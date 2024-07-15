@@ -13,7 +13,7 @@ Key identifiers are integral values that act as permanent names for persistent k
 :code:`PSA_KEY_ID_USER_MIN - PSA_KEY_ID_USER_MAX`
     Applications can freely choose persistent key identifiers in this range.
 :code:`PSA_KEY_ID_VENDOR_MIN - PSA_KEY_ID_VENDOR_MAX`
-    Implementations can define additional persistent key identifiers in this range, and must allocate any volatile key identifiers from this range.
+    Implementations can define additional persistent key identifiers in this range for :term:`built-in key`\ s, and must allocate any volatile key identifiers from this range.
 
 Key identifiers outside these ranges are reserved for future use.
 
@@ -21,7 +21,7 @@ Key identifiers are output from a successful call to one of the key creation fun
 
 If an invalid key identifier is provided as a parameter in any function, the function will return :code:`PSA_ERROR_INVALID_HANDLE`; except for the special case of calling :code:`psa_destroy_key(PSA_KEY_ID_NULL)`, which has no effect and always returns :code:`PSA_SUCCESS`.
 
-Valid key identifiers must have distinct values within the same application. If the implementation provides :term:`caller isolation`, then key identifiers are local to each application. That is, the same key identifier in two applications corresponds to two different keys.
+Valid key identifiers must have distinct values within the same application. If the implementation provides :term:`caller isolation`, then key identifiers are local to each application. That is, keys that are created by two applications with the same key identifier are two separate keys.
 
 
 Key identifier type

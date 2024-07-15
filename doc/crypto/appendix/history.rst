@@ -27,6 +27,7 @@ Changes to the API
     This enables many message-signature algorithms to be used for fragmented messages.
     See :secref:`multi-part-signature`.
 
+*   Added support for partial initialization of the implementation. See :secref:`library-init`.
 
 Relaxations
 ~~~~~~~~~~~

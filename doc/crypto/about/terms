@@ -1,4 +1,4 @@
-.. SPDX-FileCopyrightText: Copyright 2020-2022 Arm Limited and/or its affiliates
+.. SPDX-FileCopyrightText: Copyright 2020-2022, 2024 Arm Limited and/or its affiliates
 .. SPDX-License-Identifier: CC-BY-SA-4.0 AND LicenseRef-Patent-license
 
 .. term:: Algorithm
@@ -191,3 +191,21 @@
     :abbr: PQC
 
     A cryptographic scheme that relies on mathematical problems that do not have efficient algorithms for either classical or quantum computing.
+
+.. term:: Secure element
+    :abbr: SE
+
+    A hardware component or subsystem that is protected by design from unauthorized access, used to run a limited set of security services, and securely store confidential and cryptographic data.
+
+.. term:: Cryptographic accelerator
+
+    A hardware component or subsystem that provides accelerated implementation of cryptographic functionality.
+
+.. term:: Built-in key
+
+    A cryptographic key that is present in the implementation, which was not created by the application.
+    For example:
+
+    *   An immutable system or platform key.
+    *   A key derived from from a system secret.
+    *   A key provisioned by another component in the system for use by the application.

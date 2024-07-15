@@ -1,4 +1,4 @@
-.. SPDX-FileCopyrightText: Copyright 2018-2022 Arm Limited and/or its affiliates
+.. SPDX-FileCopyrightText: Copyright 2018-2022, 2024 Arm Limited and/or its affiliates
 .. SPDX-License-Identifier: CC-BY-SA-4.0 AND LicenseRef-Patent-license
 
 .. _architectures:
@@ -44,7 +44,7 @@ other partition runs an application. There is a security boundary between the
 two partitions, so that the application cannot access the cryptoprocessor,
 except through its public interface. Thus, the architecture provides
 :term:`cryptoprocessor isolation`. The cryptoprocessor has
-some non-volatile storage, a TRNG, and possibly, some cryptographic accelerators.
+some non-volatile storage, a true random number generator, and possibly, some :term:`cryptographic accelerator`\ s.
 
 There are a number of potential physical realizations: the cryptoprocessor might
 be a separate chip, a separate processor on the same chip, or a logical
@@ -103,7 +103,7 @@ have multiple cryptoprocessors:
 
 *   Different compromises between security and performance for different keys.
     Typically, this means a cryptoprocessor that runs on the same hardware as the
-    main application and processes short-term secrets, a secure element or a
+    main application and processes short-term secrets, a :term:`secure element` or a
     similar separate chip that retains long-term secrets.
 *   Independent provisioning of certain secrets.
 *   A combination of a non-removable cryptoprocessor and removable ones, for

@@ -181,7 +181,7 @@ Multi-part XOF operations
         The following conditions can result in this error:
 
         *   The operation state is not valid: it must be inactive.
-        *   The library requires initializing by a call to `psa_crypto_init()`.
+        *   The library requires initializing. See :secref:`library-init`.
     .. retval:: PSA_ERROR_INSUFFICIENT_MEMORY
     .. retval:: PSA_ERROR_COMMUNICATION_FAILURE
     .. retval:: PSA_ERROR_CORRUPTION_DETECTED
@@ -225,7 +225,7 @@ Multi-part XOF operations
         The following conditions can result in this error:
 
         *   The operation state is not valid: it must be active, and no call to `psa_xof_set_context()`, `psa_xof_update()`, or `psa_xof_output()` has been made.
-        *   The library requires initializing by a call to `psa_crypto_init()`.
+        *   The library requires initializing. See :secref:`library-init`.
     .. retval:: PSA_ERROR_INVALID_ARGUMENT
         The following conditions can result in this error:
 
@@ -269,7 +269,7 @@ Multi-part XOF operations
         The following conditions can result in this error:
 
         *   The operation state is not valid: it must be active, and no call to `psa_xof_output()` has been made.
-        *   The library requires initializing by a call to `psa_crypto_init()`.
+        *   The library requires initializing. See :secref:`library-init`.
     .. retval:: PSA_ERROR_INVALID_ARGUMENT
         The total input for the operation is too large for the XOF algorithm.
     .. retval:: PSA_ERROR_NOT_SUPPORTED
@@ -309,7 +309,7 @@ Multi-part XOF operations
         The following conditions can result in this error:
 
         *   The operation state is not valid: it must be active.
-        *   The library requires initializing by a call to `psa_crypto_init()`.
+        *   The library requires initializing. See :secref:`library-init`.
     .. retval:: PSA_ERROR_INSUFFICIENT_MEMORY
     .. retval:: PSA_ERROR_COMMUNICATION_FAILURE
     .. retval:: PSA_ERROR_CORRUPTION_DETECTED
@@ -339,7 +339,7 @@ Multi-part XOF operations
     .. retval:: PSA_ERROR_COMMUNICATION_FAILURE
     .. retval:: PSA_ERROR_CORRUPTION_DETECTED
     .. retval:: PSA_ERROR_BAD_STATE
-        The library requires initializing by a call to `psa_crypto_init()`.
+        The library requires initializing. See :secref:`library-init`.
 
     Aborting an operation frees all associated resources except for the ``operation`` object itself.
     Once aborted, the operation object can be reused for another operation by calling `psa_xof_setup()` again.
