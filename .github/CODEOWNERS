@@ -1,0 +1,15 @@
+# lock down the main branch files, against rogue Writers merging PRs
+# and any future branches from main
+/design/         @athoelke
+/doc/            @athoelke
+/docs/           @athoelke
+/examples/       @athoelke
+/headers/        @athoelke
+/LICENSES/       @athoelke
+/plans/          @athoelke
+/*.md            @athoelke
+
+# lock down git- and github- related configuration files
+/.gitignore      @athoelke
+/.gitattributes  @athoelke
+/.github/        @athoelke
