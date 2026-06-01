@@ -1,0 +1,155 @@
+---
+---
+
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta property="og:title" content="2 Use cases and rationale" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="{{ page.url | absolute_url }}" />
+<link rel="canonical" href="{{ page.url | absolute_url }}" />
+<meta property="og:site_name" content="PSA Certified Attestation API 2.0" />
+<meta property="og:description" content="The following subsections describe the primary use cases that this version of Attestation API aims to support. Other use cases are also possible. The Platform Root of Trust(PRoT) reports informatio..." />
+<meta name="description" content="The following subsections describe the primary use cases that this version of Attestation API aims to support. Other use cases are also possible. The Platform Root of Trust(PRoT) reports informatio..." />
+
+    <title>2 Use cases and rationale &#8212; PSA Certified Attestation API 2.0</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/basic.css?v=686e5160" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=f6a572b4" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+    <link rel="preconnect" type="text/css" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" type="text/css" href="https://fonts.gstatic.com" />
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;1,300;1,400&display=swap" />
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Mono:ital,wght@0,300;0,400;1,300&display=swap" />
+    <script src="../_static/documentation_options.js?v=db988ed8"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="3 Initial Attestation report" href="report.html" />
+    <link rel="prev" title="1 Introduction" href="intro.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/ARM_LOGO-2025_INK_RGB.svg" alt="Logo of PSA Certified Attestation API"/>
+            </a></p><hr />
+<h3><a href="../index.html">PSA Certified<br />Attestation API</a></h3>
+IHI 0085<br/>
+Non-confidential<br/>
+Version 2.0.0
+<hr />
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../about.html">About this document</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="intro.html">1 Introduction</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">2 Use cases and rationale</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#device-enrolment">2.1 Device enrolment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#identifying-certification">2.2 Identifying certification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#integrity-reporting">2.3 Integrity reporting</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="report.html">3 Initial Attestation report</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/api.html">4 API reference</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/example-header.html">A Example header file</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/history.html">B Document history</a></li>
+</ul>
+
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="use-cases-and-rationale">
+<span id="use-cases"></span><h1><span class="section-number">2 </span>Use cases and rationale<a class="headerlink" href="#use-cases-and-rationale" title="Link to this heading">¶</a></h1>
+<p>The following subsections describe the primary use cases that this version of Attestation API aims to support. Other use cases are also possible.</p>
+<p>The <a class="reference internal" href="../about.html#term-platform-root-of-trust"><span class="term">Platform Root of Trust</span></a> (PRoT) reports information, known as claims, that can be used to determine the exact implementation of the PRoT and its security state. If the PRoT loads other components then it also includes information about what it has loaded. Other components outside of the PRoT can bind additional information to the report by incorporating that information, or a hash of it, into the challenge passed to the attestation API. The PRoT signs attestation reports using the <a class="reference internal" href="../about.html#term-initial-attestation-key"><span class="term">Initial Attestation Key</span></a> (IAK).</p>
+<section id="device-enrolment">
+<h2><span class="section-number">2.1 </span>Device enrolment<a class="headerlink" href="#device-enrolment" title="Link to this heading">¶</a></h2>
+<p>Enrolment is the ability for an online service to enlist a device. For example, a generic connected sensor that becomes part of a company’s deployment. As part of the enrolment process, credentials need to be created for each device. However, the devices themselves need to be trustworthy to ensure that credentials are not leaked.</p>
+<p>A common solution to this problem is to certify security hardware using third-party labs, who are trusted to deliver worthwhile certifications. By placing trust in evaluation reports (such as Common Criteria or PSA Certified), one can ascertain whether a Root of Trust exhibits important security properties. For example, one important property is the ability to generate a key pair of good quality (using a non-predictable random number generator) and store it in an isolated and  tamper-proof area, which provides strong assurance that a device private key is only ever known by that device. Each device instance contains a protected attestation key that can be used to prove that they are a particular certified implementation.</p>
+<p>During such an enrolment process, a device might generate a new key pair and create a Certificate Signing Request (CSR) or equivalent, containing:</p>
+<ul class="simple">
+<li><p>The public key of the generated key-pair.</p></li>
+<li><p>A proof of possession of the corresponding private key (in general this is the public key signed by the private key). This protects against man-in-the-middle attacks where an attacker can hijack the enrolment to insert their own public key into the device request.</p></li>
+<li><p>An initial attestation, in order for the recipient to assess how that particular combination of hardware and firmware can be trusted.</p></li>
+</ul>
+<p>The CSR is then passed to a Certification Authority who can assign it an identity with the new service and then return an identity certificate signed using the private key of the Certification Authority. The Certification Authority may be operated by the company who owns the devices or operated by a trusted third party. Creating extra identities on devices is expected to be a routine operation.</p>
+<p>If a device enforces a high level of isolation, where all applications execute within their own Secure Partition, then it allows several mutually-distrustful providers to install their applications side-by-side without having to worry about leaking assets from one application to another.</p>
+<p>The attestation identity can be verified in an attestation process and checked against certification information. At the end of the process the credential manager can establish a secure connection to the attested endpoint, and deliver credentials. For example, these may be service access credentials.</p>
+</section>
+<section id="identifying-certification">
+<h2><span class="section-number">2.2 </span>Identifying certification<a class="headerlink" href="#identifying-certification" title="Link to this heading">¶</a></h2>
+<p>The combination of a hardware entity and the software installed on that entity can be certified to conform to some published security level.</p>
+<p>Manufacturers of devices can advertise a security certification as an incentive to purchase their devices, or because it is a requirement from a regulator. To gain the certification a manufacturer can engage a test lab to verify the hardware and software combination of a device conforms to specific standards. Certification should not be declared by the device, instead it is a dynamic situation where the hardware and software state can be checked against the current known certification status for that combination.</p>
+<p>The initial attestation report declares the state of the device to a verification service. The verification service can then:</p>
+<ul class="simple">
+<li><p>Verify the production status of the device identity. For example, to identify whether the device is in an inventory, and whether it is a secured production device or a development device.</p></li>
+<li><p>Verify the certification status of a device. This involves checking that all components are up to date, correctly signed, and certified to work together.</p></li>
+</ul>
+</section>
+<section id="integrity-reporting">
+<h2><span class="section-number">2.3 </span>Integrity reporting<a class="headerlink" href="#integrity-reporting" title="Link to this heading">¶</a></h2>
+<p>A party may want to check the received list of claims against a database of known measurements for each component in order to decide which level of trust should be applied. Additional information can be included, such as the version numbers for all software running on the device. As a minimum, the device provides a hash for each loaded component. Boot measurements are included in order to assess if there are obvious signs of tampering with the device firmware.</p>
+<p>Initial attestation requires three services:</p>
+<ul class="simple">
+<li><p>Enrolment verification service enforcing policy as part of service enrolment of the device.</p></li>
+<li><p>Production verification service (OEM), providing the production state of an attestation identity</p></li>
+<li><p>Certification verification service (third party), verifying that all attested components are up to date, signed correctly, and certified to work together.</p></li>
+</ul>
+<p>It is possible to further separate these roles. For example, there may be a separate software verification service.</p>
+<p>These services can be hosted by different parties in online or offline settings:</p>
+<ul class="simple">
+<li><p>The first service requires generating a challenge, reading back the device’s token, and validating the signature of the token.</p></li>
+<li><p>The second service may periodically log the current security state for all addressable devices and make that information available upon request. It does not require the knowledge of any pre-shared secret or a prior trust exchange with a device vendor. The various databases required for the full verification process may be local, replicated, or centralized, depending on the particular market.</p></li>
+</ul>
+<p>Further information about using existing attestation protocols can be found in <a class="reference internal" href="../about.html#cite-psm"><span class="cite atg_c atg_c-cite">[PSM]</span></a>.</p>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &#169; 2018-2020, 2022-2026 Arm Limited and/or its affiliates.
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

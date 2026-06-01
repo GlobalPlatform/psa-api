@@ -28,7 +28,7 @@ Specification | | | | |
 -|-|-|-|-
 Crypto API | 1.4 | [HTML][crypto-html] | [&darr; PDF][crypto-pdf] | [All versions](crypto/)
 Secure Storage API | 1.0 | [HTML][storage-html] | [&darr; PDF][storage-pdf] | [All versions](storage/)
-Attestation API | 1.0 | [HTML][attestation-html] | [&darr; PDF][attestation-pdf] | [All versions](attestation/)
+Attestation API | 2.0 | [HTML][attestation-html] | [&darr; PDF][attestation-pdf] | [All versions](attestation/)
 Firmware Update API | 1.0 | [HTML][fwu-html] | [&darr; PDF][fwu-pdf] | [All versions](fwu/)
 Status code API | 1.0 | [HTML][status-code-html] | [&darr; PDF][status-code-pdf] | [All versions](status-code/)
 
@@ -58,8 +58,8 @@ Crypto Driver Interface | 1.0 Alpha 1 | [HTML][driver-html] | [&darr; PDF][drive
 [crypto-pdf]:        crypto/1.4/IHI0086-PSA_Certified_Crypto_API-1.4.1.pdf
 [storage-html]:      storage/1.0/
 [storage-pdf]:       storage/1.0/IHI0087-PSA_Certified_Secure_Storage_API-1.0.4.pdf
-[attestation-html]:  attestation/1.0/
-[attestation-pdf]:   attestation/1.0/IHI0085-PSA_Certified_Attestation_API-1.0.4.pdf
+[attestation-html]:  attestation/2.0/
+[attestation-pdf]:   attestation/2.0/IHI0085-PSA_Certified_Attestation_API-2.0.0.pdf
 [fwu-html]:          fwu/1.0/
 [fwu-pdf]:           fwu/1.0/IHI0093-PSA_Certified_Firmware_Update_API-1.0.1.pdf
 [pqc-html]:          crypto/1.4/ext-pqc/

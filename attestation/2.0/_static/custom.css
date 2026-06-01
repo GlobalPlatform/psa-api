@@ -1,0 +1,490 @@
+/* SPDX-FileCopyrightText: Copyright 2020-2025 Arm Limited and/or its affiliates <open-source-office@arm.com> */
+
+/* CSS overrides for the html output */
+
+body {
+    font-family: Lato, sans-serif;
+    font-size: 15px;
+    font-weight: 300;
+    color: #080225;
+}
+
+div.document {
+    width: 965px;
+}
+
+div.bodywrapper {
+    margin: 0 0 0 270px;
+}
+
+div.body {
+    background-color: unset;
+    color: #080225;
+    padding: 0;
+}
+
+div.sphinxsidebar {
+    width: 240px;
+    font-size: 12.5px;
+    margin-top: -30px;
+}
+
+div.sphinxsidebarwrapper {
+    padding: 0;
+}
+
+div.sphinxsidebarwrapper p.logo {
+    margin: 0;
+}
+
+div.footer {
+    width: 965px;
+}
+
+div.watermark {
+    position: fixed;
+    width: 660px;
+    height: 100%;
+    z-index: -999;
+    pointer-events: none;
+  }
+
+div.watermark p {
+    color: #EEE;
+    font-size: 160px;
+    font-weight: 400;
+    pointer-events: none;
+    user-select: none;
+    margin: 0px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-45deg);
+  }
+
+div.body h1,
+div.body h2,
+div.body h3,
+div.body h4,
+div.body h5,
+div.body h6 {
+    font-family: Lato, sans-serif;
+    font-weight: 400;
+}
+
+div.sphinxsidebar h3,
+div.sphinxsidebar h4 {
+    font-family: Lato, sans-serif;
+    font-size: 20px;
+}
+
+p.rubric {
+    font-weight: 400;
+}
+
+div.body input, div.sphinxsidebar input {
+    font-family: Lato, sans-serif;
+    font-size: 15px;
+}
+
+a, a:visited {
+    color: #0042c0;
+    text-decoration: none;
+}
+
+a.reference, div.sphinxsidebar a.reference {
+    border-bottom: none;
+}
+
+a.reference:hover, div.sphinxsidebar a.reference:hover, a:hover code, a:hover tt {
+    color: #561bc6;
+    border-bottom: 1px dotted #561bc6;
+    background: unset;
+}
+
+pre a:hover, a:hover code, a:hover tt {
+    font-weight: 400;
+}
+
+mjx-math {
+    color: #5b566d
+}
+
+tt, code {
+    font-family: "Noto Sans Mono", monospace;
+    font-size: 76%;
+    background-color: unset;
+    color: #080225;
+}
+
+code.xref, a code {
+    font-weight: 300;
+    color: #0042c0;
+    background-color: unset;
+    border-bottom: unset;
+}
+
+pre {
+    font-family: "Noto Sans Mono", monospace;
+    font-size: 76%;
+    color: #080225;
+    background: rgba(187,187,187,0.12);
+    padding: 5px;
+    margin: 10px -6px;
+    line-height: 1.3em;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 5px;
+    border-color: rgba(187,187,187,0.3);
+}
+
+/* Fix the specific overrides in basic.css and alabaster.css for code blocks */
+div.highlight pre, dl pre, blockquote pre, li pre {
+    padding: 5px;
+    margin: 10px -6px;
+}
+
+sub {
+    font-size: 70%;
+    vertical-align: -10%;
+    font-weight: 400;
+    color: #5b566d;
+}
+
+sup {
+    font-size: 70%;
+    vertical-align: 25%;
+    font-weight: 400;
+    color: #5b566d;
+}
+
+/* Default table formatting is like 'booktabs', 'standard' formatting can
+   can be specified explicitly.
+ */
+
+table {
+    font-weight: 300;
+}
+
+table.docutils {
+    font-size: unset;
+    box-shadow: none;
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    /*width: 100%;*/
+    border: 0;
+    border-top: 1px solid #AAA;
+    border-bottom: 1px solid #AAA;
+	margin-bottom: 1em;
+}
+
+table.docutils.align-left {
+    margin-left: 0;
+    margin-right: auto;
+}
+
+table.docutils.align-right {
+    margin-left: auto;
+    margin-right: 0;
+}
+
+table.docutils.standard {
+    border: 1px solid #AAA;
+}
+
+table.docutils.borderless {
+    border: 0;
+}
+
+table.docutils.borderless.titletable {
+    margin-top: 40px;
+    width: 70%;
+    margin-right: 0px;
+    margin-left: auto;
+}
+
+table.docutils caption, div.figure p.caption, figcaption {
+    font-size: 90%;
+    text-align: right;
+    margin-right: -13px;    /* move permalink into margin */
+}
+
+table.docutils caption span.caption-number, div.figure p.caption span.caption-number, figcaption span.caption-number {
+    font-weight: 400;
+    font-style: normal;
+}
+
+table.docutils td, table.docutils th {
+    border: 0;
+    padding: 0.3em 0.5em 0.3em 0.5em;
+    text-align: left;
+    vertical-align: top;
+}
+
+/* Add all rules for standard table formatting */
+table.docutils.standard td, table.docutils.standard th {
+    border: 1px solid #AAA;
+}
+
+table.docutils td p, table.docutils th p {
+	margin-block-start: .3em;
+	margin-block-end: .3em;
+}
+
+table.docutils th > p:first-child, table.docutils td > p:first-child {
+    margin-top: 0px;
+}
+
+table.docutils th {
+    font-weight: 400;
+    font-size: 90%;
+}
+
+/* rule below stub rows */
+table.docutils th.stub {
+    border-bottom: none;
+}
+
+table.docutils.standard th.stub {
+    border-bottom: 1px solid #AAA;
+}
+
+/* rule below header rows */
+table.docutils th.head {
+    border-bottom: 0;
+}
+
+table.docutils tr:last-child > th.head {
+    border-bottom: 1px solid #AAA;
+}
+
+table.docutils.borderless tr:last-child > th.head {
+    border-bottom: 0;
+}
+
+table.docutils.standard th.head {
+    border-bottom: 1px solid #AAA;
+}
+
+table.docutils.borderless th.head {
+    border-bottom: 0;
+}
+
+figure {
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+}
+
+div.figure div.legend, figcaption div.legend {
+    font-size: 90%;     /* adds to the figcaption scaling */
+    text-align: center;
+}
+
+div.figure p.caption, div.figure div.legend p, figcaption p, figcaption div.legend {
+    margin-block-start: 0.2em;
+    margin-block-end: 0.5em;
+}
+
+div.admonition {
+    margin: 5px 15px;
+    padding: 5px 15px;
+    background-color: unset;
+    border: 0;
+    border-left: 6px solid #DDD;
+}
+
+div.admonition p.admonition-title {
+    font-family: Lato, sans-serif;
+    font-weight: 400;
+    font-size: 90%;
+}
+
+p.admonition-title:after {
+    content: "";
+}
+
+div.admonition p {
+    margin-top: 0;
+    margin-bottom: 5px;
+}
+
+div.admonition tt.xref, div.admonition code.xref, div.admonition a tt {
+    background-color: unset;
+}
+
+div.highlight {
+    background-color: unset;
+}
+
+div.admonition div.highlight pre {
+    background-color: unset;
+}
+
+div.warning {
+    border-left: 6px solid #FBB;
+}
+
+div.warning p.admonition-title {
+    color: darkred;
+}
+
+div.banner {
+    border: 2px solid #CC0;
+    background-color: rgba(255,255,0,0.25);
+}
+
+div.rationale {
+    border-left: 6px solid #BFB;
+    background-color: rgba(127,255,127,0.125);
+}
+
+div.rationale p.admonition-title {
+    color: darkgreen;
+}
+
+div.comment p.admonition-title {
+    color: #555;
+}
+
+div.comment {
+    border-left: 6px solid #ccc;
+    background-color: #f8f8f8;
+    color: #555;
+    font-size: 95%;
+}
+
+div.admonition-todo {
+    border-left: 6px solid #CC0;
+    background-color: rgba(255,255,0,0.25);
+}
+
+div.admonition-todo p.admonition-title {
+    color: #660;
+}
+
+.scterm, .sc {
+    font-variant: small-caps;
+    text-transform: lowercase;
+}
+
+.license{
+    font-size: 80%;
+}
+
+div.license p.sectiontitle {
+    display: block;
+    margin-top: 24px;
+    font-weight: 400;
+    font-size: 144%;
+}
+
+.anchor {
+    color: #0042c0;
+}
+
+.issue {
+    color: red;
+}
+
+.term {
+    font-style: italic;
+}
+
+.secref {
+    font-style: italic;
+}
+
+.sectiontitle {
+    display: block;
+    margin-top: 30px;
+    font-weight: 400;
+    font-size: 180%;
+}
+
+.sralabel {
+    font-weight: 400;
+    font-size: 90%;
+}
+
+.sradef {
+    font-weight: 400;
+    font-size: 90%;
+}
+
+.sraref {
+    font-size: 90%;
+}
+
+img.titlelogo {
+    float: left;
+    margin-top: 0.7em;
+    margin-bottom: 8em;
+    margin-right: 5%;
+    width: 25%;
+}
+
+img.logo {
+    display: block;
+    margin: 1em auto;
+    width: 40%;
+}
+
+div.sphinxsidebar hr {
+    width: 100%;
+}
+
+dl dd {
+    margin-left: 3em;
+    margin-top: 0.2em;
+    margin-bottom: 0.8em;
+}
+
+dl p {
+    margin-block-start: 0.6em;
+    margin-block-end: 0.6em;
+}
+
+div.apisubitem dl {
+    display: grid;
+    grid-template-columns: 30ex 1fr; /* term column + description column */
+    gap: 0 0.5ex; /* row gap, column gap */
+    align-items: start;
+}
+
+div.apisubitem dt p {
+    margin-block-start: 0;
+    margin-block-end: 0;
+}
+
+div.apisubitem dd {
+    margin: 0;
+}
+
+div.threat dl {
+    display: grid;
+    grid-template-columns: 20ex 1fr; /* term column + description column */
+    gap: 0 0.5ex; /* row gap, column gap */
+    align-items: start;
+}
+
+div.threat dt p {
+    margin-block-start: 0;
+}
+
+div.threat dd {
+    margin: 0;
+}
+
+div.riskrow table.docutils.borderless {
+    width: 100%;
+    margin-top: 0;
+    margin-bottom: 0.6em;
+}
+
+div.riskrow table.docutils td {
+    padding: 0;
+}
+
+div.riskrow table.docutils td p {
+    margin: 0;
+}

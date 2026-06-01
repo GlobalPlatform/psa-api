@@ -1,0 +1,154 @@
+---
+---
+
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta property="og:title" content="1 Example header file" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="{{ page.url | absolute_url }}" />
+<link rel="canonical" href="{{ page.url | absolute_url }}" />
+<meta property="og:site_name" content="PSA Certified Attestation API 2.0" />
+<meta property="og:description" content="Each implementation of the Attestation API must provide a header file named psa/initial_attestation.h, in which the interface elements in this specification are defined. This appendix provides a ex..." />
+<meta name="description" content="Each implementation of the Attestation API must provide a header file named psa/initial_attestation.h, in which the interface elements in this specification are defined. This appendix provides a ex..." />
+
+    <title>1 Example header file &#8212; PSA Certified Attestation API 2.0</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/basic.css?v=686e5160" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=f6a572b4" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+    <link rel="preconnect" type="text/css" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" type="text/css" href="https://fonts.gstatic.com" />
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;1,300;1,400&display=swap" />
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Mono:ital,wght@0,300;0,400;1,300&display=swap" />
+    <script src="../_static/documentation_options.js?v=db988ed8"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="2 Document history" href="history.html" />
+    <link rel="prev" title="4 API reference" href="../api/api.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/ARM_LOGO-2025_INK_RGB.svg" alt="Logo of PSA Certified Attestation API"/>
+            </a></p><hr />
+<h3><a href="../index.html">PSA Certified<br />Attestation API</a></h3>
+IHI 0085<br/>
+Non-confidential<br/>
+Version 2.0.0
+<hr />
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../about.html">About this document</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../overview/intro.html">1 Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../overview/use-cases.html">2 Use cases and rationale</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../overview/report.html">3 Initial Attestation report</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/api.html">4 API reference</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">A Example header file</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#psa-initial-attestation-h">A.1 psa/initial_attestation.h</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="history.html">B Document history</a></li>
+</ul>
+
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="example-header-file">
+<span id="appendix-example-header"></span><h1><span class="section-number">A </span>Example header file<a class="headerlink" href="#example-header-file" title="Link to this heading">¶</a></h1>
+<p>Each implementation of the Attestation API must provide a header file named <code class="file docutils literal notranslate"><span class="pre">psa/initial_attestation.h</span></code>, in which the interface elements in this specification are defined.</p>
+<p>This appendix provides a example of the <code class="file docutils literal notranslate"><span class="pre">psa/initial_attestation.h</span></code> header file with all of the API elements. This can be used as a starting point or reference for an implementation.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Not all of the API elements are fully defined. An implementation must provide the full definition.</p>
+<p>The header will not compile without these missing definitions, and might require reordering to satisfy C compilation rules.</p>
+</div>
+<section id="psa-initial-attestation-h">
+<h2><span class="section-number">A.1 </span>psa/initial_attestation.h<a class="headerlink" href="#psa-initial-attestation-h" title="Link to this heading">¶</a></h2>
+<pre class="literal-block"><em>/* This file is a reference template for implementation of the
+ * PSA Certified Attestation API v2.0
+ */</em>
+
+#ifndef PSA_INITIAL_ATTESTATION_H
+#define PSA_INITIAL_ATTESTATION_H
+
+#include &lt;stddef.h&gt;
+#include &lt;stdint.h&gt;
+
+#ifdef __cplusplus
+extern &quot;C&quot; {
+#endif
+
+#define <a class="reference internal" href="../api/api.html#c.PSA_INITIAL_ATTEST_API_VERSION_MAJOR" title="PSA_INITIAL_ATTEST_API_VERSION_MAJOR">PSA_INITIAL_ATTEST_API_VERSION_MAJOR</a> 2
+#define <a class="reference internal" href="../api/api.html#c.PSA_INITIAL_ATTEST_API_VERSION_MINOR" title="PSA_INITIAL_ATTEST_API_VERSION_MINOR">PSA_INITIAL_ATTEST_API_VERSION_MINOR</a> 0
+#define <a class="reference internal" href="../api/api.html#c.PSA_INITIAL_ATTEST_MAX_TOKEN_SIZE" title="PSA_INITIAL_ATTEST_MAX_TOKEN_SIZE">PSA_INITIAL_ATTEST_MAX_TOKEN_SIZE</a> <em>/* implementation-specific value */</em>
+#define <a class="reference internal" href="../api/api.html#c.PSA_INITIAL_ATTEST_CHALLENGE_SIZE_32" title="PSA_INITIAL_ATTEST_CHALLENGE_SIZE_32">PSA_INITIAL_ATTEST_CHALLENGE_SIZE_32</a> (32u)
+#define <a class="reference internal" href="../api/api.html#c.PSA_INITIAL_ATTEST_CHALLENGE_SIZE_48" title="PSA_INITIAL_ATTEST_CHALLENGE_SIZE_48">PSA_INITIAL_ATTEST_CHALLENGE_SIZE_48</a> (48u)
+#define <a class="reference internal" href="../api/api.html#c.PSA_INITIAL_ATTEST_CHALLENGE_SIZE_64" title="PSA_INITIAL_ATTEST_CHALLENGE_SIZE_64">PSA_INITIAL_ATTEST_CHALLENGE_SIZE_64</a> (64u)
+psa_status_t <a class="reference internal" href="../api/api.html#c.psa_initial_attest_get_token" title="psa_initial_attest_get_token">psa_initial_attest_get_token</a>(const uint8_t *auth_challenge,
+                                          size_t challenge_size,
+                                          uint8_t *token_buf,
+                                          size_t token_buf_size,
+                                          size_t *token_size);
+psa_status_t <a class="reference internal" href="../api/api.html#c.psa_initial_attest_get_token_size" title="psa_initial_attest_get_token_size">psa_initial_attest_get_token_size</a>(size_t challenge_size,
+                                               size_t *token_size);
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif <em>// PSA_INITIAL_ATTESTATION_H</em>
+</pre>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &#169; 2018-2020, 2022-2026 Arm Limited and/or its affiliates.
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>
