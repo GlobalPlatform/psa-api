@@ -1,5 +1,5 @@
 <!--
-SPDX-FileCopyrightText: Copyright 2022-2025 Arm Limited and/or its affiliates
+SPDX-FileCopyrightText: Copyright 2022-2026 Arm Limited and/or its affiliates
 SPDX-License-Identifier: CC-BY-SA-4.0
 -->
 
@@ -24,7 +24,7 @@ Specification | Published | Document source | Reference headers | Dashboard
 -|-|-|-|-
 Crypto API | [1.4.0][crypto-specs] | [doc/crypto/] | [headers/crypto/1.4/] | [Project board][crypto-dash]
 Secure Storage API | [1.0.4][storage-specs] | [doc/storage/] |  [headers/storage/1.0/] | [Project board][storage-dash] |
-Attestation API | [1.0.4][attestation-specs] | [doc/attestation/] |  [headers/attestation/1.0/] | [Project board][attestation-dash] |
+Attestation API | [2.0.0][attestation-specs] | [doc/attestation/] |  [headers/attestation/2.0/] | [Project board][attestation-dash] |
 Firmware Update API | [1.0.1][fwu-specs] | [doc/fwu/] |  [headers/fwu/1.0/] | [Project board][fwu-dash]
 Status code API | [1.0.4][status-specs] | [doc/status-code/] |  [headers/status-code/1.0/] | [Project board][status-code-dash] |
 
@@ -48,7 +48,7 @@ Status code API | [1.0.4][status-specs] | [doc/status-code/] |  [headers/status-
 
 [headers/crypto/1.4/]:      headers/crypto/1.4
 [headers/storage/1.0/]:     headers/storage/1.0
-[headers/attestation/1.0/]: headers/attestation/1.0
+[headers/attestation/2.0/]: headers/attestation/2.0
 [headers/fwu/1.0/]:         headers/fwu/1.0
 [headers/status-code/1.0/]: headers/status-code/1.0
 
@@ -146,4 +146,4 @@ Anyone may contribute to the PSA Certified API. Discussion of changes and enhanc
 
 ----
 
-*Copyright 2022-2025 Arm Limited and/or its affiliates*
+*Copyright 2022-2026 Arm Limited and/or its affiliates*
