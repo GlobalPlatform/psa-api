@@ -1,0 +1,131 @@
+---
+---
+
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta property="og:title" content="1 Introduction" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="{{ page.url | absolute_url }}" />
+<link rel="canonical" href="{{ page.url | absolute_url }}" />
+<meta property="og:site_name" content="PSA Certified Attestation API 2.0" />
+<meta property="og:description" content="About Platform Security Architecture: This document is one of a set of resources provided by Arm that can help organizations develop products that meet the security requirements of GlobalPlatform’s..." />
+<meta name="description" content="About Platform Security Architecture: This document is one of a set of resources provided by Arm that can help organizations develop products that meet the security requirements of GlobalPlatform’s..." />
+
+    <title>1 Introduction &#8212; PSA Certified Attestation API 2.0</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/basic.css?v=686e5160" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=f6a572b4" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+    <link rel="preconnect" type="text/css" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" type="text/css" href="https://fonts.gstatic.com" />
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;1,300;1,400&display=swap" />
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Mono:ital,wght@0,300;0,400;1,300&display=swap" />
+    <script src="../_static/documentation_options.js?v=db988ed8"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="2 Use cases and rationale" href="use-cases.html" />
+    <link rel="prev" title="About this document" href="../about.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/ARM_LOGO-2025_INK_RGB.svg" alt="Logo of PSA Certified Attestation API"/>
+            </a></p><hr />
+<h3><a href="../index.html">PSA Certified<br />Attestation API</a></h3>
+IHI 0085<br/>
+Non-confidential<br/>
+Version 2.0.0
+<hr />
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../about.html">About this document</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">1 Introduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#about-platform-security-architecture">1.1 About Platform Security Architecture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#about-the-api">1.2 About the Attestation API</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="use-cases.html">2 Use cases and rationale</a></li>
+<li class="toctree-l1"><a class="reference internal" href="report.html">3 Initial Attestation report</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/api.html">4 API reference</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/example-header.html">A Example header file</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/history.html">B Document history</a></li>
+</ul>
+
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="introduction">
+<h1><span class="section-number">1 </span>Introduction<a class="headerlink" href="#introduction" title="Link to this heading">¶</a></h1>
+<section id="about-platform-security-architecture">
+<h2><span class="section-number">1.1 </span>About Platform Security Architecture<a class="headerlink" href="#about-platform-security-architecture" title="Link to this heading">¶</a></h2>
+<p>This document is one of a set of resources provided by Arm that can help organizations develop products that meet the security requirements of GlobalPlatform’s PSA Certified evaluation scheme on Arm-based platforms. The PSA Certified scheme provides a framework and methodology that helps silicon manufacturers, system software providers and OEMs to develop more secure products. Arm resources that support PSA Certified range from threat models, standard architectures that simplify development and increase portability, and open-source partnerships that provide ready-to-use software. You can read more about PSA Certified here at <a class="reference external" href="https://www.psacertified.org">www.psacertified.org</a> and find more Arm resources here at <a class="reference external" href="https://developer.arm.com/platform-security-resources">developer.arm.com/platform-security-resources</a> and <a class="reference external" href="https://www.trustedfirmware.org">www.trustedfirmware.org</a>.</p>
+</section>
+<section id="about-the-api">
+<h2><span class="section-number">1.2 </span>About the Attestation API<a class="headerlink" href="#about-the-api" title="Link to this heading">¶</a></h2>
+<p>The interface described in this document is a PSA Certified API, that provides a verifiable report of the state of the platform. The platform attestation service is provided by the <a class="reference internal" href="../about.html#term-platform-root-of-trust"><span class="term">Platform Root of Trust</span></a> and is described in <span><em>Platform Security Model</em> <a class="reference internal" href="../about.html#cite-psm"><span class="cite">[PSM]</span></a></span>.</p>
+<p>The format of the attestation report that is produced by the Attestation API is specified in <span><em>Arm's Platform Security Architecture (PSA) Attestation Token</em> <a class="reference internal" href="../about.html#cite-rfc-9783"><span class="cite">[RFC9783]</span></a></span>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Version 2.0 of this specification is not compatible with any 1.0 version, as a result of the change in format of the attestation report that is generated by this API.</p>
+</div>
+<p>This document includes:</p>
+<ul class="simple">
+<li><p>A set of common use cases. See <a class="reference internal" href="use-cases.html#use-cases"><span class="secref">Use cases and rationale</span></a>.</p></li>
+<li><p>The associated Application Programming Interface (API). See <a class="reference internal" href="../api/api.html#api"><span class="secref">API reference</span></a>.</p></li>
+</ul>
+<p>The Attestation API can be used either to directly produce verifiable evidence about the platform state in the context of a challenge-response interaction, or as a way to bootstrap trust in other attestation schemes. The PSA Certified framework provides the generic security features allowing OEM and service providers to integrate various attestation schemes on top of the Platform Root of Trust.</p>
+<p>You can find additional resources relating to the Attestation API here at <a class="reference external" href="https://arm-software.github.io/psa-api/attestation">arm-software.github.io/psa-api/attestation</a>, and find other PSA Certified APIs here at <a class="reference external" href="https://arm-software.github.io/psa-api">arm-software.github.io/psa-api</a>.</p>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &#169; 2018-2020, 2022-2026 Arm Limited and/or its affiliates.
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

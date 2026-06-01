@@ -1,0 +1,304 @@
+---
+---
+
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta property="og:title" content="4 API reference" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="{{ page.url | absolute_url }}" />
+<link rel="canonical" href="{{ page.url | absolute_url }}" />
+<meta property="og:site_name" content="PSA Certified Attestation API 2.0" />
+<meta property="og:description" content="The Attestation API defines a header file that is provided by the implementation. The header is psa/initial_attestation.h. All the elements are defined in the C language. The Attestation API makes ..." />
+<meta name="description" content="The Attestation API defines a header file that is provided by the implementation. The header is psa/initial_attestation.h. All the elements are defined in the C language. The Attestation API makes ..." />
+
+    <title>4 API reference &#8212; PSA Certified Attestation API 2.0</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/basic.css?v=686e5160" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=f6a572b4" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+    <link rel="preconnect" type="text/css" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" type="text/css" href="https://fonts.gstatic.com" />
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;1,300;1,400&display=swap" />
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Mono:ital,wght@0,300;0,400;1,300&display=swap" />
+    <script src="../_static/documentation_options.js?v=db988ed8"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="1 Example header file" href="../appendix/example-header.html" />
+    <link rel="prev" title="3 Initial Attestation report" href="../overview/report.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/ARM_LOGO-2025_INK_RGB.svg" alt="Logo of PSA Certified Attestation API"/>
+            </a></p><hr />
+<h3><a href="../index.html">PSA Certified<br />Attestation API</a></h3>
+IHI 0085<br/>
+Non-confidential<br/>
+Version 2.0.0
+<hr />
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../about.html">About this document</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../overview/intro.html">1 Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../overview/use-cases.html">2 Use cases and rationale</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../overview/report.html">3 Initial Attestation report</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">4 API reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#api-conventions">4.1 API conventions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#status-codes">4.2 Status codes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#general-definitions">4.3 General definitions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#c.PSA_INITIAL_ATTEST_API_VERSION_MAJOR">4.3.1 <code class="docutils literal notranslate"><span class="pre">PSA_INITIAL_ATTEST_API_VERSION_MAJOR</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#c.PSA_INITIAL_ATTEST_API_VERSION_MINOR">4.3.2 <code class="docutils literal notranslate"><span class="pre">PSA_INITIAL_ATTEST_API_VERSION_MINOR</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#c.PSA_INITIAL_ATTEST_MAX_TOKEN_SIZE">4.3.3 <code class="docutils literal notranslate"><span class="pre">PSA_INITIAL_ATTEST_MAX_TOKEN_SIZE</span></code> (macro)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#challenge-sizes">4.4 Challenge sizes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#c.PSA_INITIAL_ATTEST_CHALLENGE_SIZE_32">4.4.1 <code class="docutils literal notranslate"><span class="pre">PSA_INITIAL_ATTEST_CHALLENGE_SIZE_32</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#c.PSA_INITIAL_ATTEST_CHALLENGE_SIZE_48">4.4.2 <code class="docutils literal notranslate"><span class="pre">PSA_INITIAL_ATTEST_CHALLENGE_SIZE_48</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#c.PSA_INITIAL_ATTEST_CHALLENGE_SIZE_64">4.4.3 <code class="docutils literal notranslate"><span class="pre">PSA_INITIAL_ATTEST_CHALLENGE_SIZE_64</span></code> (macro)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#attestation">4.5 Attestation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#c.psa_initial_attest_get_token">4.5.1 <code class="docutils literal notranslate"><span class="pre">psa_initial_attest_get_token</span></code> (function)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#c.psa_initial_attest_get_token_size">4.5.2 <code class="docutils literal notranslate"><span class="pre">psa_initial_attest_get_token_size</span></code> (function)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/example-header.html">A Example header file</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/history.html">B Document history</a></li>
+</ul>
+
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="api-reference">
+<span id="api"></span><h1><span class="section-number">4 </span>API reference<a class="headerlink" href="#api-reference" title="Link to this heading">¶</a></h1>
+<p>The Attestation API defines a header file that is provided by the implementation. The header is <code class="file docutils literal notranslate"><span class="pre">psa/initial_attestation.h</span></code>.</p>
+<p>All the elements are defined in the C language. The Attestation API makes use of standard C data types, including the fixed-width integer types from the ISO C99 specification update <a class="reference internal" href="../about.html#cite-c99"><span class="cite">[C99]</span></a>.</p>
+<section id="api-conventions">
+<h2><span class="section-number">4.1 </span>API conventions<a class="headerlink" href="#api-conventions" title="Link to this heading">¶</a></h2>
+<p>All functions return a status indication of type <code class="docutils literal notranslate"><span class="pre">psa_status_t</span></code>, which is defined by <span><em>PSA Certified Status code API</em> <a class="reference internal" href="../about.html#cite-psa-stat"><span class="cite">[PSA-STAT]</span></a></span>. The value <code class="docutils literal notranslate"><span class="pre">0</span></code> (<code class="docutils literal notranslate"><span class="pre">PSA_SUCCESS</span></code>) indicates successful operation, and a negative value indicates an error. Each API documents the specific error codes that might be returned, and the meaning of each error.</p>
+<p>All parameters of pointer type must be valid, non-null pointers unless the pointer is to a buffer of length 0 or the function’s documentation explicitly describes the behavior when the pointer is null. For implementations where a null pointer dereference usually aborts the application, passing NULL as a function parameter where a null pointer is not allowed should abort the caller in the habitual manner.</p>
+<p>Pointers to input parameters may be in read-only memory. Output parameters must be in writable memory. Output parameters that are not buffers must also be readable, and the implementation must be able to write to a non-buffer output parameter and read back the same value.</p>
+</section>
+<section id="status-codes">
+<h2><span class="section-number">4.2 </span>Status codes<a class="headerlink" href="#status-codes" title="Link to this heading">¶</a></h2>
+<p>The Attestation API uses the status code definitions that are shared with the other PSA Certified APIs.</p>
+<p>The following elements are defined in <code class="file docutils literal notranslate"><span class="pre">psa/error.h</span></code> from <span><em>PSA Certified Status code API</em> <a class="reference internal" href="../about.html#cite-psa-stat"><span class="cite">[PSA-STAT]</span></a></span> (previously defined in <a class="reference internal" href="../about.html#cite-psa-ffm"><span class="cite">[PSA-FFM]</span></a>):</p>
+<pre class="literal-block">typedef int32_t psa_status_t;
+
+#define PSA_SUCCESS ((psa_status_t)0)
+
+#define PSA_ERROR_GENERIC_ERROR         ((psa_status_t)-132)
+#define PSA_ERROR_INVALID_ARGUMENT      ((psa_status_t)-135)
+#define PSA_ERROR_BUFFER_TOO_SMALL      ((psa_status_t)-138)
+#define PSA_ERROR_SERVICE_FAILURE       ((psa_status_t)-144)</pre>
+<p>These definitions must be available to an application that includes the <code class="file docutils literal notranslate"><span class="pre">psa/initial_attestation.h</span></code> header file.</p>
+<div class="admonition-implementation-note admonition">
+<p class="admonition-title">Implementation note</p>
+<p>An implementation is permitted to define the status code interface elements within <code class="file docutils literal notranslate"><span class="pre">psa/initial_attestation.h</span></code>, or to define them via inclusion of a <code class="file docutils literal notranslate"><span class="pre">psa/error.h</span></code> header file that is shared with the implementation of other PSA Certified APIs.</p>
+</div>
+</section>
+<section id="general-definitions">
+<h2><span class="section-number">4.3 </span>General definitions<a class="headerlink" href="#general-definitions" title="Link to this heading">¶</a></h2>
+<section id="c.PSA_INITIAL_ATTEST_API_VERSION_MAJOR">
+<h3><span class="section-number">4.3.1 </span><code class="docutils literal notranslate"><span class="pre">PSA_INITIAL_ATTEST_API_VERSION_MAJOR</span></code> (macro)<a class="headerlink" href="#c.PSA_INITIAL_ATTEST_API_VERSION_MAJOR" title="Link to this heading">¶</a></h3>
+<p>The major version of this implementation of the Attestation API.</p>
+<pre class="literal-block">#define <a class="reference internal" href="#c.PSA_INITIAL_ATTEST_API_VERSION_MAJOR" title="PSA_INITIAL_ATTEST_API_VERSION_MAJOR">PSA_INITIAL_ATTEST_API_VERSION_MAJOR</a> 2</pre>
+</section>
+<section id="c.PSA_INITIAL_ATTEST_API_VERSION_MINOR">
+<h3><span class="section-number">4.3.2 </span><code class="docutils literal notranslate"><span class="pre">PSA_INITIAL_ATTEST_API_VERSION_MINOR</span></code> (macro)<a class="headerlink" href="#c.PSA_INITIAL_ATTEST_API_VERSION_MINOR" title="Link to this heading">¶</a></h3>
+<p>The minor version of this implementation of the Attestation API.</p>
+<pre class="literal-block">#define <a class="reference internal" href="#c.PSA_INITIAL_ATTEST_API_VERSION_MINOR" title="PSA_INITIAL_ATTEST_API_VERSION_MINOR">PSA_INITIAL_ATTEST_API_VERSION_MINOR</a> 0</pre>
+</section>
+<section id="c.PSA_INITIAL_ATTEST_MAX_TOKEN_SIZE">
+<h3><span class="section-number">4.3.3 </span><code class="docutils literal notranslate"><span class="pre">PSA_INITIAL_ATTEST_MAX_TOKEN_SIZE</span></code> (macro)<a class="headerlink" href="#c.PSA_INITIAL_ATTEST_MAX_TOKEN_SIZE" title="Link to this heading">¶</a></h3>
+<p>The maximum possible size of a token.</p>
+<pre class="literal-block">#define <a class="reference internal" href="#c.PSA_INITIAL_ATTEST_MAX_TOKEN_SIZE" title="PSA_INITIAL_ATTEST_MAX_TOKEN_SIZE">PSA_INITIAL_ATTEST_MAX_TOKEN_SIZE</a> <em>/* implementation-specific value */</em></pre>
+<p>The value of this constant is <span class="sc">implementation defined</span>.</p>
+</section>
+</section>
+<section id="challenge-sizes">
+<span id="id1"></span><h2><span class="section-number">4.4 </span>Challenge sizes<a class="headerlink" href="#challenge-sizes" title="Link to this heading">¶</a></h2>
+<p>The following constants define the valid challenge sizes that must be supported by the function
+<a class="reference internal" href="#c.psa_initial_attest_get_token" title="psa_initial_attest_get_token"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_initial_attest_get_token()</span></code></a> and <a class="reference internal" href="#c.psa_initial_attest_get_token_size" title="psa_initial_attest_get_token_size"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_initial_attest_get_token_size()</span></code></a>.</p>
+<p>An implementation must not support other challenge sizes.</p>
+<section id="c.PSA_INITIAL_ATTEST_CHALLENGE_SIZE_32">
+<h3><span class="section-number">4.4.1 </span><code class="docutils literal notranslate"><span class="pre">PSA_INITIAL_ATTEST_CHALLENGE_SIZE_32</span></code> (macro)<a class="headerlink" href="#c.PSA_INITIAL_ATTEST_CHALLENGE_SIZE_32" title="Link to this heading">¶</a></h3>
+<p>A challenge size of 32 bytes (256 bits).</p>
+<pre class="literal-block">#define <a class="reference internal" href="#c.PSA_INITIAL_ATTEST_CHALLENGE_SIZE_32" title="PSA_INITIAL_ATTEST_CHALLENGE_SIZE_32">PSA_INITIAL_ATTEST_CHALLENGE_SIZE_32</a> (32u)</pre>
+</section>
+<section id="c.PSA_INITIAL_ATTEST_CHALLENGE_SIZE_48">
+<h3><span class="section-number">4.4.2 </span><code class="docutils literal notranslate"><span class="pre">PSA_INITIAL_ATTEST_CHALLENGE_SIZE_48</span></code> (macro)<a class="headerlink" href="#c.PSA_INITIAL_ATTEST_CHALLENGE_SIZE_48" title="Link to this heading">¶</a></h3>
+<p>A challenge size of 48 bytes (384 bits).</p>
+<pre class="literal-block">#define <a class="reference internal" href="#c.PSA_INITIAL_ATTEST_CHALLENGE_SIZE_48" title="PSA_INITIAL_ATTEST_CHALLENGE_SIZE_48">PSA_INITIAL_ATTEST_CHALLENGE_SIZE_48</a> (48u)</pre>
+</section>
+<section id="c.PSA_INITIAL_ATTEST_CHALLENGE_SIZE_64">
+<h3><span class="section-number">4.4.3 </span><code class="docutils literal notranslate"><span class="pre">PSA_INITIAL_ATTEST_CHALLENGE_SIZE_64</span></code> (macro)<a class="headerlink" href="#c.PSA_INITIAL_ATTEST_CHALLENGE_SIZE_64" title="Link to this heading">¶</a></h3>
+<p>A challenge size of 64 bytes (512 bits).</p>
+<pre class="literal-block">#define <a class="reference internal" href="#c.PSA_INITIAL_ATTEST_CHALLENGE_SIZE_64" title="PSA_INITIAL_ATTEST_CHALLENGE_SIZE_64">PSA_INITIAL_ATTEST_CHALLENGE_SIZE_64</a> (64u)</pre>
+</section>
+</section>
+<section id="attestation">
+<h2><span class="section-number">4.5 </span>Attestation<a class="headerlink" href="#attestation" title="Link to this heading">¶</a></h2>
+<section id="c.psa_initial_attest_get_token">
+<h3><span class="section-number">4.5.1 </span><code class="docutils literal notranslate"><span class="pre">psa_initial_attest_get_token</span></code> (function)<a class="headerlink" href="#c.psa_initial_attest_get_token" title="Link to this heading">¶</a></h3>
+<p>Retrieve the Initial Attestation Token.</p>
+<pre class="literal-block">psa_status_t <a class="reference internal" href="#c.psa_initial_attest_get_token" title="psa_initial_attest_get_token">psa_initial_attest_get_token</a>(const uint8_t *auth_challenge,
+                                          size_t challenge_size,
+                                          uint8_t *token_buf,
+                                          size_t token_buf_size,
+                                          size_t *token_size);</pre>
+<p class="rubric">Parameters</p>
+<div class="apisubitem docutils container">
+<dl>
+<dt><p><code class="docutils literal notranslate"><span class="pre">auth_challenge</span></code></p>
+</dt><dd><p>Buffer with a challenge object. The challenge object is data provided by the caller. For example, it may be a cryptographic nonce or a hash of data (such as an external object record).</p>
+<p>If a hash of data is provided then it is the caller’s responsibility to ensure that the data is protected against replay attacks (for example, by including a cryptographic nonce within the data).</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">challenge_size</span></code></p>
+</dt><dd><p>Size of the buffer <code class="docutils literal notranslate"><span class="pre">auth_challenge</span></code> in bytes. The size must always be a supported challenge size. Supported challenge sizes are defined in <a class="reference internal" href="#challenge-sizes"><span class="secref">Challenge sizes</span></a>.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">token_buf</span></code></p>
+</dt><dd><p>Output buffer where the attestation token is to be written.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">token_buf_size</span></code></p>
+</dt><dd><p>Size of <code class="docutils literal notranslate"><span class="pre">token_buf</span></code>. The expected size can be determined by using the <a class="reference internal" href="#c.psa_initial_attest_get_token_size" title="psa_initial_attest_get_token_size"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_initial_attest_get_token_size</span></code></a> function.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">token_size</span></code></p>
+</dt><dd><p>Output variable for the actual token size.</p>
+</dd>
+</dl>
+</div>
+<p class="rubric">Outputs</p>
+<div class="apisubitem docutils container">
+<dl class="simple">
+<dt><p><code class="docutils literal notranslate"><span class="pre">*token_buf</span></code></p>
+</dt><dd><p>On success, the attestation token.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">*token_size</span></code></p>
+</dt><dd><p>On success, the number of bytes written into <code class="docutils literal notranslate"><span class="pre">token_buf</span></code>.</p>
+</dd>
+</dl>
+</div>
+<p class="rubric">Returns: <code class="docutils literal notranslate"><span class="pre">psa_status_t</span></code></p>
+<div class="apisubitem docutils container">
+<dl class="simple">
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_SUCCESS</span></code></p>
+</dt><dd><p>Action was performed successfully.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_SERVICE_FAILURE</span></code></p>
+</dt><dd><p>The implementation failed to fully initialize.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_BUFFER_TOO_SMALL</span></code></p>
+</dt><dd><p><code class="docutils literal notranslate"><span class="pre">token_buf</span></code> is too small for the attestation token.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_INVALID_ARGUMENT</span></code></p>
+</dt><dd><p>The challenge size is not supported.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_GENERIC_ERROR</span></code></p>
+</dt><dd><p>An unspecified internal error has occurred.</p>
+</dd>
+</dl>
+</div>
+<p class="rubric">Description</p>
+<p>Retrieves the Initial Attestation Token. A challenge can be passed as an input to mitigate replay attacks.</p>
+</section>
+<section id="c.psa_initial_attest_get_token_size">
+<h3><span class="section-number">4.5.2 </span><code class="docutils literal notranslate"><span class="pre">psa_initial_attest_get_token_size</span></code> (function)<a class="headerlink" href="#c.psa_initial_attest_get_token_size" title="Link to this heading">¶</a></h3>
+<p>Calculate the size of an Initial Attestation Token.</p>
+<pre class="literal-block">psa_status_t <a class="reference internal" href="#c.psa_initial_attest_get_token_size" title="psa_initial_attest_get_token_size">psa_initial_attest_get_token_size</a>(size_t challenge_size,
+                                               size_t *token_size);</pre>
+<p class="rubric">Parameters</p>
+<div class="apisubitem docutils container">
+<dl class="simple">
+<dt><p><code class="docutils literal notranslate"><span class="pre">challenge_size</span></code></p>
+</dt><dd><p>Size of a challenge object in bytes. This must be a supported challenge size as specified in <a class="reference internal" href="#challenge-sizes"><span class="secref">Challenge sizes</span></a>.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">token_size</span></code></p>
+</dt><dd><p>Output variable for the token size.</p>
+</dd>
+</dl>
+</div>
+<p class="rubric">Outputs</p>
+<div class="apisubitem docutils container">
+<dl class="simple">
+<dt><p><code class="docutils literal notranslate"><span class="pre">*token_size</span></code></p>
+</dt><dd><p>On success, the size of an attestation token in bytes when using the specified <code class="docutils literal notranslate"><span class="pre">challenge_size</span></code></p>
+</dd>
+</dl>
+</div>
+<p class="rubric">Returns: <code class="docutils literal notranslate"><span class="pre">psa_status_t</span></code></p>
+<div class="apisubitem docutils container">
+<dl class="simple">
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_SUCCESS</span></code></p>
+</dt><dd><p>Action was performed successfully.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_SERVICE_FAILURE</span></code></p>
+</dt><dd><p>The implementation failed to fully initialize.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_INVALID_ARGUMENT</span></code></p>
+</dt><dd><p>The challenge size is not supported.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_GENERIC_ERROR</span></code></p>
+</dt><dd><p>An unspecified internal error has occurred.</p>
+</dd>
+</dl>
+</div>
+<p class="rubric">Description</p>
+<p>Retrieve the exact size of the Initial Attestation Token in bytes, given a specific challenge size.</p>
+</section>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &#169; 2018-2020, 2022-2026 Arm Limited and/or its affiliates.
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>
