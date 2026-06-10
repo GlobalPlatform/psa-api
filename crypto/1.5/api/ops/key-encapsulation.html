@@ -1,0 +1,638 @@
+---
+---
+
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta property="og:title" content="10.12 Key encapsulation" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="{{ page.url | absolute_url }}" />
+<link rel="canonical" href="{{ page.url | absolute_url }}" />
+<meta property="og:site_name" content="PSA Certified Crypto API 1.5" />
+<meta property="og:description" content="A key-encapsulation algorithm can be used by two participants to establish a shared secret key over a public channel. The shared secret key can then be used with symmetric-key cryptographic algorit..." />
+<meta name="description" content="A key-encapsulation algorithm can be used by two participants to establish a shared secret key over a public channel. The shared secret key can then be used with symmetric-key cryptographic algorit..." />
+
+    <title>10.12 Key encapsulation &#8212; PSA Certified Crypto API 1.5</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/basic.css?v=686e5160" />
+    <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css?v=f6a572b4" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
+    <link rel="preconnect" type="text/css" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" type="text/css" href="https://fonts.gstatic.com" />
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;1,300;1,400&display=swap" />
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Mono:ital,wght@0,300;0,400;1,300&display=swap" />
+    <script src="../../_static/documentation_options.js?v=f8f0f945"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script>window.MathJax = {"chtml": {"mtextInheritFont": false, "mtextFont": "Lato-Light"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="10.13 Password-authenticated key exchange (PAKE)" href="pake.html" />
+    <link rel="prev" title="10.11 Key agreement" href="key-agreement.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../index.html">
+              <img class="logo" src="../../_static/ARM_LOGO-2025_INK_RGB.svg" alt="Logo of PSA Certified Crypto API"/>
+            </a></p><hr />
+<h3><a href="../../index.html">PSA Certified<br />Crypto API</a></h3>
+IHI 0086<br/>
+Non-confidential<br/>
+Version 1.5.0
+<hr />
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../about/about.html">About this document</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../overview/intro.html">1 Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview/goals.html">2 Design goals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview/functionality.html">3 Functionality overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview/sample-arch.html">4 Sample architectures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview/conventions.html">5 Library conventions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview/implementation.html">6 Implementation considerations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview/usage.html">7 Usage considerations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../library/index.html">8 Library management reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../keys/index.html">9 Key management reference</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">10 Cryptographic operation reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="algorithms.html">10.1 Algorithms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hash.html">10.2 Message digests (Hashes)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="xof.html">10.3 Extendable-output functions (XOF)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mac.html">10.4 Message authentication codes (MAC)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cipher.html">10.5 Unauthenticated ciphers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="aead.html">10.6 Authenticated encryption with associated data (AEAD)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="key-wrapping.html">10.7 Key wrapping</a></li>
+<li class="toctree-l2"><a class="reference internal" href="key-derivation.html">10.8 Key derivation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="signature.html">10.9 Asymmetric signature</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pk-encryption.html">10.10 Asymmetric encryption</a></li>
+<li class="toctree-l2"><a class="reference internal" href="key-agreement.html">10.11 Key agreement</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">10.12 Key encapsulation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#elliptic-curve-integrated-encryption-scheme">10.12.1 Elliptic Curve Integrated Encryption Scheme</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-lattice-based-key-encapsulation-algorithm">10.12.2 Module Lattice-based key-encapsulation algorithm</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#key-encapsulation-functions">10.12.3 Key-encapsulation functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#support-macros">10.12.4 Support macros</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pake.html">10.13 Password-authenticated key exchange (PAKE)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rng.html">10.14 Other cryptographic services</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../appendix/example_header.html">A Example header file</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../appendix/encodings.html">B Algorithm and key type encoding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../appendix/specdef_values.html">C Example macro implementations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../appendix/sra.html">D Security Risk Assessment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../appendix/history.html">E Changes to the API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../atg_c-identifiers.html">Index of API elements</a></li>
+</ul>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="key-encapsulation">
+<span id="id1"></span><h1><span class="section-number">10.12 </span>Key encapsulation<a class="headerlink" href="#key-encapsulation" title="Link to this heading">¶</a></h1>
+<p>A key-encapsulation algorithm can be used by two participants to establish a shared secret key over a public channel.
+The shared secret key can then be used with symmetric-key cryptographic algorithms.
+Key-encapsulation algorithms are often referred to as ‘key-encapsulation mechanisms’ or KEMs.</p>
+<p>In a key-encapsulation algorithm, participants A and B establish a shared secret as follows:</p>
+<ol class="arabic simple">
+<li><p>Participant A generates a key pair: a private decapsulation key, and a public encapsulation key.</p></li>
+<li><p>The public encapsulation key is made available to participant B.</p></li>
+<li><p>Participant B uses the encapsulation key to generate one copy of a shared secret, and some ciphertext.</p></li>
+<li><p>The ciphertext is transferred to participant A.</p></li>
+<li><p>Participant A uses the private decapsulation key to compute another copy of the shared secret.</p></li>
+</ol>
+<p>Typically, the shared secret is used as input to a key-derivation function, to create keys for secure communication between participants A and B.
+However, some key-encapsulation algorithms result in a uniformly pseudorandom shared secret, which is suitable to be used directly as a cryptographic key.</p>
+<p>Applications can use the resulting keys for different use cases.
+For example:</p>
+<ul class="simple">
+<li><p>Encrypting and authenticating a single non-interactive message from participant B to participant A.</p></li>
+<li><p>Securing an interactive communication channel between participants A and B.</p></li>
+</ul>
+<section id="elliptic-curve-integrated-encryption-scheme">
+<span id="key-encapsulation-algorithms"></span><h2><span class="section-number">10.12.1 </span>Elliptic Curve Integrated Encryption Scheme<a class="headerlink" href="#elliptic-curve-integrated-encryption-scheme" title="Link to this heading">¶</a></h2>
+<p>The Elliptic Curve Integrated Encryption Scheme (ECIES) was first proposed by Shoup, then improved by Ballare and Rogaway.</p>
+<p>The original specification permitted a number of variants.
+The Crypto API uses the version specified in <span><em>SEC 1: Elliptic Curve Cryptography</em> <a class="reference internal" href="../../about/about.html#cite-sec1"><span class="cite">[SEC1]</span></a></span>.</p>
+<p>The full ECIES scheme uses an elliptic-curve key agreement between the recipient’s static public key and an ephemeral private key, to establish encryption and authentication keys for secure transmission of arbitrary-length messages to the recipient.</p>
+<p>An application using ECIES must select all of the following parameters:</p>
+<ul class="simple">
+<li><p>The elliptic curve for the initial key agreement.</p></li>
+<li><p>The KDF to derive the symmetric keys, and any label used in that derivation.</p></li>
+<li><p>The encryption and MAC algorithms.</p></li>
+<li><p>The additional data to include when computing the authentication.</p></li>
+</ul>
+<p>The Crypto API presents the key-agreement step of ECIES as a key-encapsulation algorithm.
+The key derivation, encryption, and authentication steps are left to the application.</p>
+<div class="admonition-implementation-note admonition">
+<p class="admonition-title">Implementation note</p>
+<p>It is possible that some applications may need to use alternative versions of ECIES to interoperate with legacy systems.</p>
+<p>While the application can implement this using key agreement functions, an implementation can choose to add these as a convenience with an <a class="reference internal" href="../../about/about.html#term-implementation-defined"><span class="scterm">implementation defined</span></a> key-encapsulation algorithm identifier.</p>
+</div>
+<section id="c.PSA_ALG_ECIES_SEC1">
+<h3><code class="docutils literal notranslate"><span class="pre">PSA_ALG_ECIES_SEC1</span></code> (macro)<a class="headerlink" href="#c.PSA_ALG_ECIES_SEC1" title="Link to this heading">¶</a></h3>
+<p>The Elliptic Curve Integrated Encryption Scheme (ECIES).</p>
+<div class="versionadded">
+<p><span class="versionmodified added">Added in version 1.3.</span></p>
+</div>
+<pre class="literal-block">#define <a class="reference internal" href="#c.PSA_ALG_ECIES_SEC1" title="PSA_ALG_ECIES_SEC1">PSA_ALG_ECIES_SEC1</a> ((<a class="reference internal" href="algorithms.html#c.psa_algorithm_t" title="psa_algorithm_t">psa_algorithm_t</a>)0x0c000100)</pre>
+<p>This key-encapsulation algorithm is defined by <span><em>SEC 1: Elliptic Curve Cryptography</em> <a class="reference internal" href="../../about/about.html#cite-sec1"><span class="cite">[SEC1]</span></a></span> §5.1 under the name Elliptic Curve Integrated Encryption Scheme.</p>
+<p>A call to <a class="reference internal" href="#c.psa_encapsulate" title="psa_encapsulate"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_encapsulate()</span></code></a> carries out steps 1 to 4 of the ECIES encryption process described in <a class="reference internal" href="../../about/about.html#cite-sec1"><span class="cite atg_c atg_c-cite">[SEC1]</span></a> §5.1.3:</p>
+<ul class="simple">
+<li><p>The elliptic curve to use is determined by the key.</p></li>
+<li><p>The public-key part of the input key is used as <span class="math notranslate nohighlight">\(Q_V\)</span>.</p></li>
+<li><p>Cofactor ECDH is used to perform the key agreement.</p></li>
+<li><p>The octet string <span class="math notranslate nohighlight">\(Z\)</span> is output as the shared secret key.</p></li>
+<li><p>The ephemeral public key <span class="math notranslate nohighlight">\(\overline{R}\)</span> is output as the ciphertext.</p></li>
+</ul>
+<p>A call to <a class="reference internal" href="#c.psa_decapsulate" title="psa_decapsulate"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_decapsulate()</span></code></a> carries out steps 2 to 5 of the ECIES decryption process described in <a class="reference internal" href="../../about/about.html#cite-sec1"><span class="cite atg_c atg_c-cite">[SEC1]</span></a> §5.1.4:</p>
+<ul class="simple">
+<li><p>The elliptic curve to use is determined by the key.</p></li>
+<li><p>The ciphertext is decoded as <span class="math notranslate nohighlight">\(\overline{R}\)</span>.</p></li>
+<li><p>The private key of the input key is used as <span class="math notranslate nohighlight">\(d_V\)</span>.</p></li>
+<li><p>Cofactor ECDH is used to perform the key agreement.</p></li>
+<li><p>The octet string <span class="math notranslate nohighlight">\(Z\)</span> is output as the shared secret key.</p></li>
+</ul>
+<p>The ciphertext produced by <a class="reference internal" href="#c.PSA_ALG_ECIES_SEC1" title="PSA_ALG_ECIES_SEC1"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_ALG_ECIES_SEC1</span></code></a> is not authenticated.
+In the full ECIES scheme, the authentication of the encrypted message using a key derived from the shared secret provides assurance that the message has not been manipulated.</p>
+<p>The shared secret key that is produced by <a class="reference internal" href="#c.PSA_ALG_ECIES_SEC1" title="PSA_ALG_ECIES_SEC1"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_ALG_ECIES_SEC1</span></code></a> is not suitable for use as an encryption key.
+It must be used as an input to a key derivation operation to produce additional cryptographic keys.</p>
+<p class="rubric">Compatible key types</p>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="../keys/types.html#c.PSA_KEY_TYPE_ECC_KEY_PAIR" title="PSA_KEY_TYPE_ECC_KEY_PAIR"><code class="docutils literal notranslate"><span class="pre">PSA_KEY_TYPE_ECC_KEY_PAIR</span></code></a><code class="docutils literal notranslate"><span class="pre">(</span></code><code class="docutils literal notranslate"><span class="pre">family</span></code><code class="docutils literal notranslate"><span class="pre">)</span></code></div>
+<div class="line"><a class="reference internal" href="../keys/types.html#c.PSA_KEY_TYPE_ECC_PUBLIC_KEY" title="PSA_KEY_TYPE_ECC_PUBLIC_KEY"><code class="docutils literal notranslate"><span class="pre">PSA_KEY_TYPE_ECC_PUBLIC_KEY</span></code></a><code class="docutils literal notranslate"><span class="pre">(</span></code><code class="docutils literal notranslate"><span class="pre">family</span></code><code class="docutils literal notranslate"><span class="pre">)</span></code> (encapsulation only)</div>
+</div>
+<p>where <code class="docutils literal notranslate"><span class="pre">family</span></code> is a Weierstrass or Montgomery Elliptic curve family.
+That is, one of the following values:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">PSA_ECC_FAMILY_SECT_XX</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">PSA_ECC_FAMILY_SECP_XX</span></code></p></li>
+<li><p><a class="reference internal" href="../keys/types.html#c.PSA_ECC_FAMILY_FRP" title="PSA_ECC_FAMILY_FRP"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_ECC_FAMILY_FRP</span></code></a></p></li>
+<li><p><a class="reference internal" href="../keys/types.html#c.PSA_ECC_FAMILY_BRAINPOOL_P_R1" title="PSA_ECC_FAMILY_BRAINPOOL_P_R1"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_ECC_FAMILY_BRAINPOOL_P_R1</span></code></a></p></li>
+<li><p><a class="reference internal" href="../keys/types.html#c.PSA_ECC_FAMILY_MONTGOMERY" title="PSA_ECC_FAMILY_MONTGOMERY"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_ECC_FAMILY_MONTGOMERY</span></code></a></p></li>
+</ul>
+</section>
+</section>
+<section id="module-lattice-based-key-encapsulation-algorithm">
+<span id="ml-kem-algorithms"></span><h2><span class="section-number">10.12.2 </span>Module Lattice-based key-encapsulation algorithm<a class="headerlink" href="#module-lattice-based-key-encapsulation-algorithm" title="Link to this heading">¶</a></h2>
+<p>ML-KEM is defined in <span><em>FIPS Publication 203: Module-Lattice-Based Key-Encapsulation Mechanism Standard</em> <a class="reference internal" href="../../about/about.html#cite-fips203"><span class="cite">[FIPS203]</span></a></span>.
+ML-KEM has three parameter sets which provide differing security strengths.</p>
+<p>The generation of an ML-KEM key depends on the full parameter specification.
+The encoding of each parameter set into the key attributes is described in <a class="reference internal" href="../keys/types.html#ml-kem-keys"><span class="secref">Module Lattice-based key-encapsulation keys</span></a>.</p>
+<p>See <a class="reference internal" href="../../about/about.html#cite-fips203"><span class="cite atg_c atg_c-cite">[FIPS203]</span></a> §8 for details on the parameter sets.</p>
+<section id="c.PSA_ALG_ML_KEM">
+<h3><code class="docutils literal notranslate"><span class="pre">PSA_ALG_ML_KEM</span></code> (macro)<a class="headerlink" href="#c.PSA_ALG_ML_KEM" title="Link to this heading">¶</a></h3>
+<p>Module Lattice-based key-encapsulation mechanism (ML-KEM).</p>
+<div class="versionadded">
+<p><span class="versionmodified added">Added in version 1.3.</span></p>
+</div>
+<pre class="literal-block">#define <a class="reference internal" href="#c.PSA_ALG_ML_KEM" title="PSA_ALG_ML_KEM">PSA_ALG_ML_KEM</a> ((<a class="reference internal" href="algorithms.html#c.psa_algorithm_t" title="psa_algorithm_t">psa_algorithm_t</a>)0x0c000200)</pre>
+<p>This is the ML-KEM key-encapsulation algorithm, defined by <a class="reference internal" href="../../about/about.html#cite-fips203"><span class="cite atg_c atg_c-cite">[FIPS203]</span></a>.
+ML-KEM requires an ML-KEM key, which determines the ML-KEM parameter set for the operation.</p>
+<p>When using ML-KEM, the size of the encapsulation data returned by a call to <a class="reference internal" href="#c.psa_encapsulate" title="psa_encapsulate"><code class="docutils literal notranslate"><span class="pre">psa_encapsulate</span></code></a><code class="docutils literal notranslate"><span class="pre">()</span></code> is as follows:</p>
+<table class="docutils align-left">
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter set</p></th>
+<th class="head"><p>Encapsulation data size in bytes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>ML-KEM-512</p></td>
+<td><p>768</p></td>
+</tr>
+<tr class="row-odd"><td><p>ML-KEM-768</p></td>
+<td><p>1088</p></td>
+</tr>
+<tr class="row-even"><td><p>ML-KEM-1024</p></td>
+<td><p>1568</p></td>
+</tr>
+</tbody>
+</table>
+<p>The 32-byte shared output key that is produced by ML-KEM is pseudorandom.
+Although it can be used directly as an encryption key, it is recommended to use the output key as an input to a key-derivation operation to produce additional cryptographic keys.</p>
+<p class="rubric">Compatible key types</p>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="../keys/types.html#c.PSA_KEY_TYPE_ML_KEM_KEY_PAIR" title="PSA_KEY_TYPE_ML_KEM_KEY_PAIR"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_KEY_TYPE_ML_KEM_KEY_PAIR</span></code></a></div>
+<div class="line"><a class="reference internal" href="../keys/types.html#c.PSA_KEY_TYPE_ML_KEM_PUBLIC_KEY" title="PSA_KEY_TYPE_ML_KEM_PUBLIC_KEY"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_KEY_TYPE_ML_KEM_PUBLIC_KEY</span></code></a> (encapsulation only)</div>
+</div>
+</section>
+</section>
+<section id="key-encapsulation-functions">
+<h2><span class="section-number">10.12.3 </span>Key-encapsulation functions<a class="headerlink" href="#key-encapsulation-functions" title="Link to this heading">¶</a></h2>
+<section id="c.psa_encapsulate">
+<h3><code class="docutils literal notranslate"><span class="pre">psa_encapsulate</span></code> (function)<a class="headerlink" href="#c.psa_encapsulate" title="Link to this heading">¶</a></h3>
+<p>Use a public key to generate a new shared secret key and associated ciphertext.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">Added in version 1.3.</span></p>
+</div>
+<pre class="literal-block">psa_status_t <a class="reference internal" href="#c.psa_encapsulate" title="psa_encapsulate">psa_encapsulate</a>(<a class="reference internal" href="../keys/ids.html#c.psa_key_id_t" title="psa_key_id_t">psa_key_id_t</a> key,
+                             <a class="reference internal" href="algorithms.html#c.psa_algorithm_t" title="psa_algorithm_t">psa_algorithm_t</a> alg,
+                             const <a class="reference internal" href="../keys/attributes.html#c.psa_key_attributes_t" title="psa_key_attributes_t">psa_key_attributes_t</a> * attributes,
+                             <a class="reference internal" href="../keys/ids.html#c.psa_key_id_t" title="psa_key_id_t">psa_key_id_t</a> * output_key,
+                             uint8_t * ciphertext,
+                             size_t ciphertext_size,
+                             size_t * ciphertext_length);</pre>
+<p class="rubric">Parameters</p>
+<div class="apisubitem docutils container">
+<dl>
+<dt><p><code class="docutils literal notranslate"><span class="pre">key</span></code></p>
+</dt><dd><p>Identifier of the key to use for the encapsulation.
+It must be a public key or an asymmetric key pair.
+It must permit the usage <a class="reference internal" href="../keys/policy.html#c.PSA_KEY_USAGE_ENCRYPT" title="PSA_KEY_USAGE_ENCRYPT"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_KEY_USAGE_ENCRYPT</span></code></a>.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">alg</span></code></p>
+</dt><dd><p>The key-encapsulation algorithm to use: a value of type <a class="reference internal" href="algorithms.html#c.psa_algorithm_t" title="psa_algorithm_t"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_algorithm_t</span></code></a> such that <a class="reference internal" href="algorithms.html#c.PSA_ALG_IS_KEY_ENCAPSULATION" title="PSA_ALG_IS_KEY_ENCAPSULATION"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_IS_KEY_ENCAPSULATION</span></code></a><code class="docutils literal notranslate"><span class="pre">(</span></code><code class="docutils literal notranslate"><span class="pre">alg</span></code><code class="docutils literal notranslate"><span class="pre">)</span></code> is true.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">attributes</span></code></p>
+</dt><dd><p>The attributes for the output key.
+This function uses the attributes as follows:</p>
+<ul class="simple">
+<li><p>The key type.
+All key-encapsulation algorithms can output a key of type <a class="reference internal" href="../keys/types.html#c.PSA_KEY_TYPE_DERIVE" title="PSA_KEY_TYPE_DERIVE"><code class="docutils literal notranslate"><span class="pre">PSA_KEY_TYPE_DERIVE</span></code></a> or <a class="reference internal" href="../keys/types.html#c.PSA_KEY_TYPE_HMAC" title="PSA_KEY_TYPE_HMAC"><code class="docutils literal notranslate"><span class="pre">PSA_KEY_TYPE_HMAC</span></code></a>.
+Key-encapsulation algorithms that produce a uniformly pseudorandom shared secret, can also output block-cipher key types, for example <a class="reference internal" href="../keys/types.html#c.PSA_KEY_TYPE_AES" title="PSA_KEY_TYPE_AES"><code class="docutils literal notranslate"><span class="pre">PSA_KEY_TYPE_AES</span></code></a>.
+Refer to the documentation of individual key-encapsulation algorithms for more information.</p></li>
+</ul>
+<p>The following attributes must be set for keys used in cryptographic operations:</p>
+<ul class="simple">
+<li><p>The key permitted-algorithm policy, see <a class="reference internal" href="../keys/policy.html#permitted-algorithms"><span class="secref">Permitted algorithms</span></a>.</p></li>
+<li><p>The key usage flags, see <a class="reference internal" href="../keys/policy.html#key-usage-flags"><span class="secref">Key usage flags</span></a>.</p></li>
+</ul>
+<p>The following attributes must be set for keys that do not use the default <a class="reference internal" href="../keys/lifetimes.html#c.PSA_KEY_LIFETIME_VOLATILE" title="PSA_KEY_LIFETIME_VOLATILE"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_KEY_LIFETIME_VOLATILE</span></code></a> lifetime:</p>
+<ul class="simple">
+<li><p>The key lifetime, see <a class="reference internal" href="../keys/lifetimes.html#key-lifetimes"><span class="secref">Key lifetimes</span></a>.</p></li>
+<li><p>The key identifier is required for a key with a persistent lifetime, see <a class="reference internal" href="../keys/ids.html#key-identifiers"><span class="secref">Key identifiers</span></a>.</p></li>
+</ul>
+<p>The following attributes are optional:</p>
+<ul class="simple">
+<li><p>If the key size is nonzero, it must be equal to the size, in bits, of the shared secret.</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This is an input parameter: it is not updated with the final key attributes.
+The final attributes of the new key can be queried by calling <a class="reference internal" href="../keys/attributes.html#c.psa_get_key_attributes" title="psa_get_key_attributes"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_get_key_attributes()</span></code></a> with the key’s identifier.</p>
+</div>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">output_key</span></code></p>
+</dt><dd><p>On success, an identifier for the newly created shared secret key.
+<a class="reference internal" href="../keys/ids.html#c.PSA_KEY_ID_NULL" title="PSA_KEY_ID_NULL"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_KEY_ID_NULL</span></code></a> on failure.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">ciphertext</span></code></p>
+</dt><dd><p>Buffer where the ciphertext output is to be written.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">ciphertext_size</span></code></p>
+</dt><dd><p>Size of the <code class="docutils literal notranslate"><span class="pre">ciphertext</span></code> buffer in bytes.
+This must be appropriate for the selected algorithm and key:</p>
+<ul class="simple">
+<li><p>A sufficient ciphertext size is <a class="reference internal" href="#c.PSA_ENCAPSULATE_CIPHERTEXT_SIZE" title="PSA_ENCAPSULATE_CIPHERTEXT_SIZE"><code class="docutils literal notranslate"><span class="pre">PSA_ENCAPSULATE_CIPHERTEXT_SIZE</span></code></a><code class="docutils literal notranslate"><span class="pre">(</span></code><code class="docutils literal notranslate"><span class="pre">type</span></code><code class="docutils literal notranslate"><span class="pre">,</span> </code><code class="docutils literal notranslate"><span class="pre">bits</span></code><code class="docutils literal notranslate"><span class="pre">,</span> </code><code class="docutils literal notranslate"><span class="pre">alg</span></code><code class="docutils literal notranslate"><span class="pre">)</span></code>, where <code class="docutils literal notranslate"><span class="pre">type</span></code> and <code class="docutils literal notranslate"><span class="pre">bits</span></code> are the type and bit-size of <code class="docutils literal notranslate"><span class="pre">key</span></code>.</p></li>
+<li><p><a class="reference internal" href="#c.PSA_ENCAPSULATE_CIPHERTEXT_MAX_SIZE" title="PSA_ENCAPSULATE_CIPHERTEXT_MAX_SIZE"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_ENCAPSULATE_CIPHERTEXT_MAX_SIZE</span></code></a> evaluates to the maximum ciphertext size of any supported key-encapsulation algorithm.</p></li>
+</ul>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">ciphertext_length</span></code></p>
+</dt><dd><p>On success, the number of bytes that make up the ciphertext value.</p>
+</dd>
+</dl>
+</div>
+<p class="rubric">Returns: <code class="docutils literal notranslate"><span class="pre">psa_status_t</span></code></p>
+<div class="apisubitem docutils container">
+<dl class="simple">
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_SUCCESS</span></code></p>
+</dt><dd><p>Success.
+The bytes of <code class="docutils literal notranslate"><span class="pre">ciphertext</span></code> contain the data to be sent to the other participant, and <code class="docutils literal notranslate"><span class="pre">output_key</span></code> contains the identifier for the shared secret key.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_BAD_STATE</span></code></p>
+</dt><dd><p>The library requires initializing by a call to <a class="reference internal" href="../library/library.html#c.psa_crypto_init" title="psa_crypto_init"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_crypto_init()</span></code></a>.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_INVALID_HANDLE</span></code></p>
+</dt><dd><p><code class="docutils literal notranslate"><span class="pre">key</span></code> is not a valid key identifier.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_NOT_PERMITTED</span></code></p>
+</dt><dd><p>The following conditions can result in this error:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">key</span></code> does not have the <a class="reference internal" href="../keys/policy.html#c.PSA_KEY_USAGE_ENCRYPT" title="PSA_KEY_USAGE_ENCRYPT"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_KEY_USAGE_ENCRYPT</span></code></a> flag, or it does not permit the requested algorithm.</p></li>
+<li><p>The implementation does not permit creating a key with the specified attributes due to some implementation-specific policy.</p></li>
+</ul>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_ALREADY_EXISTS</span></code></p>
+</dt><dd><p>This is an attempt to create a persistent key, and there is already a persistent key with the given identifier.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_BUFFER_TOO_SMALL</span></code></p>
+</dt><dd><p>The size of the <code class="docutils literal notranslate"><span class="pre">ciphertext</span></code> buffer is too small.
+<a class="reference internal" href="#c.PSA_ENCAPSULATE_CIPHERTEXT_SIZE" title="PSA_ENCAPSULATE_CIPHERTEXT_SIZE"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_ENCAPSULATE_CIPHERTEXT_SIZE()</span></code></a> or <a class="reference internal" href="#c.PSA_ENCAPSULATE_CIPHERTEXT_MAX_SIZE" title="PSA_ENCAPSULATE_CIPHERTEXT_MAX_SIZE"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_ENCAPSULATE_CIPHERTEXT_MAX_SIZE</span></code></a> can be used to determine a sufficient buffer size.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_INVALID_ARGUMENT</span></code></p>
+</dt><dd><p>The following conditions can result in this error:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">alg</span></code> is not a key-encapsulation algorithm.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">key</span></code> is not a public key or an asymmetric key pair, that is compatible with <code class="docutils literal notranslate"><span class="pre">alg</span></code>.</p></li>
+<li><p>The output key attributes in <code class="docutils literal notranslate"><span class="pre">attributes</span></code> are not valid:</p>
+<ul>
+<li><p>The key type is not valid for the shared secret.</p></li>
+<li><p>The key size is nonzero, and is not the size of the shared secret.</p></li>
+<li><p>The key lifetime is invalid.</p></li>
+<li><p>The key identifier is not valid for the key lifetime.</p></li>
+<li><p>The key usage flags include invalid values.</p></li>
+<li><p>The key’s permitted-usage algorithm is invalid.</p></li>
+<li><p>The key attributes, as a whole, are invalid.</p></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_NOT_SUPPORTED</span></code></p>
+</dt><dd><p>The following conditions can result in this error:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">alg</span></code> is not supported or is not a key-encapsulation algorithm.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">key</span></code> is not supported for use with <code class="docutils literal notranslate"><span class="pre">alg</span></code>.</p></li>
+<li><p>The output key attributes in <code class="docutils literal notranslate"><span class="pre">attributes</span></code>, as a whole, are not supported, either by the implementation in general or in the specified storage location.</p></li>
+</ul>
+</dd>
+<dt><p><a class="reference internal" href="../library/status.html#c.PSA_ERROR_INSUFFICIENT_ENTROPY" title="PSA_ERROR_INSUFFICIENT_ENTROPY"><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_INSUFFICIENT_ENTROPY</span></code></a></p>
+</dt><dd></dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_INSUFFICIENT_MEMORY</span></code></p>
+</dt><dd></dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_INSUFFICIENT_STORAGE</span></code></p>
+</dt><dd></dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_COMMUNICATION_FAILURE</span></code></p>
+</dt><dd></dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_CORRUPTION_DETECTED</span></code></p>
+</dt><dd></dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_STORAGE_FAILURE</span></code></p>
+</dt><dd></dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_DATA_CORRUPT</span></code></p>
+</dt><dd></dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_DATA_INVALID</span></code></p>
+</dt><dd></dd>
+</dl>
+</div>
+<p class="rubric">Description</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">output_key</span></code> location, policy, and type are taken from <code class="docutils literal notranslate"><span class="pre">attributes</span></code>.</p>
+<p>The size of the returned key is always the bit-size of the shared secret, rounded up to a whole number of bytes.
+The size of the shared secret is dependent on the key-encapsulation algorithm and the type and size of <code class="docutils literal notranslate"><span class="pre">key</span></code>.</p>
+<p>It is recommended that the shared secret key is used as an input to a key derivation operation to produce additional cryptographic keys.
+For some key-encapsulation algorithms, the shared secret key is also suitable for use as a key in cryptographic operations such as encryption.
+Refer to the documentation of individual key-encapsulation algorithms for more information.</p>
+<p>The output <code class="docutils literal notranslate"><span class="pre">ciphertext</span></code> is to be sent to the other participant, who uses the decapsulation key to extract another copy of the shared secret key.</p>
+</section>
+<section id="c.psa_decapsulate">
+<h3><code class="docutils literal notranslate"><span class="pre">psa_decapsulate</span></code> (function)<a class="headerlink" href="#c.psa_decapsulate" title="Link to this heading">¶</a></h3>
+<p>Use a private key to decapsulate a shared secret key from a ciphertext.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">Added in version 1.3.</span></p>
+</div>
+<pre class="literal-block">psa_status_t <a class="reference internal" href="#c.psa_decapsulate" title="psa_decapsulate">psa_decapsulate</a>(<a class="reference internal" href="../keys/ids.html#c.psa_key_id_t" title="psa_key_id_t">psa_key_id_t</a> key,
+                             <a class="reference internal" href="algorithms.html#c.psa_algorithm_t" title="psa_algorithm_t">psa_algorithm_t</a> alg,
+                             const uint8_t * ciphertext,
+                             size_t ciphertext_length,
+                             const <a class="reference internal" href="../keys/attributes.html#c.psa_key_attributes_t" title="psa_key_attributes_t">psa_key_attributes_t</a> * attributes,
+                             <a class="reference internal" href="../keys/ids.html#c.psa_key_id_t" title="psa_key_id_t">psa_key_id_t</a> * output_key);</pre>
+<p class="rubric">Parameters</p>
+<div class="apisubitem docutils container">
+<dl>
+<dt><p><code class="docutils literal notranslate"><span class="pre">key</span></code></p>
+</dt><dd><p>Identifier of the key to use for the decapsulation.
+It must be an asymmetric key pair.
+It must permit the usage <a class="reference internal" href="../keys/policy.html#c.PSA_KEY_USAGE_DECRYPT" title="PSA_KEY_USAGE_DECRYPT"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_KEY_USAGE_DECRYPT</span></code></a>.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">alg</span></code></p>
+</dt><dd><p>The key-encapsulation algorithm to use: a value of type <a class="reference internal" href="algorithms.html#c.psa_algorithm_t" title="psa_algorithm_t"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_algorithm_t</span></code></a> such that <a class="reference internal" href="algorithms.html#c.PSA_ALG_IS_KEY_ENCAPSULATION" title="PSA_ALG_IS_KEY_ENCAPSULATION"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_IS_KEY_ENCAPSULATION</span></code></a><code class="docutils literal notranslate"><span class="pre">(</span></code><code class="docutils literal notranslate"><span class="pre">alg</span></code><code class="docutils literal notranslate"><span class="pre">)</span></code> is true.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">ciphertext</span></code></p>
+</dt><dd><p>The ciphertext received from the other participant.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">ciphertext_length</span></code></p>
+</dt><dd><p>Size of the <code class="docutils literal notranslate"><span class="pre">ciphertext</span></code> buffer in bytes.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">attributes</span></code></p>
+</dt><dd><p>The attributes for the output key.
+This function uses the attributes as follows:</p>
+<ul class="simple">
+<li><p>The key type.
+All key-encapsulation algorithms can output a key of type <a class="reference internal" href="../keys/types.html#c.PSA_KEY_TYPE_DERIVE" title="PSA_KEY_TYPE_DERIVE"><code class="docutils literal notranslate"><span class="pre">PSA_KEY_TYPE_DERIVE</span></code></a> or <a class="reference internal" href="../keys/types.html#c.PSA_KEY_TYPE_HMAC" title="PSA_KEY_TYPE_HMAC"><code class="docutils literal notranslate"><span class="pre">PSA_KEY_TYPE_HMAC</span></code></a>.
+Key-encapsulation algorithms that produce a uniformly pseudorandom shared secret, can also output block-cipher key types, for example <a class="reference internal" href="../keys/types.html#c.PSA_KEY_TYPE_AES" title="PSA_KEY_TYPE_AES"><code class="docutils literal notranslate"><span class="pre">PSA_KEY_TYPE_AES</span></code></a>.
+Refer to the documentation of individual key-encapsulation algorithms for more information.</p></li>
+</ul>
+<p>The following attributes must be set for keys used in cryptographic operations:</p>
+<ul class="simple">
+<li><p>The key permitted-algorithm policy, see <a class="reference internal" href="../keys/policy.html#permitted-algorithms"><span class="secref">Permitted algorithms</span></a>.</p></li>
+<li><p>The key usage flags, see <a class="reference internal" href="../keys/policy.html#key-usage-flags"><span class="secref">Key usage flags</span></a>.</p></li>
+</ul>
+<p>The following attributes must be set for keys that do not use the default <a class="reference internal" href="../keys/lifetimes.html#c.PSA_KEY_LIFETIME_VOLATILE" title="PSA_KEY_LIFETIME_VOLATILE"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_KEY_LIFETIME_VOLATILE</span></code></a> lifetime:</p>
+<ul class="simple">
+<li><p>The key lifetime, see <a class="reference internal" href="../keys/lifetimes.html#key-lifetimes"><span class="secref">Key lifetimes</span></a>.</p></li>
+<li><p>The key identifier is required for a key with a persistent lifetime, see <a class="reference internal" href="../keys/ids.html#key-identifiers"><span class="secref">Key identifiers</span></a>.</p></li>
+</ul>
+<p>The following attributes are optional:</p>
+<ul class="simple">
+<li><p>If the key size is nonzero, it must be equal to the size, in bits, of the shared secret.</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This is an input parameter: it is not updated with the final key attributes.
+The final attributes of the new key can be queried by calling <a class="reference internal" href="../keys/attributes.html#c.psa_get_key_attributes" title="psa_get_key_attributes"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_get_key_attributes()</span></code></a> with the key’s identifier.</p>
+</div>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">output_key</span></code></p>
+</dt><dd><p>On success, an identifier for the newly created shared secret key.
+<a class="reference internal" href="../keys/ids.html#c.PSA_KEY_ID_NULL" title="PSA_KEY_ID_NULL"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_KEY_ID_NULL</span></code></a> on failure.</p>
+</dd>
+</dl>
+</div>
+<p class="rubric">Returns: <code class="docutils literal notranslate"><span class="pre">psa_status_t</span></code></p>
+<div class="apisubitem docutils container">
+<dl>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_SUCCESS</span></code></p>
+</dt><dd><p>Success.
+<code class="docutils literal notranslate"><span class="pre">output_key</span></code> contains the identifier for the shared secret key.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In some key-encapsulation algorithms, decapsulation failure is not reported with a explicit error code.
+Instead, an incorrect, pseudorandom key is output.</p>
+</div>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_BAD_STATE</span></code></p>
+</dt><dd><p>The library requires initializing by a call to <a class="reference internal" href="../library/library.html#c.psa_crypto_init" title="psa_crypto_init"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_crypto_init()</span></code></a>.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_INVALID_HANDLE</span></code></p>
+</dt><dd><p><code class="docutils literal notranslate"><span class="pre">key</span></code> is not a valid key identifier.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_NOT_PERMITTED</span></code></p>
+</dt><dd><p>The following conditions can result in this error:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">key</span></code> does not have the <a class="reference internal" href="../keys/policy.html#c.PSA_KEY_USAGE_DECRYPT" title="PSA_KEY_USAGE_DECRYPT"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_KEY_USAGE_DECRYPT</span></code></a> flag, or it does not permit the requested algorithm.</p></li>
+<li><p>The implementation does not permit creating a key with the specified attributes due to some implementation-specific policy.</p></li>
+</ul>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_INVALID_SIGNATURE</span></code></p>
+</dt><dd><p>Authentication of the ciphertext fails.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Some key-encapsulation algorithms do not report an authentication failure explicitly.
+Instead, an incorrect, pseudorandom key is output.</p>
+</div>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_ALREADY_EXISTS</span></code></p>
+</dt><dd><p>This is an attempt to create a persistent key, and there is already a persistent key with the given identifier.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_INVALID_ARGUMENT</span></code></p>
+</dt><dd><p>The following conditions can result in this error:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">alg</span></code> is not a key-encapsulation algorithm.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">key</span></code> is not an asymmetric key pair, that is compatible with <code class="docutils literal notranslate"><span class="pre">alg</span></code>.</p></li>
+<li><p>The output key attributes in <code class="docutils literal notranslate"><span class="pre">attributes</span></code> are not valid:</p>
+<ul>
+<li><p>The key type is not valid for the shared secret.</p></li>
+<li><p>The key size is nonzero, and is not the size of the shared secret.</p></li>
+<li><p>The key lifetime is invalid.</p></li>
+<li><p>The key identifier is not valid for the key lifetime.</p></li>
+<li><p>The key usage flags include invalid values.</p></li>
+<li><p>The key’s permitted-usage algorithm is invalid.</p></li>
+<li><p>The key attributes, as a whole, are invalid.</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ciphertext</span></code> is obviously invalid for the selected algorithm and key.
+For example, the implementation can detect that it has an incorrect length.</p></li>
+</ul>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_NOT_SUPPORTED</span></code></p>
+</dt><dd><p>The following conditions can result in this error:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">alg</span></code> is not supported or is not a key-encapsulation algorithm.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">key</span></code> is not supported for use with <code class="docutils literal notranslate"><span class="pre">alg</span></code>.</p></li>
+<li><p>The output key attributes in <code class="docutils literal notranslate"><span class="pre">attributes</span></code>, as a whole, are not supported, either by the implementation in general or in the specified storage location.</p></li>
+</ul>
+</dd>
+<dt><p><a class="reference internal" href="../library/status.html#c.PSA_ERROR_INSUFFICIENT_ENTROPY" title="PSA_ERROR_INSUFFICIENT_ENTROPY"><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_INSUFFICIENT_ENTROPY</span></code></a></p>
+</dt><dd></dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_INSUFFICIENT_MEMORY</span></code></p>
+</dt><dd></dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_INSUFFICIENT_STORAGE</span></code></p>
+</dt><dd></dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_COMMUNICATION_FAILURE</span></code></p>
+</dt><dd></dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_CORRUPTION_DETECTED</span></code></p>
+</dt><dd></dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_STORAGE_FAILURE</span></code></p>
+</dt><dd></dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_DATA_CORRUPT</span></code></p>
+</dt><dd></dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_DATA_INVALID</span></code></p>
+</dt><dd></dd>
+</dl>
+</div>
+<p class="rubric">Description</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">output_key</span></code> location, policy, and type are taken from <code class="docutils literal notranslate"><span class="pre">attributes</span></code>.</p>
+<p>The size of the returned key is always the bit-size of the shared secret, rounded up to a whole number of bytes.
+The size of the shared secret is dependent on the key-encapsulation algorithm and the type and size of <code class="docutils literal notranslate"><span class="pre">key</span></code>.</p>
+<p>It is recommended that the shared secret key is used as an input to a key derivation operation to produce additional cryptographic keys.
+For some key-encapsulation algorithms, the shared secret key is also suitable for use as a key in cryptographic operations such as encryption.
+Refer to the documentation of individual key-encapsulation algorithms for more information.</p>
+<p>If the key-encapsulation protocol is executed correctly then, with overwhelming probability, the two copies of the shared secret are identical.
+However, the protocol does not protect one participant against the other participant executing it incorrectly, or against a third party modifying data in transit.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>A <code class="docutils literal notranslate"><span class="pre">PSA_SUCCESS</span></code> result from <a class="reference internal" href="#c.psa_decapsulate" title="psa_decapsulate"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_decapsulate()</span></code></a> does not guarantee that the output key is identical to the key produced by the call to <a class="reference internal" href="#c.psa_encapsulate" title="psa_encapsulate"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_encapsulate()</span></code></a>. For example, <code class="docutils literal notranslate"><span class="pre">PSA_SUCCESS</span></code> can be returned with a mismatched shared secret key value in the following situations:</p>
+<ul class="simple">
+<li><p>The key-encapsulation algorithm does not authenticate the ciphertext.
+Manipulated or corrupted ciphertext will not be detected during decapsulation.</p></li>
+<li><p>The key-encapsulation algorithm reports authentication failure implicitly, by returning a pseudorandom key value.
+This is done to prevent disclosing information to an attacker that has manipulated the ciphertext.</p></li>
+<li><p>The key-encapsulation algorithm is probabilistic, and will <em>extremely</em> rarely result in non-identical key values.</p></li>
+</ul>
+<p>It is strongly recommended that the application uses the output key in a way that will confirm that the shared secret keys are identical.</p>
+</div>
+<div class="admonition-implementation-note admonition">
+<p class="admonition-title">Implementation note</p>
+<p>For key-encapsulation algorithms which involve data padding when computing the ciphertext, the decapsulation algorithm <strong>must not</strong> report a distinct error status if invalid padding is detected.</p>
+<p>Instead, it is recommended that the decapsulation fails implicitly when invalid padding is detected, returning a pseudorandom key.</p>
+</div>
+</section>
+</section>
+<section id="support-macros">
+<h2><span class="section-number">10.12.4 </span>Support macros<a class="headerlink" href="#support-macros" title="Link to this heading">¶</a></h2>
+<section id="c.PSA_ENCAPSULATE_CIPHERTEXT_SIZE">
+<h3><code class="docutils literal notranslate"><span class="pre">PSA_ENCAPSULATE_CIPHERTEXT_SIZE</span></code> (macro)<a class="headerlink" href="#c.PSA_ENCAPSULATE_CIPHERTEXT_SIZE" title="Link to this heading">¶</a></h3>
+<p>Sufficient ciphertext buffer size for <a class="reference internal" href="#c.psa_encapsulate" title="psa_encapsulate"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_encapsulate()</span></code></a>, in bytes.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">Added in version 1.3.</span></p>
+</div>
+<pre class="literal-block">#define <a class="reference internal" href="#c.PSA_ENCAPSULATE_CIPHERTEXT_SIZE" title="PSA_ENCAPSULATE_CIPHERTEXT_SIZE">PSA_ENCAPSULATE_CIPHERTEXT_SIZE</a>(key_type, key_bits, alg) \
+    <em><a class="reference internal" href="../../overview/implementation.html#implementation-defined-value"><span class="std std-ref">/* implementation-defined value */</span></a></em></pre>
+<p class="rubric">Parameters</p>
+<div class="apisubitem docutils container">
+<dl class="simple">
+<dt><p><code class="docutils literal notranslate"><span class="pre">key_type</span></code></p>
+</dt><dd><p>A key type that is compatible with algorithm <code class="docutils literal notranslate"><span class="pre">alg</span></code>.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">key_bits</span></code></p>
+</dt><dd><p>The size of the key in bits.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">alg</span></code></p>
+</dt><dd><p>A key-encapsulation algorithm: a value of type <a class="reference internal" href="algorithms.html#c.psa_algorithm_t" title="psa_algorithm_t"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_algorithm_t</span></code></a> such that <a class="reference internal" href="algorithms.html#c.PSA_ALG_IS_KEY_ENCAPSULATION" title="PSA_ALG_IS_KEY_ENCAPSULATION"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_IS_KEY_ENCAPSULATION</span></code></a><code class="docutils literal notranslate"><span class="pre">(</span></code><code class="docutils literal notranslate"><span class="pre">alg</span></code><code class="docutils literal notranslate"><span class="pre">)</span></code> is true.</p>
+</dd>
+</dl>
+</div>
+<p class="rubric">Returns</p>
+<p>A sufficient ciphertext buffer size for the specified algorithm, key type, and size. An implementation can return either <code class="docutils literal notranslate"><span class="pre">0</span></code> or a correct size for an algorithm, key type, and size that it recognizes, but does not support. If the parameters are not valid, the return value is unspecified.</p>
+<p class="rubric">Description</p>
+<p>If the size of the ciphertext buffer is at least this large, it is guaranteed that <a class="reference internal" href="#c.psa_encapsulate" title="psa_encapsulate"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_encapsulate()</span></code></a> will not fail due to an insufficient buffer size. The actual size of the ciphertext might be smaller in any given call.</p>
+<p>See also <a class="reference internal" href="#c.PSA_ENCAPSULATE_CIPHERTEXT_MAX_SIZE" title="PSA_ENCAPSULATE_CIPHERTEXT_MAX_SIZE"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_ENCAPSULATE_CIPHERTEXT_MAX_SIZE</span></code></a>.</p>
+</section>
+<section id="c.PSA_ENCAPSULATE_CIPHERTEXT_MAX_SIZE">
+<h3><code class="docutils literal notranslate"><span class="pre">PSA_ENCAPSULATE_CIPHERTEXT_MAX_SIZE</span></code> (macro)<a class="headerlink" href="#c.PSA_ENCAPSULATE_CIPHERTEXT_MAX_SIZE" title="Link to this heading">¶</a></h3>
+<p>Sufficient ciphertext buffer size for <a class="reference internal" href="#c.psa_encapsulate" title="psa_encapsulate"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_encapsulate()</span></code></a>, for any of the supported key types and key-encapsulation algorithms.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">Added in version 1.3.</span></p>
+</div>
+<pre class="literal-block">#define <a class="reference internal" href="#c.PSA_ENCAPSULATE_CIPHERTEXT_MAX_SIZE" title="PSA_ENCAPSULATE_CIPHERTEXT_MAX_SIZE">PSA_ENCAPSULATE_CIPHERTEXT_MAX_SIZE</a> <em><a class="reference internal" href="../../overview/implementation.html#implementation-defined-value"><span class="std std-ref">/* implementation-defined value */</span></a></em></pre>
+<p>If the size of the ciphertext buffer is at least this large, it is guaranteed that <a class="reference internal" href="#c.psa_encapsulate" title="psa_encapsulate"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_encapsulate()</span></code></a> will not fail due to an insufficient buffer size.</p>
+<p>See also <a class="reference internal" href="#c.PSA_ENCAPSULATE_CIPHERTEXT_SIZE" title="PSA_ENCAPSULATE_CIPHERTEXT_SIZE"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_ENCAPSULATE_CIPHERTEXT_SIZE()</span></code></a>.</p>
+</section>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &#169; 2018-2026 Arm Limited and/or its affiliates.
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,142 @@
+---
+---
+
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta property="og:title" content="1 Introduction" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="{{ page.url | absolute_url }}" />
+<link rel="canonical" href="{{ page.url | absolute_url }}" />
+<meta property="og:site_name" content="PSA Certified Crypto API 1.5" />
+<meta property="og:description" content="About Platform Security Architecture: This document is one of a set of resources provided by Arm that can help organizations develop products that meet the security requirements of GlobalPlatform’s..." />
+<meta name="description" content="About Platform Security Architecture: This document is one of a set of resources provided by Arm that can help organizations develop products that meet the security requirements of GlobalPlatform’s..." />
+
+    <title>1 Introduction &#8212; PSA Certified Crypto API 1.5</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/basic.css?v=686e5160" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=f6a572b4" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+    <link rel="preconnect" type="text/css" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" type="text/css" href="https://fonts.gstatic.com" />
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;1,300;1,400&display=swap" />
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Mono:ital,wght@0,300;0,400;1,300&display=swap" />
+    <script src="../_static/documentation_options.js?v=f8f0f945"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="2 Design goals" href="goals.html" />
+    <link rel="prev" title="About this document" href="../about/about.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/ARM_LOGO-2025_INK_RGB.svg" alt="Logo of PSA Certified Crypto API"/>
+            </a></p><hr />
+<h3><a href="../index.html">PSA Certified<br />Crypto API</a></h3>
+IHI 0086<br/>
+Non-confidential<br/>
+Version 1.5.0
+<hr />
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../about/about.html">About this document</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">1 Introduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#about-platform-security-architecture">1.1 About Platform Security Architecture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#about-the-api">1.2 About the Crypto API</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="goals.html">2 Design goals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="functionality.html">3 Functionality overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sample-arch.html">4 Sample architectures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="conventions.html">5 Library conventions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="implementation.html">6 Implementation considerations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">7 Usage considerations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/library/index.html">8 Library management reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/keys/index.html">9 Key management reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/ops/index.html">10 Cryptographic operation reference</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/example_header.html">A Example header file</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/encodings.html">B Algorithm and key type encoding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/specdef_values.html">C Example macro implementations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/sra.html">D Security Risk Assessment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/history.html">E Changes to the API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../atg_c-identifiers.html">Index of API elements</a></li>
+</ul>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="introduction">
+<h1><span class="section-number">1 </span>Introduction<a class="headerlink" href="#introduction" title="Link to this heading">¶</a></h1>
+<section id="about-platform-security-architecture">
+<h2><span class="section-number">1.1 </span>About Platform Security Architecture<a class="headerlink" href="#about-platform-security-architecture" title="Link to this heading">¶</a></h2>
+<p>This document is one of a set of resources provided by Arm that can help organizations develop products that meet the security requirements of GlobalPlatform’s PSA Certified evaluation scheme on Arm-based platforms. The PSA Certified scheme provides a framework and methodology that helps silicon manufacturers, system software providers and OEMs to develop more secure products. Arm resources that support PSA Certified range from threat models, standard architectures that simplify development and increase portability, and open-source partnerships that provide ready-to-use software. You can read more about PSA Certified here at <a class="reference external" href="https://www.psacertified.org">www.psacertified.org</a> and find more Arm resources here at <a class="reference external" href="https://developer.arm.com/platform-security-resources">developer.arm.com/platform-security-resources</a> and <a class="reference external" href="https://www.trustedfirmware.org">www.trustedfirmware.org</a>.</p>
+</section>
+<section id="about-the-api">
+<h2><span class="section-number">1.2 </span>About the Crypto API<a class="headerlink" href="#about-the-api" title="Link to this heading">¶</a></h2>
+<p>The interface described in this document is a PSA Certified API, that provides a portable programming interface to cryptographic operations, and key storage functionality, on a wide range of hardware.</p>
+<p>The interface is user-friendly, while still providing access to the low-level primitives used in modern cryptography. It does not require that the user has access to the key material. Instead, it uses opaque key identifiers.</p>
+<p>You can find additional resources relating to the Crypto API here at <a class="reference external" href="https://arm-software.github.io/psa-api/crypto">arm-software.github.io/psa-api/crypto</a>, and find other PSA Certified APIs here at <a class="reference external" href="https://arm-software.github.io/psa-api">arm-software.github.io/psa-api</a>.</p>
+<p>This document includes:</p>
+<ul class="simple">
+<li><p>A rationale for the design. See <a class="reference internal" href="goals.html#design-goals"><span class="secref">Design goals</span></a>.</p></li>
+<li><p>A high-level overview of the functionality provided by the interface. See <a class="reference internal" href="functionality.html#functionality-overview"><span class="secref">Functionality overview</span></a>.</p></li>
+<li><p>A description of typical architectures of implementations for this specification. See <a class="reference internal" href="sample-arch.html#architectures"><span class="secref">Sample architectures</span></a>.</p></li>
+<li><p>General considerations for implementers of this specification, and for applications that use the interface defined in this specification. See <a class="reference internal" href="implementation.html#implementation-considerations"><span class="secref">Implementation considerations</span></a> and <a class="reference internal" href="usage.html#usage-considerations"><span class="secref">Usage considerations</span></a>.</p></li>
+<li><p>A detailed definition of the API. See <a class="reference internal" href="../api/library/index.html#library-management"><span class="secref">Library management reference</span></a>, <a class="reference internal" href="../api/keys/index.html#key-management"><span class="secref">Key management reference</span></a>, and <a class="reference internal" href="../api/ops/index.html#crypto-operations"><span class="secref">Cryptographic operation reference</span></a>.</p></li>
+</ul>
+<p>In future, companion documents will define <em>profiles</em> for this specification. A profile is
+a minimum mandatory subset of the interface that a compliant implementation must
+provide.</p>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &#169; 2018-2026 Arm Limited and/or its affiliates.
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

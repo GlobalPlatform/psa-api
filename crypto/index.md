@@ -26,6 +26,7 @@ Test suites to verify a correct implementation can be found in the [PSA Certifie
 
 Version | | | Publication
 -|-|-|-:
+1.5.0 | [HTML][1-5-html] | [&darr; PDF][1-5-0-pdf] | June 2026
 1.4.1 | [HTML][1-4-html] | [&darr; PDF][1-4-1-pdf] | January 2026
 1.4.0 | | [&darr; PDF][1-4-0-pdf] | November 2025
 1.3.2 | [HTML][1-3-html] | [&darr; PDF][1-3-2-pdf] | September 2025
@@ -43,6 +44,7 @@ Version | | | Publication
 
 Extension | Version | | | Publication
 -|-|-|-|-:
+PQC | 1.5.0 | *Integrated* | *n/a* | June 2026
 PQC | 1.4 Final 1 | [HTML][pqc-rel-html] | [&darr; PDF][pqc-rel-1-pdf] | January 2026
 PQC | 1.4 Final 0 | | [&darr; PDF][pqc-rel-0-pdf] | November 2025
 PQC | 1.3 Beta 3 | [HTML][pqc-beta-html] | [&darr; PDF][pqc-beta-3-pdf] | September 2025
@@ -54,6 +56,9 @@ PAKE | 1.2 Final 1 | [HTML][pake-rel-html] | [&darr; PDF][pake-rel-1-pdf] | Marc
 PAKE | 1.2 Final | | [&darr; PDF][pake-rel-0-pdf] | February 2024
 PAKE | 1.1 Beta 1 | [HTML][pake-beta-html] | [&darr; PDF][pake-beta-1-pdf] | October 2022
 PAKE | 1.1 Beta 0 | | [&darr; PDF][pake-beta-0-pdf] | February 2022
+
+[1-5-html]:             1.5/
+[1-5-0-pdf]:            1.5/IHI0086-PSA_Certified_Crypto_API-1.5.0.pdf
 
 [1-4-html]:             1.4/
 [1-4-1-pdf]:            1.4/IHI0086-PSA_Certified_Crypto_API-1.4.1.pdf

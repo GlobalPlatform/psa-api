@@ -1,0 +1,552 @@
+---
+---
+
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta property="og:title" content="PSA Certified  Crypto API 1.5" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="{{ page.url | absolute_url }}" />
+<link rel="canonical" href="{{ page.url | absolute_url }}" />
+<meta property="og:site_name" content="PSA Certified Crypto API 1.5" />
+<meta property="og:description" content="Arm PSA Certified Crypto API 1.5:,, Document number:, IHI 0086,, Release Quality:, Final,, Issue Number:, 0,, Confidentiality:, Non-confidential,, Date of Issue:, June 2026,,,, Abstract This docume..." />
+<meta name="description" content="Arm PSA Certified Crypto API 1.5:,, Document number:, IHI 0086,, Release Quality:, Final,, Issue Number:, 0,, Confidentiality:, Non-confidential,, Date of Issue:, June 2026,,,, Abstract This docume..." />
+
+    <title>PSA Certified Crypto API 1.5 &#8212; PSA Certified Crypto API 1.5</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/basic.css?v=686e5160" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=f6a572b4" />
+    <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
+    <link rel="preconnect" type="text/css" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" type="text/css" href="https://fonts.gstatic.com" />
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;1,300;1,400&display=swap" />
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Mono:ital,wght@0,300;0,400;1,300&display=swap" />
+    <script src="_static/documentation_options.js?v=f8f0f945"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script>window.MathJax = {"chtml": {"mtextInheritFont": false, "mtextFont": "Lato-Light"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="About this document" href="about/about.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="#">
+              <img class="logo" src="_static/ARM_LOGO-2025_INK_RGB.svg" alt="Logo of PSA Certified Crypto API"/>
+            </a></p><hr />
+<h3><a href="#">PSA Certified<br />Crypto API</a></h3>
+IHI 0086<br/>
+Non-confidential<br/>
+Version 1.5.0
+<hr />
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="about/about.html">About this document</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="overview/intro.html">1 Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="overview/goals.html">2 Design goals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="overview/functionality.html">3 Functionality overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="overview/sample-arch.html">4 Sample architectures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="overview/conventions.html">5 Library conventions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="overview/implementation.html">6 Implementation considerations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="overview/usage.html">7 Usage considerations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/library/index.html">8 Library management reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/keys/index.html">9 Key management reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/ops/index.html">10 Cryptographic operation reference</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="appendix/example_header.html">A Example header file</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendix/encodings.html">B Algorithm and key type encoding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendix/specdef_values.html">C Example macro implementations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendix/sra.html">D Security Risk Assessment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendix/history.html">E Changes to the API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="atg_c-identifiers.html">Index of API elements</a></li>
+</ul>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <img alt="Arm" class="titlelogo" src="_images/ARM_LOGO-2025_INK_RGB.svg" />
+<section id="docrsttitle-docversion">
+<h1>PSA Certified <br /> Crypto API 1.5<a class="headerlink" href="#docrsttitle-docversion" title="Link to this heading">¶</a></h1>
+<table class="titletable borderless docutils align-left">
+<tbody>
+<tr class="row-odd"><td><p>Document number:</p></td>
+<td><p>IHI 0086</p></td>
+</tr>
+<tr class="row-even"><td><p>Release Quality:</p></td>
+<td><p>Final</p></td>
+</tr>
+<tr class="row-odd"><td><p>Issue Number:</p></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-even"><td><p>Confidentiality:</p></td>
+<td><p>Non-confidential</p></td>
+</tr>
+<tr class="row-odd"><td><p>Date of Issue:</p></td>
+<td><p>June 2026</p></td>
+</tr>
+</tbody>
+</table>
+<p><span class="sectiontitle">Abstract</span></p>
+<p>This document is part of the PSA Certified API specifications. It defines interfaces to provide cryptographic operations and key storage services.</p>
+<p><span class="sectiontitle">Contents</span></p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="about/about.html">About this document</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="about/about.html#release-information">Release information</a></li>
+<li class="toctree-l2"><a class="reference internal" href="about/about.html#license">License</a></li>
+<li class="toctree-l2"><a class="reference internal" href="about/about.html#references">References</a></li>
+<li class="toctree-l2"><a class="reference internal" href="about/about.html#terms-and-abbreviations">Terms and abbreviations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="about/about.html#potential-for-change">Potential for change</a></li>
+<li class="toctree-l2"><a class="reference internal" href="about/about.html#conventions">Conventions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="about/about.html#feedback">Feedback</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="overview/intro.html">1 Introduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="overview/intro.html#about-platform-security-architecture">1.1 About Platform Security Architecture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="overview/intro.html#about-the-api">1.2 About the Crypto API</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="overview/goals.html">2 Design goals</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="overview/goals.html#suitable-for-constrained-devices">2.1 Suitable for constrained devices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="overview/goals.html#a-keystore-interface">2.2 A keystore interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="overview/goals.html#optional-isolation">2.3 Optional isolation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="overview/goals.html#choice-of-algorithms">2.4 Choice of algorithms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="overview/goals.html#ease-of-use">2.5 Ease of use</a></li>
+<li class="toctree-l2"><a class="reference internal" href="overview/goals.html#example-use-cases">2.6 Example use cases</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="overview/goals.html#network-security-tls">2.6.1 Network Security (TLS)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="overview/goals.html#secure-storage">2.6.2 Secure Storage</a></li>
+<li class="toctree-l3"><a class="reference internal" href="overview/goals.html#network-credentials">2.6.3 Network Credentials</a></li>
+<li class="toctree-l3"><a class="reference internal" href="overview/goals.html#device-pairing">2.6.4 Device Pairing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="overview/goals.html#secure-boot">2.6.5 Secure Boot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="overview/goals.html#attestation">2.6.6 Attestation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="overview/goals.html#factory-provisioning">2.6.7 Factory Provisioning</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="overview/functionality.html">3 Functionality overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="overview/functionality.html#library-management">3.1 Library management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="overview/functionality.html#key-management">3.2 Key management</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="overview/functionality.html#key-types">3.2.1 Key types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="overview/functionality.html#key-identifiers">3.2.2 Key identifiers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="overview/functionality.html#key-lifetimes">3.2.3 Key lifetimes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="overview/functionality.html#key-policies">3.2.4 Key policies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="overview/functionality.html#recommendations-of-minimum-standards-for-key-management">3.2.5 Recommendations of minimum standards for key management</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="overview/functionality.html#cryptographic-operations">3.3 Cryptographic operations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="overview/functionality.html#single-part-functions">3.3.1 Single-part Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="overview/functionality.html#multi-part-operations">3.3.2 Multi-part operations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="overview/functionality.html#symmetric-cryptography">3.3.3 Symmetric cryptography</a></li>
+<li class="toctree-l3"><a class="reference internal" href="overview/functionality.html#asymmetric-cryptography">3.3.4 Asymmetric cryptography</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="overview/functionality.html#randomness-and-key-generation">3.4 Randomness and key generation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="overview/sample-arch.html">4 Sample architectures</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="overview/sample-arch.html#single-partition-architecture">4.1 Single-partition architecture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="overview/sample-arch.html#cryptographic-token-and-single-application-processor">4.2 Cryptographic token and single-application processor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="overview/sample-arch.html#cryptoprocessor-with-no-key-storage">4.3 Cryptoprocessor with no key storage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="overview/sample-arch.html#multi-client-cryptoprocessor">4.4 Multi-client cryptoprocessor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="overview/sample-arch.html#multi-cryptoprocessor-architecture">4.5 Multi-cryptoprocessor architecture</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="overview/conventions.html">5 Library conventions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="overview/conventions.html#header-files">5.1 Header files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="overview/conventions.html#api-conventions">5.2 API conventions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="overview/conventions.html#identifier-names">5.2.1 Identifier names</a></li>
+<li class="toctree-l3"><a class="reference internal" href="overview/conventions.html#basic-types">5.2.2 Basic types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="overview/conventions.html#data-types">5.2.3 Data types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="overview/conventions.html#constants">5.2.4 Constants</a></li>
+<li class="toctree-l3"><a class="reference internal" href="overview/conventions.html#function-like-macros">5.2.5 Function-like macros</a></li>
+<li class="toctree-l3"><a class="reference internal" href="overview/conventions.html#functions">5.2.6 Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="overview/conventions.html#error-handling">5.3 Error handling</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="overview/conventions.html#return-status">5.3.1 Return status</a></li>
+<li class="toctree-l3"><a class="reference internal" href="overview/conventions.html#behavior-on-error">5.3.2 Behavior on error</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="overview/conventions.html#parameter-conventions">5.4 Parameter conventions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="overview/conventions.html#pointer-conventions">5.4.1 Pointer conventions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="overview/conventions.html#input-buffer-sizes">5.4.2 Input buffer sizes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="overview/conventions.html#output-buffer-sizes">5.4.3 Output buffer sizes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="overview/conventions.html#overlap-between-parameters">5.4.4 Overlap between parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="overview/conventions.html#stability-of-parameters">5.4.5 Stability of parameters</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="overview/conventions.html#key-types-and-algorithms">5.5 Key types and algorithms</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="overview/conventions.html#structure-of-key-types-and-algorithms">5.5.1 Structure of key types and algorithms</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="overview/conventions.html#concurrent-calls">5.6 Concurrent calls</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="overview/implementation.html">6 Implementation considerations</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="overview/implementation.html#implementation-specific-aspects-of-the-interface">6.1 Implementation-specific aspects of the interface</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="overview/implementation.html#implementation-profile">6.1.1 Implementation profile</a></li>
+<li class="toctree-l3"><a class="reference internal" href="overview/implementation.html#implementation-specific-types">6.1.2 Implementation-specific types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="overview/implementation.html#implementation-specific-macros">6.1.3 Implementation-specific macros</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="overview/implementation.html#porting-to-a-platform">6.2 Porting to a platform</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="overview/implementation.html#platform-assumptions">6.2.1 Platform assumptions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="overview/implementation.html#platform-specific-types">6.2.2 Platform-specific types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="overview/implementation.html#cryptographic-hardware-support">6.2.3 Cryptographic hardware support</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="overview/implementation.html#security-requirements-and-recommendations">6.3 Security requirements and recommendations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="overview/implementation.html#error-detection">6.3.1 Error detection</a></li>
+<li class="toctree-l3"><a class="reference internal" href="overview/implementation.html#indirect-object-references">6.3.2 Indirect object references</a></li>
+<li class="toctree-l3"><a class="reference internal" href="overview/implementation.html#memory-cleanup">6.3.3 Memory cleanup</a></li>
+<li class="toctree-l3"><a class="reference internal" href="overview/implementation.html#managing-key-material">6.3.4 Managing key material</a></li>
+<li class="toctree-l3"><a class="reference internal" href="overview/implementation.html#safe-outputs-on-error">6.3.5 Safe outputs on error</a></li>
+<li class="toctree-l3"><a class="reference internal" href="overview/implementation.html#attack-resistance">6.3.6 Attack resistance</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="overview/implementation.html#other-implementation-considerations">6.4 Other implementation considerations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="overview/implementation.html#philosophy-of-resource-management">6.4.1 Philosophy of resource management</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="overview/usage.html">7 Usage considerations</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="overview/usage.html#security-recommendations">7.1 Security recommendations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="overview/usage.html#always-check-for-errors">7.1.1 Always check for errors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="overview/usage.html#shared-memory-and-concurrency">7.1.2 Shared memory and concurrency</a></li>
+<li class="toctree-l3"><a class="reference internal" href="overview/usage.html#cleaning-up-after-use">7.1.3 Cleaning up after use</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api/library/index.html">8 Library management reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/library/status.html">8.1 Status codes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/library/status.html#common-error-codes">8.1.1 Common error codes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/library/status.html#error-codes-specific-to-the-api">8.1.2 Error codes specific to the Crypto API</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api/library/library.html">8.2 Crypto API library</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/library/library.html#api-version">8.2.1 API version</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/library/library.html#library-initialization">8.2.2 Library initialization</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api/keys/index.html">9 Key management reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/keys/attributes.html">9.1 Key attributes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/keys/attributes.html#managing-key-attributes">9.1.1 Managing key attributes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api/keys/types.html">9.2 Key types</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/keys/types.html#key-type-encoding">9.2.1 Key type encoding</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/keys/types.html#key-categories">9.2.2 Key categories</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/keys/types.html#elliptic-curve-families">9.2.3 Elliptic curve families</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/keys/types.html#finite-field-diffie-hellman-families">9.2.4 Finite field Diffie-Hellman families</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/keys/types.html#attribute-accessors">9.2.5 Attribute accessors</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api/keys/types.html#unstructured-key-types">9.3 Unstructured key types</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/keys/types.html#non-key-data">9.3.1 Non-key data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/keys/types.html#symmetric-cryptographic-keys">9.3.2 Symmetric cryptographic keys</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api/keys/types.html#structured-key-types">9.4 Structured key types</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/keys/types.html#wpa3-sae-password-tokens">9.4.1 WPA3-SAE password tokens</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api/keys/types.html#asymmetric-key-types">9.5 Asymmetric key types</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/keys/types.html#rsa-keys">9.5.1 RSA keys</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/keys/types.html#elliptic-curve-keys">9.5.2 Elliptic Curve keys</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/keys/types.html#diffie-hellman-keys">9.5.3 Diffie Hellman keys</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/keys/types.html#leighton-micali-signature-keys">9.5.4 Leighton-Micali Signature keys</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/keys/types.html#xmss-and-xmss-mt-keys">9.5.5 XMSS and XMSS<sup>MT</sup> keys</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/keys/types.html#module-lattice-based-signature-keys">9.5.6 Module Lattice-based signature keys</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/keys/types.html#stateless-hash-based-signature-keys">9.5.7 Stateless Hash-based signature keys</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/keys/types.html#module-lattice-based-key-encapsulation-keys">9.5.8 Module Lattice-based key-encapsulation keys</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/keys/types.html#spake2-keys">9.5.9 SPAKE2+ keys</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/keys/types.html#support-macros">9.5.10 Support macros</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api/keys/lifetimes.html">9.6 Key lifetimes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/keys/lifetimes.html#volatile-keys">9.6.1 Volatile keys</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/keys/lifetimes.html#persistent-keys">9.6.2 Persistent keys</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/keys/lifetimes.html#key-lifetime-encoding">9.6.3 Key lifetime encoding</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/keys/lifetimes.html#lifetime-values">9.6.4 Lifetime values</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/keys/lifetimes.html#attribute-accessors">9.6.5 Attribute accessors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/keys/lifetimes.html#support-macros">9.6.6 Support macros</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api/keys/ids.html">9.7 Key identifiers</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/keys/ids.html#key-identifier-type">9.7.1 Key identifier type</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/keys/ids.html#attribute-accessors">9.7.2 Attribute accessors</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api/keys/policy.html">9.8 Key policies</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/keys/policy.html#permitted-algorithms">9.8.1 Permitted algorithms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/keys/policy.html#key-usage-flags">9.8.2 Key usage flags</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api/keys/management.html">9.9 Key management functions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/keys/management.html#key-creation">9.9.1 Key creation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/keys/management.html#key-destruction">9.9.2 Key destruction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/keys/management.html#key-export">9.9.3 Key export</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api/ops/index.html">10 Cryptographic operation reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/ops/algorithms.html">10.1 Algorithms</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/ops/algorithms.html#algorithm-encoding">10.1.1 Algorithm encoding</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/ops/algorithms.html#algorithm-categories">10.1.2 Algorithm categories</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/ops/algorithms.html#support-macros">10.1.3 Support macros</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api/ops/hash.html">10.2 Message digests (Hashes)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/ops/hash.html#hash-algorithms">10.2.1 Hash algorithms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/ops/hash.html#single-part-hashing-functions">10.2.2 Single-part hashing functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/ops/hash.html#multi-part-hashing-operations">10.2.3 Multi-part hashing operations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/ops/hash.html#support-macros">10.2.4 Support macros</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/ops/hash.html#hash-suspend-state">10.2.5 Hash suspend state</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api/ops/xof.html">10.3 Extendable-output functions (XOF)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/ops/xof.html#xof-algorithms">10.3.1 XOF algorithms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/ops/xof.html#multi-part-xof-operations">10.3.2 Multi-part XOF operations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/ops/xof.html#support-macros">10.3.3 Support macros</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api/ops/mac.html">10.4 Message authentication codes (MAC)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/ops/mac.html#mac-algorithms">10.4.1 MAC algorithms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/ops/mac.html#single-part-mac-functions">10.4.2 Single-part MAC functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/ops/mac.html#multi-part-mac-operations">10.4.3 Multi-part MAC operations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/ops/mac.html#support-macros">10.4.4 Support macros</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api/ops/cipher.html">10.5 Unauthenticated ciphers</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/ops/cipher.html#cipher-algorithms">10.5.1 Cipher algorithms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/ops/cipher.html#single-part-cipher-functions">10.5.2 Single-part cipher functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/ops/cipher.html#multi-part-cipher-operations">10.5.3 Multi-part cipher operations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/ops/cipher.html#support-macros">10.5.4 Support macros</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api/ops/aead.html">10.6 Authenticated encryption with associated data (AEAD)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/ops/aead.html#aead-algorithms">10.6.1 AEAD algorithms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/ops/aead.html#single-part-aead-functions">10.6.2 Single-part AEAD functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/ops/aead.html#multi-part-aead-operations">10.6.3 Multi-part AEAD operations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/ops/aead.html#support-macros">10.6.4 Support macros</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api/ops/key-wrapping.html">10.7 Key wrapping</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/ops/key-wrapping.html#key-wrapping-algorithms">10.7.1 Key-wrapping algorithms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/ops/key-wrapping.html#key-wrapping-functions">10.7.2 Key wrapping functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/ops/key-wrapping.html#support-macros">10.7.3 Support macros</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api/ops/key-derivation.html">10.8 Key derivation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/ops/key-derivation.html#key-derivation-algorithms">10.8.1 Key-derivation algorithms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/ops/key-derivation.html#input-step-types">10.8.2 Input step types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/ops/key-derivation.html#key-derivation-functions">10.8.3 Key-derivation functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/ops/key-derivation.html#support-macros">10.8.4 Support macros</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api/ops/signature.html">10.9 Asymmetric signature</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/ops/signature.html#rsa-signature-algorithms">10.9.1 RSA signature algorithms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/ops/signature.html#ecdsa-signature-algorithms">10.9.2 ECDSA signature algorithms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/ops/signature.html#eddsa-signature-algorithms">10.9.3 EdDSA signature algorithms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/ops/signature.html#stateless-hash-based-signature-algorithms">10.9.4 Stateless Hash-based signature algorithms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/ops/signature.html#module-lattice-based-signature-algorithms">10.9.5 Module Lattice-based signature algorithms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/ops/signature.html#leighton-micali-signature-algorithms">10.9.6 Leighton-Micali Signature algorithms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/ops/signature.html#xmss-and-xmss-mt-algorithms">10.9.7 XMSS and XMSS<sup>MT</sup> algorithms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/ops/signature.html#single-part-asymmetric-signature-functions">10.9.8 Single-part asymmetric signature functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/ops/signature.html#multi-part-asymmetric-signature-operations">10.9.9 Multi-part asymmetric signature operations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/ops/signature.html#support-macros">10.9.10 Support macros</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api/ops/pk-encryption.html">10.10 Asymmetric encryption</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/ops/pk-encryption.html#asymmetric-encryption-algorithms">10.10.1 Asymmetric encryption algorithms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/ops/pk-encryption.html#asymmetric-encryption-functions">10.10.2 Asymmetric encryption functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/ops/pk-encryption.html#support-macros">10.10.3 Support macros</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api/ops/key-agreement.html">10.11 Key agreement</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/ops/key-agreement.html#key-agreement-algorithms">10.11.1 Key-agreement algorithms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/ops/key-agreement.html#standalone-key-agreement">10.11.2 Standalone key agreement</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/ops/key-agreement.html#combining-key-agreement-and-key-derivation">10.11.3 Combining key agreement and key derivation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/ops/key-agreement.html#support-macros">10.11.4 Support macros</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api/ops/key-encapsulation.html">10.12 Key encapsulation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/ops/key-encapsulation.html#elliptic-curve-integrated-encryption-scheme">10.12.1 Elliptic Curve Integrated Encryption Scheme</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/ops/key-encapsulation.html#module-lattice-based-key-encapsulation-algorithm">10.12.2 Module Lattice-based key-encapsulation algorithm</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/ops/key-encapsulation.html#key-encapsulation-functions">10.12.3 Key-encapsulation functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/ops/key-encapsulation.html#support-macros">10.12.4 Support macros</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api/ops/pake.html">10.13 Password-authenticated key exchange (PAKE)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/ops/pake.html#common-api-for-pake">10.13.1 Common API for PAKE</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/ops/pake.html#pake-primitives">10.13.2 PAKE primitives</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/ops/pake.html#pake-cipher-suites">10.13.3 PAKE cipher suites</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/ops/pake.html#pake-roles">10.13.4 PAKE roles</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/ops/pake.html#pake-step-types">10.13.5 PAKE step types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/ops/pake.html#multi-part-pake-operations">10.13.6 Multi-part PAKE operations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/ops/pake.html#pake-support-macros">10.13.7 PAKE support macros</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/ops/pake.html#the-j-pake-protocol">10.13.8 The J-PAKE protocol</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/ops/pake.html#j-pake-algorithms">10.13.9 J-PAKE algorithms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/ops/pake.html#the-spake2-protocol">10.13.10 The SPAKE2+ protocol</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/ops/pake.html#spake2-algorithms">10.13.11 SPAKE2+ algorithms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/ops/pake.html#the-wpa3-sae-protocol">10.13.12 The WPA3-SAE protocol</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/ops/pake.html#wpa3-sae-algorithms">10.13.13 WPA3-SAE algorithms</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api/ops/rng.html">10.14 Other cryptographic services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/ops/rng.html#random-number-generation">10.14.1 Random number generation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="appendix/example_header.html">A Example header file</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="appendix/example_header.html#psa-crypto-h">A.1 psa/crypto.h</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="appendix/encodings.html">B Algorithm and key type encoding</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="appendix/encodings.html#algorithm-identifier-encoding">B.1 Algorithm identifier encoding</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="appendix/encodings.html#algorithm-categories">B.1.1 Algorithm categories</a></li>
+<li class="toctree-l3"><a class="reference internal" href="appendix/encodings.html#hash-algorithm-encoding">B.1.2 Hash algorithm encoding</a></li>
+<li class="toctree-l3"><a class="reference internal" href="appendix/encodings.html#xof-algorithm-encoding">B.1.3 XOF algorithm encoding</a></li>
+<li class="toctree-l3"><a class="reference internal" href="appendix/encodings.html#mac-algorithm-encoding">B.1.4 MAC algorithm encoding</a></li>
+<li class="toctree-l3"><a class="reference internal" href="appendix/encodings.html#cipher-algorithm-encoding">B.1.5 Cipher algorithm encoding</a></li>
+<li class="toctree-l3"><a class="reference internal" href="appendix/encodings.html#aead-algorithm-encoding">B.1.6 AEAD algorithm encoding</a></li>
+<li class="toctree-l3"><a class="reference internal" href="appendix/encodings.html#key-wrapping-algorithm-encoding">B.1.7 Key-wrapping algorithm encoding</a></li>
+<li class="toctree-l3"><a class="reference internal" href="appendix/encodings.html#key-derivation-algorithm-encoding">B.1.8 Key-derivation algorithm encoding</a></li>
+<li class="toctree-l3"><a class="reference internal" href="appendix/encodings.html#asymmetric-signature-algorithm-encoding">B.1.9 Asymmetric signature algorithm encoding</a></li>
+<li class="toctree-l3"><a class="reference internal" href="appendix/encodings.html#asymmetric-encryption-algorithm-encoding">B.1.10 Asymmetric encryption algorithm encoding</a></li>
+<li class="toctree-l3"><a class="reference internal" href="appendix/encodings.html#key-agreement-algorithm-encoding">B.1.11 Key-agreement algorithm encoding</a></li>
+<li class="toctree-l3"><a class="reference internal" href="appendix/encodings.html#key-encapsulation-algorithm-encoding">B.1.12 Key-encapsulation algorithm encoding</a></li>
+<li class="toctree-l3"><a class="reference internal" href="appendix/encodings.html#pake-algorithm-encoding">B.1.13 PAKE algorithm encoding</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="appendix/encodings.html#key-type-encoding">B.2 Key type encoding</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="appendix/encodings.html#key-type-categories">B.2.1 Key type categories</a></li>
+<li class="toctree-l3"><a class="reference internal" href="appendix/encodings.html#raw-key-encoding">B.2.2 Raw key encoding</a></li>
+<li class="toctree-l3"><a class="reference internal" href="appendix/encodings.html#symmetric-key-encoding">B.2.3 Symmetric key encoding</a></li>
+<li class="toctree-l3"><a class="reference internal" href="appendix/encodings.html#structured-key-encoding">B.2.4 Structured key encoding</a></li>
+<li class="toctree-l3"><a class="reference internal" href="appendix/encodings.html#asymmetric-key-encoding">B.2.5 Asymmetric key encoding</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="appendix/specdef_values.html">C Example macro implementations</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="appendix/specdef_values.html#algorithm-macros">C.1 Algorithm macros</a></li>
+<li class="toctree-l2"><a class="reference internal" href="appendix/specdef_values.html#key-type-macros">C.2 Key type macros</a></li>
+<li class="toctree-l2"><a class="reference internal" href="appendix/specdef_values.html#hash-suspend-state-macros">C.3 Hash suspend state macros</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="appendix/sra.html">D Security Risk Assessment</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="appendix/sra.html#architecture">D.1 Architecture</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="appendix/sra.html#system-definition">D.1.1 System definition</a></li>
+<li class="toctree-l3"><a class="reference internal" href="appendix/sra.html#assets-and-stakeholders">D.1.2 Assets and stakeholders</a></li>
+<li class="toctree-l3"><a class="reference internal" href="appendix/sra.html#security-goals">D.1.3 Security goals</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="appendix/sra.html#threat-model">D.2 Threat Model</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="appendix/sra.html#adversarial-models">D.2.1 Adversarial models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="appendix/sra.html#threats-and-attacks">D.2.2 Threats and attacks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="appendix/sra.html#risk-assessment">D.2.3 Risk assessment</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="appendix/sra.html#mitigations">D.3 Mitigations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="appendix/sra.html#objectives">D.3.1 Objectives</a></li>
+<li class="toctree-l3"><a class="reference internal" href="appendix/sra.html#requirements">D.3.2 Requirements</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="appendix/sra.html#remediation-residual-risk">D.4 Remediation &amp; residual risk</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="appendix/sra.html#implementation-remediations">D.4.1 Implementation remediations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="appendix/sra.html#residual-risk">D.4.2 Residual risk</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="appendix/history.html">E Changes to the API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="appendix/history.html#document-change-history">E.1 Document change history</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="appendix/history.html#changes-between-1-4-1-and-1-5">E.1.1 Changes between <em>1.4.1</em> and <em>1.5</em></a></li>
+<li class="toctree-l3"><a class="reference internal" href="appendix/history.html#changes-between-1-4-0-and-1-4-1">E.1.2 Changes between <em>1.4.0</em> and <em>1.4.1</em></a></li>
+<li class="toctree-l3"><a class="reference internal" href="appendix/history.html#changes-between-1-3-2-and-1-4-0">E.1.3 Changes between <em>1.3.2</em> and <em>1.4.0</em></a></li>
+<li class="toctree-l3"><a class="reference internal" href="appendix/history.html#changes-between-1-3-1-and-1-3-2">E.1.4 Changes between <em>1.3.1</em> and <em>1.3.2</em></a></li>
+<li class="toctree-l3"><a class="reference internal" href="appendix/history.html#changes-between-1-3-0-and-1-3-1">E.1.5 Changes between <em>1.3.0</em> and <em>1.3.1</em></a></li>
+<li class="toctree-l3"><a class="reference internal" href="appendix/history.html#changes-between-1-2-1-and-1-3-0">E.1.6 Changes between <em>1.2.1</em> and <em>1.3.0</em></a></li>
+<li class="toctree-l3"><a class="reference internal" href="appendix/history.html#changes-between-1-2-0-and-1-2-1">E.1.7 Changes between <em>1.2.0</em> and <em>1.2.1</em></a></li>
+<li class="toctree-l3"><a class="reference internal" href="appendix/history.html#changes-between-1-1-2-and-1-2-0">E.1.8 Changes between <em>1.1.2</em> and <em>1.2.0</em></a></li>
+<li class="toctree-l3"><a class="reference internal" href="appendix/history.html#changes-between-1-1-1-and-1-1-2">E.1.9 Changes between <em>1.1.1</em> and <em>1.1.2</em></a></li>
+<li class="toctree-l3"><a class="reference internal" href="appendix/history.html#changes-between-1-1-0-and-1-1-1">E.1.10 Changes between <em>1.1.0</em> and <em>1.1.1</em></a></li>
+<li class="toctree-l3"><a class="reference internal" href="appendix/history.html#changes-between-1-0-1-and-1-1-0">E.1.11 Changes between <em>1.0.1</em> and <em>1.1.0</em></a></li>
+<li class="toctree-l3"><a class="reference internal" href="appendix/history.html#changes-between-1-0-0-and-1-0-1">E.1.12 Changes between <em>1.0.0</em> and <em>1.0.1</em></a></li>
+<li class="toctree-l3"><a class="reference internal" href="appendix/history.html#changes-between-1-0-beta-3-and-1-0-0">E.1.13 Changes between <em>1.0 beta 3</em> and <em>1.0.0</em></a></li>
+<li class="toctree-l3"><a class="reference internal" href="appendix/history.html#changes-between-1-0-beta-2-and-1-0-beta-3">E.1.14 Changes between <em>1.0 beta 2</em> and <em>1.0 beta 3</em></a></li>
+<li class="toctree-l3"><a class="reference internal" href="appendix/history.html#changes-between-1-0-beta-1-and-1-0-beta-2">E.1.15 Changes between <em>1.0 beta 1</em> and <em>1.0 beta 2</em></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="appendix/history.html#planned-changes-for-version-docversion-x">E.2 Planned changes for version 1.5.x</a></li>
+<li class="toctree-l2"><a class="reference internal" href="appendix/history.html#future-additions">E.3 Future additions</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &#169; 2018-2026 Arm Limited and/or its affiliates.
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

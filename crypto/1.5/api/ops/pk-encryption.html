@@ -1,0 +1,487 @@
+---
+---
+
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta property="og:title" content="10.10 Asymmetric encryption" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="{{ page.url | absolute_url }}" />
+<link rel="canonical" href="{{ page.url | absolute_url }}" />
+<meta property="og:site_name" content="PSA Certified Crypto API 1.5" />
+<meta property="og:description" content="Asymmetric encryption is provided through the functions psa_asymmetric_encrypt() and psa_asymmetric_decrypt(). Asymmetric encryption algorithms: PSA_ALG_RSA_PKCS1V15_CRYPT(macro): The RSA PKCS#1 v1..." />
+<meta name="description" content="Asymmetric encryption is provided through the functions psa_asymmetric_encrypt() and psa_asymmetric_decrypt(). Asymmetric encryption algorithms: PSA_ALG_RSA_PKCS1V15_CRYPT(macro): The RSA PKCS#1 v1..." />
+
+    <title>10.10 Asymmetric encryption &#8212; PSA Certified Crypto API 1.5</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/basic.css?v=686e5160" />
+    <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css?v=f6a572b4" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
+    <link rel="preconnect" type="text/css" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" type="text/css" href="https://fonts.gstatic.com" />
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;1,300;1,400&display=swap" />
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Mono:ital,wght@0,300;0,400;1,300&display=swap" />
+    <script src="../../_static/documentation_options.js?v=f8f0f945"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="10.11 Key agreement" href="key-agreement.html" />
+    <link rel="prev" title="10.9 Asymmetric signature" href="signature.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../index.html">
+              <img class="logo" src="../../_static/ARM_LOGO-2025_INK_RGB.svg" alt="Logo of PSA Certified Crypto API"/>
+            </a></p><hr />
+<h3><a href="../../index.html">PSA Certified<br />Crypto API</a></h3>
+IHI 0086<br/>
+Non-confidential<br/>
+Version 1.5.0
+<hr />
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../about/about.html">About this document</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../overview/intro.html">1 Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview/goals.html">2 Design goals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview/functionality.html">3 Functionality overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview/sample-arch.html">4 Sample architectures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview/conventions.html">5 Library conventions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview/implementation.html">6 Implementation considerations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview/usage.html">7 Usage considerations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../library/index.html">8 Library management reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../keys/index.html">9 Key management reference</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">10 Cryptographic operation reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="algorithms.html">10.1 Algorithms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hash.html">10.2 Message digests (Hashes)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="xof.html">10.3 Extendable-output functions (XOF)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mac.html">10.4 Message authentication codes (MAC)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cipher.html">10.5 Unauthenticated ciphers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="aead.html">10.6 Authenticated encryption with associated data (AEAD)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="key-wrapping.html">10.7 Key wrapping</a></li>
+<li class="toctree-l2"><a class="reference internal" href="key-derivation.html">10.8 Key derivation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="signature.html">10.9 Asymmetric signature</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">10.10 Asymmetric encryption</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#asymmetric-encryption-algorithms">10.10.1 Asymmetric encryption algorithms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#asymmetric-encryption-functions">10.10.2 Asymmetric encryption functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#support-macros">10.10.3 Support macros</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="key-agreement.html">10.11 Key agreement</a></li>
+<li class="toctree-l2"><a class="reference internal" href="key-encapsulation.html">10.12 Key encapsulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pake.html">10.13 Password-authenticated key exchange (PAKE)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rng.html">10.14 Other cryptographic services</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../appendix/example_header.html">A Example header file</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../appendix/encodings.html">B Algorithm and key type encoding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../appendix/specdef_values.html">C Example macro implementations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../appendix/sra.html">D Security Risk Assessment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../appendix/history.html">E Changes to the API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../atg_c-identifiers.html">Index of API elements</a></li>
+</ul>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="asymmetric-encryption">
+<span id="pke"></span><h1><span class="section-number">10.10 </span>Asymmetric encryption<a class="headerlink" href="#asymmetric-encryption" title="Link to this heading">¶</a></h1>
+<p>Asymmetric encryption is provided through the functions <a class="reference internal" href="#c.psa_asymmetric_encrypt" title="psa_asymmetric_encrypt"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_asymmetric_encrypt()</span></code></a> and <a class="reference internal" href="#c.psa_asymmetric_decrypt" title="psa_asymmetric_decrypt"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_asymmetric_decrypt()</span></code></a>.</p>
+<section id="asymmetric-encryption-algorithms">
+<span id="id1"></span><h2><span class="section-number">10.10.1 </span>Asymmetric encryption algorithms<a class="headerlink" href="#asymmetric-encryption-algorithms" title="Link to this heading">¶</a></h2>
+<section id="c.PSA_ALG_RSA_PKCS1V15_CRYPT">
+<h3><code class="docutils literal notranslate"><span class="pre">PSA_ALG_RSA_PKCS1V15_CRYPT</span></code> (macro)<a class="headerlink" href="#c.PSA_ALG_RSA_PKCS1V15_CRYPT" title="Link to this heading">¶</a></h3>
+<p>The RSA PKCS#1 v1.5 asymmetric encryption algorithm.</p>
+<pre class="literal-block">#define <a class="reference internal" href="#c.PSA_ALG_RSA_PKCS1V15_CRYPT" title="PSA_ALG_RSA_PKCS1V15_CRYPT">PSA_ALG_RSA_PKCS1V15_CRYPT</a> ((<a class="reference internal" href="algorithms.html#c.psa_algorithm_t" title="psa_algorithm_t">psa_algorithm_t</a>)0x07000200)</pre>
+<p>This encryption scheme is defined by <span><em>PKCS #1: RSA Cryptography Specifications Version 2.2</em> <a class="reference internal" href="../../about/about.html#cite-rfc-8017"><span class="cite">[RFC8017]</span></a></span> <a class="reference external" href="https://datatracker.ietf.org/doc/html/rfc8017.html#section-7.2">§7.2</a> under the name RSAES-PKCS-v1_5.</p>
+<p class="rubric">Compatible key types</p>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="../keys/types.html#c.PSA_KEY_TYPE_RSA_KEY_PAIR" title="PSA_KEY_TYPE_RSA_KEY_PAIR"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_KEY_TYPE_RSA_KEY_PAIR</span></code></a></div>
+<div class="line"><a class="reference internal" href="../keys/types.html#c.PSA_KEY_TYPE_RSA_PUBLIC_KEY" title="PSA_KEY_TYPE_RSA_PUBLIC_KEY"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_KEY_TYPE_RSA_PUBLIC_KEY</span></code></a> (asymmetric encryption only)</div>
+</div>
+</section>
+<section id="c.PSA_ALG_RSA_OAEP">
+<h3><code class="docutils literal notranslate"><span class="pre">PSA_ALG_RSA_OAEP</span></code> (macro)<a class="headerlink" href="#c.PSA_ALG_RSA_OAEP" title="Link to this heading">¶</a></h3>
+<p>The RSA OAEP asymmetric encryption algorithm.</p>
+<pre class="literal-block">#define <a class="reference internal" href="#c.PSA_ALG_RSA_OAEP" title="PSA_ALG_RSA_OAEP">PSA_ALG_RSA_OAEP</a>(hash_alg) <em><a class="reference internal" href="../../overview/implementation.html#specification-defined-value"><span class="std std-ref">/* specification-defined value */</span></a></em></pre>
+<p class="rubric">Parameters</p>
+<div class="apisubitem docutils container">
+<dl class="simple">
+<dt><p><code class="docutils literal notranslate"><span class="pre">hash_alg</span></code></p>
+</dt><dd><p>A hash algorithm: a value of type <a class="reference internal" href="algorithms.html#c.psa_algorithm_t" title="psa_algorithm_t"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_algorithm_t</span></code></a> such that <a class="reference internal" href="algorithms.html#c.PSA_ALG_IS_HASH" title="PSA_ALG_IS_HASH"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_IS_HASH</span></code></a><code class="docutils literal notranslate"><span class="pre">(</span></code><code class="docutils literal notranslate"><span class="pre">hash_alg</span></code><code class="docutils literal notranslate"><span class="pre">)</span></code> is true. The hash algorithm is used for <em>MGF1</em>.</p>
+</dd>
+</dl>
+</div>
+<p class="rubric">Returns</p>
+<p>The corresponding RSA OAEP encryption algorithm.</p>
+<p>Unspecified if <code class="docutils literal notranslate"><span class="pre">hash_alg</span></code> is not a supported hash algorithm.</p>
+<p class="rubric">Description</p>
+<p>This encryption scheme is defined by <a class="reference internal" href="../../about/about.html#cite-rfc-8017"><span class="cite">[RFC8017]</span></a> <a class="reference external" href="https://datatracker.ietf.org/doc/html/rfc8017.html#section-7.1">§7.1</a> under the name RSAES-OAEP, with the following options:</p>
+<ul class="simple">
+<li><p>The mask generation function <em>MGF1</em> defined in <a class="reference internal" href="../../about/about.html#cite-rfc-8017"><span class="cite">[RFC8017]</span></a> <a class="reference external" href="https://datatracker.ietf.org/doc/html/rfc8017.html#appendix-B.2.1">Appendix B.2.1</a>.</p></li>
+<li><p>The specified hash algorithm is used to hash the label, and for the mask generation function.</p></li>
+</ul>
+<p class="rubric">Compatible key types</p>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="../keys/types.html#c.PSA_KEY_TYPE_RSA_KEY_PAIR" title="PSA_KEY_TYPE_RSA_KEY_PAIR"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_KEY_TYPE_RSA_KEY_PAIR</span></code></a></div>
+<div class="line"><a class="reference internal" href="../keys/types.html#c.PSA_KEY_TYPE_RSA_PUBLIC_KEY" title="PSA_KEY_TYPE_RSA_PUBLIC_KEY"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_KEY_TYPE_RSA_PUBLIC_KEY</span></code></a> (asymmetric encryption only)</div>
+</div>
+</section>
+</section>
+<section id="asymmetric-encryption-functions">
+<h2><span class="section-number">10.10.2 </span>Asymmetric encryption functions<a class="headerlink" href="#asymmetric-encryption-functions" title="Link to this heading">¶</a></h2>
+<section id="c.psa_asymmetric_encrypt">
+<h3><code class="docutils literal notranslate"><span class="pre">psa_asymmetric_encrypt</span></code> (function)<a class="headerlink" href="#c.psa_asymmetric_encrypt" title="Link to this heading">¶</a></h3>
+<p>Encrypt a short message with a public key.</p>
+<pre class="literal-block">psa_status_t <a class="reference internal" href="#c.psa_asymmetric_encrypt" title="psa_asymmetric_encrypt">psa_asymmetric_encrypt</a>(<a class="reference internal" href="../keys/ids.html#c.psa_key_id_t" title="psa_key_id_t">psa_key_id_t</a> key,
+                                    <a class="reference internal" href="algorithms.html#c.psa_algorithm_t" title="psa_algorithm_t">psa_algorithm_t</a> alg,
+                                    const uint8_t * input,
+                                    size_t input_length,
+                                    const uint8_t * salt,
+                                    size_t salt_length,
+                                    uint8_t * output,
+                                    size_t output_size,
+                                    size_t * output_length);</pre>
+<p class="rubric">Parameters</p>
+<div class="apisubitem docutils container">
+<dl class="simple">
+<dt><p><code class="docutils literal notranslate"><span class="pre">key</span></code></p>
+</dt><dd><p>Identifier of the key to use for the operation. It must be a public key or an asymmetric key pair.
+It must permit the usage <a class="reference internal" href="../keys/policy.html#c.PSA_KEY_USAGE_ENCRYPT" title="PSA_KEY_USAGE_ENCRYPT"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_KEY_USAGE_ENCRYPT</span></code></a>.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">alg</span></code></p>
+</dt><dd><p>The asymmetric encryption algorithm to compute: a value of type <a class="reference internal" href="algorithms.html#c.psa_algorithm_t" title="psa_algorithm_t"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_algorithm_t</span></code></a> such that <a class="reference internal" href="algorithms.html#c.PSA_ALG_IS_ASYMMETRIC_ENCRYPTION" title="PSA_ALG_IS_ASYMMETRIC_ENCRYPTION"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_IS_ASYMMETRIC_ENCRYPTION</span></code></a><code class="docutils literal notranslate"><span class="pre">(</span></code><code class="docutils literal notranslate"><span class="pre">alg</span></code><code class="docutils literal notranslate"><span class="pre">)</span></code> is true.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">input</span></code></p>
+</dt><dd><p>The message to encrypt.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">input_length</span></code></p>
+</dt><dd><p>Size of the <code class="docutils literal notranslate"><span class="pre">input</span></code> buffer in bytes.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">salt</span></code></p>
+</dt><dd><p>A salt or label, if supported by the encryption algorithm. If the algorithm does not support a salt, pass <code class="docutils literal notranslate"><span class="pre">NULL</span></code>. If the algorithm supports an optional salt, pass <code class="docutils literal notranslate"><span class="pre">NULL</span></code> to indicate that there is no salt.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">salt_length</span></code></p>
+</dt><dd><p>Size of the <code class="docutils literal notranslate"><span class="pre">salt</span></code> buffer in bytes. If <code class="docutils literal notranslate"><span class="pre">salt</span></code> is <code class="docutils literal notranslate"><span class="pre">NULL</span></code>, pass <code class="docutils literal notranslate"><span class="pre">0</span></code>.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">output</span></code></p>
+</dt><dd><p>Buffer where the encrypted message is to be written.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">output_size</span></code></p>
+</dt><dd><p>Size of the <code class="docutils literal notranslate"><span class="pre">output</span></code> buffer in bytes.
+This must be appropriate for the selected algorithm and key:</p>
+<ul class="simple">
+<li><p>The required output size is <a class="reference internal" href="#c.PSA_ASYMMETRIC_ENCRYPT_OUTPUT_SIZE" title="PSA_ASYMMETRIC_ENCRYPT_OUTPUT_SIZE"><code class="docutils literal notranslate"><span class="pre">PSA_ASYMMETRIC_ENCRYPT_OUTPUT_SIZE</span></code></a><code class="docutils literal notranslate"><span class="pre">(</span></code><code class="docutils literal notranslate"><span class="pre">key_type</span></code><code class="docutils literal notranslate"><span class="pre">,</span> </code><code class="docutils literal notranslate"><span class="pre">key_bits</span></code><code class="docutils literal notranslate"><span class="pre">,</span> </code><code class="docutils literal notranslate"><span class="pre">alg</span></code><code class="docutils literal notranslate"><span class="pre">)</span></code> where <code class="docutils literal notranslate"><span class="pre">key_type</span></code> and <code class="docutils literal notranslate"><span class="pre">key_bits</span></code> are the type and bit-size respectively of <code class="docutils literal notranslate"><span class="pre">key</span></code>.</p></li>
+<li><p><a class="reference internal" href="#c.PSA_ASYMMETRIC_ENCRYPT_OUTPUT_MAX_SIZE" title="PSA_ASYMMETRIC_ENCRYPT_OUTPUT_MAX_SIZE"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_ASYMMETRIC_ENCRYPT_OUTPUT_MAX_SIZE</span></code></a> evaluates to the maximum output size of any supported asymmetric encryption.</p></li>
+</ul>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">output_length</span></code></p>
+</dt><dd><p>On success, the number of bytes that make up the returned output.</p>
+</dd>
+</dl>
+</div>
+<p class="rubric">Returns: <code class="docutils literal notranslate"><span class="pre">psa_status_t</span></code></p>
+<div class="apisubitem docutils container">
+<dl class="simple">
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_SUCCESS</span></code></p>
+</dt><dd><p>Success.
+The first <code class="docutils literal notranslate"><span class="pre">(*output_length)</span></code> bytes of <code class="docutils literal notranslate"><span class="pre">output</span></code> contain the encrypted output.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_BAD_STATE</span></code></p>
+</dt><dd><p>The library requires initializing by a call to <a class="reference internal" href="../library/library.html#c.psa_crypto_init" title="psa_crypto_init"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_crypto_init()</span></code></a>.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_INVALID_HANDLE</span></code></p>
+</dt><dd><p><code class="docutils literal notranslate"><span class="pre">key</span></code> is not a valid key identifier.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_NOT_PERMITTED</span></code></p>
+</dt><dd><p>The key does not have the <a class="reference internal" href="../keys/policy.html#c.PSA_KEY_USAGE_ENCRYPT" title="PSA_KEY_USAGE_ENCRYPT"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_KEY_USAGE_ENCRYPT</span></code></a> flag, or it does not permit the requested algorithm.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_BUFFER_TOO_SMALL</span></code></p>
+</dt><dd><p>The size of the <code class="docutils literal notranslate"><span class="pre">output</span></code> buffer is too small.
+<a class="reference internal" href="#c.PSA_ASYMMETRIC_ENCRYPT_OUTPUT_SIZE" title="PSA_ASYMMETRIC_ENCRYPT_OUTPUT_SIZE"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_ASYMMETRIC_ENCRYPT_OUTPUT_SIZE()</span></code></a> or <a class="reference internal" href="#c.PSA_ASYMMETRIC_ENCRYPT_OUTPUT_MAX_SIZE" title="PSA_ASYMMETRIC_ENCRYPT_OUTPUT_MAX_SIZE"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_ASYMMETRIC_ENCRYPT_OUTPUT_MAX_SIZE</span></code></a> can be used to determine a sufficient buffer size.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_INVALID_ARGUMENT</span></code></p>
+</dt><dd><p>The following conditions can result in this error:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">alg</span></code> is not an asymmetric encryption algorithm.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">key</span></code> is not a public key or an asymmetric key pair, that is compatible with <code class="docutils literal notranslate"><span class="pre">alg</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">input_length</span></code> is not valid for the algorithm and key type.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">salt_length</span></code> is not valid for the algorithm and key type.</p></li>
+</ul>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_NOT_SUPPORTED</span></code></p>
+</dt><dd><p>The following conditions can result in this error:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">alg</span></code> is not supported or is not an asymmetric encryption algorithm.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">key</span></code> is not supported for use with <code class="docutils literal notranslate"><span class="pre">alg</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">input_length</span></code> or <code class="docutils literal notranslate"><span class="pre">salt_length</span></code> are too large for the implementation.</p></li>
+</ul>
+</dd>
+<dt><p><a class="reference internal" href="../library/status.html#c.PSA_ERROR_INSUFFICIENT_ENTROPY" title="PSA_ERROR_INSUFFICIENT_ENTROPY"><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_INSUFFICIENT_ENTROPY</span></code></a></p>
+</dt><dd></dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_INSUFFICIENT_MEMORY</span></code></p>
+</dt><dd></dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_COMMUNICATION_FAILURE</span></code></p>
+</dt><dd></dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_CORRUPTION_DETECTED</span></code></p>
+</dt><dd></dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_STORAGE_FAILURE</span></code></p>
+</dt><dd></dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_DATA_CORRUPT</span></code></p>
+</dt><dd></dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_DATA_INVALID</span></code></p>
+</dt><dd></dd>
+</dl>
+</div>
+<p class="rubric">Description</p>
+<ul class="simple">
+<li><p>For <a class="reference internal" href="#c.PSA_ALG_RSA_PKCS1V15_CRYPT" title="PSA_ALG_RSA_PKCS1V15_CRYPT"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_ALG_RSA_PKCS1V15_CRYPT</span></code></a>, no salt is supported.</p></li>
+</ul>
+</section>
+<section id="c.psa_asymmetric_decrypt">
+<h3><code class="docutils literal notranslate"><span class="pre">psa_asymmetric_decrypt</span></code> (function)<a class="headerlink" href="#c.psa_asymmetric_decrypt" title="Link to this heading">¶</a></h3>
+<p>Decrypt a short message with a private key.</p>
+<pre class="literal-block">psa_status_t <a class="reference internal" href="#c.psa_asymmetric_decrypt" title="psa_asymmetric_decrypt">psa_asymmetric_decrypt</a>(<a class="reference internal" href="../keys/ids.html#c.psa_key_id_t" title="psa_key_id_t">psa_key_id_t</a> key,
+                                    <a class="reference internal" href="algorithms.html#c.psa_algorithm_t" title="psa_algorithm_t">psa_algorithm_t</a> alg,
+                                    const uint8_t * input,
+                                    size_t input_length,
+                                    const uint8_t * salt,
+                                    size_t salt_length,
+                                    uint8_t * output,
+                                    size_t output_size,
+                                    size_t * output_length);</pre>
+<p class="rubric">Parameters</p>
+<div class="apisubitem docutils container">
+<dl class="simple">
+<dt><p><code class="docutils literal notranslate"><span class="pre">key</span></code></p>
+</dt><dd><p>Identifier of the key to use for the operation. It must be an asymmetric key pair.
+It must permit the usage <a class="reference internal" href="../keys/policy.html#c.PSA_KEY_USAGE_DECRYPT" title="PSA_KEY_USAGE_DECRYPT"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_KEY_USAGE_DECRYPT</span></code></a>.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">alg</span></code></p>
+</dt><dd><p>The asymmetric encryption algorithm to compute: a value of type <a class="reference internal" href="algorithms.html#c.psa_algorithm_t" title="psa_algorithm_t"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_algorithm_t</span></code></a> such that <a class="reference internal" href="algorithms.html#c.PSA_ALG_IS_ASYMMETRIC_ENCRYPTION" title="PSA_ALG_IS_ASYMMETRIC_ENCRYPTION"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_IS_ASYMMETRIC_ENCRYPTION</span></code></a><code class="docutils literal notranslate"><span class="pre">(</span></code><code class="docutils literal notranslate"><span class="pre">alg</span></code><code class="docutils literal notranslate"><span class="pre">)</span></code> is true.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">input</span></code></p>
+</dt><dd><p>The message to decrypt.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">input_length</span></code></p>
+</dt><dd><p>Size of the <code class="docutils literal notranslate"><span class="pre">input</span></code> buffer in bytes.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">salt</span></code></p>
+</dt><dd><p>A salt or label, if supported by the encryption algorithm. If the algorithm does not support a salt, pass <code class="docutils literal notranslate"><span class="pre">NULL</span></code>. If the algorithm supports an optional salt, pass <code class="docutils literal notranslate"><span class="pre">NULL</span></code> to indicate that there is no salt.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">salt_length</span></code></p>
+</dt><dd><p>Size of the <code class="docutils literal notranslate"><span class="pre">salt</span></code> buffer in bytes. If <code class="docutils literal notranslate"><span class="pre">salt</span></code> is <code class="docutils literal notranslate"><span class="pre">NULL</span></code>, pass <code class="docutils literal notranslate"><span class="pre">0</span></code>.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">output</span></code></p>
+</dt><dd><p>Buffer where the decrypted message is to be written.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">output_size</span></code></p>
+</dt><dd><p>Size of the <code class="docutils literal notranslate"><span class="pre">output</span></code> buffer in bytes.
+This must be appropriate for the selected algorithm and key:</p>
+<ul class="simple">
+<li><p>The required output size is <a class="reference internal" href="#c.PSA_ASYMMETRIC_DECRYPT_OUTPUT_SIZE" title="PSA_ASYMMETRIC_DECRYPT_OUTPUT_SIZE"><code class="docutils literal notranslate"><span class="pre">PSA_ASYMMETRIC_DECRYPT_OUTPUT_SIZE</span></code></a><code class="docutils literal notranslate"><span class="pre">(</span></code><code class="docutils literal notranslate"><span class="pre">key_type</span></code><code class="docutils literal notranslate"><span class="pre">,</span> </code><code class="docutils literal notranslate"><span class="pre">key_bits</span></code><code class="docutils literal notranslate"><span class="pre">,</span> </code><code class="docutils literal notranslate"><span class="pre">alg</span></code><code class="docutils literal notranslate"><span class="pre">)</span></code> where <code class="docutils literal notranslate"><span class="pre">key_type</span></code> and <code class="docutils literal notranslate"><span class="pre">key_bits</span></code> are the type and bit-size respectively of <code class="docutils literal notranslate"><span class="pre">key</span></code>.</p></li>
+<li><p><a class="reference internal" href="#c.PSA_ASYMMETRIC_DECRYPT_OUTPUT_MAX_SIZE" title="PSA_ASYMMETRIC_DECRYPT_OUTPUT_MAX_SIZE"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_ASYMMETRIC_DECRYPT_OUTPUT_MAX_SIZE</span></code></a> evaluates to the maximum output size of any supported asymmetric decryption.</p></li>
+</ul>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">output_length</span></code></p>
+</dt><dd><p>On success, the number of bytes that make up the returned output.</p>
+</dd>
+</dl>
+</div>
+<p class="rubric">Returns: <code class="docutils literal notranslate"><span class="pre">psa_status_t</span></code></p>
+<div class="apisubitem docutils container">
+<dl class="simple">
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_SUCCESS</span></code></p>
+</dt><dd><p>Success.
+The first <code class="docutils literal notranslate"><span class="pre">(*output_length)</span></code> bytes of <code class="docutils literal notranslate"><span class="pre">output</span></code> contain the decrypted output.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_BAD_STATE</span></code></p>
+</dt><dd><p>The library requires initializing by a call to <a class="reference internal" href="../library/library.html#c.psa_crypto_init" title="psa_crypto_init"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_crypto_init()</span></code></a>.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_INVALID_HANDLE</span></code></p>
+</dt><dd><p><code class="docutils literal notranslate"><span class="pre">key</span></code> is not a valid key identifier.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_NOT_PERMITTED</span></code></p>
+</dt><dd><p>The key does not have the <a class="reference internal" href="../keys/policy.html#c.PSA_KEY_USAGE_DECRYPT" title="PSA_KEY_USAGE_DECRYPT"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_KEY_USAGE_DECRYPT</span></code></a> flag, or it does not permit the requested algorithm.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_BUFFER_TOO_SMALL</span></code></p>
+</dt><dd><p>The size of the <code class="docutils literal notranslate"><span class="pre">output</span></code> buffer is too small.
+<a class="reference internal" href="#c.PSA_ASYMMETRIC_DECRYPT_OUTPUT_SIZE" title="PSA_ASYMMETRIC_DECRYPT_OUTPUT_SIZE"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_ASYMMETRIC_DECRYPT_OUTPUT_SIZE()</span></code></a> or <a class="reference internal" href="#c.PSA_ASYMMETRIC_DECRYPT_OUTPUT_MAX_SIZE" title="PSA_ASYMMETRIC_DECRYPT_OUTPUT_MAX_SIZE"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_ASYMMETRIC_DECRYPT_OUTPUT_MAX_SIZE</span></code></a> can be used to determine a sufficient buffer size.</p>
+</dd>
+<dt><p><a class="reference internal" href="../library/status.html#c.PSA_ERROR_INVALID_PADDING" title="PSA_ERROR_INVALID_PADDING"><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_INVALID_PADDING</span></code></a></p>
+</dt><dd><p>The algorithm uses padding, and the input does not contain valid padding.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_INVALID_ARGUMENT</span></code></p>
+</dt><dd><p>The following conditions can result in this error:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">alg</span></code> is not an asymmetric encryption algorithm.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">key</span></code> is not an asymmetric key pair, that is compatible with <code class="docutils literal notranslate"><span class="pre">alg</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">input_length</span></code> is not valid for the algorithm and key type.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">salt_length</span></code> is not valid for the algorithm and key type.</p></li>
+</ul>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_NOT_SUPPORTED</span></code></p>
+</dt><dd><p>The following conditions can result in this error:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">alg</span></code> is not supported or is not an asymmetric encryption algorithm.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">key</span></code> is not supported for use with <code class="docutils literal notranslate"><span class="pre">alg</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">input_length</span></code> or <code class="docutils literal notranslate"><span class="pre">salt_length</span></code> are too large for the implementation.</p></li>
+</ul>
+</dd>
+<dt><p><a class="reference internal" href="../library/status.html#c.PSA_ERROR_INSUFFICIENT_ENTROPY" title="PSA_ERROR_INSUFFICIENT_ENTROPY"><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_INSUFFICIENT_ENTROPY</span></code></a></p>
+</dt><dd></dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_INSUFFICIENT_MEMORY</span></code></p>
+</dt><dd></dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_COMMUNICATION_FAILURE</span></code></p>
+</dt><dd></dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_CORRUPTION_DETECTED</span></code></p>
+</dt><dd></dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_STORAGE_FAILURE</span></code></p>
+</dt><dd></dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_DATA_CORRUPT</span></code></p>
+</dt><dd></dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_DATA_INVALID</span></code></p>
+</dt><dd></dd>
+</dl>
+</div>
+<p class="rubric">Description</p>
+<ul class="simple">
+<li><p>For <a class="reference internal" href="#c.PSA_ALG_RSA_PKCS1V15_CRYPT" title="PSA_ALG_RSA_PKCS1V15_CRYPT"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_ALG_RSA_PKCS1V15_CRYPT</span></code></a>, no salt is supported.</p></li>
+</ul>
+</section>
+</section>
+<section id="support-macros">
+<h2><span class="section-number">10.10.3 </span>Support macros<a class="headerlink" href="#support-macros" title="Link to this heading">¶</a></h2>
+<section id="c.PSA_ALG_IS_RSA_OAEP">
+<h3><code class="docutils literal notranslate"><span class="pre">PSA_ALG_IS_RSA_OAEP</span></code> (macro)<a class="headerlink" href="#c.PSA_ALG_IS_RSA_OAEP" title="Link to this heading">¶</a></h3>
+<p>Whether the specified algorithm is an RSA OAEP encryption algorithm.</p>
+<pre class="literal-block">#define <a class="reference internal" href="#c.PSA_ALG_IS_RSA_OAEP" title="PSA_ALG_IS_RSA_OAEP">PSA_ALG_IS_RSA_OAEP</a>(alg) <em><a class="reference internal" href="../../overview/implementation.html#specification-defined-value"><span class="std std-ref">/* specification-defined value */</span></a></em></pre>
+<p class="rubric">Parameters</p>
+<div class="apisubitem docutils container">
+<dl class="simple">
+<dt><p><code class="docutils literal notranslate"><span class="pre">alg</span></code></p>
+</dt><dd><p>An algorithm identifier: a value of type <a class="reference internal" href="algorithms.html#c.psa_algorithm_t" title="psa_algorithm_t"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_algorithm_t</span></code></a>.</p>
+</dd>
+</dl>
+</div>
+<p class="rubric">Returns</p>
+<p><code class="docutils literal notranslate"><span class="pre">1</span></code> if <code class="docutils literal notranslate"><span class="pre">alg</span></code> is an RSA OAEP algorithm, <code class="docutils literal notranslate"><span class="pre">0</span></code> otherwise.</p>
+<p>This macro can return either <code class="docutils literal notranslate"><span class="pre">0</span></code> or <code class="docutils literal notranslate"><span class="pre">1</span></code> if <code class="docutils literal notranslate"><span class="pre">alg</span></code> is not a supported algorithm identifier.</p>
+</section>
+<section id="c.PSA_ASYMMETRIC_ENCRYPT_OUTPUT_SIZE">
+<h3><code class="docutils literal notranslate"><span class="pre">PSA_ASYMMETRIC_ENCRYPT_OUTPUT_SIZE</span></code> (macro)<a class="headerlink" href="#c.PSA_ASYMMETRIC_ENCRYPT_OUTPUT_SIZE" title="Link to this heading">¶</a></h3>
+<p>Sufficient output buffer size for <a class="reference internal" href="#c.psa_asymmetric_encrypt" title="psa_asymmetric_encrypt"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_asymmetric_encrypt()</span></code></a>.</p>
+<pre class="literal-block">#define <a class="reference internal" href="#c.PSA_ASYMMETRIC_ENCRYPT_OUTPUT_SIZE" title="PSA_ASYMMETRIC_ENCRYPT_OUTPUT_SIZE">PSA_ASYMMETRIC_ENCRYPT_OUTPUT_SIZE</a>(key_type, key_bits, alg) \
+    <em><a class="reference internal" href="../../overview/implementation.html#implementation-defined-value"><span class="std std-ref">/* implementation-defined value */</span></a></em></pre>
+<p class="rubric">Parameters</p>
+<div class="apisubitem docutils container">
+<dl class="simple">
+<dt><p><code class="docutils literal notranslate"><span class="pre">key_type</span></code></p>
+</dt><dd><p>An asymmetric key type, either a key pair or a public key.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">key_bits</span></code></p>
+</dt><dd><p>The size of the key in bits.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">alg</span></code></p>
+</dt><dd><p>An asymmetric encryption algorithm: a value of type <a class="reference internal" href="algorithms.html#c.psa_algorithm_t" title="psa_algorithm_t"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_algorithm_t</span></code></a> such that <a class="reference internal" href="algorithms.html#c.PSA_ALG_IS_ASYMMETRIC_ENCRYPTION" title="PSA_ALG_IS_ASYMMETRIC_ENCRYPTION"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_IS_ASYMMETRIC_ENCRYPTION</span></code></a><code class="docutils literal notranslate"><span class="pre">(</span></code><code class="docutils literal notranslate"><span class="pre">alg</span></code><code class="docutils literal notranslate"><span class="pre">)</span></code> is true.</p>
+</dd>
+</dl>
+</div>
+<p class="rubric">Returns</p>
+<p>A sufficient output buffer size for the specified asymmetric encryption algorithm and key parameters. An implementation can return either <code class="docutils literal notranslate"><span class="pre">0</span></code> or a correct size for an asymmetric encryption algorithm and key parameters that it recognizes, but does not support. If the parameters are not valid, the return value is unspecified.</p>
+<p class="rubric">Description</p>
+<p>If the size of the output buffer is at least this large, it is guaranteed that <a class="reference internal" href="#c.psa_asymmetric_encrypt" title="psa_asymmetric_encrypt"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_asymmetric_encrypt()</span></code></a> will not fail due to an insufficient buffer size. The actual size of the output might be smaller in any given call.</p>
+<p>See also <a class="reference internal" href="#c.PSA_ASYMMETRIC_ENCRYPT_OUTPUT_MAX_SIZE" title="PSA_ASYMMETRIC_ENCRYPT_OUTPUT_MAX_SIZE"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_ASYMMETRIC_ENCRYPT_OUTPUT_MAX_SIZE</span></code></a>.</p>
+</section>
+<section id="c.PSA_ASYMMETRIC_ENCRYPT_OUTPUT_MAX_SIZE">
+<h3><code class="docutils literal notranslate"><span class="pre">PSA_ASYMMETRIC_ENCRYPT_OUTPUT_MAX_SIZE</span></code> (macro)<a class="headerlink" href="#c.PSA_ASYMMETRIC_ENCRYPT_OUTPUT_MAX_SIZE" title="Link to this heading">¶</a></h3>
+<p>A sufficient output buffer size for <a class="reference internal" href="#c.psa_asymmetric_encrypt" title="psa_asymmetric_encrypt"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_asymmetric_encrypt()</span></code></a>, for any of the supported key types and asymmetric encryption algorithms.</p>
+<pre class="literal-block">#define <a class="reference internal" href="#c.PSA_ASYMMETRIC_ENCRYPT_OUTPUT_MAX_SIZE" title="PSA_ASYMMETRIC_ENCRYPT_OUTPUT_MAX_SIZE">PSA_ASYMMETRIC_ENCRYPT_OUTPUT_MAX_SIZE</a> \
+    <em><a class="reference internal" href="../../overview/implementation.html#implementation-defined-value"><span class="std std-ref">/* implementation-defined value */</span></a></em></pre>
+<p>If the size of the output buffer is at least this large, it is guaranteed that <a class="reference internal" href="#c.psa_asymmetric_encrypt" title="psa_asymmetric_encrypt"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_asymmetric_encrypt()</span></code></a> will not fail due to an insufficient buffer size.</p>
+<p>See also <a class="reference internal" href="#c.PSA_ASYMMETRIC_ENCRYPT_OUTPUT_SIZE" title="PSA_ASYMMETRIC_ENCRYPT_OUTPUT_SIZE"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_ASYMMETRIC_ENCRYPT_OUTPUT_SIZE()</span></code></a>.</p>
+</section>
+<section id="c.PSA_ASYMMETRIC_DECRYPT_OUTPUT_SIZE">
+<h3><code class="docutils literal notranslate"><span class="pre">PSA_ASYMMETRIC_DECRYPT_OUTPUT_SIZE</span></code> (macro)<a class="headerlink" href="#c.PSA_ASYMMETRIC_DECRYPT_OUTPUT_SIZE" title="Link to this heading">¶</a></h3>
+<p>Sufficient output buffer size for <a class="reference internal" href="#c.psa_asymmetric_decrypt" title="psa_asymmetric_decrypt"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_asymmetric_decrypt()</span></code></a>.</p>
+<pre class="literal-block">#define <a class="reference internal" href="#c.PSA_ASYMMETRIC_DECRYPT_OUTPUT_SIZE" title="PSA_ASYMMETRIC_DECRYPT_OUTPUT_SIZE">PSA_ASYMMETRIC_DECRYPT_OUTPUT_SIZE</a>(key_type, key_bits, alg) \
+    <em><a class="reference internal" href="../../overview/implementation.html#implementation-defined-value"><span class="std std-ref">/* implementation-defined value */</span></a></em></pre>
+<p class="rubric">Parameters</p>
+<div class="apisubitem docutils container">
+<dl class="simple">
+<dt><p><code class="docutils literal notranslate"><span class="pre">key_type</span></code></p>
+</dt><dd><p>An asymmetric key type, either a key pair or a public key.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">key_bits</span></code></p>
+</dt><dd><p>The size of the key in bits.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">alg</span></code></p>
+</dt><dd><p>An asymmetric encryption algorithm: a value of type <a class="reference internal" href="algorithms.html#c.psa_algorithm_t" title="psa_algorithm_t"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_algorithm_t</span></code></a> such that <a class="reference internal" href="algorithms.html#c.PSA_ALG_IS_ASYMMETRIC_ENCRYPTION" title="PSA_ALG_IS_ASYMMETRIC_ENCRYPTION"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_IS_ASYMMETRIC_ENCRYPTION</span></code></a><code class="docutils literal notranslate"><span class="pre">(</span></code><code class="docutils literal notranslate"><span class="pre">alg</span></code><code class="docutils literal notranslate"><span class="pre">)</span></code> is true.</p>
+</dd>
+</dl>
+</div>
+<p class="rubric">Returns</p>
+<p>A sufficient output buffer size for the specified asymmetric encryption algorithm and key parameters. An implementation can return either <code class="docutils literal notranslate"><span class="pre">0</span></code> or a correct size for an asymmetric encryption algorithm and key parameters that it recognizes, but does not support. If the parameters are not valid, the return value is unspecified.</p>
+<p class="rubric">Description</p>
+<p>If the size of the output buffer is at least this large, it is guaranteed that <a class="reference internal" href="#c.psa_asymmetric_decrypt" title="psa_asymmetric_decrypt"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_asymmetric_decrypt()</span></code></a> will not fail due to an insufficient buffer size. The actual size of the output might be smaller in any given call.</p>
+<p>See also <a class="reference internal" href="#c.PSA_ASYMMETRIC_DECRYPT_OUTPUT_MAX_SIZE" title="PSA_ASYMMETRIC_DECRYPT_OUTPUT_MAX_SIZE"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_ASYMMETRIC_DECRYPT_OUTPUT_MAX_SIZE</span></code></a>.</p>
+</section>
+<section id="c.PSA_ASYMMETRIC_DECRYPT_OUTPUT_MAX_SIZE">
+<h3><code class="docutils literal notranslate"><span class="pre">PSA_ASYMMETRIC_DECRYPT_OUTPUT_MAX_SIZE</span></code> (macro)<a class="headerlink" href="#c.PSA_ASYMMETRIC_DECRYPT_OUTPUT_MAX_SIZE" title="Link to this heading">¶</a></h3>
+<p>A sufficient output buffer size for <a class="reference internal" href="#c.psa_asymmetric_decrypt" title="psa_asymmetric_decrypt"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_asymmetric_decrypt()</span></code></a>, for any of the supported key types and asymmetric encryption algorithms.</p>
+<pre class="literal-block">#define <a class="reference internal" href="#c.PSA_ASYMMETRIC_DECRYPT_OUTPUT_MAX_SIZE" title="PSA_ASYMMETRIC_DECRYPT_OUTPUT_MAX_SIZE">PSA_ASYMMETRIC_DECRYPT_OUTPUT_MAX_SIZE</a> \
+    <em><a class="reference internal" href="../../overview/implementation.html#implementation-defined-value"><span class="std std-ref">/* implementation-defined value */</span></a></em></pre>
+<p>If the size of the output buffer is at least this large, it is guaranteed that <a class="reference internal" href="#c.psa_asymmetric_decrypt" title="psa_asymmetric_decrypt"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_asymmetric_decrypt()</span></code></a> will not fail due to an insufficient buffer size.</p>
+<p>See also <a class="reference internal" href="#c.PSA_ASYMMETRIC_DECRYPT_OUTPUT_SIZE" title="PSA_ASYMMETRIC_DECRYPT_OUTPUT_SIZE"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_ASYMMETRIC_DECRYPT_OUTPUT_SIZE()</span></code></a>.</p>
+</section>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &#169; 2018-2026 Arm Limited and/or its affiliates.
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

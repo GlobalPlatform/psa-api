@@ -1,0 +1,506 @@
+---
+---
+
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta property="og:title" content="10.7 Key wrapping" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="{{ page.url | absolute_url }}" />
+<link rel="canonical" href="{{ page.url | absolute_url }}" />
+<meta property="og:site_name" content="PSA Certified Crypto API 1.5" />
+<meta property="og:description" content="Key wrapping is the process of encrypting a key, so that the resulting ciphertext can be stored, or transported, in a form that maintains the confidentiality of the key material. Key unwrapping rev..." />
+<meta name="description" content="Key wrapping is the process of encrypting a key, so that the resulting ciphertext can be stored, or transported, in a form that maintains the confidentiality of the key material. Key unwrapping rev..." />
+
+    <title>10.7 Key wrapping &#8212; PSA Certified Crypto API 1.5</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/basic.css?v=686e5160" />
+    <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css?v=f6a572b4" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
+    <link rel="preconnect" type="text/css" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" type="text/css" href="https://fonts.gstatic.com" />
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;1,300;1,400&display=swap" />
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Mono:ital,wght@0,300;0,400;1,300&display=swap" />
+    <script src="../../_static/documentation_options.js?v=f8f0f945"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="10.8 Key derivation" href="key-derivation.html" />
+    <link rel="prev" title="10.6 Authenticated encryption with associated data (AEAD)" href="aead.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../index.html">
+              <img class="logo" src="../../_static/ARM_LOGO-2025_INK_RGB.svg" alt="Logo of PSA Certified Crypto API"/>
+            </a></p><hr />
+<h3><a href="../../index.html">PSA Certified<br />Crypto API</a></h3>
+IHI 0086<br/>
+Non-confidential<br/>
+Version 1.5.0
+<hr />
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../about/about.html">About this document</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../overview/intro.html">1 Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview/goals.html">2 Design goals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview/functionality.html">3 Functionality overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview/sample-arch.html">4 Sample architectures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview/conventions.html">5 Library conventions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview/implementation.html">6 Implementation considerations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview/usage.html">7 Usage considerations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../library/index.html">8 Library management reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../keys/index.html">9 Key management reference</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">10 Cryptographic operation reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="algorithms.html">10.1 Algorithms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hash.html">10.2 Message digests (Hashes)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="xof.html">10.3 Extendable-output functions (XOF)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mac.html">10.4 Message authentication codes (MAC)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cipher.html">10.5 Unauthenticated ciphers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="aead.html">10.6 Authenticated encryption with associated data (AEAD)</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">10.7 Key wrapping</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#key-wrapping-algorithms">10.7.1 Key-wrapping algorithms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#key-wrapping-functions">10.7.2 Key wrapping functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#support-macros">10.7.3 Support macros</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="key-derivation.html">10.8 Key derivation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="signature.html">10.9 Asymmetric signature</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pk-encryption.html">10.10 Asymmetric encryption</a></li>
+<li class="toctree-l2"><a class="reference internal" href="key-agreement.html">10.11 Key agreement</a></li>
+<li class="toctree-l2"><a class="reference internal" href="key-encapsulation.html">10.12 Key encapsulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pake.html">10.13 Password-authenticated key exchange (PAKE)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rng.html">10.14 Other cryptographic services</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../appendix/example_header.html">A Example header file</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../appendix/encodings.html">B Algorithm and key type encoding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../appendix/specdef_values.html">C Example macro implementations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../appendix/sra.html">D Security Risk Assessment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../appendix/history.html">E Changes to the API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../atg_c-identifiers.html">Index of API elements</a></li>
+</ul>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="key-wrapping">
+<span id="id1"></span><h1><span class="section-number">10.7 </span>Key wrapping<a class="headerlink" href="#key-wrapping" title="Link to this heading">¶</a></h1>
+<p>Key wrapping is the process of encrypting a key, so that the resulting ciphertext can be stored, or transported, in a form that maintains the confidentiality of the key material.
+Key unwrapping reverses this process, extracting the key from the ciphertext.
+Some key-wrapping schemes also provide integrity protection, to ensure that modification of the ciphertext can be detected.</p>
+<p>Some key-wrapping algorithms operate on arbitrary data, and provide authenticated encryption that is specifically designed for key values.
+For example, the AES Key-wrap algorithm AES-KW.
+For this type of algorithm, the Crypto API provides a simple pair of functions, <a class="reference internal" href="#c.psa_unwrap_key" title="psa_unwrap_key"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_unwrap_key()</span></code></a> and <a class="reference internal" href="#c.psa_wrap_key" title="psa_wrap_key"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_wrap_key()</span></code></a>, that unwrap or wrap key data in the default export format.
+When using one of these key-wrapping algorithms, the key attributes are managed by the application.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Other key-wrapping schemes define both the format of the wrapped key material and the algorithm that is used to perform the wrapping.
+For example PKCS#8 defines <em>EncryptedPrivateKeyInfo</em>, which is also described in <span><em>Asymmetric Key Packages</em> <a class="reference internal" href="../../about/about.html#cite-rfc-5958"><span class="cite">[RFC5958]</span></a></span>.
+Wrapped-key formats typically encode the key type and wrapping algorithm within the output data, and can also include other key attributes.
+This version of the Crypto API does not support these key-wrapping schemes, but this is planned for a future version.</p>
+</div>
+<section id="key-wrapping-algorithms">
+<span id="id2"></span><h2><span class="section-number">10.7.1 </span>Key-wrapping algorithms<a class="headerlink" href="#key-wrapping-algorithms" title="Link to this heading">¶</a></h2>
+<section id="c.PSA_ALG_KW">
+<h3><code class="docutils literal notranslate"><span class="pre">PSA_ALG_KW</span></code> (macro)<a class="headerlink" href="#c.PSA_ALG_KW" title="Link to this heading">¶</a></h3>
+<p>A key-wrapping algorithm based on the NIST Key Wrap (KW) mode of a block cipher.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">Added in version 1.4.</span></p>
+</div>
+<pre class="literal-block">#define <a class="reference internal" href="#c.PSA_ALG_KW" title="PSA_ALG_KW">PSA_ALG_KW</a> ((<a class="reference internal" href="algorithms.html#c.psa_algorithm_t" title="psa_algorithm_t">psa_algorithm_t</a>)0x0B400100)</pre>
+<p>KW is defined for block ciphers that have a 128-bit block size.
+The underlying block cipher is determined by the key type.</p>
+<p>Keys to be wrapped must have a length equal to a multiple of the ‘semi-block’ size for the block cipher.
+That is, a multiple of 8 bytes.</p>
+<p>To wrap keys that are not a multiple of the semi-block size, <a class="reference internal" href="#c.PSA_ALG_KWP" title="PSA_ALG_KWP"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_ALG_KWP</span></code></a> can be used.</p>
+<p>This is the NIST Key Wrap algorithm, using any block-cipher that operates on 128-bit blocks, as defined in <span><em>NIST Special Publication 800-38F: Recommendation for Block Cipher Modes of Operation: Methods for Key Wrapping</em> <a class="reference internal" href="../../about/about.html#cite-sp800-38f"><span class="cite">[SP800-38F]</span></a></span>.
+A definition of AES-KW is also found in <span><em>Advanced Encryption Standard (AES) Key Wrap Algorithm</em> <a class="reference internal" href="../../about/about.html#cite-rfc-3394"><span class="cite">[RFC3394]</span></a></span>.</p>
+<p class="rubric">Compatible key types</p>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="../keys/types.html#c.PSA_KEY_TYPE_AES" title="PSA_KEY_TYPE_AES"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_KEY_TYPE_AES</span></code></a></div>
+<div class="line"><a class="reference internal" href="../keys/types.html#c.PSA_KEY_TYPE_ARIA" title="PSA_KEY_TYPE_ARIA"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_KEY_TYPE_ARIA</span></code></a></div>
+<div class="line"><a class="reference internal" href="../keys/types.html#c.PSA_KEY_TYPE_CAMELLIA" title="PSA_KEY_TYPE_CAMELLIA"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_KEY_TYPE_CAMELLIA</span></code></a></div>
+<div class="line"><a class="reference internal" href="../keys/types.html#c.PSA_KEY_TYPE_SM4" title="PSA_KEY_TYPE_SM4"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_KEY_TYPE_SM4</span></code></a></div>
+</div>
+</section>
+<section id="c.PSA_ALG_KWP">
+<h3><code class="docutils literal notranslate"><span class="pre">PSA_ALG_KWP</span></code> (macro)<a class="headerlink" href="#c.PSA_ALG_KWP" title="Link to this heading">¶</a></h3>
+<p>A key-wrapping algorithm based on the NIST Key Wrap with Padding (KWP) mode of a block cipher.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">Added in version 1.4.</span></p>
+</div>
+<pre class="literal-block">#define <a class="reference internal" href="#c.PSA_ALG_KWP" title="PSA_ALG_KWP">PSA_ALG_KWP</a> ((<a class="reference internal" href="algorithms.html#c.psa_algorithm_t" title="psa_algorithm_t">psa_algorithm_t</a>)0x0BC00200)</pre>
+<p>KWP is defined for block ciphers that have a 128-bit block size.
+The underlying block cipher is determined by the key type.</p>
+<p>This algorithm can wrap a key of any length.</p>
+<p>This is the NIST Key Wrap with Padding algorithm, using any block-cipher that operates on 128-bit blocks, as defined in <span><em>NIST Special Publication 800-38F: Recommendation for Block Cipher Modes of Operation: Methods for Key Wrapping</em> <a class="reference internal" href="../../about/about.html#cite-sp800-38f"><span class="cite">[SP800-38F]</span></a></span>.
+A definition of AES-KWP is also found in <span><em>Advanced Encryption Standard (AES) Key Wrap with Padding Algorithm</em> <a class="reference internal" href="../../about/about.html#cite-rfc-5649"><span class="cite">[RFC5649]</span></a></span>.</p>
+<p class="rubric">Compatible key types</p>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="../keys/types.html#c.PSA_KEY_TYPE_AES" title="PSA_KEY_TYPE_AES"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_KEY_TYPE_AES</span></code></a></div>
+<div class="line"><a class="reference internal" href="../keys/types.html#c.PSA_KEY_TYPE_ARIA" title="PSA_KEY_TYPE_ARIA"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_KEY_TYPE_ARIA</span></code></a></div>
+<div class="line"><a class="reference internal" href="../keys/types.html#c.PSA_KEY_TYPE_CAMELLIA" title="PSA_KEY_TYPE_CAMELLIA"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_KEY_TYPE_CAMELLIA</span></code></a></div>
+<div class="line"><a class="reference internal" href="../keys/types.html#c.PSA_KEY_TYPE_SM4" title="PSA_KEY_TYPE_SM4"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_KEY_TYPE_SM4</span></code></a></div>
+</div>
+</section>
+</section>
+<section id="key-wrapping-functions">
+<h2><span class="section-number">10.7.2 </span>Key wrapping functions<a class="headerlink" href="#key-wrapping-functions" title="Link to this heading">¶</a></h2>
+<section id="c.psa_unwrap_key">
+<h3><code class="docutils literal notranslate"><span class="pre">psa_unwrap_key</span></code> (function)<a class="headerlink" href="#c.psa_unwrap_key" title="Link to this heading">¶</a></h3>
+<p>Unwrap and import a key using a specified wrapping key.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">Added in version 1.4.</span></p>
+</div>
+<pre class="literal-block">psa_status_t <a class="reference internal" href="#c.psa_unwrap_key" title="psa_unwrap_key">psa_unwrap_key</a>(const <a class="reference internal" href="../keys/attributes.html#c.psa_key_attributes_t" title="psa_key_attributes_t">psa_key_attributes_t</a> * attributes,
+                            <a class="reference internal" href="../keys/ids.html#c.psa_key_id_t" title="psa_key_id_t">psa_key_id_t</a> wrapping_key,
+                            <a class="reference internal" href="algorithms.html#c.psa_algorithm_t" title="psa_algorithm_t">psa_algorithm_t</a> alg,
+                            const uint8_t * data,
+                            size_t data_length,
+                            <a class="reference internal" href="../keys/ids.html#c.psa_key_id_t" title="psa_key_id_t">psa_key_id_t</a> * key);</pre>
+<p class="rubric">Parameters</p>
+<div class="apisubitem docutils container">
+<dl>
+<dt><p><code class="docutils literal notranslate"><span class="pre">attributes</span></code></p>
+</dt><dd><p>The attributes for the new key.</p>
+<p>The following attributes are required for all keys:</p>
+<ul class="simple">
+<li><p>The key type determines how the decrypted <code class="docutils literal notranslate"><span class="pre">data</span></code> buffer is interpreted.</p></li>
+</ul>
+<p>The following attributes must be set for keys used in cryptographic operations:</p>
+<ul class="simple">
+<li><p>The key permitted-algorithm policy, see <a class="reference internal" href="../keys/policy.html#permitted-algorithms"><span class="secref">Permitted algorithms</span></a>.</p></li>
+<li><p>The key usage flags, see <a class="reference internal" href="../keys/policy.html#key-usage-flags"><span class="secref">Key usage flags</span></a>.</p></li>
+</ul>
+<p>The following attributes must be set for keys that do not use the default volatile lifetime:</p>
+<ul class="simple">
+<li><p>The key lifetime, see <a class="reference internal" href="../keys/lifetimes.html#key-lifetimes"><span class="secref">Key lifetimes</span></a>.</p></li>
+<li><p>The key identifier is required for a key with a persistent lifetime, see <a class="reference internal" href="../keys/ids.html#key-identifiers"><span class="secref">Key identifiers</span></a>.</p></li>
+</ul>
+<p>The following attributes are optional:</p>
+<ul class="simple">
+<li><p>If the key size is nonzero, it must be equal to the key size determined from <code class="docutils literal notranslate"><span class="pre">data</span></code>.</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This is an input parameter: it is not updated with the final key attributes.
+The final attributes of the new key can be queried by calling <a class="reference internal" href="../keys/attributes.html#c.psa_get_key_attributes" title="psa_get_key_attributes"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_get_key_attributes()</span></code></a> with the key’s identifier.</p>
+</div>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">wrapping_key</span></code></p>
+</dt><dd><p>Identifier of the key to use for the unwrapping operation.
+It must permit the usage <a class="reference internal" href="../keys/policy.html#c.PSA_KEY_USAGE_UNWRAP" title="PSA_KEY_USAGE_UNWRAP"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_KEY_USAGE_UNWRAP</span></code></a>.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">alg</span></code></p>
+</dt><dd><p>The key-wrapping algorithm: a value of type <a class="reference internal" href="algorithms.html#c.psa_algorithm_t" title="psa_algorithm_t"><code class="docutils literal notranslate"><span class="pre">psa_algorithm_t</span></code></a> such that <a class="reference internal" href="algorithms.html#c.PSA_ALG_IS_KEY_WRAP" title="PSA_ALG_IS_KEY_WRAP"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_IS_KEY_WRAP</span></code></a><code class="docutils literal notranslate"><span class="pre">(</span></code><code class="docutils literal notranslate"><span class="pre">alg</span></code><code class="docutils literal notranslate"><span class="pre">)</span></code> is true.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">data</span></code></p>
+</dt><dd><p>Buffer containing the wrapped key data.
+The content of this buffer is unwrapped using the algorithm <code class="docutils literal notranslate"><span class="pre">alg</span></code>, and then interpreted according to the type declared in <code class="docutils literal notranslate"><span class="pre">attributes</span></code>.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">data_length</span></code></p>
+</dt><dd><p>Size of the <code class="docutils literal notranslate"><span class="pre">data</span></code> buffer in bytes.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">key</span></code></p>
+</dt><dd><p>On success, an identifier for the newly created key.
+<a class="reference internal" href="../keys/ids.html#c.PSA_KEY_ID_NULL" title="PSA_KEY_ID_NULL"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_KEY_ID_NULL</span></code></a> on failure.</p>
+</dd>
+</dl>
+</div>
+<p class="rubric">Returns: <code class="docutils literal notranslate"><span class="pre">psa_status_t</span></code></p>
+<div class="apisubitem docutils container">
+<dl class="simple">
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_SUCCESS</span></code></p>
+</dt><dd><p>Success.
+If the key is persistent, the key material and the key’s metadata have been saved to persistent storage.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_BAD_STATE</span></code></p>
+</dt><dd><p>The library requires initializing by a call to <a class="reference internal" href="../library/library.html#c.psa_crypto_init" title="psa_crypto_init"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_crypto_init()</span></code></a>.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_INVALID_HANDLE</span></code></p>
+</dt><dd><p><code class="docutils literal notranslate"><span class="pre">wrapping_key</span></code> is not a valid key identifier.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_NOT_PERMITTED</span></code></p>
+</dt><dd><p>The following conditions can result in this error:</p>
+<ul class="simple">
+<li><p>The wrapping key does not have the <a class="reference internal" href="../keys/policy.html#c.PSA_KEY_USAGE_UNWRAP" title="PSA_KEY_USAGE_UNWRAP"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_KEY_USAGE_UNWRAP</span></code></a> flag, or it does not permit the requested algorithm.</p></li>
+<li><p>The implementation does not permit creating a key with the specified attributes due to some implementation-specific policy.</p></li>
+</ul>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_INVALID_SIGNATURE</span></code></p>
+</dt><dd><p>The wrapped key data could not be authenticated.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_ALREADY_EXISTS</span></code></p>
+</dt><dd><p>This is an attempt to create a persistent key, and there is already a persistent key with the given identifier.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_INVALID_ARGUMENT</span></code></p>
+</dt><dd><p>The following conditions can result in this error:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">alg</span></code> is not a key-wrapping algorithm.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">wrapping_key</span></code> is not compatible with <code class="docutils literal notranslate"><span class="pre">alg</span></code>.</p></li>
+<li><p>The key type is invalid.</p></li>
+<li><p>The key size is nonzero, and is incompatible with the wrapped key data in <code class="docutils literal notranslate"><span class="pre">data</span></code>.</p></li>
+<li><p>The key lifetime is invalid.</p></li>
+<li><p>The key identifier is not valid for the key lifetime.</p></li>
+<li><p>The key usage flags include invalid values.</p></li>
+<li><p>The key’s permitted-usage algorithm is invalid.</p></li>
+<li><p>The key attributes, as a whole, are invalid.</p></li>
+<li><p>The key data is not correctly formatted for the key type.</p></li>
+</ul>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_NOT_SUPPORTED</span></code></p>
+</dt><dd><p>The following conditions can result in this error:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">alg</span></code> is not supported or is not a key-wrapping algorithm.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">wrapping_key</span></code> is not supported for use with <code class="docutils literal notranslate"><span class="pre">alg</span></code>.</p></li>
+<li><p>The key attributes, as a whole, are not supported, either by the implementation in general or in the specified storage location.</p></li>
+</ul>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_INSUFFICIENT_MEMORY</span></code></p>
+</dt><dd></dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_INSUFFICIENT_STORAGE</span></code></p>
+</dt><dd></dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_COMMUNICATION_FAILURE</span></code></p>
+</dt><dd></dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_CORRUPTION_DETECTED</span></code></p>
+</dt><dd></dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_STORAGE_FAILURE</span></code></p>
+</dt><dd></dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_DATA_CORRUPT</span></code></p>
+</dt><dd></dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_DATA_INVALID</span></code></p>
+</dt><dd></dd>
+</dl>
+</div>
+<p class="rubric">Description</p>
+<p>The key is unwrapped and extracted from the provided <code class="docutils literal notranslate"><span class="pre">data</span></code> buffer. Its location, policy, and type are taken from <code class="docutils literal notranslate"><span class="pre">attributes</span></code>.</p>
+<p>The wrapped key data determines the key size.
+:code:<code class="docutils literal notranslate"><span class="pre">psa_get_key_bits(attributes)</span></code> must either match the determined key size or be <code class="docutils literal notranslate"><span class="pre">0</span></code>.</p>
+<p>Implementations must reject an attempt to unwrap a key if the determined key size is <code class="docutils literal notranslate"><span class="pre">0</span></code>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>A call to <a class="reference internal" href="#c.psa_unwrap_key" title="psa_unwrap_key"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_unwrap_key()</span></code></a> first applies the decryption procedure associated with the key-wrapping algorithm <code class="docutils literal notranslate"><span class="pre">alg</span></code>, using the <code class="docutils literal notranslate"><span class="pre">wrapping_key</span></code> key, to the supplied <code class="docutils literal notranslate"><span class="pre">data</span></code> buffer.
+The resulting plaintext is retained within the cryptoprocessor, and used with the provided <code class="docutils literal notranslate"><span class="pre">attributes</span></code> to create a key, as if they were inputs to <a class="reference internal" href="../keys/management.html#c.psa_import_key" title="psa_import_key"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_import_key()</span></code></a>.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The Crypto API does not support asymmetric private key objects outside of a key pair.
+When unwrapping a private key, the corresponding key-pair type is created.
+If the imported key data does not contain the public key, then the implementation will reconstruct the public key from the private key as needed.</p>
+</div>
+<div class="admonition-implementation-note admonition">
+<p class="admonition-title">Implementation note</p>
+<p>It is recommended that the implementation supports unwrapping any key data that can be produced by a call to <a class="reference internal" href="#c.psa_wrap_key" title="psa_wrap_key"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_wrap_key()</span></code></a>, with the same key-wrapping algorithm and key, and matching key attributes.</p>
+<p>It is recommended that implementations reject wrapped key data if it might be erroneous, for example, if it is the wrong type or is truncated.</p>
+</div>
+</section>
+<section id="c.psa_wrap_key">
+<h3><code class="docutils literal notranslate"><span class="pre">psa_wrap_key</span></code> (function)<a class="headerlink" href="#c.psa_wrap_key" title="Link to this heading">¶</a></h3>
+<p>Wrap and export a key using a specified wrapping key.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">Added in version 1.4.</span></p>
+</div>
+<pre class="literal-block">psa_status_t <a class="reference internal" href="#c.psa_wrap_key" title="psa_wrap_key">psa_wrap_key</a>(<a class="reference internal" href="../keys/ids.html#c.psa_key_id_t" title="psa_key_id_t">psa_key_id_t</a> wrapping_key,
+                          <a class="reference internal" href="algorithms.html#c.psa_algorithm_t" title="psa_algorithm_t">psa_algorithm_t</a> alg,
+                          <a class="reference internal" href="../keys/ids.html#c.psa_key_id_t" title="psa_key_id_t">psa_key_id_t</a> key,
+                          uint8_t * data,
+                          size_t data_size,
+                          size_t * data_length);</pre>
+<p class="rubric">Parameters</p>
+<div class="apisubitem docutils container">
+<dl class="simple">
+<dt><p><code class="docutils literal notranslate"><span class="pre">wrapping_key</span></code></p>
+</dt><dd><p>Identifier of the key to use for the wrapping operation.
+It must permit the usage <a class="reference internal" href="../keys/policy.html#c.PSA_KEY_USAGE_WRAP" title="PSA_KEY_USAGE_WRAP"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_KEY_USAGE_WRAP</span></code></a>.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">alg</span></code></p>
+</dt><dd><p>The key-wrapping algorithm: a value of type <a class="reference internal" href="algorithms.html#c.psa_algorithm_t" title="psa_algorithm_t"><code class="docutils literal notranslate"><span class="pre">psa_algorithm_t</span></code></a> such that <a class="reference internal" href="algorithms.html#c.PSA_ALG_IS_KEY_WRAP" title="PSA_ALG_IS_KEY_WRAP"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_IS_KEY_WRAP</span></code></a><code class="docutils literal notranslate"><span class="pre">(</span></code><code class="docutils literal notranslate"><span class="pre">alg</span></code><code class="docutils literal notranslate"><span class="pre">)</span></code> is true.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">key</span></code></p>
+</dt><dd><p>Identifier of the key to wrap.
+It must permit the usage <a class="reference internal" href="../keys/policy.html#c.PSA_KEY_USAGE_EXPORT" title="PSA_KEY_USAGE_EXPORT"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_KEY_USAGE_EXPORT</span></code></a>.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">data</span></code></p>
+</dt><dd><p>Buffer where the wrapped key data is to be written.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">data_size</span></code></p>
+</dt><dd><p>Size of the <code class="docutils literal notranslate"><span class="pre">data</span></code> buffer in bytes.
+This must be appropriate for the key:</p>
+<ul class="simple">
+<li><p>The required output size is <a class="reference internal" href="#c.PSA_WRAP_KEY_OUTPUT_SIZE" title="PSA_WRAP_KEY_OUTPUT_SIZE"><code class="docutils literal notranslate"><span class="pre">PSA_WRAP_KEY_OUTPUT_SIZE</span></code></a><code class="docutils literal notranslate"><span class="pre">(</span></code><code class="docutils literal notranslate"><span class="pre">wrap_key_type</span></code><code class="docutils literal notranslate"><span class="pre">,</span> </code><code class="docutils literal notranslate"><span class="pre">alg</span></code><code class="docutils literal notranslate"><span class="pre">,</span> </code><code class="docutils literal notranslate"><span class="pre">type</span></code><code class="docutils literal notranslate"><span class="pre">,</span> </code><code class="docutils literal notranslate"><span class="pre">bits</span></code><code class="docutils literal notranslate"><span class="pre">)</span></code>, where <code class="docutils literal notranslate"><span class="pre">wrap_key_type</span></code> is the type of the wrapping key, <code class="docutils literal notranslate"><span class="pre">alg</span></code> is the key-wrapping algorithm, <code class="docutils literal notranslate"><span class="pre">type</span></code> is the type of the key being wrapped, and <code class="docutils literal notranslate"><span class="pre">bits</span></code> is the bit-size of the key being wrapped.</p></li>
+<li><p><a class="reference internal" href="#c.PSA_WRAP_KEY_PAIR_MAX_SIZE" title="PSA_WRAP_KEY_PAIR_MAX_SIZE"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_WRAP_KEY_PAIR_MAX_SIZE</span></code></a> evaluates to the maximum wrapped output size of any supported key pair, in any supported combination of key-wrapping algorithm and wrapping-key type.</p></li>
+<li><p>This API defines no maximum size for wrapped symmetric keys.
+Arbitrarily large data items can be stored in the key store, for example certificates that correspond to a stored private key or input material for key derivation.</p></li>
+</ul>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">data_length</span></code></p>
+</dt><dd><p>On success, the number of bytes that make up the wrapped key data.</p>
+</dd>
+</dl>
+</div>
+<p class="rubric">Returns: <code class="docutils literal notranslate"><span class="pre">psa_status_t</span></code></p>
+<div class="apisubitem docutils container">
+<dl class="simple">
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_SUCCESS</span></code></p>
+</dt><dd><p>Success.
+The first <code class="docutils literal notranslate"><span class="pre">(*data_length)</span></code> bytes of <code class="docutils literal notranslate"><span class="pre">data</span></code> contain the wrapped key.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_BAD_STATE</span></code></p>
+</dt><dd><p>The library requires initializing by a call to <a class="reference internal" href="../library/library.html#c.psa_crypto_init" title="psa_crypto_init"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_crypto_init()</span></code></a>.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_INVALID_HANDLE</span></code></p>
+</dt><dd><p>The following conditions can result in this error:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">wrapping_key</span></code> is not a valid key identifier.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">key</span></code> is not a valid key identifier.</p></li>
+</ul>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_NOT_PERMITTED</span></code></p>
+</dt><dd><p>The following conditions can result in this error:</p>
+<ul class="simple">
+<li><p>The wrapping key does not have the <a class="reference internal" href="../keys/policy.html#c.PSA_KEY_USAGE_WRAP" title="PSA_KEY_USAGE_WRAP"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_KEY_USAGE_WRAP</span></code></a> flag, or it does not permit the requested algorithm.</p></li>
+<li><p>The key to be wrapped does not have the <a class="reference internal" href="../keys/policy.html#c.PSA_KEY_USAGE_EXPORT" title="PSA_KEY_USAGE_EXPORT"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_KEY_USAGE_EXPORT</span></code></a> flag.</p></li>
+</ul>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_BUFFER_TOO_SMALL</span></code></p>
+</dt><dd><p>The size of the <code class="docutils literal notranslate"><span class="pre">data</span></code> buffer is too small.
+<a class="reference internal" href="#c.PSA_WRAP_KEY_OUTPUT_SIZE" title="PSA_WRAP_KEY_OUTPUT_SIZE"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_WRAP_KEY_OUTPUT_SIZE()</span></code></a> or <a class="reference internal" href="#c.PSA_WRAP_KEY_PAIR_MAX_SIZE" title="PSA_WRAP_KEY_PAIR_MAX_SIZE"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_WRAP_KEY_PAIR_MAX_SIZE</span></code></a> can be used to determine a sufficient buffer size.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_INVALID_ARGUMENT</span></code></p>
+</dt><dd><p>The following conditions can result in this error:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">alg</span></code> is not a key-wrapping algorithm.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">wrapping_key</span></code> is not compatible with <code class="docutils literal notranslate"><span class="pre">alg</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">key</span></code> has a size that is not valid for <code class="docutils literal notranslate"><span class="pre">alg</span></code>.</p></li>
+</ul>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_NOT_SUPPORTED</span></code></p>
+</dt><dd><p>The following conditions can result in this error:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">alg</span></code> is not supported or is not a key-wrapping algorithm.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">wrapping_key</span></code> is not supported for use with <code class="docutils literal notranslate"><span class="pre">alg</span></code>.</p></li>
+<li><p>The storage location of <code class="docutils literal notranslate"><span class="pre">key</span></code> does not support export of the key.</p></li>
+<li><p>The implementation does not support export of keys with the type of <code class="docutils literal notranslate"><span class="pre">key</span></code>.</p></li>
+</ul>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_INSUFFICIENT_MEMORY</span></code></p>
+</dt><dd></dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_COMMUNICATION_FAILURE</span></code></p>
+</dt><dd></dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_CORRUPTION_DETECTED</span></code></p>
+</dt><dd></dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_STORAGE_FAILURE</span></code></p>
+</dt><dd></dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_DATA_CORRUPT</span></code></p>
+</dt><dd></dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_DATA_INVALID</span></code></p>
+</dt><dd></dd>
+</dl>
+</div>
+<p class="rubric">Description</p>
+<p>Wrap a key from the key store into a data buffer using a specified key-wrapping algorithm and key-wrapping key.
+On success, the output contains the wrapped key value.
+The policy of the key to be wrapped must have the usage flag <a class="reference internal" href="../keys/policy.html#c.PSA_KEY_USAGE_EXPORT" title="PSA_KEY_USAGE_EXPORT"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_KEY_USAGE_EXPORT</span></code></a> set.</p>
+<p>The output of this function can be passed to <a class="reference internal" href="#c.psa_unwrap_key" title="psa_unwrap_key"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_unwrap_key()</span></code></a>, specifying the same algorithm and wrapping key, with the same attributes as <code class="docutils literal notranslate"><span class="pre">key</span></code>, to create an equivalent key object.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>A call to <a class="reference internal" href="#c.psa_wrap_key" title="psa_wrap_key"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_wrap_key()</span></code></a> first evaluates the key data for <code class="docutils literal notranslate"><span class="pre">key</span></code>, as if <a class="reference internal" href="../keys/management.html#c.psa_export_key" title="psa_export_key"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_export_key()</span></code></a> is called, but retaining the key data within the cryptoprocessor.
+If this succeeds, the encryption procedure associated with the key-wrapping algorithm <code class="docutils literal notranslate"><span class="pre">alg</span></code>, using the <code class="docutils literal notranslate"><span class="pre">wrapping_key</span></code> key, is applied to the key data.
+The resulting ciphertext is then returned.</p>
+</div>
+</section>
+</section>
+<section id="support-macros">
+<h2><span class="section-number">10.7.3 </span>Support macros<a class="headerlink" href="#support-macros" title="Link to this heading">¶</a></h2>
+<section id="c.PSA_WRAP_KEY_OUTPUT_SIZE">
+<h3><code class="docutils literal notranslate"><span class="pre">PSA_WRAP_KEY_OUTPUT_SIZE</span></code> (macro)<a class="headerlink" href="#c.PSA_WRAP_KEY_OUTPUT_SIZE" title="Link to this heading">¶</a></h3>
+<p>Sufficient output buffer size for <a class="reference internal" href="#c.psa_wrap_key" title="psa_wrap_key"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_wrap_key()</span></code></a>.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">Added in version 1.4.</span></p>
+</div>
+<pre class="literal-block">#define <a class="reference internal" href="#c.PSA_WRAP_KEY_OUTPUT_SIZE" title="PSA_WRAP_KEY_OUTPUT_SIZE">PSA_WRAP_KEY_OUTPUT_SIZE</a>(wrap_key_type, alg, key_type, key_bits) \
+    <em><a class="reference internal" href="../../overview/implementation.html#implementation-defined-value"><span class="std std-ref">/* implementation-defined value */</span></a></em></pre>
+<p class="rubric">Parameters</p>
+<div class="apisubitem docutils container">
+<dl class="simple">
+<dt><p><code class="docutils literal notranslate"><span class="pre">wrap_key_type</span></code></p>
+</dt><dd><p>A supported key-wrapping key type.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">alg</span></code></p>
+</dt><dd><p>A supported key-wrapping algorithm.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">key_type</span></code></p>
+</dt><dd><p>A supported key type.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">key_bits</span></code></p>
+</dt><dd><p>The size of the key in bits.</p>
+</dd>
+</dl>
+</div>
+<p class="rubric">Returns</p>
+<p>If the parameters are valid and supported, return a buffer size in bytes that guarantees that <a class="reference internal" href="#c.psa_wrap_key" title="psa_wrap_key"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_wrap_key()</span></code></a> will not fail with <code class="docutils literal notranslate"><span class="pre">PSA_ERROR_BUFFER_TOO_SMALL</span></code>. If the parameters are a valid combination that is not supported by the implementation, this macro must return either a sensible size or <code class="docutils literal notranslate"><span class="pre">0</span></code>. If the parameters are not valid, the return value is unspecified.</p>
+<p class="rubric">Description</p>
+<p>See also <a class="reference internal" href="#c.PSA_WRAP_KEY_PAIR_MAX_SIZE" title="PSA_WRAP_KEY_PAIR_MAX_SIZE"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_WRAP_KEY_PAIR_MAX_SIZE</span></code></a>.</p>
+</section>
+<section id="c.PSA_WRAP_KEY_PAIR_MAX_SIZE">
+<h3><code class="docutils literal notranslate"><span class="pre">PSA_WRAP_KEY_PAIR_MAX_SIZE</span></code> (macro)<a class="headerlink" href="#c.PSA_WRAP_KEY_PAIR_MAX_SIZE" title="Link to this heading">¶</a></h3>
+<p>Sufficient buffer size for wrapping any asymmetric key pair.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">Added in version 1.4.</span></p>
+</div>
+<pre class="literal-block">#define <a class="reference internal" href="#c.PSA_WRAP_KEY_PAIR_MAX_SIZE" title="PSA_WRAP_KEY_PAIR_MAX_SIZE">PSA_WRAP_KEY_PAIR_MAX_SIZE</a> <em><a class="reference internal" href="../../overview/implementation.html#implementation-defined-value"><span class="std std-ref">/* implementation-defined value */</span></a></em></pre>
+<p>This value must be a sufficient buffer size when calling <a class="reference internal" href="#c.psa_wrap_key" title="psa_wrap_key"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_wrap_key()</span></code></a> to export any asymmetric key pair that is supported by the implementation, regardless of the exact key type and key size.</p>
+<p>See also <a class="reference internal" href="#c.PSA_WRAP_KEY_OUTPUT_SIZE" title="PSA_WRAP_KEY_OUTPUT_SIZE"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_WRAP_KEY_OUTPUT_SIZE()</span></code></a>.</p>
+</section>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &#169; 2018-2026 Arm Limited and/or its affiliates.
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

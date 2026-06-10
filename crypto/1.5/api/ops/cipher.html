@@ -1,0 +1,1391 @@
+---
+---
+
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta property="og:title" content="10.5 Unauthenticated ciphers" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="{{ page.url | absolute_url }}" />
+<link rel="canonical" href="{{ page.url | absolute_url }}" />
+<meta property="og:site_name" content="PSA Certified Crypto API 1.5" />
+<meta property="og:description" content="The single-part functions for encrypting or decrypting a message using an unauthenticated symmetric cipher are: psa_cipher_encrypt() to encrypt a message using an unauthenticated symmetric cipher. ..." />
+<meta name="description" content="The single-part functions for encrypting or decrypting a message using an unauthenticated symmetric cipher are: psa_cipher_encrypt() to encrypt a message using an unauthenticated symmetric cipher. ..." />
+
+    <title>10.5 Unauthenticated ciphers &#8212; PSA Certified Crypto API 1.5</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/basic.css?v=686e5160" />
+    <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css?v=f6a572b4" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
+    <link rel="preconnect" type="text/css" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" type="text/css" href="https://fonts.gstatic.com" />
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;1,300;1,400&display=swap" />
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Mono:ital,wght@0,300;0,400;1,300&display=swap" />
+    <script src="../../_static/documentation_options.js?v=f8f0f945"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script>window.MathJax = {"chtml": {"mtextInheritFont": false, "mtextFont": "Lato-Light"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="10.6 Authenticated encryption with associated data (AEAD)" href="aead.html" />
+    <link rel="prev" title="10.4 Message authentication codes (MAC)" href="mac.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../index.html">
+              <img class="logo" src="../../_static/ARM_LOGO-2025_INK_RGB.svg" alt="Logo of PSA Certified Crypto API"/>
+            </a></p><hr />
+<h3><a href="../../index.html">PSA Certified<br />Crypto API</a></h3>
+IHI 0086<br/>
+Non-confidential<br/>
+Version 1.5.0
+<hr />
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../about/about.html">About this document</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../overview/intro.html">1 Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview/goals.html">2 Design goals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview/functionality.html">3 Functionality overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview/sample-arch.html">4 Sample architectures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview/conventions.html">5 Library conventions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview/implementation.html">6 Implementation considerations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview/usage.html">7 Usage considerations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../library/index.html">8 Library management reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../keys/index.html">9 Key management reference</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">10 Cryptographic operation reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="algorithms.html">10.1 Algorithms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hash.html">10.2 Message digests (Hashes)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="xof.html">10.3 Extendable-output functions (XOF)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mac.html">10.4 Message authentication codes (MAC)</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">10.5 Unauthenticated ciphers</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#cipher-algorithms">10.5.1 Cipher algorithms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#single-part-cipher-functions">10.5.2 Single-part cipher functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#multi-part-cipher-operations">10.5.3 Multi-part cipher operations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#support-macros">10.5.4 Support macros</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="aead.html">10.6 Authenticated encryption with associated data (AEAD)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="key-wrapping.html">10.7 Key wrapping</a></li>
+<li class="toctree-l2"><a class="reference internal" href="key-derivation.html">10.8 Key derivation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="signature.html">10.9 Asymmetric signature</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pk-encryption.html">10.10 Asymmetric encryption</a></li>
+<li class="toctree-l2"><a class="reference internal" href="key-agreement.html">10.11 Key agreement</a></li>
+<li class="toctree-l2"><a class="reference internal" href="key-encapsulation.html">10.12 Key encapsulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pake.html">10.13 Password-authenticated key exchange (PAKE)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rng.html">10.14 Other cryptographic services</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../appendix/example_header.html">A Example header file</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../appendix/encodings.html">B Algorithm and key type encoding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../appendix/specdef_values.html">C Example macro implementations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../appendix/sra.html">D Security Risk Assessment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../appendix/history.html">E Changes to the API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../atg_c-identifiers.html">Index of API elements</a></li>
+</ul>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="unauthenticated-ciphers">
+<span id="ciphers"></span><h1><span class="section-number">10.5 </span>Unauthenticated ciphers<a class="headerlink" href="#unauthenticated-ciphers" title="Link to this heading">¶</a></h1>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The unauthenticated cipher API is provided to implement legacy protocols and for use cases where the data integrity and authenticity is guaranteed by non-cryptographic means.</p>
+<p>It is recommended that newer protocols use <a class="reference internal" href="aead.html#aead"><span class="secref">Authenticated encryption with associated data (AEAD)</span></a>.</p>
+</div>
+<p>The single-part functions for encrypting or decrypting a message using an unauthenticated symmetric cipher are:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#c.psa_cipher_encrypt" title="psa_cipher_encrypt"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_cipher_encrypt()</span></code></a> to encrypt a message using an unauthenticated symmetric cipher. The encryption function generates a random initialization vector (IV). Use the multi-part API to provide a deterministic IV: this is not secure in general, but can be secure in some conditions that depend on the algorithm.</p></li>
+<li><p><a class="reference internal" href="#c.psa_cipher_decrypt" title="psa_cipher_decrypt"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_cipher_decrypt()</span></code></a> to decrypt a message using an unauthenticated symmetric cipher.</p></li>
+</ul>
+<p>The <a class="reference internal" href="#c.psa_cipher_operation_t" title="psa_cipher_operation_t"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_cipher_operation_t</span></code></a> <a class="reference internal" href="../../overview/functionality.html#multi-part-operations"><span class="std std-ref">multi-part operation</span></a> permits alternative initialization parameters and allows messages to be processed in fragments. A multi-part cipher operation is used as follows:</p>
+<ol class="arabic simple">
+<li><p>Initialize the <a class="reference internal" href="#c.psa_cipher_operation_t" title="psa_cipher_operation_t"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_cipher_operation_t</span></code></a> object to zero, or by assigning the value of the associated macro <a class="reference internal" href="#c.PSA_CIPHER_OPERATION_INIT" title="PSA_CIPHER_OPERATION_INIT"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_CIPHER_OPERATION_INIT</span></code></a>.</p></li>
+<li><p>Call <a class="reference internal" href="#c.psa_cipher_encrypt_setup" title="psa_cipher_encrypt_setup"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_cipher_encrypt_setup()</span></code></a> or <a class="reference internal" href="#c.psa_cipher_decrypt_setup" title="psa_cipher_decrypt_setup"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_cipher_decrypt_setup()</span></code></a> to specify the algorithm and key.</p></li>
+<li><p>Provide additional parameters:</p>
+<ul class="simple">
+<li><p>When encrypting data, generate or set an IV, nonce, or similar initial value such as an initial counter value. To generate a random IV, which is recommended in most protocols, call <a class="reference internal" href="#c.psa_cipher_generate_iv" title="psa_cipher_generate_iv"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_cipher_generate_iv()</span></code></a>. To set the IV, call <a class="reference internal" href="#c.psa_cipher_set_iv" title="psa_cipher_set_iv"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_cipher_set_iv()</span></code></a>.</p></li>
+<li><p>When decrypting, set the IV or nonce. To set the IV, call <a class="reference internal" href="#c.psa_cipher_set_iv" title="psa_cipher_set_iv"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_cipher_set_iv()</span></code></a>.</p></li>
+</ul>
+</li>
+<li><p>Call the <a class="reference internal" href="#c.psa_cipher_update" title="psa_cipher_update"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_cipher_update()</span></code></a> function on successive chunks of the message.</p></li>
+<li><p>Call <a class="reference internal" href="#c.psa_cipher_finish" title="psa_cipher_finish"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_cipher_finish()</span></code></a> to complete the operation and return any final output.</p></li>
+</ol>
+<p>To abort the operation or recover from an error, call <a class="reference internal" href="#c.psa_cipher_abort" title="psa_cipher_abort"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_cipher_abort()</span></code></a>.</p>
+<section id="cipher-algorithms">
+<span id="id1"></span><h2><span class="section-number">10.5.1 </span>Cipher algorithms<a class="headerlink" href="#cipher-algorithms" title="Link to this heading">¶</a></h2>
+<section id="c.PSA_ALG_STREAM_CIPHER">
+<h3><code class="docutils literal notranslate"><span class="pre">PSA_ALG_STREAM_CIPHER</span></code> (macro)<a class="headerlink" href="#c.PSA_ALG_STREAM_CIPHER" title="Link to this heading">¶</a></h3>
+<p>The stream cipher mode of a stream cipher algorithm.</p>
+<pre class="literal-block">#define <a class="reference internal" href="#c.PSA_ALG_STREAM_CIPHER" title="PSA_ALG_STREAM_CIPHER">PSA_ALG_STREAM_CIPHER</a> ((<a class="reference internal" href="algorithms.html#c.psa_algorithm_t" title="psa_algorithm_t">psa_algorithm_t</a>)0x04800100)</pre>
+<p>The underlying stream cipher is determined by the key type. The ARC4, ChaCha20, and XChaCha20 ciphers use this algorithm identifier.</p>
+<p class="rubric">ARC4</p>
+<p>To use ARC4, use a key type of <a class="reference internal" href="../keys/types.html#c.PSA_KEY_TYPE_ARC4" title="PSA_KEY_TYPE_ARC4"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_KEY_TYPE_ARC4</span></code></a> and algorithm id <a class="reference internal" href="#c.PSA_ALG_STREAM_CIPHER" title="PSA_ALG_STREAM_CIPHER"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_ALG_STREAM_CIPHER</span></code></a>.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The ARC4 cipher is weak and deprecated and is only recommended for use in legacy applications.</p>
+</div>
+<p>The ARC4 cipher does not use an initialization vector (IV). When using a multi-part cipher operation with the <a class="reference internal" href="#c.PSA_ALG_STREAM_CIPHER" title="PSA_ALG_STREAM_CIPHER"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_ALG_STREAM_CIPHER</span></code></a> algorithm and an ARC4 key, <a class="reference internal" href="#c.psa_cipher_generate_iv" title="psa_cipher_generate_iv"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_cipher_generate_iv()</span></code></a> and <a class="reference internal" href="#c.psa_cipher_set_iv" title="psa_cipher_set_iv"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_cipher_set_iv()</span></code></a> must not be called.</p>
+<p class="rubric">ChaCha20</p>
+<p>To use ChaCha20, use a key type of <a class="reference internal" href="../keys/types.html#c.PSA_KEY_TYPE_CHACHA20" title="PSA_KEY_TYPE_CHACHA20"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_KEY_TYPE_CHACHA20</span></code></a> and algorithm id <a class="reference internal" href="#c.PSA_ALG_STREAM_CIPHER" title="PSA_ALG_STREAM_CIPHER"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_ALG_STREAM_CIPHER</span></code></a>.</p>
+<p>Implementations must support the variant that is defined in <span><em>ChaCha20 and Poly1305 for IETF Protocols</em> <a class="reference internal" href="../../about/about.html#cite-rfc-8439"><span class="cite">[RFC8439]</span></a></span> <a class="reference external" href="https://datatracker.ietf.org/doc/html/rfc8439.html#section-2.4">§2.4</a>, which has a 96-bit nonce and a 32-bit counter. Implementations can optionally also support the original variant, as defined in <span><em>ChaCha, a variant of Salsa20</em> <a class="reference internal" href="../../about/about.html#cite-chacha20"><span class="cite">[CHACHA20]</span></a></span>, which has a 64-bit nonce and a 64-bit counter. Except where noted, the <a class="reference internal" href="../../about/about.html#cite-rfc-8439"><span class="cite">[RFC8439]</span></a> variant must be used.</p>
+<p>ChaCha20 defines a nonce and an initial counter to be provided to the encryption and decryption operations. When using a ChaCha20 key with the <a class="reference internal" href="#c.PSA_ALG_STREAM_CIPHER" title="PSA_ALG_STREAM_CIPHER"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_ALG_STREAM_CIPHER</span></code></a> algorithm, these values are provided using the initialization vector (IV) functions in the following ways:</p>
+<ul class="simple">
+<li><p>A call to <a class="reference internal" href="#c.psa_cipher_encrypt" title="psa_cipher_encrypt"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_cipher_encrypt()</span></code></a> will generate a random 12-byte nonce, and set the counter value to zero. The random nonce is output as a 12-byte IV value in the output.</p></li>
+<li><p>A call to <a class="reference internal" href="#c.psa_cipher_decrypt" title="psa_cipher_decrypt"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_cipher_decrypt()</span></code></a> will use first 12 bytes of the input buffer as the nonce and set the counter value to zero.</p></li>
+<li><p>A call to <a class="reference internal" href="#c.psa_cipher_generate_iv" title="psa_cipher_generate_iv"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_cipher_generate_iv()</span></code></a> on a multi-part cipher operation will generate and return a random 12-byte nonce and set the counter value to zero.</p></li>
+<li><p>A call to <a class="reference internal" href="#c.psa_cipher_set_iv" title="psa_cipher_set_iv"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_cipher_set_iv()</span></code></a> on a multi-part cipher operation can support the following IV sizes:</p>
+<ul>
+<li><p>12 bytes: the provided IV is used as the nonce, and the counter value is set to zero.</p></li>
+<li><p>16 bytes: the first four bytes of the IV are used as the counter value (encoded as little-endian), and the remaining 12 bytes are used as the nonce.</p></li>
+<li><p>8 bytes: the cipher operation uses the original <a class="reference internal" href="../../about/about.html#cite-chacha20"><span class="cite">[CHACHA20]</span></a> definition of ChaCha20: the provided IV is used as the 64-bit nonce, and the 64-bit counter value is set to zero.</p></li>
+<li><p>It is recommended that implementations do not support other sizes of IV.</p></li>
+</ul>
+</li>
+</ul>
+<p class="rubric">XChaCha20</p>
+<p>To use XChaCha20, use a key type of <a class="reference internal" href="../keys/types.html#c.PSA_KEY_TYPE_XCHACHA20" title="PSA_KEY_TYPE_XCHACHA20"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_KEY_TYPE_XCHACHA20</span></code></a> and algorithm id <a class="reference internal" href="#c.PSA_ALG_STREAM_CIPHER" title="PSA_ALG_STREAM_CIPHER"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_ALG_STREAM_CIPHER</span></code></a>.</p>
+<p>XChaCha20 is a variation of ChaCha20 that uses a 192-bit nonce and a 64-bit counter. The larger nonce provides much lower probability of nonce misuse.</p>
+<p>When using an XChaCha20 key with the <a class="reference internal" href="#c.PSA_ALG_STREAM_CIPHER" title="PSA_ALG_STREAM_CIPHER"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_ALG_STREAM_CIPHER</span></code></a> algorithm, the nonce and an initial counter values are provided using the initialization vector (IV) functions in the following ways:</p>
+<ul>
+<li><p>A call to <a class="reference internal" href="#c.psa_cipher_encrypt" title="psa_cipher_encrypt"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_cipher_encrypt()</span></code></a> will generate a random 24-byte nonce, and set the counter value to zero. The random nonce is output as a 24-byte IV value in the output.</p></li>
+<li><p>A call to <a class="reference internal" href="#c.psa_cipher_decrypt" title="psa_cipher_decrypt"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_cipher_decrypt()</span></code></a> will use first 24 bytes of the input buffer as the nonce and set the counter value to zero.</p></li>
+<li><p>A call to <a class="reference internal" href="#c.psa_cipher_generate_iv" title="psa_cipher_generate_iv"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_cipher_generate_iv()</span></code></a> on a multi-part cipher operation will generate and return a random 24-byte nonce and set the counter value to zero.</p></li>
+<li><p>A call to <a class="reference internal" href="#c.psa_cipher_set_iv" title="psa_cipher_set_iv"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_cipher_set_iv()</span></code></a> on a multi-part cipher operation can support the following IV sizes:</p>
+<ul class="simple">
+<li><p>24 bytes: the provided IV is used as the nonce, and the counter value is set to zero.</p></li>
+<li><p>32 bytes: the first 8 bytes of the IV are used as the counter value (encoded as little-endian), and the remaining 24 bytes are used as the nonce.</p></li>
+</ul>
+<p>Other sizes of IV are invalid.</p>
+</li>
+</ul>
+<p>XChaCha20 is defined in <span><em>XChaCha: eXtended-nonce ChaCha and AEAD_XChaCha20_Poly1305</em> <a class="reference internal" href="../../about/about.html#cite-xchacha"><span class="cite">[XCHACHA]</span></a></span>.</p>
+<p class="rubric">Compatible key types</p>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="../keys/types.html#c.PSA_KEY_TYPE_ARC4" title="PSA_KEY_TYPE_ARC4"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_KEY_TYPE_ARC4</span></code></a></div>
+<div class="line"><a class="reference internal" href="../keys/types.html#c.PSA_KEY_TYPE_CHACHA20" title="PSA_KEY_TYPE_CHACHA20"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_KEY_TYPE_CHACHA20</span></code></a></div>
+<div class="line"><a class="reference internal" href="../keys/types.html#c.PSA_KEY_TYPE_XCHACHA20" title="PSA_KEY_TYPE_XCHACHA20"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_KEY_TYPE_XCHACHA20</span></code></a></div>
+</div>
+</section>
+<section id="c.PSA_ALG_CTR">
+<h3><code class="docutils literal notranslate"><span class="pre">PSA_ALG_CTR</span></code> (macro)<a class="headerlink" href="#c.PSA_ALG_CTR" title="Link to this heading">¶</a></h3>
+<p>A stream cipher built using the Counter (CTR) mode of a block cipher.</p>
+<pre class="literal-block">#define <a class="reference internal" href="#c.PSA_ALG_CTR" title="PSA_ALG_CTR">PSA_ALG_CTR</a> ((<a class="reference internal" href="algorithms.html#c.psa_algorithm_t" title="psa_algorithm_t">psa_algorithm_t</a>)0x04c01000)</pre>
+<p>CTR is a stream cipher which is built from a block cipher. The underlying block cipher is determined by the key type. For example, to use AES-128-CTR, use this algorithm with a key of type <a class="reference internal" href="../keys/types.html#c.PSA_KEY_TYPE_AES" title="PSA_KEY_TYPE_AES"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_KEY_TYPE_AES</span></code></a> and a size of 128 bits (16 bytes).</p>
+<p>The CTR block cipher mode is defined in <span><em>NIST Special Publication 800-38A: Recommendation for Block Cipher Modes of Operation: Methods and Techniques</em> <a class="reference internal" href="../../about/about.html#cite-sp800-38a"><span class="cite">[SP800-38A]</span></a></span>.</p>
+<p>CTR mode operates using a <em>counter block</em> which is the same size as the cipher block length. The counter block is updated for each block, or a partial final block, that is encrypted or decrypted.</p>
+<p>For the <a class="reference internal" href="#c.PSA_ALG_CTR" title="PSA_ALG_CTR"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_ALG_CTR</span></code></a> algorithm, the counter block is initialized from the IV. The counter block is then treated as a single, big-endian encoded integer, and the counter block is updated by incrementing this integer by <code class="docutils literal notranslate"><span class="pre">1</span></code>.</p>
+<p>The security of CTR mode depends on using counter block values that are unique across all messages encrypted using the same key value.
+This is achieved by using suitable initial counter block values, the appropriate way to do this depends on the application use case:</p>
+<ul>
+<li><p>If the application is using CTR mode to implement a protocol that specifies the construction of the IV, then the application must use a multi-part cipher operation, and call <a class="reference internal" href="#c.psa_cipher_set_iv" title="psa_cipher_set_iv"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_cipher_set_iv()</span></code></a> with the appropriate IV for encryption and decryption operations.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The protocol must use the same counter block update strategy as the one specified here.</p>
+</div>
+</li>
+<li><p>If the application is able to construct a unique <em>nonce</em> value for each time the same key is used to encrypt data, then it is recommended that the application uses a multi-part cipher operation, and call <a class="reference internal" href="#c.psa_cipher_set_iv" title="psa_cipher_set_iv"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_cipher_set_iv()</span></code></a> using the nonce as the IV for encryption and decryption operations.</p>
+<p>The nonce length, <span class="math notranslate nohighlight">\(n\)</span> bytes, must satisfy <span class="math notranslate nohighlight">\(1\le n\le b\)</span>, where <span class="math notranslate nohighlight">\(b\)</span> is the cipher block size in bytes. To avoid a counter-block collision with other nonce values, the application must ensure that at most <span class="math notranslate nohighlight">\(2^{8(b-n)}\)</span> blocks of data are encrypted in any single operation.</p>
+<p>For example, when using CTR encryption with an AES key, the cipher block size is 16 bytes. The application can provide a 12-byte nonce when setting the IV. This leaves 4 bytes for the counter, allowing up to <span class="math notranslate nohighlight">\(2^{32}\)</span> blocks (64GB) of message data to be encrypted in each message.</p>
+</li>
+<li><p>Otherwise, it is recommended that the application uses a random IV value when encrypting data, and transmits the IV along with the ciphertext for use when decrypting the data. This can be achieved with either the single-part cipher functions or the multi-part cipher operation:</p>
+<ul class="simple">
+<li><p>In a multi-part cipher encryption operation, call <a class="reference internal" href="#c.psa_cipher_generate_iv" title="psa_cipher_generate_iv"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_cipher_generate_iv()</span></code></a>, which returns the IV value. To use the same IV in a multi-part cipher decryption operation, call <a class="reference internal" href="#c.psa_cipher_set_iv" title="psa_cipher_set_iv"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_cipher_set_iv()</span></code></a>.</p></li>
+<li><p>A call to <a class="reference internal" href="#c.psa_cipher_encrypt" title="psa_cipher_encrypt"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_cipher_encrypt()</span></code></a> will generate a random counter block value. This is the first block of output. A call to <a class="reference internal" href="#c.psa_cipher_decrypt" title="psa_cipher_decrypt"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_cipher_decrypt()</span></code></a> will use first block of the input buffer as the initial counter block value.</p></li>
+</ul>
+</li>
+</ul>
+<p>When using <a class="reference internal" href="#c.PSA_ALG_CTR" title="PSA_ALG_CTR"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_ALG_CTR</span></code></a>, if the IV passed to <a class="reference internal" href="#c.psa_cipher_set_iv" title="psa_cipher_set_iv"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_cipher_set_iv()</span></code></a> is shorter than a cipher block, the initial counter block is formed by padding the end of the IV with zero bytes up to the block length.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The cipher block length can be determined using <a class="reference internal" href="#c.PSA_BLOCK_CIPHER_BLOCK_LENGTH" title="PSA_BLOCK_CIPHER_BLOCK_LENGTH"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_BLOCK_CIPHER_BLOCK_LENGTH()</span></code></a>.</p>
+</div>
+<p class="rubric">Compatible key types</p>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="../keys/types.html#c.PSA_KEY_TYPE_AES" title="PSA_KEY_TYPE_AES"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_KEY_TYPE_AES</span></code></a></div>
+<div class="line"><a class="reference internal" href="../keys/types.html#c.PSA_KEY_TYPE_ARIA" title="PSA_KEY_TYPE_ARIA"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_KEY_TYPE_ARIA</span></code></a></div>
+<div class="line"><a class="reference internal" href="../keys/types.html#c.PSA_KEY_TYPE_DES" title="PSA_KEY_TYPE_DES"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_KEY_TYPE_DES</span></code></a></div>
+<div class="line"><a class="reference internal" href="../keys/types.html#c.PSA_KEY_TYPE_CAMELLIA" title="PSA_KEY_TYPE_CAMELLIA"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_KEY_TYPE_CAMELLIA</span></code></a></div>
+<div class="line"><a class="reference internal" href="../keys/types.html#c.PSA_KEY_TYPE_SM4" title="PSA_KEY_TYPE_SM4"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_KEY_TYPE_SM4</span></code></a></div>
+</div>
+</section>
+<section id="c.PSA_ALG_CCM_STAR_NO_TAG">
+<h3><code class="docutils literal notranslate"><span class="pre">PSA_ALG_CCM_STAR_NO_TAG</span></code> (macro)<a class="headerlink" href="#c.PSA_ALG_CCM_STAR_NO_TAG" title="Link to this heading">¶</a></h3>
+<p>The CCM* cipher mode without authentication.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">Added in version 1.2.</span></p>
+</div>
+<pre class="literal-block">#define <a class="reference internal" href="#c.PSA_ALG_CCM_STAR_NO_TAG" title="PSA_ALG_CCM_STAR_NO_TAG">PSA_ALG_CCM_STAR_NO_TAG</a> ((<a class="reference internal" href="algorithms.html#c.psa_algorithm_t" title="psa_algorithm_t">psa_algorithm_t</a>)0x04c01300)</pre>
+<p>This is CCM* as specified in <span><em>IEEE Standard for Low-Rate Wireless Networks</em> <a class="reference internal" href="../../about/about.html#cite-ieee-ccm"><span class="cite">[IEEE-CCM]</span></a></span> §7, with a tag length of 0. For CCM* with a nonzero tag length, use the AEAD algorithm <a class="reference internal" href="aead.html#c.PSA_ALG_CCM" title="PSA_ALG_CCM"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_ALG_CCM</span></code></a>.</p>
+<p>The underlying block cipher is determined by the key type.</p>
+<p>The IV generated or set in the cipher API is used as the nonce in the CCM* operation. An implementation must support the default IV length of 13. Support for setting a shorter IV is optional.</p>
+<p>The maximum message length that can be encrypted is dependent on the length of the IV. See <a class="reference internal" href="aead.html#c.PSA_ALG_CCM" title="PSA_ALG_CCM"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_ALG_CCM</span></code></a> for details of this relationship.</p>
+<p class="rubric" id="using-ccm-star-no-tag">Usage in Zigbee</p>
+<p>The Zigbee message encryption algorithm is based on CCM*. This is detailed in <span><em>zigbee Specification</em> <a class="reference internal" href="../../about/about.html#cite-zigbee"><span class="cite">[ZIGBEE]</span></a></span> §B.1.1 and §A.</p>
+<ul>
+<li><p>For unauthenticated messages — when tag length <span class="math notranslate nohighlight">\(M = 0\)</span> — the <a class="reference internal" href="#c.PSA_ALG_CCM_STAR_NO_TAG" title="PSA_ALG_CCM_STAR_NO_TAG"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_ALG_CCM_STAR_NO_TAG</span></code></a> algorithm is used with an AES-128 key in a multi-part cipher operation. The 13-byte IV must be constructed as specified in <a class="reference internal" href="../../about/about.html#cite-zigbee"><span class="cite atg_c atg_c-cite">[ZIGBEE]</span></a>, and provided to the operation using <a class="reference internal" href="#c.psa_cipher_set_iv" title="psa_cipher_set_iv"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_cipher_set_iv()</span></code></a>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>An implementation of Zigbee cannot use the single-part <a class="reference internal" href="#c.psa_cipher_encrypt" title="psa_cipher_encrypt"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_cipher_encrypt()</span></code></a> function, as this generates a random IV, which is not valid for the Zigbee protocol.</p>
+</div>
+</li>
+<li><p>For authenticated messages — when tag length <span class="math notranslate nohighlight">\(M \in \{4, 8, 16\}\)</span> — the <a class="reference internal" href="aead.html#c.PSA_ALG_AEAD_WITH_SHORTENED_TAG" title="PSA_ALG_AEAD_WITH_SHORTENED_TAG"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_AEAD_WITH_SHORTENED_TAG</span></code></a><code class="docutils literal notranslate"><span class="pre">(</span></code><a class="reference internal" href="aead.html#c.PSA_ALG_CCM" title="PSA_ALG_CCM"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_CCM</span></code></a><code class="docutils literal notranslate"><span class="pre">,</span> </code><code class="docutils literal notranslate"><span class="pre">tag_length</span></code><code class="docutils literal notranslate"><span class="pre">)</span></code> algorithm is used with an AES-128 key, where <code class="docutils literal notranslate"><span class="pre">tag_length</span></code> is the required value of <span class="math notranslate nohighlight">\(M\)</span>. The 13-byte nonce must be constructed as specified in <a class="reference internal" href="../../about/about.html#cite-zigbee"><span class="cite atg_c atg_c-cite">[ZIGBEE]</span></a>.</p>
+<p>As the default tag length for CCM is 16, then <a class="reference internal" href="aead.html#c.PSA_ALG_CCM" title="PSA_ALG_CCM"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_ALG_CCM</span></code></a> algorithm can be used when <span class="math notranslate nohighlight">\(M = 16\)</span>.</p>
+</li>
+<li><p>To enable a single AES-128 key to be used for both the <a class="reference internal" href="#c.PSA_ALG_CCM_STAR_NO_TAG" title="PSA_ALG_CCM_STAR_NO_TAG"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_ALG_CCM_STAR_NO_TAG</span></code></a> cipher and <a class="reference internal" href="aead.html#c.PSA_ALG_CCM" title="PSA_ALG_CCM"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_ALG_CCM</span></code></a> AEAD algorithm, the key can be defined with the wildcard <a class="reference internal" href="#c.PSA_ALG_CCM_STAR_ANY_TAG" title="PSA_ALG_CCM_STAR_ANY_TAG"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_ALG_CCM_STAR_ANY_TAG</span></code></a> permitted algorithm.</p></li>
+</ul>
+<p class="rubric">Compatible key types</p>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="../keys/types.html#c.PSA_KEY_TYPE_AES" title="PSA_KEY_TYPE_AES"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_KEY_TYPE_AES</span></code></a></div>
+<div class="line"><a class="reference internal" href="../keys/types.html#c.PSA_KEY_TYPE_ARIA" title="PSA_KEY_TYPE_ARIA"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_KEY_TYPE_ARIA</span></code></a></div>
+<div class="line"><a class="reference internal" href="../keys/types.html#c.PSA_KEY_TYPE_CAMELLIA" title="PSA_KEY_TYPE_CAMELLIA"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_KEY_TYPE_CAMELLIA</span></code></a></div>
+<div class="line"><a class="reference internal" href="../keys/types.html#c.PSA_KEY_TYPE_SM4" title="PSA_KEY_TYPE_SM4"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_KEY_TYPE_SM4</span></code></a></div>
+</div>
+</section>
+<section id="c.PSA_ALG_CFB">
+<h3><code class="docutils literal notranslate"><span class="pre">PSA_ALG_CFB</span></code> (macro)<a class="headerlink" href="#c.PSA_ALG_CFB" title="Link to this heading">¶</a></h3>
+<p>A stream cipher built using the Cipher Feedback (CFB) mode of a block cipher.</p>
+<pre class="literal-block">#define <a class="reference internal" href="#c.PSA_ALG_CFB" title="PSA_ALG_CFB">PSA_ALG_CFB</a> ((<a class="reference internal" href="algorithms.html#c.psa_algorithm_t" title="psa_algorithm_t">psa_algorithm_t</a>)0x04c01100)</pre>
+<p>The underlying block cipher is determined by the key type. This is the variant of CFB where each iteration encrypts or decrypts a segment of the input that is the same length as the cipher block size. For example, using <a class="reference internal" href="#c.PSA_ALG_CFB" title="PSA_ALG_CFB"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_ALG_CFB</span></code></a> with a key of type <a class="reference internal" href="../keys/types.html#c.PSA_KEY_TYPE_AES" title="PSA_KEY_TYPE_AES"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_KEY_TYPE_AES</span></code></a> will result in the AES-CFB-128 cipher.</p>
+<p>CFB mode requires an initialization vector (IV) that is the same size as the cipher block length.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The cipher block length can be determined using <a class="reference internal" href="#c.PSA_BLOCK_CIPHER_BLOCK_LENGTH" title="PSA_BLOCK_CIPHER_BLOCK_LENGTH"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_BLOCK_CIPHER_BLOCK_LENGTH()</span></code></a>.</p>
+</div>
+<p>The CFB block cipher mode is defined in <span><em>NIST Special Publication 800-38A: Recommendation for Block Cipher Modes of Operation: Methods and Techniques</em> <a class="reference internal" href="../../about/about.html#cite-sp800-38a"><span class="cite">[SP800-38A]</span></a></span>, using a segment size <span class="math notranslate nohighlight">\(s\)</span> equal to the block size <span class="math notranslate nohighlight">\(b\)</span>. The definition in <a class="reference internal" href="../../about/about.html#cite-sp800-38a"><span class="cite atg_c atg_c-cite">[SP800-38A]</span></a> is extended to allow an incomplete final block of input, in which case the algorithm discards the final bytes of the key stream when encrypting or decrypting the final partial block.</p>
+<p class="rubric">Compatible key types</p>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="../keys/types.html#c.PSA_KEY_TYPE_AES" title="PSA_KEY_TYPE_AES"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_KEY_TYPE_AES</span></code></a></div>
+<div class="line"><a class="reference internal" href="../keys/types.html#c.PSA_KEY_TYPE_ARIA" title="PSA_KEY_TYPE_ARIA"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_KEY_TYPE_ARIA</span></code></a></div>
+<div class="line"><a class="reference internal" href="../keys/types.html#c.PSA_KEY_TYPE_DES" title="PSA_KEY_TYPE_DES"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_KEY_TYPE_DES</span></code></a></div>
+<div class="line"><a class="reference internal" href="../keys/types.html#c.PSA_KEY_TYPE_CAMELLIA" title="PSA_KEY_TYPE_CAMELLIA"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_KEY_TYPE_CAMELLIA</span></code></a></div>
+<div class="line"><a class="reference internal" href="../keys/types.html#c.PSA_KEY_TYPE_SM4" title="PSA_KEY_TYPE_SM4"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_KEY_TYPE_SM4</span></code></a></div>
+</div>
+</section>
+<section id="c.PSA_ALG_OFB">
+<h3><code class="docutils literal notranslate"><span class="pre">PSA_ALG_OFB</span></code> (macro)<a class="headerlink" href="#c.PSA_ALG_OFB" title="Link to this heading">¶</a></h3>
+<p>A stream cipher built using the Output Feedback (OFB) mode of a block cipher.</p>
+<pre class="literal-block">#define <a class="reference internal" href="#c.PSA_ALG_OFB" title="PSA_ALG_OFB">PSA_ALG_OFB</a> ((<a class="reference internal" href="algorithms.html#c.psa_algorithm_t" title="psa_algorithm_t">psa_algorithm_t</a>)0x04c01200)</pre>
+<p>The underlying block cipher is determined by the key type.</p>
+<p>OFB mode requires an initialization vector (IV) that is the same size as the cipher block length. OFB mode requires that the IV is a nonce, and must be unique for each use of the mode with the same key.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The cipher block length can be determined using <a class="reference internal" href="#c.PSA_BLOCK_CIPHER_BLOCK_LENGTH" title="PSA_BLOCK_CIPHER_BLOCK_LENGTH"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_BLOCK_CIPHER_BLOCK_LENGTH()</span></code></a>.</p>
+</div>
+<p>The OFB block cipher mode is defined in <span><em>NIST Special Publication 800-38A: Recommendation for Block Cipher Modes of Operation: Methods and Techniques</em> <a class="reference internal" href="../../about/about.html#cite-sp800-38a"><span class="cite">[SP800-38A]</span></a></span>.</p>
+<p class="rubric">Compatible key types</p>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="../keys/types.html#c.PSA_KEY_TYPE_AES" title="PSA_KEY_TYPE_AES"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_KEY_TYPE_AES</span></code></a></div>
+<div class="line"><a class="reference internal" href="../keys/types.html#c.PSA_KEY_TYPE_ARIA" title="PSA_KEY_TYPE_ARIA"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_KEY_TYPE_ARIA</span></code></a></div>
+<div class="line"><a class="reference internal" href="../keys/types.html#c.PSA_KEY_TYPE_DES" title="PSA_KEY_TYPE_DES"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_KEY_TYPE_DES</span></code></a></div>
+<div class="line"><a class="reference internal" href="../keys/types.html#c.PSA_KEY_TYPE_CAMELLIA" title="PSA_KEY_TYPE_CAMELLIA"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_KEY_TYPE_CAMELLIA</span></code></a></div>
+<div class="line"><a class="reference internal" href="../keys/types.html#c.PSA_KEY_TYPE_SM4" title="PSA_KEY_TYPE_SM4"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_KEY_TYPE_SM4</span></code></a></div>
+</div>
+</section>
+<section id="c.PSA_ALG_XTS">
+<h3><code class="docutils literal notranslate"><span class="pre">PSA_ALG_XTS</span></code> (macro)<a class="headerlink" href="#c.PSA_ALG_XTS" title="Link to this heading">¶</a></h3>
+<p>The XEX with Ciphertext Stealing (XTS) cipher mode of a block cipher.</p>
+<pre class="literal-block">#define <a class="reference internal" href="#c.PSA_ALG_XTS" title="PSA_ALG_XTS">PSA_ALG_XTS</a> ((<a class="reference internal" href="algorithms.html#c.psa_algorithm_t" title="psa_algorithm_t">psa_algorithm_t</a>)0x0440ff00)</pre>
+<p>XTS is a cipher mode which is built from a block cipher, designed for use in disk encryption. It requires at least one full cipher block length of input, but beyond this minimum the input does not need to be a whole number of blocks.</p>
+<p>XTS mode uses two keys for the underlying block cipher. These are provided by using a key that is twice the normal key size for the cipher. For example, to use AES-256-XTS the application must create a key with type <a class="reference internal" href="../keys/types.html#c.PSA_KEY_TYPE_AES" title="PSA_KEY_TYPE_AES"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_KEY_TYPE_AES</span></code></a> and bit size <code class="docutils literal notranslate"><span class="pre">512</span></code>.</p>
+<p>XTS mode requires an initialization vector (IV) that is the same size as the cipher block length. The IV for XTS is typically defined to be the sector number of the disk block being encrypted or decrypted.</p>
+<p>The XTS block cipher mode is defined in <span><em>1619-2018 --- IEEE Standard for Cryptographic Protection of Data on Block-Oriented Storage Devices</em> <a class="reference internal" href="../../about/about.html#cite-ieee-xts"><span class="cite">[IEEE-XTS]</span></a></span>.</p>
+<p class="rubric">Compatible key types</p>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="../keys/types.html#c.PSA_KEY_TYPE_AES" title="PSA_KEY_TYPE_AES"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_KEY_TYPE_AES</span></code></a></div>
+<div class="line"><a class="reference internal" href="../keys/types.html#c.PSA_KEY_TYPE_ARIA" title="PSA_KEY_TYPE_ARIA"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_KEY_TYPE_ARIA</span></code></a></div>
+<div class="line"><a class="reference internal" href="../keys/types.html#c.PSA_KEY_TYPE_DES" title="PSA_KEY_TYPE_DES"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_KEY_TYPE_DES</span></code></a></div>
+<div class="line"><a class="reference internal" href="../keys/types.html#c.PSA_KEY_TYPE_CAMELLIA" title="PSA_KEY_TYPE_CAMELLIA"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_KEY_TYPE_CAMELLIA</span></code></a></div>
+<div class="line"><a class="reference internal" href="../keys/types.html#c.PSA_KEY_TYPE_SM4" title="PSA_KEY_TYPE_SM4"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_KEY_TYPE_SM4</span></code></a></div>
+</div>
+</section>
+<section id="c.PSA_ALG_ECB_NO_PADDING">
+<h3><code class="docutils literal notranslate"><span class="pre">PSA_ALG_ECB_NO_PADDING</span></code> (macro)<a class="headerlink" href="#c.PSA_ALG_ECB_NO_PADDING" title="Link to this heading">¶</a></h3>
+<p>The Electronic Codebook (ECB) mode of a block cipher, with no padding.</p>
+<pre class="literal-block">#define <a class="reference internal" href="#c.PSA_ALG_ECB_NO_PADDING" title="PSA_ALG_ECB_NO_PADDING">PSA_ALG_ECB_NO_PADDING</a> ((<a class="reference internal" href="algorithms.html#c.psa_algorithm_t" title="psa_algorithm_t">psa_algorithm_t</a>)0x04404400)</pre>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>ECB mode does not protect the confidentiality of the encrypted data except in extremely narrow circumstances. It is recommended that applications only use ECB if they need to construct an operating mode that the implementation does not provide. Implementations are encouraged to provide the modes that applications need in preference to supporting direct access to ECB.</p>
+</div>
+<p>The underlying block cipher is determined by the key type.</p>
+<p>This symmetric cipher mode can only be used with messages whose lengths are a multiple of the block size of the chosen block cipher.</p>
+<p>ECB mode does not accept an initialization vector (IV). When using a multi-part cipher operation with this algorithm, <a class="reference internal" href="#c.psa_cipher_generate_iv" title="psa_cipher_generate_iv"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_cipher_generate_iv()</span></code></a> and <a class="reference internal" href="#c.psa_cipher_set_iv" title="psa_cipher_set_iv"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_cipher_set_iv()</span></code></a> must not be called.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The cipher block length can be determined using <a class="reference internal" href="#c.PSA_BLOCK_CIPHER_BLOCK_LENGTH" title="PSA_BLOCK_CIPHER_BLOCK_LENGTH"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_BLOCK_CIPHER_BLOCK_LENGTH()</span></code></a>.</p>
+</div>
+<p>The ECB block cipher mode is defined in <span><em>NIST Special Publication 800-38A: Recommendation for Block Cipher Modes of Operation: Methods and Techniques</em> <a class="reference internal" href="../../about/about.html#cite-sp800-38a"><span class="cite">[SP800-38A]</span></a></span>.</p>
+<p class="rubric">Compatible key types</p>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="../keys/types.html#c.PSA_KEY_TYPE_AES" title="PSA_KEY_TYPE_AES"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_KEY_TYPE_AES</span></code></a></div>
+<div class="line"><a class="reference internal" href="../keys/types.html#c.PSA_KEY_TYPE_ARIA" title="PSA_KEY_TYPE_ARIA"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_KEY_TYPE_ARIA</span></code></a></div>
+<div class="line"><a class="reference internal" href="../keys/types.html#c.PSA_KEY_TYPE_DES" title="PSA_KEY_TYPE_DES"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_KEY_TYPE_DES</span></code></a></div>
+<div class="line"><a class="reference internal" href="../keys/types.html#c.PSA_KEY_TYPE_CAMELLIA" title="PSA_KEY_TYPE_CAMELLIA"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_KEY_TYPE_CAMELLIA</span></code></a></div>
+<div class="line"><a class="reference internal" href="../keys/types.html#c.PSA_KEY_TYPE_SM4" title="PSA_KEY_TYPE_SM4"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_KEY_TYPE_SM4</span></code></a></div>
+</div>
+</section>
+<section id="c.PSA_ALG_CBC_NO_PADDING">
+<h3><code class="docutils literal notranslate"><span class="pre">PSA_ALG_CBC_NO_PADDING</span></code> (macro)<a class="headerlink" href="#c.PSA_ALG_CBC_NO_PADDING" title="Link to this heading">¶</a></h3>
+<p>The Cipher Block Chaining (CBC) mode of a block cipher, with no padding.</p>
+<pre class="literal-block">#define <a class="reference internal" href="#c.PSA_ALG_CBC_NO_PADDING" title="PSA_ALG_CBC_NO_PADDING">PSA_ALG_CBC_NO_PADDING</a> ((<a class="reference internal" href="algorithms.html#c.psa_algorithm_t" title="psa_algorithm_t">psa_algorithm_t</a>)0x04404000)</pre>
+<p>The underlying block cipher is determined by the key type.</p>
+<p>This symmetric cipher mode can only be used with messages whose lengths are a multiple of the block size of the chosen block cipher.</p>
+<p>CBC mode requires an initialization vector (IV) that is the same size as the cipher block length.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The cipher block length can be determined using <a class="reference internal" href="#c.PSA_BLOCK_CIPHER_BLOCK_LENGTH" title="PSA_BLOCK_CIPHER_BLOCK_LENGTH"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_BLOCK_CIPHER_BLOCK_LENGTH()</span></code></a>.</p>
+</div>
+<p>The CBC block cipher mode is defined in <span><em>NIST Special Publication 800-38A: Recommendation for Block Cipher Modes of Operation: Methods and Techniques</em> <a class="reference internal" href="../../about/about.html#cite-sp800-38a"><span class="cite">[SP800-38A]</span></a></span>.</p>
+<p class="rubric">Compatible key types</p>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="../keys/types.html#c.PSA_KEY_TYPE_AES" title="PSA_KEY_TYPE_AES"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_KEY_TYPE_AES</span></code></a></div>
+<div class="line"><a class="reference internal" href="../keys/types.html#c.PSA_KEY_TYPE_ARIA" title="PSA_KEY_TYPE_ARIA"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_KEY_TYPE_ARIA</span></code></a></div>
+<div class="line"><a class="reference internal" href="../keys/types.html#c.PSA_KEY_TYPE_DES" title="PSA_KEY_TYPE_DES"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_KEY_TYPE_DES</span></code></a></div>
+<div class="line"><a class="reference internal" href="../keys/types.html#c.PSA_KEY_TYPE_CAMELLIA" title="PSA_KEY_TYPE_CAMELLIA"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_KEY_TYPE_CAMELLIA</span></code></a></div>
+<div class="line"><a class="reference internal" href="../keys/types.html#c.PSA_KEY_TYPE_SM4" title="PSA_KEY_TYPE_SM4"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_KEY_TYPE_SM4</span></code></a></div>
+</div>
+</section>
+<section id="c.PSA_ALG_CBC_PKCS7">
+<h3><code class="docutils literal notranslate"><span class="pre">PSA_ALG_CBC_PKCS7</span></code> (macro)<a class="headerlink" href="#c.PSA_ALG_CBC_PKCS7" title="Link to this heading">¶</a></h3>
+<p>The Cipher Block Chaining (CBC) mode of a block cipher, with PKCS#7 padding.</p>
+<pre class="literal-block">#define <a class="reference internal" href="#c.PSA_ALG_CBC_PKCS7" title="PSA_ALG_CBC_PKCS7">PSA_ALG_CBC_PKCS7</a> ((<a class="reference internal" href="algorithms.html#c.psa_algorithm_t" title="psa_algorithm_t">psa_algorithm_t</a>)0x04404100)</pre>
+<p>The underlying block cipher is determined by the key type.</p>
+<p>CBC mode requires an initialization vector (IV) that is the same size as the cipher block length.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The cipher block length can be determined using <a class="reference internal" href="#c.PSA_BLOCK_CIPHER_BLOCK_LENGTH" title="PSA_BLOCK_CIPHER_BLOCK_LENGTH"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_BLOCK_CIPHER_BLOCK_LENGTH()</span></code></a>.</p>
+</div>
+<p>The CBC block cipher mode is defined in <span><em>NIST Special Publication 800-38A: Recommendation for Block Cipher Modes of Operation: Methods and Techniques</em> <a class="reference internal" href="../../about/about.html#cite-sp800-38a"><span class="cite">[SP800-38A]</span></a></span>. The padding operation is defined by <span><em>PKCS #7: Cryptographic Message Syntax Version 1.5</em> <a class="reference internal" href="../../about/about.html#cite-rfc-2315"><span class="cite">[RFC2315]</span></a></span> <a class="reference external" href="https://datatracker.ietf.org/doc/html/rfc2315.html#section-10.3">§10.3</a>.</p>
+<p class="rubric">Compatible key types</p>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="../keys/types.html#c.PSA_KEY_TYPE_AES" title="PSA_KEY_TYPE_AES"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_KEY_TYPE_AES</span></code></a></div>
+<div class="line"><a class="reference internal" href="../keys/types.html#c.PSA_KEY_TYPE_ARIA" title="PSA_KEY_TYPE_ARIA"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_KEY_TYPE_ARIA</span></code></a></div>
+<div class="line"><a class="reference internal" href="../keys/types.html#c.PSA_KEY_TYPE_DES" title="PSA_KEY_TYPE_DES"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_KEY_TYPE_DES</span></code></a></div>
+<div class="line"><a class="reference internal" href="../keys/types.html#c.PSA_KEY_TYPE_CAMELLIA" title="PSA_KEY_TYPE_CAMELLIA"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_KEY_TYPE_CAMELLIA</span></code></a></div>
+<div class="line"><a class="reference internal" href="../keys/types.html#c.PSA_KEY_TYPE_SM4" title="PSA_KEY_TYPE_SM4"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_KEY_TYPE_SM4</span></code></a></div>
+</div>
+</section>
+</section>
+<section id="single-part-cipher-functions">
+<h2><span class="section-number">10.5.2 </span>Single-part cipher functions<a class="headerlink" href="#single-part-cipher-functions" title="Link to this heading">¶</a></h2>
+<section id="c.psa_cipher_encrypt">
+<h3><code class="docutils literal notranslate"><span class="pre">psa_cipher_encrypt</span></code> (function)<a class="headerlink" href="#c.psa_cipher_encrypt" title="Link to this heading">¶</a></h3>
+<p>Encrypt a message using a symmetric cipher.</p>
+<pre class="literal-block">psa_status_t <a class="reference internal" href="#c.psa_cipher_encrypt" title="psa_cipher_encrypt">psa_cipher_encrypt</a>(<a class="reference internal" href="../keys/ids.html#c.psa_key_id_t" title="psa_key_id_t">psa_key_id_t</a> key,
+                                <a class="reference internal" href="algorithms.html#c.psa_algorithm_t" title="psa_algorithm_t">psa_algorithm_t</a> alg,
+                                const uint8_t * input,
+                                size_t input_length,
+                                uint8_t * output,
+                                size_t output_size,
+                                size_t * output_length);</pre>
+<p class="rubric">Parameters</p>
+<div class="apisubitem docutils container">
+<dl class="simple">
+<dt><p><code class="docutils literal notranslate"><span class="pre">key</span></code></p>
+</dt><dd><p>Identifier of the key to use for the operation.
+It must permit the usage <a class="reference internal" href="../keys/policy.html#c.PSA_KEY_USAGE_ENCRYPT" title="PSA_KEY_USAGE_ENCRYPT"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_KEY_USAGE_ENCRYPT</span></code></a>.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">alg</span></code></p>
+</dt><dd><p>The cipher algorithm to compute: a value of type <a class="reference internal" href="algorithms.html#c.psa_algorithm_t" title="psa_algorithm_t"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_algorithm_t</span></code></a> such that <a class="reference internal" href="algorithms.html#c.PSA_ALG_IS_CIPHER" title="PSA_ALG_IS_CIPHER"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_IS_CIPHER</span></code></a><code class="docutils literal notranslate"><span class="pre">(</span></code><code class="docutils literal notranslate"><span class="pre">alg</span></code><code class="docutils literal notranslate"><span class="pre">)</span></code> is true.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">input</span></code></p>
+</dt><dd><p>Buffer containing the message to encrypt.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">input_length</span></code></p>
+</dt><dd><p>Size of the <code class="docutils literal notranslate"><span class="pre">input</span></code> buffer in bytes.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">output</span></code></p>
+</dt><dd><p>Buffer where the output is to be written. The output contains the IV followed by the ciphertext proper.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">output_size</span></code></p>
+</dt><dd><p>Size of the <code class="docutils literal notranslate"><span class="pre">output</span></code> buffer in bytes. This must be appropriate for the selected algorithm and key:</p>
+<ul class="simple">
+<li><p>A sufficient output size is <a class="reference internal" href="#c.PSA_CIPHER_ENCRYPT_OUTPUT_SIZE" title="PSA_CIPHER_ENCRYPT_OUTPUT_SIZE"><code class="docutils literal notranslate"><span class="pre">PSA_CIPHER_ENCRYPT_OUTPUT_SIZE</span></code></a><code class="docutils literal notranslate"><span class="pre">(</span></code><code class="docutils literal notranslate"><span class="pre">key_type</span></code><code class="docutils literal notranslate"><span class="pre">,</span> </code><code class="docutils literal notranslate"><span class="pre">alg</span></code><code class="docutils literal notranslate"><span class="pre">,</span> </code><code class="docutils literal notranslate"><span class="pre">input_length</span></code><code class="docutils literal notranslate"><span class="pre">)</span></code>  where <code class="docutils literal notranslate"><span class="pre">key_type</span></code> is the type of <code class="docutils literal notranslate"><span class="pre">key</span></code>.</p></li>
+<li><p><a class="reference internal" href="#c.PSA_CIPHER_ENCRYPT_OUTPUT_MAX_SIZE" title="PSA_CIPHER_ENCRYPT_OUTPUT_MAX_SIZE"><code class="docutils literal notranslate"><span class="pre">PSA_CIPHER_ENCRYPT_OUTPUT_MAX_SIZE</span></code></a><code class="docutils literal notranslate"><span class="pre">(</span></code><code class="docutils literal notranslate"><span class="pre">input_length</span></code><code class="docutils literal notranslate"><span class="pre">)</span></code> evaluates to the maximum output size of any supported cipher encryption.</p></li>
+</ul>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">output_length</span></code></p>
+</dt><dd><p>On success, the number of bytes that make up the output.</p>
+</dd>
+</dl>
+</div>
+<p class="rubric">Returns: <code class="docutils literal notranslate"><span class="pre">psa_status_t</span></code></p>
+<div class="apisubitem docutils container">
+<dl class="simple">
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_SUCCESS</span></code></p>
+</dt><dd><p>Success.
+The first <code class="docutils literal notranslate"><span class="pre">(*output_length)</span></code> bytes of <code class="docutils literal notranslate"><span class="pre">output</span></code> contain the encrypted output.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_BAD_STATE</span></code></p>
+</dt><dd><p>The library requires initializing by a call to <a class="reference internal" href="../library/library.html#c.psa_crypto_init" title="psa_crypto_init"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_crypto_init()</span></code></a>.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_INVALID_HANDLE</span></code></p>
+</dt><dd><p><code class="docutils literal notranslate"><span class="pre">key</span></code> is not a valid key identifier.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_NOT_PERMITTED</span></code></p>
+</dt><dd><p>The key does not have the <a class="reference internal" href="../keys/policy.html#c.PSA_KEY_USAGE_ENCRYPT" title="PSA_KEY_USAGE_ENCRYPT"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_KEY_USAGE_ENCRYPT</span></code></a> flag, or it does not permit the requested algorithm.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_BUFFER_TOO_SMALL</span></code></p>
+</dt><dd><p>The size of the <code class="docutils literal notranslate"><span class="pre">output</span></code> buffer is too small. <a class="reference internal" href="#c.PSA_CIPHER_ENCRYPT_OUTPUT_SIZE" title="PSA_CIPHER_ENCRYPT_OUTPUT_SIZE"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_CIPHER_ENCRYPT_OUTPUT_SIZE()</span></code></a> or <a class="reference internal" href="#c.PSA_CIPHER_ENCRYPT_OUTPUT_MAX_SIZE" title="PSA_CIPHER_ENCRYPT_OUTPUT_MAX_SIZE"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_CIPHER_ENCRYPT_OUTPUT_MAX_SIZE()</span></code></a> can be used to determine a sufficient buffer size.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_INVALID_ARGUMENT</span></code></p>
+</dt><dd><p>The following conditions can result in this error:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">alg</span></code> is not a cipher algorithm.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">key</span></code> is not compatible with <code class="docutils literal notranslate"><span class="pre">alg</span></code>.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">input_length</span></code> is not valid for the algorithm and key type. For example, the algorithm is a based on block cipher and requires a whole number of blocks, but the total input size is not a multiple of the block size.</p></li>
+</ul>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_NOT_SUPPORTED</span></code></p>
+</dt><dd><p>The following conditions can result in this error:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">alg</span></code> is not supported or is not a cipher algorithm.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">key</span></code> is not supported for use with <code class="docutils literal notranslate"><span class="pre">alg</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">input_length</span></code> is too large for the implementation.</p></li>
+</ul>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_INSUFFICIENT_MEMORY</span></code></p>
+</dt><dd></dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_COMMUNICATION_FAILURE</span></code></p>
+</dt><dd></dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_CORRUPTION_DETECTED</span></code></p>
+</dt><dd></dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_STORAGE_FAILURE</span></code></p>
+</dt><dd></dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_DATA_CORRUPT</span></code></p>
+</dt><dd></dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_DATA_INVALID</span></code></p>
+</dt><dd></dd>
+</dl>
+</div>
+<p class="rubric">Description</p>
+<p>This function encrypts a message with a random initialization vector (IV).
+The length of the IV is <a class="reference internal" href="#c.PSA_CIPHER_IV_LENGTH" title="PSA_CIPHER_IV_LENGTH"><code class="docutils literal notranslate"><span class="pre">PSA_CIPHER_IV_LENGTH</span></code></a><code class="docutils literal notranslate"><span class="pre">(</span></code><code class="docutils literal notranslate"><span class="pre">key_type</span></code><code class="docutils literal notranslate"><span class="pre">,</span> </code><code class="docutils literal notranslate"><span class="pre">alg</span></code><code class="docutils literal notranslate"><span class="pre">)</span></code> where <code class="docutils literal notranslate"><span class="pre">key_type</span></code> is the type of <code class="docutils literal notranslate"><span class="pre">key</span></code>.
+The output of <a class="reference internal" href="#c.psa_cipher_encrypt" title="psa_cipher_encrypt"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_cipher_encrypt()</span></code></a> is the IV followed by the ciphertext.</p>
+<p>Use the multi-part operation interface with a <a class="reference internal" href="#c.psa_cipher_operation_t" title="psa_cipher_operation_t"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_cipher_operation_t</span></code></a> object to provide other forms of IV or to manage the IV and ciphertext independently.</p>
+</section>
+<section id="c.psa_cipher_decrypt">
+<h3><code class="docutils literal notranslate"><span class="pre">psa_cipher_decrypt</span></code> (function)<a class="headerlink" href="#c.psa_cipher_decrypt" title="Link to this heading">¶</a></h3>
+<p>Decrypt a message using a symmetric cipher.</p>
+<pre class="literal-block">psa_status_t <a class="reference internal" href="#c.psa_cipher_decrypt" title="psa_cipher_decrypt">psa_cipher_decrypt</a>(<a class="reference internal" href="../keys/ids.html#c.psa_key_id_t" title="psa_key_id_t">psa_key_id_t</a> key,
+                                <a class="reference internal" href="algorithms.html#c.psa_algorithm_t" title="psa_algorithm_t">psa_algorithm_t</a> alg,
+                                const uint8_t * input,
+                                size_t input_length,
+                                uint8_t * output,
+                                size_t output_size,
+                                size_t * output_length);</pre>
+<p class="rubric">Parameters</p>
+<div class="apisubitem docutils container">
+<dl class="simple">
+<dt><p><code class="docutils literal notranslate"><span class="pre">key</span></code></p>
+</dt><dd><p>Identifier of the key to use for the operation. It must remain valid until the operation terminates.
+It must permit the usage <a class="reference internal" href="../keys/policy.html#c.PSA_KEY_USAGE_DECRYPT" title="PSA_KEY_USAGE_DECRYPT"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_KEY_USAGE_DECRYPT</span></code></a>.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">alg</span></code></p>
+</dt><dd><p>The cipher algorithm to compute: a value of type <a class="reference internal" href="algorithms.html#c.psa_algorithm_t" title="psa_algorithm_t"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_algorithm_t</span></code></a> such that <a class="reference internal" href="algorithms.html#c.PSA_ALG_IS_CIPHER" title="PSA_ALG_IS_CIPHER"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_IS_CIPHER</span></code></a><code class="docutils literal notranslate"><span class="pre">(</span></code><code class="docutils literal notranslate"><span class="pre">alg</span></code><code class="docutils literal notranslate"><span class="pre">)</span></code> is true.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">input</span></code></p>
+</dt><dd><p>Buffer containing the message to decrypt. This consists of the IV followed by the ciphertext proper.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">input_length</span></code></p>
+</dt><dd><p>Size of the <code class="docutils literal notranslate"><span class="pre">input</span></code> buffer in bytes.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">output</span></code></p>
+</dt><dd><p>Buffer where the plaintext is to be written.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">output_size</span></code></p>
+</dt><dd><p>Size of the <code class="docutils literal notranslate"><span class="pre">output</span></code> buffer in bytes. This must be appropriate for the selected algorithm and key:</p>
+<ul class="simple">
+<li><p>A sufficient output size is <a class="reference internal" href="#c.PSA_CIPHER_DECRYPT_OUTPUT_SIZE" title="PSA_CIPHER_DECRYPT_OUTPUT_SIZE"><code class="docutils literal notranslate"><span class="pre">PSA_CIPHER_DECRYPT_OUTPUT_SIZE</span></code></a><code class="docutils literal notranslate"><span class="pre">(</span></code><code class="docutils literal notranslate"><span class="pre">key_type</span></code><code class="docutils literal notranslate"><span class="pre">,</span> </code><code class="docutils literal notranslate"><span class="pre">alg</span></code><code class="docutils literal notranslate"><span class="pre">,</span> </code><code class="docutils literal notranslate"><span class="pre">input_length</span></code><code class="docutils literal notranslate"><span class="pre">)</span></code>  where <code class="docutils literal notranslate"><span class="pre">key_type</span></code> is the type of <code class="docutils literal notranslate"><span class="pre">key</span></code>.</p></li>
+<li><p><a class="reference internal" href="#c.PSA_CIPHER_DECRYPT_OUTPUT_MAX_SIZE" title="PSA_CIPHER_DECRYPT_OUTPUT_MAX_SIZE"><code class="docutils literal notranslate"><span class="pre">PSA_CIPHER_DECRYPT_OUTPUT_MAX_SIZE</span></code></a><code class="docutils literal notranslate"><span class="pre">(</span></code><code class="docutils literal notranslate"><span class="pre">input_length</span></code><code class="docutils literal notranslate"><span class="pre">)</span></code> evaluates to the maximum output size of any supported cipher decryption.</p></li>
+</ul>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">output_length</span></code></p>
+</dt><dd><p>On success, the number of bytes that make up the output.</p>
+</dd>
+</dl>
+</div>
+<p class="rubric">Returns: <code class="docutils literal notranslate"><span class="pre">psa_status_t</span></code></p>
+<div class="apisubitem docutils container">
+<dl class="simple">
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_SUCCESS</span></code></p>
+</dt><dd><p>Success.
+The first <code class="docutils literal notranslate"><span class="pre">(*output_length)</span></code> bytes of <code class="docutils literal notranslate"><span class="pre">output</span></code> contain the plaintext.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_BAD_STATE</span></code></p>
+</dt><dd><p>The library requires initializing by a call to <a class="reference internal" href="../library/library.html#c.psa_crypto_init" title="psa_crypto_init"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_crypto_init()</span></code></a>.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_INVALID_HANDLE</span></code></p>
+</dt><dd><p><code class="docutils literal notranslate"><span class="pre">key</span></code> is not a valid key identifier.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_NOT_PERMITTED</span></code></p>
+</dt><dd><p>The key does not have the <a class="reference internal" href="../keys/policy.html#c.PSA_KEY_USAGE_DECRYPT" title="PSA_KEY_USAGE_DECRYPT"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_KEY_USAGE_DECRYPT</span></code></a> flag, or it does not permit the requested algorithm.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_BUFFER_TOO_SMALL</span></code></p>
+</dt><dd><p>The size of the <code class="docutils literal notranslate"><span class="pre">output</span></code> buffer is too small. <a class="reference internal" href="#c.PSA_CIPHER_DECRYPT_OUTPUT_SIZE" title="PSA_CIPHER_DECRYPT_OUTPUT_SIZE"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_CIPHER_DECRYPT_OUTPUT_SIZE()</span></code></a> or <a class="reference internal" href="#c.PSA_CIPHER_DECRYPT_OUTPUT_MAX_SIZE" title="PSA_CIPHER_DECRYPT_OUTPUT_MAX_SIZE"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_CIPHER_DECRYPT_OUTPUT_MAX_SIZE()</span></code></a> can be used to determine a sufficient buffer size.</p>
+</dd>
+<dt><p><a class="reference internal" href="../library/status.html#c.PSA_ERROR_INVALID_PADDING" title="PSA_ERROR_INVALID_PADDING"><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_INVALID_PADDING</span></code></a></p>
+</dt><dd><p>The algorithm uses padding, and the input does not contain valid padding.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_INVALID_ARGUMENT</span></code></p>
+</dt><dd><p>The following conditions can result in this error:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">alg</span></code> is not a cipher algorithm.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">key</span></code> is not compatible with <code class="docutils literal notranslate"><span class="pre">alg</span></code>.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">input_length</span></code> is not valid for the algorithm and key type. For example, the algorithm is a based on block cipher and requires a whole number of blocks, but the total input size is not a multiple of the block size.</p></li>
+</ul>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_NOT_SUPPORTED</span></code></p>
+</dt><dd><p>The following conditions can result in this error:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">alg</span></code> is not supported or is not a cipher algorithm.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">key</span></code> is not supported for use with <code class="docutils literal notranslate"><span class="pre">alg</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">input_length</span></code> is too large for the implementation.</p></li>
+</ul>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_INSUFFICIENT_MEMORY</span></code></p>
+</dt><dd></dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_COMMUNICATION_FAILURE</span></code></p>
+</dt><dd></dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_CORRUPTION_DETECTED</span></code></p>
+</dt><dd></dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_STORAGE_FAILURE</span></code></p>
+</dt><dd></dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_DATA_CORRUPT</span></code></p>
+</dt><dd></dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_DATA_INVALID</span></code></p>
+</dt><dd></dd>
+</dl>
+</div>
+<p class="rubric">Description</p>
+<p>This function decrypts a message encrypted with a symmetric cipher.</p>
+<p>The input to this function must contain the IV followed by the ciphertext, as output by <a class="reference internal" href="#c.psa_cipher_encrypt" title="psa_cipher_encrypt"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_cipher_encrypt()</span></code></a>. The IV must be <a class="reference internal" href="#c.PSA_CIPHER_IV_LENGTH" title="PSA_CIPHER_IV_LENGTH"><code class="docutils literal notranslate"><span class="pre">PSA_CIPHER_IV_LENGTH</span></code></a><code class="docutils literal notranslate"><span class="pre">(</span></code><code class="docutils literal notranslate"><span class="pre">key_type</span></code><code class="docutils literal notranslate"><span class="pre">,</span> </code><code class="docutils literal notranslate"><span class="pre">alg</span></code><code class="docutils literal notranslate"><span class="pre">)</span></code> bytes in length, where <code class="docutils literal notranslate"><span class="pre">key_type</span></code> is the type of <code class="docutils literal notranslate"><span class="pre">key</span></code>.</p>
+<p>Use the multi-part operation interface with a <a class="reference internal" href="#c.psa_cipher_operation_t" title="psa_cipher_operation_t"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_cipher_operation_t</span></code></a> object to decrypt data which is not in the expected input format.</p>
+</section>
+</section>
+<section id="multi-part-cipher-operations">
+<h2><span class="section-number">10.5.3 </span>Multi-part cipher operations<a class="headerlink" href="#multi-part-cipher-operations" title="Link to this heading">¶</a></h2>
+<section id="c.psa_cipher_operation_t">
+<h3><code class="docutils literal notranslate"><span class="pre">psa_cipher_operation_t</span></code> (typedef)<a class="headerlink" href="#c.psa_cipher_operation_t" title="Link to this heading">¶</a></h3>
+<p>The type of the state object for multi-part cipher operations.</p>
+<pre class="literal-block">typedef <em><a class="reference internal" href="../../overview/implementation.html#implementation-defined-type"><span class="std std-ref">/* implementation-defined type */</span></a></em> <a class="reference internal" href="#c.psa_cipher_operation_t" title="psa_cipher_operation_t">psa_cipher_operation_t</a>;</pre>
+<p>Before calling any function on a cipher operation object, the application must initialize it by any of the following means:</p>
+<ul>
+<li><p>Set the object to all-bits-zero, for example:</p>
+<pre class="literal-block"><a class="reference internal" href="#c.psa_cipher_operation_t" title="psa_cipher_operation_t">psa_cipher_operation_t</a> operation;
+memset(&amp;operation, 0, sizeof(operation));</pre>
+</li>
+<li><p>Initialize the object to logical zero values by declaring the object as static or global without an explicit initializer, for example:</p>
+<pre class="literal-block">static <a class="reference internal" href="#c.psa_cipher_operation_t" title="psa_cipher_operation_t">psa_cipher_operation_t</a> operation;</pre>
+</li>
+<li><p>Initialize the object to the initializer <a class="reference internal" href="#c.PSA_CIPHER_OPERATION_INIT" title="PSA_CIPHER_OPERATION_INIT"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_CIPHER_OPERATION_INIT</span></code></a>, for example:</p>
+<pre class="literal-block"><a class="reference internal" href="#c.psa_cipher_operation_t" title="psa_cipher_operation_t">psa_cipher_operation_t</a> operation = <a class="reference internal" href="#c.PSA_CIPHER_OPERATION_INIT" title="PSA_CIPHER_OPERATION_INIT">PSA_CIPHER_OPERATION_INIT</a>;</pre>
+</li>
+<li><p>Assign the result of the function <a class="reference internal" href="#c.psa_cipher_operation_init" title="psa_cipher_operation_init"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_cipher_operation_init()</span></code></a> to the object, for example:</p>
+<pre class="literal-block"><a class="reference internal" href="#c.psa_cipher_operation_t" title="psa_cipher_operation_t">psa_cipher_operation_t</a> operation;
+operation = <a class="reference internal" href="#c.psa_cipher_operation_init" title="psa_cipher_operation_init">psa_cipher_operation_init</a>();</pre>
+</li>
+</ul>
+<p>This is an implementation-defined type. Applications that make assumptions about the content of this object will result in implementation-specific behavior, and are non-portable.</p>
+</section>
+<section id="c.PSA_CIPHER_OPERATION_INIT">
+<h3><code class="docutils literal notranslate"><span class="pre">PSA_CIPHER_OPERATION_INIT</span></code> (macro)<a class="headerlink" href="#c.PSA_CIPHER_OPERATION_INIT" title="Link to this heading">¶</a></h3>
+<p>This macro returns a suitable initializer for a cipher operation object of type <a class="reference internal" href="#c.psa_cipher_operation_t" title="psa_cipher_operation_t"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_cipher_operation_t</span></code></a>.</p>
+<pre class="literal-block">#define <a class="reference internal" href="#c.PSA_CIPHER_OPERATION_INIT" title="PSA_CIPHER_OPERATION_INIT">PSA_CIPHER_OPERATION_INIT</a> <em><a class="reference internal" href="../../overview/implementation.html#implementation-defined-value"><span class="std std-ref">/* implementation-defined value */</span></a></em></pre>
+</section>
+<section id="c.psa_cipher_operation_init">
+<h3><code class="docutils literal notranslate"><span class="pre">psa_cipher_operation_init</span></code> (function)<a class="headerlink" href="#c.psa_cipher_operation_init" title="Link to this heading">¶</a></h3>
+<p>Return an initial value for a cipher operation object.</p>
+<pre class="literal-block"><a class="reference internal" href="#c.psa_cipher_operation_t" title="psa_cipher_operation_t">psa_cipher_operation_t</a> <a class="reference internal" href="#c.psa_cipher_operation_init" title="psa_cipher_operation_init">psa_cipher_operation_init</a>(void);</pre>
+<p class="rubric">Returns: <a class="reference internal" href="#c.psa_cipher_operation_t" title="psa_cipher_operation_t"><code class="docutils literal notranslate"><span class="pre">psa_cipher_operation_t</span></code></a></p>
+</section>
+<section id="c.psa_cipher_encrypt_setup">
+<h3><code class="docutils literal notranslate"><span class="pre">psa_cipher_encrypt_setup</span></code> (function)<a class="headerlink" href="#c.psa_cipher_encrypt_setup" title="Link to this heading">¶</a></h3>
+<p>Set the key for a multi-part symmetric encryption operation.</p>
+<pre class="literal-block">psa_status_t <a class="reference internal" href="#c.psa_cipher_encrypt_setup" title="psa_cipher_encrypt_setup">psa_cipher_encrypt_setup</a>(<a class="reference internal" href="#c.psa_cipher_operation_t" title="psa_cipher_operation_t">psa_cipher_operation_t</a> * operation,
+                                      <a class="reference internal" href="../keys/ids.html#c.psa_key_id_t" title="psa_key_id_t">psa_key_id_t</a> key,
+                                      <a class="reference internal" href="algorithms.html#c.psa_algorithm_t" title="psa_algorithm_t">psa_algorithm_t</a> alg);</pre>
+<p class="rubric">Parameters</p>
+<div class="apisubitem docutils container">
+<dl class="simple">
+<dt><p><code class="docutils literal notranslate"><span class="pre">operation</span></code></p>
+</dt><dd><p>The operation object to set up. It must have been initialized as per the documentation for <a class="reference internal" href="#c.psa_cipher_operation_t" title="psa_cipher_operation_t"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_cipher_operation_t</span></code></a> and not yet in use.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">key</span></code></p>
+</dt><dd><p>Identifier of the key to use for the operation. It must remain valid until the operation terminates.
+It must permit the usage <a class="reference internal" href="../keys/policy.html#c.PSA_KEY_USAGE_ENCRYPT" title="PSA_KEY_USAGE_ENCRYPT"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_KEY_USAGE_ENCRYPT</span></code></a>.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">alg</span></code></p>
+</dt><dd><p>The cipher algorithm to compute: a value of type <a class="reference internal" href="algorithms.html#c.psa_algorithm_t" title="psa_algorithm_t"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_algorithm_t</span></code></a> such that <a class="reference internal" href="algorithms.html#c.PSA_ALG_IS_CIPHER" title="PSA_ALG_IS_CIPHER"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_IS_CIPHER</span></code></a><code class="docutils literal notranslate"><span class="pre">(</span></code><code class="docutils literal notranslate"><span class="pre">alg</span></code><code class="docutils literal notranslate"><span class="pre">)</span></code> is true.</p>
+</dd>
+</dl>
+</div>
+<p class="rubric">Returns: <code class="docutils literal notranslate"><span class="pre">psa_status_t</span></code></p>
+<div class="apisubitem docutils container">
+<dl class="simple">
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_SUCCESS</span></code></p>
+</dt><dd><p>Success. The operation is now active.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_BAD_STATE</span></code></p>
+</dt><dd><p>The following conditions can result in this error:</p>
+<ul class="simple">
+<li><p>The operation state is not valid: it must be inactive.</p></li>
+<li><p>The library requires initializing by a call to <a class="reference internal" href="../library/library.html#c.psa_crypto_init" title="psa_crypto_init"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_crypto_init()</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_INVALID_HANDLE</span></code></p>
+</dt><dd><p><code class="docutils literal notranslate"><span class="pre">key</span></code> is not a valid key identifier.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_NOT_PERMITTED</span></code></p>
+</dt><dd><p>The key does not have the <a class="reference internal" href="../keys/policy.html#c.PSA_KEY_USAGE_ENCRYPT" title="PSA_KEY_USAGE_ENCRYPT"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_KEY_USAGE_ENCRYPT</span></code></a> flag, or it does not permit the requested algorithm.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_INVALID_ARGUMENT</span></code></p>
+</dt><dd><p>The following conditions can result in this error:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">alg</span></code> is not a cipher algorithm.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">key</span></code> is not compatible with <code class="docutils literal notranslate"><span class="pre">alg</span></code>.</p></li>
+</ul>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_NOT_SUPPORTED</span></code></p>
+</dt><dd><p>The following conditions can result in this error:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">alg</span></code> is not supported or is not a cipher algorithm.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">key</span></code> is not supported for use with <code class="docutils literal notranslate"><span class="pre">alg</span></code>.</p></li>
+</ul>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_INSUFFICIENT_MEMORY</span></code></p>
+</dt><dd></dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_COMMUNICATION_FAILURE</span></code></p>
+</dt><dd></dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_CORRUPTION_DETECTED</span></code></p>
+</dt><dd></dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_STORAGE_FAILURE</span></code></p>
+</dt><dd></dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_DATA_CORRUPT</span></code></p>
+</dt><dd></dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_DATA_INVALID</span></code></p>
+</dt><dd></dd>
+</dl>
+</div>
+<p class="rubric">Description</p>
+<p>The sequence of operations to encrypt a message with a symmetric cipher is as follows:</p>
+<ol class="arabic simple">
+<li><p>Allocate a cipher operation object which will be passed to all the functions listed here.</p></li>
+<li><p>Initialize the operation object with one of the methods described in the documentation for <a class="reference internal" href="#c.psa_cipher_operation_t" title="psa_cipher_operation_t"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_cipher_operation_t</span></code></a>, e.g. <a class="reference internal" href="#c.PSA_CIPHER_OPERATION_INIT" title="PSA_CIPHER_OPERATION_INIT"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_CIPHER_OPERATION_INIT</span></code></a>.</p></li>
+<li><p>Call <a class="reference internal" href="#c.psa_cipher_encrypt_setup" title="psa_cipher_encrypt_setup"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_cipher_encrypt_setup()</span></code></a> to specify the algorithm and key.</p></li>
+<li><p>Call either <a class="reference internal" href="#c.psa_cipher_generate_iv" title="psa_cipher_generate_iv"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_cipher_generate_iv()</span></code></a> or <a class="reference internal" href="#c.psa_cipher_set_iv" title="psa_cipher_set_iv"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_cipher_set_iv()</span></code></a> to generate or set the initialization vector (IV), if the algorithm requires one. It is recommended to use <a class="reference internal" href="#c.psa_cipher_generate_iv" title="psa_cipher_generate_iv"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_cipher_generate_iv()</span></code></a> unless the protocol being implemented requires a specific IV value.</p></li>
+<li><p>Call <a class="reference internal" href="#c.psa_cipher_update" title="psa_cipher_update"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_cipher_update()</span></code></a> zero, one or more times, passing a fragment of the message each time.</p></li>
+<li><p>Call <a class="reference internal" href="#c.psa_cipher_finish" title="psa_cipher_finish"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_cipher_finish()</span></code></a>.</p></li>
+</ol>
+<p>After a successful call to <a class="reference internal" href="#c.psa_cipher_encrypt_setup" title="psa_cipher_encrypt_setup"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_cipher_encrypt_setup()</span></code></a>, the operation is active, and the application must eventually terminate the operation. The following events terminate an operation:</p>
+<ul class="simple">
+<li><p>A successful call to <a class="reference internal" href="#c.psa_cipher_finish" title="psa_cipher_finish"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_cipher_finish()</span></code></a>.</p></li>
+<li><p>A call to <a class="reference internal" href="#c.psa_cipher_abort" title="psa_cipher_abort"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_cipher_abort()</span></code></a>.</p></li>
+</ul>
+<p>If <a class="reference internal" href="#c.psa_cipher_encrypt_setup" title="psa_cipher_encrypt_setup"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_cipher_encrypt_setup()</span></code></a> returns an error, the operation object is unchanged. If a subsequent function call with an active operation returns an error, the operation enters an error state.</p>
+<p>To abandon an active operation, or reset an operation in an error state, call <a class="reference internal" href="#c.psa_cipher_abort" title="psa_cipher_abort"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_cipher_abort()</span></code></a>.</p>
+<p>See <a class="reference internal" href="../../overview/functionality.html#multi-part-operations"><span class="secref">Multi-part operations</span></a>.</p>
+</section>
+<section id="c.psa_cipher_decrypt_setup">
+<h3><code class="docutils literal notranslate"><span class="pre">psa_cipher_decrypt_setup</span></code> (function)<a class="headerlink" href="#c.psa_cipher_decrypt_setup" title="Link to this heading">¶</a></h3>
+<p>Set the key for a multi-part symmetric decryption operation.</p>
+<pre class="literal-block">psa_status_t <a class="reference internal" href="#c.psa_cipher_decrypt_setup" title="psa_cipher_decrypt_setup">psa_cipher_decrypt_setup</a>(<a class="reference internal" href="#c.psa_cipher_operation_t" title="psa_cipher_operation_t">psa_cipher_operation_t</a> * operation,
+                                      <a class="reference internal" href="../keys/ids.html#c.psa_key_id_t" title="psa_key_id_t">psa_key_id_t</a> key,
+                                      <a class="reference internal" href="algorithms.html#c.psa_algorithm_t" title="psa_algorithm_t">psa_algorithm_t</a> alg);</pre>
+<p class="rubric">Parameters</p>
+<div class="apisubitem docutils container">
+<dl class="simple">
+<dt><p><code class="docutils literal notranslate"><span class="pre">operation</span></code></p>
+</dt><dd><p>The operation object to set up. It must have been initialized as per the documentation for <a class="reference internal" href="#c.psa_cipher_operation_t" title="psa_cipher_operation_t"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_cipher_operation_t</span></code></a> and not yet in use.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">key</span></code></p>
+</dt><dd><p>Identifier of the key to use for the operation. It must remain valid until the operation terminates.
+It must permit the usage <a class="reference internal" href="../keys/policy.html#c.PSA_KEY_USAGE_DECRYPT" title="PSA_KEY_USAGE_DECRYPT"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_KEY_USAGE_DECRYPT</span></code></a>.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">alg</span></code></p>
+</dt><dd><p>The cipher algorithm to compute: a value of type <a class="reference internal" href="algorithms.html#c.psa_algorithm_t" title="psa_algorithm_t"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_algorithm_t</span></code></a> such that <a class="reference internal" href="algorithms.html#c.PSA_ALG_IS_CIPHER" title="PSA_ALG_IS_CIPHER"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_IS_CIPHER</span></code></a><code class="docutils literal notranslate"><span class="pre">(</span></code><code class="docutils literal notranslate"><span class="pre">alg</span></code><code class="docutils literal notranslate"><span class="pre">)</span></code> is true.</p>
+</dd>
+</dl>
+</div>
+<p class="rubric">Returns: <code class="docutils literal notranslate"><span class="pre">psa_status_t</span></code></p>
+<div class="apisubitem docutils container">
+<dl class="simple">
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_SUCCESS</span></code></p>
+</dt><dd><p>Success. The operation is now active.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_BAD_STATE</span></code></p>
+</dt><dd><p>The following conditions can result in this error:</p>
+<ul class="simple">
+<li><p>The operation state is not valid: it must be inactive.</p></li>
+<li><p>The library requires initializing by a call to <a class="reference internal" href="../library/library.html#c.psa_crypto_init" title="psa_crypto_init"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_crypto_init()</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_INVALID_HANDLE</span></code></p>
+</dt><dd><p><code class="docutils literal notranslate"><span class="pre">key</span></code> is not a valid key identifier.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_NOT_PERMITTED</span></code></p>
+</dt><dd><p>The key does not have the <a class="reference internal" href="../keys/policy.html#c.PSA_KEY_USAGE_DECRYPT" title="PSA_KEY_USAGE_DECRYPT"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_KEY_USAGE_DECRYPT</span></code></a> flag, or it does not permit the requested algorithm.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_INVALID_ARGUMENT</span></code></p>
+</dt><dd><p>The following conditions can result in this error:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">alg</span></code> is not a cipher algorithm.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">key</span></code> is not compatible with <code class="docutils literal notranslate"><span class="pre">alg</span></code>.</p></li>
+</ul>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_NOT_SUPPORTED</span></code></p>
+</dt><dd><p>The following conditions can result in this error:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">alg</span></code> is not supported or is not a cipher algorithm.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">key</span></code> is not supported for use with <code class="docutils literal notranslate"><span class="pre">alg</span></code>.</p></li>
+</ul>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_INSUFFICIENT_MEMORY</span></code></p>
+</dt><dd></dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_COMMUNICATION_FAILURE</span></code></p>
+</dt><dd></dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_CORRUPTION_DETECTED</span></code></p>
+</dt><dd></dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_STORAGE_FAILURE</span></code></p>
+</dt><dd></dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_DATA_CORRUPT</span></code></p>
+</dt><dd></dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_DATA_INVALID</span></code></p>
+</dt><dd></dd>
+</dl>
+</div>
+<p class="rubric">Description</p>
+<p>The sequence of operations to decrypt a message with a symmetric cipher is as follows:</p>
+<ol class="arabic simple">
+<li><p>Allocate a cipher operation object which will be passed to all the functions listed here.</p></li>
+<li><p>Initialize the operation object with one of the methods described in the documentation for <a class="reference internal" href="#c.psa_cipher_operation_t" title="psa_cipher_operation_t"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_cipher_operation_t</span></code></a>, e.g. <a class="reference internal" href="#c.PSA_CIPHER_OPERATION_INIT" title="PSA_CIPHER_OPERATION_INIT"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_CIPHER_OPERATION_INIT</span></code></a>.</p></li>
+<li><p>Call <a class="reference internal" href="#c.psa_cipher_decrypt_setup" title="psa_cipher_decrypt_setup"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_cipher_decrypt_setup()</span></code></a> to specify the algorithm and key.</p></li>
+<li><p>Call <a class="reference internal" href="#c.psa_cipher_set_iv" title="psa_cipher_set_iv"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_cipher_set_iv()</span></code></a> with the initialization vector (IV) for the decryption, if the algorithm requires one. This must match the IV used for the encryption.</p></li>
+<li><p>Call <a class="reference internal" href="#c.psa_cipher_update" title="psa_cipher_update"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_cipher_update()</span></code></a> zero, one or more times, passing a fragment of the message each time.</p></li>
+<li><p>Call <a class="reference internal" href="#c.psa_cipher_finish" title="psa_cipher_finish"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_cipher_finish()</span></code></a>.</p></li>
+</ol>
+<p>After a successful call to <a class="reference internal" href="#c.psa_cipher_decrypt_setup" title="psa_cipher_decrypt_setup"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_cipher_decrypt_setup()</span></code></a>, the operation is active, and the application must eventually terminate the operation. The following events terminate an operation:</p>
+<ul class="simple">
+<li><p>A successful call to <a class="reference internal" href="#c.psa_cipher_finish" title="psa_cipher_finish"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_cipher_finish()</span></code></a>.</p></li>
+<li><p>A call to <a class="reference internal" href="#c.psa_cipher_abort" title="psa_cipher_abort"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_cipher_abort()</span></code></a>.</p></li>
+</ul>
+<p>If <a class="reference internal" href="#c.psa_cipher_decrypt_setup" title="psa_cipher_decrypt_setup"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_cipher_decrypt_setup()</span></code></a> returns an error, the operation object is unchanged. If a subsequent function call with an active operation returns an error, the operation enters an error state.</p>
+<p>To abandon an active operation, or reset an operation in an error state, call <a class="reference internal" href="#c.psa_cipher_abort" title="psa_cipher_abort"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_cipher_abort()</span></code></a>.</p>
+<p>See <a class="reference internal" href="../../overview/functionality.html#multi-part-operations"><span class="secref">Multi-part operations</span></a>.</p>
+</section>
+<section id="c.psa_cipher_generate_iv">
+<h3><code class="docutils literal notranslate"><span class="pre">psa_cipher_generate_iv</span></code> (function)<a class="headerlink" href="#c.psa_cipher_generate_iv" title="Link to this heading">¶</a></h3>
+<p>Generate an initialization vector (IV) for a symmetric encryption operation.</p>
+<pre class="literal-block">psa_status_t <a class="reference internal" href="#c.psa_cipher_generate_iv" title="psa_cipher_generate_iv">psa_cipher_generate_iv</a>(<a class="reference internal" href="#c.psa_cipher_operation_t" title="psa_cipher_operation_t">psa_cipher_operation_t</a> * operation,
+                                    uint8_t * iv,
+                                    size_t iv_size,
+                                    size_t * iv_length);</pre>
+<p class="rubric">Parameters</p>
+<div class="apisubitem docutils container">
+<dl class="simple">
+<dt><p><code class="docutils literal notranslate"><span class="pre">operation</span></code></p>
+</dt><dd><p>Active cipher operation.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">iv</span></code></p>
+</dt><dd><p>Buffer where the generated IV is to be written.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">iv_size</span></code></p>
+</dt><dd><p>Size of the <code class="docutils literal notranslate"><span class="pre">iv</span></code> buffer in bytes. This must be at least <a class="reference internal" href="#c.PSA_CIPHER_IV_LENGTH" title="PSA_CIPHER_IV_LENGTH"><code class="docutils literal notranslate"><span class="pre">PSA_CIPHER_IV_LENGTH</span></code></a><code class="docutils literal notranslate"><span class="pre">(</span></code><code class="docutils literal notranslate"><span class="pre">key_type</span></code><code class="docutils literal notranslate"><span class="pre">,</span> </code><code class="docutils literal notranslate"><span class="pre">alg</span></code><code class="docutils literal notranslate"><span class="pre">)</span></code> where <code class="docutils literal notranslate"><span class="pre">key_type</span></code> and <code class="docutils literal notranslate"><span class="pre">alg</span></code> are type of key and the algorithm respectively that were used to set up the cipher operation.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">iv_length</span></code></p>
+</dt><dd><p>On success, the number of bytes of the generated IV.</p>
+</dd>
+</dl>
+</div>
+<p class="rubric">Returns: <code class="docutils literal notranslate"><span class="pre">psa_status_t</span></code></p>
+<div class="apisubitem docutils container">
+<dl class="simple">
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_SUCCESS</span></code></p>
+</dt><dd><p>Success.
+The first <code class="docutils literal notranslate"><span class="pre">(*iv_length)</span></code> bytes of <code class="docutils literal notranslate"><span class="pre">iv</span></code> contain the generated IV.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_BAD_STATE</span></code></p>
+</dt><dd><p>The following conditions can result in this error:</p>
+<ul class="simple">
+<li><p>The cipher algorithm does not use an IV.</p></li>
+<li><p>The operation state is not valid: it must be active, with no IV set.</p></li>
+<li><p>The library requires initializing by a call to <a class="reference internal" href="../library/library.html#c.psa_crypto_init" title="psa_crypto_init"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_crypto_init()</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_BUFFER_TOO_SMALL</span></code></p>
+</dt><dd><p>The size of the <code class="docutils literal notranslate"><span class="pre">iv</span></code> buffer is too small. <a class="reference internal" href="#c.PSA_CIPHER_IV_LENGTH" title="PSA_CIPHER_IV_LENGTH"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_CIPHER_IV_LENGTH()</span></code></a> or <a class="reference internal" href="#c.PSA_CIPHER_IV_MAX_SIZE" title="PSA_CIPHER_IV_MAX_SIZE"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_CIPHER_IV_MAX_SIZE</span></code></a> can be used to determine a sufficient buffer size.</p>
+</dd>
+<dt><p><a class="reference internal" href="../library/status.html#c.PSA_ERROR_INSUFFICIENT_ENTROPY" title="PSA_ERROR_INSUFFICIENT_ENTROPY"><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_INSUFFICIENT_ENTROPY</span></code></a></p>
+</dt><dd></dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_INSUFFICIENT_MEMORY</span></code></p>
+</dt><dd></dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_COMMUNICATION_FAILURE</span></code></p>
+</dt><dd></dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_CORRUPTION_DETECTED</span></code></p>
+</dt><dd></dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_STORAGE_FAILURE</span></code></p>
+</dt><dd></dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_DATA_CORRUPT</span></code></p>
+</dt><dd></dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_DATA_INVALID</span></code></p>
+</dt><dd></dd>
+</dl>
+</div>
+<p class="rubric">Description</p>
+<p>This function generates a random IV, nonce or initial counter value for the encryption operation as appropriate for the chosen algorithm, key type and key size.</p>
+<p>The generated IV is always the default length for the key and algorithm: <a class="reference internal" href="#c.PSA_CIPHER_IV_LENGTH" title="PSA_CIPHER_IV_LENGTH"><code class="docutils literal notranslate"><span class="pre">PSA_CIPHER_IV_LENGTH</span></code></a><code class="docutils literal notranslate"><span class="pre">(</span></code><code class="docutils literal notranslate"><span class="pre">key_type</span></code><code class="docutils literal notranslate"><span class="pre">,</span> </code><code class="docutils literal notranslate"><span class="pre">alg</span></code><code class="docutils literal notranslate"><span class="pre">)</span></code>, where <code class="docutils literal notranslate"><span class="pre">key_type</span></code> is the type of key and <code class="docutils literal notranslate"><span class="pre">alg</span></code> is the algorithm that were used to set up the operation. To generate different lengths of IV, use <a class="reference internal" href="rng.html#c.psa_generate_random" title="psa_generate_random"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_generate_random()</span></code></a> and <a class="reference internal" href="#c.psa_cipher_set_iv" title="psa_cipher_set_iv"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_cipher_set_iv()</span></code></a>.</p>
+<p>If the cipher algorithm does not use an IV, calling this function returns a <code class="docutils literal notranslate"><span class="pre">PSA_ERROR_BAD_STATE</span></code> error. For these algorithms, <a class="reference internal" href="#c.PSA_CIPHER_IV_LENGTH" title="PSA_CIPHER_IV_LENGTH"><code class="docutils literal notranslate"><span class="pre">PSA_CIPHER_IV_LENGTH</span></code></a><code class="docutils literal notranslate"><span class="pre">(</span></code><code class="docutils literal notranslate"><span class="pre">key_type</span></code><code class="docutils literal notranslate"><span class="pre">,</span> </code><code class="docutils literal notranslate"><span class="pre">alg</span></code><code class="docutils literal notranslate"><span class="pre">)</span></code> will be zero.</p>
+<p>The application must call <a class="reference internal" href="#c.psa_cipher_encrypt_setup" title="psa_cipher_encrypt_setup"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_cipher_encrypt_setup()</span></code></a> before calling this function.</p>
+<p>If this function returns an error status, the operation enters an error state and must be aborted by calling <a class="reference internal" href="#c.psa_cipher_abort" title="psa_cipher_abort"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_cipher_abort()</span></code></a>.</p>
+</section>
+<section id="c.psa_cipher_set_iv">
+<h3><code class="docutils literal notranslate"><span class="pre">psa_cipher_set_iv</span></code> (function)<a class="headerlink" href="#c.psa_cipher_set_iv" title="Link to this heading">¶</a></h3>
+<p>Set the initialization vector (IV) for a symmetric encryption or decryption operation.</p>
+<pre class="literal-block">psa_status_t <a class="reference internal" href="#c.psa_cipher_set_iv" title="psa_cipher_set_iv">psa_cipher_set_iv</a>(<a class="reference internal" href="#c.psa_cipher_operation_t" title="psa_cipher_operation_t">psa_cipher_operation_t</a> * operation,
+                               const uint8_t * iv,
+                               size_t iv_length);</pre>
+<p class="rubric">Parameters</p>
+<div class="apisubitem docutils container">
+<dl class="simple">
+<dt><p><code class="docutils literal notranslate"><span class="pre">operation</span></code></p>
+</dt><dd><p>Active cipher operation.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">iv</span></code></p>
+</dt><dd><p>Buffer containing the IV to use.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">iv_length</span></code></p>
+</dt><dd><p>Size of the IV in bytes.</p>
+</dd>
+</dl>
+</div>
+<p class="rubric">Returns: <code class="docutils literal notranslate"><span class="pre">psa_status_t</span></code></p>
+<div class="apisubitem docutils container">
+<dl class="simple">
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_SUCCESS</span></code></p>
+</dt><dd><p>Success.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_BAD_STATE</span></code></p>
+</dt><dd><p>The following conditions can result in this error:</p>
+<ul class="simple">
+<li><p>The cipher algorithm does not use an IV.</p></li>
+<li><p>The operation state is not valid: it must be an active cipher encrypt operation, with no IV set.</p></li>
+<li><p>The library requires initializing by a call to <a class="reference internal" href="../library/library.html#c.psa_crypto_init" title="psa_crypto_init"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_crypto_init()</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_INVALID_ARGUMENT</span></code></p>
+</dt><dd><p>The following conditions can result in this error:</p>
+<ul class="simple">
+<li><p>The chosen algorithm does not use an IV.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">iv_length</span></code> is not valid for the chosen algorithm.</p></li>
+</ul>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_NOT_SUPPORTED</span></code></p>
+</dt><dd><p><code class="docutils literal notranslate"><span class="pre">iv_length</span></code> is not supported for use with the operation’s algorithm and key.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_INSUFFICIENT_MEMORY</span></code></p>
+</dt><dd></dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_COMMUNICATION_FAILURE</span></code></p>
+</dt><dd></dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_CORRUPTION_DETECTED</span></code></p>
+</dt><dd></dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_STORAGE_FAILURE</span></code></p>
+</dt><dd></dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_DATA_CORRUPT</span></code></p>
+</dt><dd></dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_DATA_INVALID</span></code></p>
+</dt><dd></dd>
+</dl>
+</div>
+<p class="rubric">Description</p>
+<p>This function sets the IV, nonce or initial counter value for the encryption or decryption operation.</p>
+<p>If the cipher algorithm does not use an IV, calling this function returns a <code class="docutils literal notranslate"><span class="pre">PSA_ERROR_BAD_STATE</span></code> error. For these algorithms, <a class="reference internal" href="#c.PSA_CIPHER_IV_LENGTH" title="PSA_CIPHER_IV_LENGTH"><code class="docutils literal notranslate"><span class="pre">PSA_CIPHER_IV_LENGTH</span></code></a><code class="docutils literal notranslate"><span class="pre">(</span></code><code class="docutils literal notranslate"><span class="pre">key_type</span></code><code class="docutils literal notranslate"><span class="pre">,</span> </code><code class="docutils literal notranslate"><span class="pre">alg</span></code><code class="docutils literal notranslate"><span class="pre">)</span></code> will be zero.</p>
+<p>The application must call <a class="reference internal" href="#c.psa_cipher_encrypt_setup" title="psa_cipher_encrypt_setup"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_cipher_encrypt_setup()</span></code></a> or <a class="reference internal" href="#c.psa_cipher_decrypt_setup" title="psa_cipher_decrypt_setup"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_cipher_decrypt_setup()</span></code></a> before calling this function.</p>
+<p>If this function returns an error status, the operation enters an error state and must be aborted by calling <a class="reference internal" href="#c.psa_cipher_abort" title="psa_cipher_abort"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_cipher_abort()</span></code></a>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When encrypting, <a class="reference internal" href="#c.psa_cipher_generate_iv" title="psa_cipher_generate_iv"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_cipher_generate_iv()</span></code></a> is recommended instead of using this function, unless implementing a protocol that requires a non-random IV.</p>
+</div>
+</section>
+<section id="c.psa_cipher_update">
+<h3><code class="docutils literal notranslate"><span class="pre">psa_cipher_update</span></code> (function)<a class="headerlink" href="#c.psa_cipher_update" title="Link to this heading">¶</a></h3>
+<p>Encrypt or decrypt a message fragment in an active cipher operation.</p>
+<pre class="literal-block">psa_status_t <a class="reference internal" href="#c.psa_cipher_update" title="psa_cipher_update">psa_cipher_update</a>(<a class="reference internal" href="#c.psa_cipher_operation_t" title="psa_cipher_operation_t">psa_cipher_operation_t</a> * operation,
+                               const uint8_t * input,
+                               size_t input_length,
+                               uint8_t * output,
+                               size_t output_size,
+                               size_t * output_length);</pre>
+<p class="rubric">Parameters</p>
+<div class="apisubitem docutils container">
+<dl class="simple">
+<dt><p><code class="docutils literal notranslate"><span class="pre">operation</span></code></p>
+</dt><dd><p>Active cipher operation.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">input</span></code></p>
+</dt><dd><p>Buffer containing the message fragment to encrypt or decrypt.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">input_length</span></code></p>
+</dt><dd><p>Size of the <code class="docutils literal notranslate"><span class="pre">input</span></code> buffer in bytes.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">output</span></code></p>
+</dt><dd><p>Buffer where the output is to be written.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">output_size</span></code></p>
+</dt><dd><p>Size of the <code class="docutils literal notranslate"><span class="pre">output</span></code> buffer in bytes. This must be appropriate for the selected algorithm and key:</p>
+<ul class="simple">
+<li><p>A sufficient output size is <a class="reference internal" href="#c.PSA_CIPHER_UPDATE_OUTPUT_SIZE" title="PSA_CIPHER_UPDATE_OUTPUT_SIZE"><code class="docutils literal notranslate"><span class="pre">PSA_CIPHER_UPDATE_OUTPUT_SIZE</span></code></a><code class="docutils literal notranslate"><span class="pre">(</span></code><code class="docutils literal notranslate"><span class="pre">key_type</span></code><code class="docutils literal notranslate"><span class="pre">,</span> </code><code class="docutils literal notranslate"><span class="pre">alg</span></code><code class="docutils literal notranslate"><span class="pre">,</span> </code><code class="docutils literal notranslate"><span class="pre">input_length</span></code><code class="docutils literal notranslate"><span class="pre">)</span></code>  where <code class="docutils literal notranslate"><span class="pre">key_type</span></code> is the type of key and <code class="docutils literal notranslate"><span class="pre">alg</span></code> is the algorithm that were used to set up the operation.</p></li>
+<li><p><a class="reference internal" href="#c.PSA_CIPHER_UPDATE_OUTPUT_MAX_SIZE" title="PSA_CIPHER_UPDATE_OUTPUT_MAX_SIZE"><code class="docutils literal notranslate"><span class="pre">PSA_CIPHER_UPDATE_OUTPUT_MAX_SIZE</span></code></a><code class="docutils literal notranslate"><span class="pre">(</span></code><code class="docutils literal notranslate"><span class="pre">input_length</span></code><code class="docutils literal notranslate"><span class="pre">)</span></code> evaluates to the maximum output size of any supported cipher algorithm.</p></li>
+</ul>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">output_length</span></code></p>
+</dt><dd><p>On success, the number of bytes that make up the returned output.</p>
+</dd>
+</dl>
+</div>
+<p class="rubric">Returns: <code class="docutils literal notranslate"><span class="pre">psa_status_t</span></code></p>
+<div class="apisubitem docutils container">
+<dl class="simple">
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_SUCCESS</span></code></p>
+</dt><dd><p>Success.
+The first <code class="docutils literal notranslate"><span class="pre">(*output_length)</span></code> bytes of <code class="docutils literal notranslate"><span class="pre">output</span></code> contain the output data.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_BAD_STATE</span></code></p>
+</dt><dd><p>The following conditions can result in this error:</p>
+<ul class="simple">
+<li><p>The operation state is not valid: it must be active, with an IV set if required for the algorithm.</p></li>
+<li><p>The library requires initializing by a call to <a class="reference internal" href="../library/library.html#c.psa_crypto_init" title="psa_crypto_init"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_crypto_init()</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_BUFFER_TOO_SMALL</span></code></p>
+</dt><dd><p>The size of the <code class="docutils literal notranslate"><span class="pre">output</span></code> buffer is too small. <a class="reference internal" href="#c.PSA_CIPHER_UPDATE_OUTPUT_SIZE" title="PSA_CIPHER_UPDATE_OUTPUT_SIZE"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_CIPHER_UPDATE_OUTPUT_SIZE()</span></code></a> or <a class="reference internal" href="#c.PSA_CIPHER_UPDATE_OUTPUT_MAX_SIZE" title="PSA_CIPHER_UPDATE_OUTPUT_MAX_SIZE"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_CIPHER_UPDATE_OUTPUT_MAX_SIZE()</span></code></a> can be used to determine a sufficient buffer size.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_INVALID_ARGUMENT</span></code></p>
+</dt><dd><p>The total input size passed to this operation is too large for this particular algorithm.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_NOT_SUPPORTED</span></code></p>
+</dt><dd><p>The total input size passed to this operation is too large for the implementation.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_INSUFFICIENT_MEMORY</span></code></p>
+</dt><dd></dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_COMMUNICATION_FAILURE</span></code></p>
+</dt><dd></dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_CORRUPTION_DETECTED</span></code></p>
+</dt><dd></dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_STORAGE_FAILURE</span></code></p>
+</dt><dd></dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_DATA_CORRUPT</span></code></p>
+</dt><dd></dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_DATA_INVALID</span></code></p>
+</dt><dd></dd>
+</dl>
+</div>
+<p class="rubric">Description</p>
+<p>The following must occur before calling this function:</p>
+<ol class="arabic simple">
+<li><p>Call either <a class="reference internal" href="#c.psa_cipher_encrypt_setup" title="psa_cipher_encrypt_setup"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_cipher_encrypt_setup()</span></code></a> or <a class="reference internal" href="#c.psa_cipher_decrypt_setup" title="psa_cipher_decrypt_setup"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_cipher_decrypt_setup()</span></code></a>. The choice of setup function determines whether this function encrypts or decrypts its input.</p></li>
+<li><p>If the algorithm requires an IV, call <a class="reference internal" href="#c.psa_cipher_generate_iv" title="psa_cipher_generate_iv"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_cipher_generate_iv()</span></code></a> or <a class="reference internal" href="#c.psa_cipher_set_iv" title="psa_cipher_set_iv"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_cipher_set_iv()</span></code></a>. <a class="reference internal" href="#c.psa_cipher_generate_iv" title="psa_cipher_generate_iv"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_cipher_generate_iv()</span></code></a> is recommended when encrypting.</p></li>
+</ol>
+<p>If this function returns an error status, the operation enters an error state and must be aborted by calling <a class="reference internal" href="#c.psa_cipher_abort" title="psa_cipher_abort"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_cipher_abort()</span></code></a>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This function does not require the input to be aligned to any particular block boundary. If the implementation can only process a whole block at a time, it must consume all the input provided, but it might delay the end of the corresponding output until a subsequent call to <a class="reference internal" href="#c.psa_cipher_update" title="psa_cipher_update"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_cipher_update()</span></code></a> provides sufficient input, or a subsequent call to <a class="reference internal" href="#c.psa_cipher_finish" title="psa_cipher_finish"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_cipher_finish()</span></code></a> indicates the end of the input. The amount of data that can be delayed in this way is bounded by the associated output size macro: <a class="reference internal" href="#c.PSA_CIPHER_UPDATE_OUTPUT_SIZE" title="PSA_CIPHER_UPDATE_OUTPUT_SIZE"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_CIPHER_UPDATE_OUTPUT_SIZE()</span></code></a> or <a class="reference internal" href="#c.PSA_CIPHER_FINISH_OUTPUT_SIZE" title="PSA_CIPHER_FINISH_OUTPUT_SIZE"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_CIPHER_FINISH_OUTPUT_SIZE()</span></code></a>.</p>
+</div>
+</section>
+<section id="c.psa_cipher_finish">
+<h3><code class="docutils literal notranslate"><span class="pre">psa_cipher_finish</span></code> (function)<a class="headerlink" href="#c.psa_cipher_finish" title="Link to this heading">¶</a></h3>
+<p>Finish encrypting or decrypting a message in a cipher operation.</p>
+<pre class="literal-block">psa_status_t <a class="reference internal" href="#c.psa_cipher_finish" title="psa_cipher_finish">psa_cipher_finish</a>(<a class="reference internal" href="#c.psa_cipher_operation_t" title="psa_cipher_operation_t">psa_cipher_operation_t</a> * operation,
+                               uint8_t * output,
+                               size_t output_size,
+                               size_t * output_length);</pre>
+<p class="rubric">Parameters</p>
+<div class="apisubitem docutils container">
+<dl class="simple">
+<dt><p><code class="docutils literal notranslate"><span class="pre">operation</span></code></p>
+</dt><dd><p>Active cipher operation.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">output</span></code></p>
+</dt><dd><p>Buffer where the last part of the output is to be written.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">output_size</span></code></p>
+</dt><dd><p>Size of the <code class="docutils literal notranslate"><span class="pre">output</span></code> buffer in bytes. This must be appropriate for the selected algorithm and key:</p>
+<ul class="simple">
+<li><p>A sufficient output size is <a class="reference internal" href="#c.PSA_CIPHER_FINISH_OUTPUT_SIZE" title="PSA_CIPHER_FINISH_OUTPUT_SIZE"><code class="docutils literal notranslate"><span class="pre">PSA_CIPHER_FINISH_OUTPUT_SIZE</span></code></a><code class="docutils literal notranslate"><span class="pre">(</span></code><code class="docutils literal notranslate"><span class="pre">key_type</span></code><code class="docutils literal notranslate"><span class="pre">,</span> </code><code class="docutils literal notranslate"><span class="pre">alg</span></code><code class="docutils literal notranslate"><span class="pre">)</span></code>  where <code class="docutils literal notranslate"><span class="pre">key_type</span></code> is the type of key and <code class="docutils literal notranslate"><span class="pre">alg</span></code> is the algorithm that were used to set up the operation.</p></li>
+<li><p><a class="reference internal" href="#c.PSA_CIPHER_FINISH_OUTPUT_MAX_SIZE" title="PSA_CIPHER_FINISH_OUTPUT_MAX_SIZE"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_CIPHER_FINISH_OUTPUT_MAX_SIZE</span></code></a> evaluates to the maximum output size of any supported cipher algorithm.</p></li>
+</ul>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">output_length</span></code></p>
+</dt><dd><p>On success, the number of bytes that make up the returned output.</p>
+</dd>
+</dl>
+</div>
+<p class="rubric">Returns: <code class="docutils literal notranslate"><span class="pre">psa_status_t</span></code></p>
+<div class="apisubitem docutils container">
+<dl class="simple">
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_SUCCESS</span></code></p>
+</dt><dd><p>Success.
+The first <code class="docutils literal notranslate"><span class="pre">(*output_length)</span></code> bytes of <code class="docutils literal notranslate"><span class="pre">output</span></code> contain the final output.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_BAD_STATE</span></code></p>
+</dt><dd><p>The following conditions can result in this error:</p>
+<ul class="simple">
+<li><p>The operation state is not valid: it must be active, with an IV set if required for the algorithm.</p></li>
+<li><p>The library requires initializing by a call to <a class="reference internal" href="../library/library.html#c.psa_crypto_init" title="psa_crypto_init"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_crypto_init()</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_BUFFER_TOO_SMALL</span></code></p>
+</dt><dd><p>The size of the <code class="docutils literal notranslate"><span class="pre">output</span></code> buffer is too small. <a class="reference internal" href="#c.PSA_CIPHER_FINISH_OUTPUT_SIZE" title="PSA_CIPHER_FINISH_OUTPUT_SIZE"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_CIPHER_FINISH_OUTPUT_SIZE()</span></code></a> or <a class="reference internal" href="#c.PSA_CIPHER_FINISH_OUTPUT_MAX_SIZE" title="PSA_CIPHER_FINISH_OUTPUT_MAX_SIZE"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_CIPHER_FINISH_OUTPUT_MAX_SIZE</span></code></a> can be used to determine a sufficient buffer size.</p>
+</dd>
+<dt><p><a class="reference internal" href="../library/status.html#c.PSA_ERROR_INVALID_PADDING" title="PSA_ERROR_INVALID_PADDING"><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_INVALID_PADDING</span></code></a></p>
+</dt><dd><p>This is a decryption operation for an algorithm that includes padding, and the ciphertext does not contain valid padding.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_INVALID_ARGUMENT</span></code></p>
+</dt><dd><p>The total input size passed to this operation is not valid for this particular algorithm. For example, the algorithm is a based on block cipher and requires a whole number of blocks, but the total input size is not a multiple of the block size.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_INSUFFICIENT_MEMORY</span></code></p>
+</dt><dd></dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_COMMUNICATION_FAILURE</span></code></p>
+</dt><dd></dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_CORRUPTION_DETECTED</span></code></p>
+</dt><dd></dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_STORAGE_FAILURE</span></code></p>
+</dt><dd></dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_DATA_CORRUPT</span></code></p>
+</dt><dd></dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_DATA_INVALID</span></code></p>
+</dt><dd></dd>
+</dl>
+</div>
+<p class="rubric">Description</p>
+<p>The application must call <a class="reference internal" href="#c.psa_cipher_encrypt_setup" title="psa_cipher_encrypt_setup"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_cipher_encrypt_setup()</span></code></a> or <a class="reference internal" href="#c.psa_cipher_decrypt_setup" title="psa_cipher_decrypt_setup"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_cipher_decrypt_setup()</span></code></a> before calling this function. The choice of setup function determines whether this function encrypts or decrypts its input.</p>
+<p>This function finishes the encryption or decryption of the message formed by concatenating the inputs passed to preceding calls to <a class="reference internal" href="#c.psa_cipher_update" title="psa_cipher_update"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_cipher_update()</span></code></a>.</p>
+<p>When this function returns successfully, the operation becomes inactive. If this function returns an error status, the operation enters an error state and must be aborted by calling <a class="reference internal" href="#c.psa_cipher_abort" title="psa_cipher_abort"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_cipher_abort()</span></code></a>.</p>
+</section>
+<section id="c.psa_cipher_abort">
+<h3><code class="docutils literal notranslate"><span class="pre">psa_cipher_abort</span></code> (function)<a class="headerlink" href="#c.psa_cipher_abort" title="Link to this heading">¶</a></h3>
+<p>Abort a cipher operation.</p>
+<pre class="literal-block">psa_status_t <a class="reference internal" href="#c.psa_cipher_abort" title="psa_cipher_abort">psa_cipher_abort</a>(<a class="reference internal" href="#c.psa_cipher_operation_t" title="psa_cipher_operation_t">psa_cipher_operation_t</a> * operation);</pre>
+<p class="rubric">Parameters</p>
+<div class="apisubitem docutils container">
+<dl class="simple">
+<dt><p><code class="docutils literal notranslate"><span class="pre">operation</span></code></p>
+</dt><dd><p>Initialized cipher operation.</p>
+</dd>
+</dl>
+</div>
+<p class="rubric">Returns: <code class="docutils literal notranslate"><span class="pre">psa_status_t</span></code></p>
+<div class="apisubitem docutils container">
+<dl class="simple">
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_SUCCESS</span></code></p>
+</dt><dd><p>Success.
+The operation object can now be discarded or reused.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_BAD_STATE</span></code></p>
+</dt><dd><p>The library requires initializing by a call to <a class="reference internal" href="../library/library.html#c.psa_crypto_init" title="psa_crypto_init"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_crypto_init()</span></code></a>.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_COMMUNICATION_FAILURE</span></code></p>
+</dt><dd></dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_CORRUPTION_DETECTED</span></code></p>
+</dt><dd></dd>
+</dl>
+</div>
+<p class="rubric">Description</p>
+<p>Aborting an operation frees all associated resources except for the <code class="docutils literal notranslate"><span class="pre">operation</span></code> object itself. Once aborted, the operation object can be reused for another operation by calling <a class="reference internal" href="#c.psa_cipher_encrypt_setup" title="psa_cipher_encrypt_setup"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_cipher_encrypt_setup()</span></code></a> or <a class="reference internal" href="#c.psa_cipher_decrypt_setup" title="psa_cipher_decrypt_setup"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_cipher_decrypt_setup()</span></code></a> again.</p>
+<p>This function can be called any time after the operation object has been initialized as described in <a class="reference internal" href="#c.psa_cipher_operation_t" title="psa_cipher_operation_t"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_cipher_operation_t</span></code></a>.</p>
+<p>In particular, calling <a class="reference internal" href="#c.psa_cipher_abort" title="psa_cipher_abort"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_cipher_abort()</span></code></a> after the operation has been terminated by a call to <a class="reference internal" href="#c.psa_cipher_abort" title="psa_cipher_abort"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_cipher_abort()</span></code></a> or <a class="reference internal" href="#c.psa_cipher_finish" title="psa_cipher_finish"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_cipher_finish()</span></code></a> is safe and has no effect.</p>
+</section>
+</section>
+<section id="support-macros">
+<h2><span class="section-number">10.5.4 </span>Support macros<a class="headerlink" href="#support-macros" title="Link to this heading">¶</a></h2>
+<section id="c.PSA_ALG_IS_STREAM_CIPHER">
+<h3><code class="docutils literal notranslate"><span class="pre">PSA_ALG_IS_STREAM_CIPHER</span></code> (macro)<a class="headerlink" href="#c.PSA_ALG_IS_STREAM_CIPHER" title="Link to this heading">¶</a></h3>
+<p>Whether the specified algorithm is a stream cipher.</p>
+<pre class="literal-block">#define <a class="reference internal" href="#c.PSA_ALG_IS_STREAM_CIPHER" title="PSA_ALG_IS_STREAM_CIPHER">PSA_ALG_IS_STREAM_CIPHER</a>(alg) <em><a class="reference internal" href="../../overview/implementation.html#specification-defined-value"><span class="std std-ref">/* specification-defined value */</span></a></em></pre>
+<p class="rubric">Parameters</p>
+<div class="apisubitem docutils container">
+<dl class="simple">
+<dt><p><code class="docutils literal notranslate"><span class="pre">alg</span></code></p>
+</dt><dd><p>An algorithm identifier: a value of type <a class="reference internal" href="algorithms.html#c.psa_algorithm_t" title="psa_algorithm_t"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_algorithm_t</span></code></a>.</p>
+</dd>
+</dl>
+</div>
+<p class="rubric">Returns</p>
+<p><code class="docutils literal notranslate"><span class="pre">1</span></code> if <code class="docutils literal notranslate"><span class="pre">alg</span></code> is a stream cipher algorithm, <code class="docutils literal notranslate"><span class="pre">0</span></code> otherwise. This macro can return either <code class="docutils literal notranslate"><span class="pre">0</span></code> or <code class="docutils literal notranslate"><span class="pre">1</span></code> if <code class="docutils literal notranslate"><span class="pre">alg</span></code> is not a supported algorithm identifier or if it is not a symmetric cipher algorithm.</p>
+<p class="rubric">Description</p>
+<p>A stream cipher is a symmetric cipher that encrypts or decrypts messages by applying a bitwise-xor with a stream of bytes that is generated from a key.</p>
+</section>
+<section id="c.PSA_ALG_CCM_STAR_ANY_TAG">
+<h3><code class="docutils literal notranslate"><span class="pre">PSA_ALG_CCM_STAR_ANY_TAG</span></code> (macro)<a class="headerlink" href="#c.PSA_ALG_CCM_STAR_ANY_TAG" title="Link to this heading">¶</a></h3>
+<p>A wildcard algorithm that permits the use of the key with CCM* as both an AEAD and an unauthenticated cipher algorithm.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">Added in version 1.2.</span></p>
+</div>
+<pre class="literal-block">#define <a class="reference internal" href="#c.PSA_ALG_CCM_STAR_ANY_TAG" title="PSA_ALG_CCM_STAR_ANY_TAG">PSA_ALG_CCM_STAR_ANY_TAG</a> ((<a class="reference internal" href="algorithms.html#c.psa_algorithm_t" title="psa_algorithm_t">psa_algorithm_t</a>)0x04c09300)</pre>
+<p>If a block-cipher key specifies <a class="reference internal" href="#c.PSA_ALG_CCM_STAR_ANY_TAG" title="PSA_ALG_CCM_STAR_ANY_TAG"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_ALG_CCM_STAR_ANY_TAG</span></code></a> as its permitted algorithm, then the key can be used with the <a class="reference internal" href="#c.PSA_ALG_CCM_STAR_NO_TAG" title="PSA_ALG_CCM_STAR_NO_TAG"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_ALG_CCM_STAR_NO_TAG</span></code></a> unauthenticated cipher, the <a class="reference internal" href="aead.html#c.PSA_ALG_CCM" title="PSA_ALG_CCM"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_ALG_CCM</span></code></a> AEAD algorithm, and truncated <a class="reference internal" href="aead.html#c.PSA_ALG_CCM" title="PSA_ALG_CCM"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_ALG_CCM</span></code></a> AEAD algorithms.</p>
+</section>
+<section id="c.PSA_CIPHER_ENCRYPT_OUTPUT_SIZE">
+<h3><code class="docutils literal notranslate"><span class="pre">PSA_CIPHER_ENCRYPT_OUTPUT_SIZE</span></code> (macro)<a class="headerlink" href="#c.PSA_CIPHER_ENCRYPT_OUTPUT_SIZE" title="Link to this heading">¶</a></h3>
+<p>A sufficient output buffer size for <a class="reference internal" href="#c.psa_cipher_encrypt" title="psa_cipher_encrypt"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_cipher_encrypt()</span></code></a>, in bytes.</p>
+<pre class="literal-block">#define <a class="reference internal" href="#c.PSA_CIPHER_ENCRYPT_OUTPUT_SIZE" title="PSA_CIPHER_ENCRYPT_OUTPUT_SIZE">PSA_CIPHER_ENCRYPT_OUTPUT_SIZE</a>(key_type, alg, input_length) \
+    <em><a class="reference internal" href="../../overview/implementation.html#implementation-defined-value"><span class="std std-ref">/* implementation-defined value */</span></a></em></pre>
+<p class="rubric">Parameters</p>
+<div class="apisubitem docutils container">
+<dl class="simple">
+<dt><p><code class="docutils literal notranslate"><span class="pre">key_type</span></code></p>
+</dt><dd><p>A symmetric key type that is compatible with algorithm <code class="docutils literal notranslate"><span class="pre">alg</span></code>.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">alg</span></code></p>
+</dt><dd><p>A cipher algorithm: a value of type <a class="reference internal" href="algorithms.html#c.psa_algorithm_t" title="psa_algorithm_t"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_algorithm_t</span></code></a> such that <a class="reference internal" href="algorithms.html#c.PSA_ALG_IS_CIPHER" title="PSA_ALG_IS_CIPHER"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_IS_CIPHER</span></code></a><code class="docutils literal notranslate"><span class="pre">(</span></code><code class="docutils literal notranslate"><span class="pre">alg</span></code><code class="docutils literal notranslate"><span class="pre">)</span></code> is true.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">input_length</span></code></p>
+</dt><dd><p>Size of the input in bytes.</p>
+</dd>
+</dl>
+</div>
+<p class="rubric">Returns</p>
+<p>A sufficient output size for the specified key type and algorithm. If the key type or cipher algorithm is not recognized, or the parameters are incompatible, return <code class="docutils literal notranslate"><span class="pre">0</span></code>. An implementation can return either <code class="docutils literal notranslate"><span class="pre">0</span></code> or a correct size for a key type and cipher algorithm that it recognizes, but does not support.</p>
+<p class="rubric">Description</p>
+<p>If the size of the output buffer is at least this large, it is guaranteed that <a class="reference internal" href="#c.psa_cipher_encrypt" title="psa_cipher_encrypt"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_cipher_encrypt()</span></code></a> will not fail due to an insufficient buffer size. Depending on the algorithm, the actual size of the output might be smaller.</p>
+<p>See also <a class="reference internal" href="#c.PSA_CIPHER_ENCRYPT_OUTPUT_MAX_SIZE" title="PSA_CIPHER_ENCRYPT_OUTPUT_MAX_SIZE"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_CIPHER_ENCRYPT_OUTPUT_MAX_SIZE</span></code></a>.</p>
+</section>
+<section id="c.PSA_CIPHER_ENCRYPT_OUTPUT_MAX_SIZE">
+<h3><code class="docutils literal notranslate"><span class="pre">PSA_CIPHER_ENCRYPT_OUTPUT_MAX_SIZE</span></code> (macro)<a class="headerlink" href="#c.PSA_CIPHER_ENCRYPT_OUTPUT_MAX_SIZE" title="Link to this heading">¶</a></h3>
+<p>A sufficient output buffer size for <a class="reference internal" href="#c.psa_cipher_encrypt" title="psa_cipher_encrypt"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_cipher_encrypt()</span></code></a>, for any of the supported key types and cipher algorithms.</p>
+<pre class="literal-block">#define <a class="reference internal" href="#c.PSA_CIPHER_ENCRYPT_OUTPUT_MAX_SIZE" title="PSA_CIPHER_ENCRYPT_OUTPUT_MAX_SIZE">PSA_CIPHER_ENCRYPT_OUTPUT_MAX_SIZE</a>(input_length) \
+    <em><a class="reference internal" href="../../overview/implementation.html#implementation-defined-value"><span class="std std-ref">/* implementation-defined value */</span></a></em></pre>
+<p class="rubric">Parameters</p>
+<div class="apisubitem docutils container">
+<dl class="simple">
+<dt><p><code class="docutils literal notranslate"><span class="pre">input_length</span></code></p>
+</dt><dd><p>Size of the input in bytes.</p>
+</dd>
+</dl>
+</div>
+<p class="rubric">Description</p>
+<p>If the size of the output buffer is at least this large, it is guaranteed that <a class="reference internal" href="#c.psa_cipher_encrypt" title="psa_cipher_encrypt"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_cipher_encrypt()</span></code></a> will not fail due to an insufficient buffer size.</p>
+<p>See also <a class="reference internal" href="#c.PSA_CIPHER_ENCRYPT_OUTPUT_SIZE" title="PSA_CIPHER_ENCRYPT_OUTPUT_SIZE"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_CIPHER_ENCRYPT_OUTPUT_SIZE()</span></code></a>.</p>
+</section>
+<section id="c.PSA_CIPHER_DECRYPT_OUTPUT_SIZE">
+<h3><code class="docutils literal notranslate"><span class="pre">PSA_CIPHER_DECRYPT_OUTPUT_SIZE</span></code> (macro)<a class="headerlink" href="#c.PSA_CIPHER_DECRYPT_OUTPUT_SIZE" title="Link to this heading">¶</a></h3>
+<p>A sufficient output buffer size for <a class="reference internal" href="#c.psa_cipher_decrypt" title="psa_cipher_decrypt"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_cipher_decrypt()</span></code></a>, in bytes.</p>
+<pre class="literal-block">#define <a class="reference internal" href="#c.PSA_CIPHER_DECRYPT_OUTPUT_SIZE" title="PSA_CIPHER_DECRYPT_OUTPUT_SIZE">PSA_CIPHER_DECRYPT_OUTPUT_SIZE</a>(key_type, alg, input_length) \
+    <em><a class="reference internal" href="../../overview/implementation.html#implementation-defined-value"><span class="std std-ref">/* implementation-defined value */</span></a></em></pre>
+<p class="rubric">Parameters</p>
+<div class="apisubitem docutils container">
+<dl class="simple">
+<dt><p><code class="docutils literal notranslate"><span class="pre">key_type</span></code></p>
+</dt><dd><p>A symmetric key type that is compatible with algorithm <code class="docutils literal notranslate"><span class="pre">alg</span></code>.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">alg</span></code></p>
+</dt><dd><p>A cipher algorithm: a value of type <a class="reference internal" href="algorithms.html#c.psa_algorithm_t" title="psa_algorithm_t"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_algorithm_t</span></code></a> such that <a class="reference internal" href="algorithms.html#c.PSA_ALG_IS_CIPHER" title="PSA_ALG_IS_CIPHER"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_IS_CIPHER</span></code></a><code class="docutils literal notranslate"><span class="pre">(</span></code><code class="docutils literal notranslate"><span class="pre">alg</span></code><code class="docutils literal notranslate"><span class="pre">)</span></code> is true.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">input_length</span></code></p>
+</dt><dd><p>Size of the input in bytes.</p>
+</dd>
+</dl>
+</div>
+<p class="rubric">Returns</p>
+<p>A sufficient output size for the specified key type and algorithm. If the key type or cipher algorithm is not recognized, or the parameters are incompatible, return <code class="docutils literal notranslate"><span class="pre">0</span></code>. An implementation can return either <code class="docutils literal notranslate"><span class="pre">0</span></code> or a correct size for a key type and cipher algorithm that it recognizes, but does not support.</p>
+<p class="rubric">Description</p>
+<p>If the size of the output buffer is at least this large, it is guaranteed that <a class="reference internal" href="#c.psa_cipher_decrypt" title="psa_cipher_decrypt"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_cipher_decrypt()</span></code></a> will not fail due to an insufficient buffer size. Depending on the algorithm, the actual size of the output might be smaller.</p>
+<p>See also <a class="reference internal" href="#c.PSA_CIPHER_DECRYPT_OUTPUT_MAX_SIZE" title="PSA_CIPHER_DECRYPT_OUTPUT_MAX_SIZE"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_CIPHER_DECRYPT_OUTPUT_MAX_SIZE</span></code></a>.</p>
+</section>
+<section id="c.PSA_CIPHER_DECRYPT_OUTPUT_MAX_SIZE">
+<h3><code class="docutils literal notranslate"><span class="pre">PSA_CIPHER_DECRYPT_OUTPUT_MAX_SIZE</span></code> (macro)<a class="headerlink" href="#c.PSA_CIPHER_DECRYPT_OUTPUT_MAX_SIZE" title="Link to this heading">¶</a></h3>
+<p>A sufficient output buffer size for <a class="reference internal" href="#c.psa_cipher_decrypt" title="psa_cipher_decrypt"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_cipher_decrypt()</span></code></a>, for any of the supported key types and cipher algorithms.</p>
+<pre class="literal-block">#define <a class="reference internal" href="#c.PSA_CIPHER_DECRYPT_OUTPUT_MAX_SIZE" title="PSA_CIPHER_DECRYPT_OUTPUT_MAX_SIZE">PSA_CIPHER_DECRYPT_OUTPUT_MAX_SIZE</a>(input_length) \
+    <em><a class="reference internal" href="../../overview/implementation.html#implementation-defined-value"><span class="std std-ref">/* implementation-defined value */</span></a></em></pre>
+<p class="rubric">Parameters</p>
+<div class="apisubitem docutils container">
+<dl class="simple">
+<dt><p><code class="docutils literal notranslate"><span class="pre">input_length</span></code></p>
+</dt><dd><p>Size of the input in bytes.</p>
+</dd>
+</dl>
+</div>
+<p class="rubric">Description</p>
+<p>If the size of the output buffer is at least this large, it is guaranteed that <a class="reference internal" href="#c.psa_cipher_decrypt" title="psa_cipher_decrypt"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_cipher_decrypt()</span></code></a> will not fail due to an insufficient buffer size.</p>
+<p>See also <a class="reference internal" href="#c.PSA_CIPHER_DECRYPT_OUTPUT_SIZE" title="PSA_CIPHER_DECRYPT_OUTPUT_SIZE"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_CIPHER_DECRYPT_OUTPUT_SIZE()</span></code></a>.</p>
+</section>
+<section id="c.PSA_CIPHER_IV_LENGTH">
+<h3><code class="docutils literal notranslate"><span class="pre">PSA_CIPHER_IV_LENGTH</span></code> (macro)<a class="headerlink" href="#c.PSA_CIPHER_IV_LENGTH" title="Link to this heading">¶</a></h3>
+<p>The default IV size for a cipher algorithm, in bytes.</p>
+<pre class="literal-block">#define <a class="reference internal" href="#c.PSA_CIPHER_IV_LENGTH" title="PSA_CIPHER_IV_LENGTH">PSA_CIPHER_IV_LENGTH</a>(key_type, alg) <em><a class="reference internal" href="../../overview/implementation.html#implementation-defined-value"><span class="std std-ref">/* implementation-defined value */</span></a></em></pre>
+<p class="rubric">Parameters</p>
+<div class="apisubitem docutils container">
+<dl class="simple">
+<dt><p><code class="docutils literal notranslate"><span class="pre">key_type</span></code></p>
+</dt><dd><p>A symmetric key type that is compatible with algorithm <code class="docutils literal notranslate"><span class="pre">alg</span></code>.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">alg</span></code></p>
+</dt><dd><p>A cipher algorithm: a value of type <a class="reference internal" href="algorithms.html#c.psa_algorithm_t" title="psa_algorithm_t"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_algorithm_t</span></code></a> such that <a class="reference internal" href="algorithms.html#c.PSA_ALG_IS_CIPHER" title="PSA_ALG_IS_CIPHER"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_IS_CIPHER</span></code></a><code class="docutils literal notranslate"><span class="pre">(</span></code><code class="docutils literal notranslate"><span class="pre">alg</span></code><code class="docutils literal notranslate"><span class="pre">)</span></code> is true.</p>
+</dd>
+</dl>
+</div>
+<p class="rubric">Returns</p>
+<p>The default IV size for the specified key type and algorithm.
+If the algorithm does not use an IV, return <code class="docutils literal notranslate"><span class="pre">0</span></code>.
+If the key type or cipher algorithm is not recognized, or the parameters are incompatible, return <code class="docutils literal notranslate"><span class="pre">0</span></code>.
+An implementation can return either <code class="docutils literal notranslate"><span class="pre">0</span></code> or a correct size for a key type and cipher algorithm that it recognizes, but does not support.</p>
+<p class="rubric">Description</p>
+<p>The IV that is generated as part of a call to <a class="reference internal" href="#c.psa_cipher_encrypt" title="psa_cipher_encrypt"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_cipher_encrypt()</span></code></a> is always the default IV length for the algorithm.</p>
+<p>This macro can be used to allocate a buffer of sufficient size to store the IV output from <a class="reference internal" href="#c.psa_cipher_generate_iv" title="psa_cipher_generate_iv"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_cipher_generate_iv()</span></code></a> when using a multi-part cipher operation.</p>
+<p>See also <a class="reference internal" href="#c.PSA_CIPHER_IV_MAX_SIZE" title="PSA_CIPHER_IV_MAX_SIZE"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_CIPHER_IV_MAX_SIZE</span></code></a>.</p>
+</section>
+<section id="c.PSA_CIPHER_IV_MAX_SIZE">
+<h3><code class="docutils literal notranslate"><span class="pre">PSA_CIPHER_IV_MAX_SIZE</span></code> (macro)<a class="headerlink" href="#c.PSA_CIPHER_IV_MAX_SIZE" title="Link to this heading">¶</a></h3>
+<p>A sufficient buffer size for storing the IV generated by <a class="reference internal" href="#c.psa_cipher_generate_iv" title="psa_cipher_generate_iv"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_cipher_generate_iv()</span></code></a>, for any of the supported key types and cipher algorithms.</p>
+<pre class="literal-block">#define <a class="reference internal" href="#c.PSA_CIPHER_IV_MAX_SIZE" title="PSA_CIPHER_IV_MAX_SIZE">PSA_CIPHER_IV_MAX_SIZE</a> <em><a class="reference internal" href="../../overview/implementation.html#implementation-defined-value"><span class="std std-ref">/* implementation-defined value */</span></a></em></pre>
+<p>If the size of the IV buffer is at least this large, it is guaranteed that <a class="reference internal" href="#c.psa_cipher_generate_iv" title="psa_cipher_generate_iv"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_cipher_generate_iv()</span></code></a> will not fail due to an insufficient buffer size.</p>
+<p>See also <a class="reference internal" href="#c.PSA_CIPHER_IV_LENGTH" title="PSA_CIPHER_IV_LENGTH"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_CIPHER_IV_LENGTH()</span></code></a>.</p>
+</section>
+<section id="c.PSA_CIPHER_UPDATE_OUTPUT_SIZE">
+<h3><code class="docutils literal notranslate"><span class="pre">PSA_CIPHER_UPDATE_OUTPUT_SIZE</span></code> (macro)<a class="headerlink" href="#c.PSA_CIPHER_UPDATE_OUTPUT_SIZE" title="Link to this heading">¶</a></h3>
+<p>A sufficient output buffer size for <a class="reference internal" href="#c.psa_cipher_update" title="psa_cipher_update"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_cipher_update()</span></code></a>, in bytes.</p>
+<pre class="literal-block">#define <a class="reference internal" href="#c.PSA_CIPHER_UPDATE_OUTPUT_SIZE" title="PSA_CIPHER_UPDATE_OUTPUT_SIZE">PSA_CIPHER_UPDATE_OUTPUT_SIZE</a>(key_type, alg, input_length) \
+    <em><a class="reference internal" href="../../overview/implementation.html#implementation-defined-value"><span class="std std-ref">/* implementation-defined value */</span></a></em></pre>
+<p class="rubric">Parameters</p>
+<div class="apisubitem docutils container">
+<dl class="simple">
+<dt><p><code class="docutils literal notranslate"><span class="pre">key_type</span></code></p>
+</dt><dd><p>A symmetric key type that is compatible with algorithm <code class="docutils literal notranslate"><span class="pre">alg</span></code>.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">alg</span></code></p>
+</dt><dd><p>A cipher algorithm: a value of type <a class="reference internal" href="algorithms.html#c.psa_algorithm_t" title="psa_algorithm_t"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_algorithm_t</span></code></a> such that <a class="reference internal" href="algorithms.html#c.PSA_ALG_IS_CIPHER" title="PSA_ALG_IS_CIPHER"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_IS_CIPHER</span></code></a><code class="docutils literal notranslate"><span class="pre">(</span></code><code class="docutils literal notranslate"><span class="pre">alg</span></code><code class="docutils literal notranslate"><span class="pre">)</span></code> is true.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">input_length</span></code></p>
+</dt><dd><p>Size of the input in bytes.</p>
+</dd>
+</dl>
+</div>
+<p class="rubric">Returns</p>
+<p>A sufficient output size for the specified key type and algorithm. If the key type or cipher algorithm is not recognized, or the parameters are incompatible, return <code class="docutils literal notranslate"><span class="pre">0</span></code>. An implementation can return either <code class="docutils literal notranslate"><span class="pre">0</span></code> or a correct size for a key type and cipher algorithm that it recognizes, but does not support.</p>
+<p class="rubric">Description</p>
+<p>If the size of the output buffer is at least this large, it is guaranteed that <a class="reference internal" href="#c.psa_cipher_update" title="psa_cipher_update"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_cipher_update()</span></code></a> will not fail due to an insufficient buffer size. The actual size of the output might be smaller in any given call.</p>
+<p>See also <a class="reference internal" href="#c.PSA_CIPHER_UPDATE_OUTPUT_MAX_SIZE" title="PSA_CIPHER_UPDATE_OUTPUT_MAX_SIZE"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_CIPHER_UPDATE_OUTPUT_MAX_SIZE</span></code></a>.</p>
+</section>
+<section id="c.PSA_CIPHER_UPDATE_OUTPUT_MAX_SIZE">
+<h3><code class="docutils literal notranslate"><span class="pre">PSA_CIPHER_UPDATE_OUTPUT_MAX_SIZE</span></code> (macro)<a class="headerlink" href="#c.PSA_CIPHER_UPDATE_OUTPUT_MAX_SIZE" title="Link to this heading">¶</a></h3>
+<p>A sufficient output buffer size for <a class="reference internal" href="#c.psa_cipher_update" title="psa_cipher_update"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_cipher_update()</span></code></a>, for any of the supported key types and cipher algorithms.</p>
+<pre class="literal-block">#define <a class="reference internal" href="#c.PSA_CIPHER_UPDATE_OUTPUT_MAX_SIZE" title="PSA_CIPHER_UPDATE_OUTPUT_MAX_SIZE">PSA_CIPHER_UPDATE_OUTPUT_MAX_SIZE</a>(input_length) \
+    <em><a class="reference internal" href="../../overview/implementation.html#implementation-defined-value"><span class="std std-ref">/* implementation-defined value */</span></a></em></pre>
+<p class="rubric">Parameters</p>
+<div class="apisubitem docutils container">
+<dl class="simple">
+<dt><p><code class="docutils literal notranslate"><span class="pre">input_length</span></code></p>
+</dt><dd><p>Size of the input in bytes.</p>
+</dd>
+</dl>
+</div>
+<p class="rubric">Description</p>
+<p>If the size of the output buffer is at least this large, it is guaranteed that <a class="reference internal" href="#c.psa_cipher_update" title="psa_cipher_update"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_cipher_update()</span></code></a> will not fail due to an insufficient buffer size.</p>
+<p>See also <a class="reference internal" href="#c.PSA_CIPHER_UPDATE_OUTPUT_SIZE" title="PSA_CIPHER_UPDATE_OUTPUT_SIZE"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_CIPHER_UPDATE_OUTPUT_SIZE()</span></code></a>.</p>
+</section>
+<section id="c.PSA_CIPHER_FINISH_OUTPUT_SIZE">
+<h3><code class="docutils literal notranslate"><span class="pre">PSA_CIPHER_FINISH_OUTPUT_SIZE</span></code> (macro)<a class="headerlink" href="#c.PSA_CIPHER_FINISH_OUTPUT_SIZE" title="Link to this heading">¶</a></h3>
+<p>A sufficient output buffer size for <a class="reference internal" href="#c.psa_cipher_finish" title="psa_cipher_finish"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_cipher_finish()</span></code></a>.</p>
+<pre class="literal-block">#define <a class="reference internal" href="#c.PSA_CIPHER_FINISH_OUTPUT_SIZE" title="PSA_CIPHER_FINISH_OUTPUT_SIZE">PSA_CIPHER_FINISH_OUTPUT_SIZE</a>(key_type, alg) \
+    <em><a class="reference internal" href="../../overview/implementation.html#implementation-defined-value"><span class="std std-ref">/* implementation-defined value */</span></a></em></pre>
+<p class="rubric">Parameters</p>
+<div class="apisubitem docutils container">
+<dl class="simple">
+<dt><p><code class="docutils literal notranslate"><span class="pre">key_type</span></code></p>
+</dt><dd><p>A symmetric key type that is compatible with algorithm <code class="docutils literal notranslate"><span class="pre">alg</span></code>.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">alg</span></code></p>
+</dt><dd><p>A cipher algorithm: a value of type <a class="reference internal" href="algorithms.html#c.psa_algorithm_t" title="psa_algorithm_t"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_algorithm_t</span></code></a> such that <a class="reference internal" href="algorithms.html#c.PSA_ALG_IS_CIPHER" title="PSA_ALG_IS_CIPHER"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_IS_CIPHER</span></code></a><code class="docutils literal notranslate"><span class="pre">(</span></code><code class="docutils literal notranslate"><span class="pre">alg</span></code><code class="docutils literal notranslate"><span class="pre">)</span></code> is true.</p>
+</dd>
+</dl>
+</div>
+<p class="rubric">Returns</p>
+<p>A sufficient output size for the specified key type and algorithm. If the key type or cipher algorithm is not recognized, or the parameters are incompatible, return <code class="docutils literal notranslate"><span class="pre">0</span></code>. An implementation can return either <code class="docutils literal notranslate"><span class="pre">0</span></code> or a correct size for a key type and cipher algorithm that it recognizes, but does not support.</p>
+<p class="rubric">Description</p>
+<p>If the size of the output buffer is at least this large, it is guaranteed that <a class="reference internal" href="#c.psa_cipher_finish" title="psa_cipher_finish"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_cipher_finish()</span></code></a> will not fail due to an insufficient buffer size. The actual size of the output might be smaller in any given call.</p>
+<p>See also <a class="reference internal" href="#c.PSA_CIPHER_FINISH_OUTPUT_MAX_SIZE" title="PSA_CIPHER_FINISH_OUTPUT_MAX_SIZE"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_CIPHER_FINISH_OUTPUT_MAX_SIZE</span></code></a>.</p>
+</section>
+<section id="c.PSA_CIPHER_FINISH_OUTPUT_MAX_SIZE">
+<h3><code class="docutils literal notranslate"><span class="pre">PSA_CIPHER_FINISH_OUTPUT_MAX_SIZE</span></code> (macro)<a class="headerlink" href="#c.PSA_CIPHER_FINISH_OUTPUT_MAX_SIZE" title="Link to this heading">¶</a></h3>
+<p>A sufficient output buffer size for <a class="reference internal" href="#c.psa_cipher_finish" title="psa_cipher_finish"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_cipher_finish()</span></code></a>, for any of the supported key types and cipher algorithms.</p>
+<pre class="literal-block">#define <a class="reference internal" href="#c.PSA_CIPHER_FINISH_OUTPUT_MAX_SIZE" title="PSA_CIPHER_FINISH_OUTPUT_MAX_SIZE">PSA_CIPHER_FINISH_OUTPUT_MAX_SIZE</a> <em><a class="reference internal" href="../../overview/implementation.html#implementation-defined-value"><span class="std std-ref">/* implementation-defined value */</span></a></em></pre>
+<p>If the size of the output buffer is at least this large, it is guaranteed that <a class="reference internal" href="#c.psa_cipher_finish" title="psa_cipher_finish"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_cipher_finish()</span></code></a> will not fail due to an insufficient buffer size.</p>
+<p>See also <a class="reference internal" href="#c.PSA_CIPHER_FINISH_OUTPUT_SIZE" title="PSA_CIPHER_FINISH_OUTPUT_SIZE"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_CIPHER_FINISH_OUTPUT_SIZE()</span></code></a>.</p>
+</section>
+<section id="c.PSA_BLOCK_CIPHER_BLOCK_LENGTH">
+<h3><code class="docutils literal notranslate"><span class="pre">PSA_BLOCK_CIPHER_BLOCK_LENGTH</span></code> (macro)<a class="headerlink" href="#c.PSA_BLOCK_CIPHER_BLOCK_LENGTH" title="Link to this heading">¶</a></h3>
+<p>The block size of a block cipher.</p>
+<pre class="literal-block">#define <a class="reference internal" href="#c.PSA_BLOCK_CIPHER_BLOCK_LENGTH" title="PSA_BLOCK_CIPHER_BLOCK_LENGTH">PSA_BLOCK_CIPHER_BLOCK_LENGTH</a>(type) <em><a class="reference internal" href="../../overview/implementation.html#specification-defined-value"><span class="std std-ref">/* specification-defined value */</span></a></em></pre>
+<p class="rubric">Parameters</p>
+<div class="apisubitem docutils container">
+<dl class="simple">
+<dt><p><code class="docutils literal notranslate"><span class="pre">type</span></code></p>
+</dt><dd><p>A cipher key type: a value of type <a class="reference internal" href="../keys/types.html#c.psa_key_type_t" title="psa_key_type_t"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_key_type_t</span></code></a>.</p>
+</dd>
+</dl>
+</div>
+<p class="rubric">Returns</p>
+<p>The block size for a block cipher, or <code class="docutils literal notranslate"><span class="pre">1</span></code> for a stream cipher. The return value is undefined if <code class="docutils literal notranslate"><span class="pre">type</span></code> is not a supported cipher key type.</p>
+<p class="rubric">Description</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>It is possible to build stream cipher algorithms on top of a block cipher, for example CTR mode (<a class="reference internal" href="#c.PSA_ALG_CTR" title="PSA_ALG_CTR"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_ALG_CTR</span></code></a>). This macro only takes the key type into account, so it cannot be used to determine the size of the data that <a class="reference internal" href="#c.psa_cipher_update" title="psa_cipher_update"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_cipher_update()</span></code></a> might buffer for future processing in general.</p>
+</div>
+<p>See also <a class="reference internal" href="#c.PSA_BLOCK_CIPHER_BLOCK_MAX_SIZE" title="PSA_BLOCK_CIPHER_BLOCK_MAX_SIZE"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_BLOCK_CIPHER_BLOCK_MAX_SIZE</span></code></a>.</p>
+</section>
+<section id="c.PSA_BLOCK_CIPHER_BLOCK_MAX_SIZE">
+<h3><code class="docutils literal notranslate"><span class="pre">PSA_BLOCK_CIPHER_BLOCK_MAX_SIZE</span></code> (macro)<a class="headerlink" href="#c.PSA_BLOCK_CIPHER_BLOCK_MAX_SIZE" title="Link to this heading">¶</a></h3>
+<p>The maximum block size of a block cipher supported by the implementation.</p>
+<pre class="literal-block">#define <a class="reference internal" href="#c.PSA_BLOCK_CIPHER_BLOCK_MAX_SIZE" title="PSA_BLOCK_CIPHER_BLOCK_MAX_SIZE">PSA_BLOCK_CIPHER_BLOCK_MAX_SIZE</a> <em><a class="reference internal" href="../../overview/implementation.html#implementation-defined-value"><span class="std std-ref">/* implementation-defined value */</span></a></em></pre>
+<p>See also <a class="reference internal" href="#c.PSA_BLOCK_CIPHER_BLOCK_LENGTH" title="PSA_BLOCK_CIPHER_BLOCK_LENGTH"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_BLOCK_CIPHER_BLOCK_LENGTH()</span></code></a>.</p>
+</section>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &#169; 2018-2026 Arm Limited and/or its affiliates.
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

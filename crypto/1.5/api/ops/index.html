@@ -1,0 +1,794 @@
+---
+---
+
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta property="og:title" content="10 Cryptographic operation reference" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="{{ page.url | absolute_url }}" />
+<link rel="canonical" href="{{ page.url | absolute_url }}" />
+<meta property="og:site_name" content="PSA Certified Crypto API 1.5" />
+<meta property="og:description" content="Algorithms- Algorithm encoding- psa_algorithm_t(typedef), PSA_ALG_NONE(macro)., Algorithm categories- PSA_ALG_IS_HASH(macro), PSA_ALG_IS_XOF(macro), PSA_ALG_IS_MAC(macro), PSA_ALG_IS_CIPHER(macro),..." />
+<meta name="description" content="Algorithms- Algorithm encoding- psa_algorithm_t(typedef), PSA_ALG_NONE(macro)., Algorithm categories- PSA_ALG_IS_HASH(macro), PSA_ALG_IS_XOF(macro), PSA_ALG_IS_MAC(macro), PSA_ALG_IS_CIPHER(macro),..." />
+
+    <title>10 Cryptographic operation reference &#8212; PSA Certified Crypto API 1.5</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/basic.css?v=686e5160" />
+    <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css?v=f6a572b4" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
+    <link rel="preconnect" type="text/css" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" type="text/css" href="https://fonts.gstatic.com" />
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;1,300;1,400&display=swap" />
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Mono:ital,wght@0,300;0,400;1,300&display=swap" />
+    <script src="../../_static/documentation_options.js?v=f8f0f945"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script>window.MathJax = {"chtml": {"mtextInheritFont": false, "mtextFont": "Lato-Light"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="10.1 Algorithms" href="algorithms.html" />
+    <link rel="prev" title="9.9 Key management functions" href="../keys/management.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../index.html">
+              <img class="logo" src="../../_static/ARM_LOGO-2025_INK_RGB.svg" alt="Logo of PSA Certified Crypto API"/>
+            </a></p><hr />
+<h3><a href="../../index.html">PSA Certified<br />Crypto API</a></h3>
+IHI 0086<br/>
+Non-confidential<br/>
+Version 1.5.0
+<hr />
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../about/about.html">About this document</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../overview/intro.html">1 Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview/goals.html">2 Design goals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview/functionality.html">3 Functionality overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview/sample-arch.html">4 Sample architectures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview/conventions.html">5 Library conventions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview/implementation.html">6 Implementation considerations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview/usage.html">7 Usage considerations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../library/index.html">8 Library management reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../keys/index.html">9 Key management reference</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">10 Cryptographic operation reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="algorithms.html">10.1 Algorithms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hash.html">10.2 Message digests (Hashes)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="xof.html">10.3 Extendable-output functions (XOF)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mac.html">10.4 Message authentication codes (MAC)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cipher.html">10.5 Unauthenticated ciphers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="aead.html">10.6 Authenticated encryption with associated data (AEAD)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="key-wrapping.html">10.7 Key wrapping</a></li>
+<li class="toctree-l2"><a class="reference internal" href="key-derivation.html">10.8 Key derivation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="signature.html">10.9 Asymmetric signature</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pk-encryption.html">10.10 Asymmetric encryption</a></li>
+<li class="toctree-l2"><a class="reference internal" href="key-agreement.html">10.11 Key agreement</a></li>
+<li class="toctree-l2"><a class="reference internal" href="key-encapsulation.html">10.12 Key encapsulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pake.html">10.13 Password-authenticated key exchange (PAKE)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rng.html">10.14 Other cryptographic services</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../appendix/example_header.html">A Example header file</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../appendix/encodings.html">B Algorithm and key type encoding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../appendix/specdef_values.html">C Example macro implementations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../appendix/sra.html">D Security Risk Assessment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../appendix/history.html">E Changes to the API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../atg_c-identifiers.html">Index of API elements</a></li>
+</ul>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="cryptographic-operation-reference">
+<span id="crypto-operations"></span><h1><span class="section-number">10 </span>Cryptographic operation reference<a class="headerlink" href="#cryptographic-operation-reference" title="Link to this heading">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="algorithms.html">10.1 Algorithms</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="algorithms.html#algorithm-encoding">10.1.1 Algorithm encoding</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="algorithms.html#c.psa_algorithm_t"><code class="docutils literal notranslate"><span class="pre">psa_algorithm_t</span></code> (typedef)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="algorithms.html#c.PSA_ALG_NONE"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_NONE</span></code> (macro)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="algorithms.html#algorithm-categories">10.1.2 Algorithm categories</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="algorithms.html#c.PSA_ALG_IS_HASH"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_IS_HASH</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="algorithms.html#c.PSA_ALG_IS_XOF"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_IS_XOF</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="algorithms.html#c.PSA_ALG_IS_MAC"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_IS_MAC</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="algorithms.html#c.PSA_ALG_IS_CIPHER"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_IS_CIPHER</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="algorithms.html#c.PSA_ALG_IS_AEAD"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_IS_AEAD</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="algorithms.html#c.PSA_ALG_IS_KEY_WRAP"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_IS_KEY_WRAP</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="algorithms.html#c.PSA_ALG_IS_KEY_DERIVATION"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_IS_KEY_DERIVATION</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="algorithms.html#c.PSA_ALG_IS_SIGN"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_IS_SIGN</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="algorithms.html#c.PSA_ALG_IS_ASYMMETRIC_ENCRYPTION"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_IS_ASYMMETRIC_ENCRYPTION</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="algorithms.html#c.PSA_ALG_IS_KEY_AGREEMENT"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_IS_KEY_AGREEMENT</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="algorithms.html#c.PSA_ALG_IS_PAKE"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_IS_PAKE</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="algorithms.html#c.PSA_ALG_IS_KEY_ENCAPSULATION"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_IS_KEY_ENCAPSULATION</span></code> (macro)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="algorithms.html#support-macros">10.1.3 Support macros</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="algorithms.html#c.PSA_ALG_IS_WILDCARD"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_IS_WILDCARD</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="algorithms.html#c.PSA_ALG_GET_HASH"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_GET_HASH</span></code> (macro)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="hash.html">10.2 Message digests (Hashes)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="hash.html#hash-algorithms">10.2.1 Hash algorithms</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="hash.html#c.PSA_ALG_MD2"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_MD2</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hash.html#c.PSA_ALG_MD4"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_MD4</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hash.html#c.PSA_ALG_MD5"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_MD5</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hash.html#c.PSA_ALG_RIPEMD160"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_RIPEMD160</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hash.html#c.PSA_ALG_AES_MMO_ZIGBEE"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_AES_MMO_ZIGBEE</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hash.html#c.PSA_ALG_SHA_1"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_SHA_1</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hash.html#c.PSA_ALG_SHA_224"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_SHA_224</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hash.html#c.PSA_ALG_SHA_256"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_SHA_256</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hash.html#c.PSA_ALG_SHA_384"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_SHA_384</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hash.html#c.PSA_ALG_SHA_512"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_SHA_512</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hash.html#c.PSA_ALG_SHA_512_224"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_SHA_512_224</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hash.html#c.PSA_ALG_SHA_512_256"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_SHA_512_256</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hash.html#c.PSA_ALG_SHA_256_192"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_SHA_256_192</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hash.html#c.PSA_ALG_SHA3_224"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_SHA3_224</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hash.html#c.PSA_ALG_SHA3_256"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_SHA3_256</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hash.html#c.PSA_ALG_SHA3_384"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_SHA3_384</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hash.html#c.PSA_ALG_SHA3_512"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_SHA3_512</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hash.html#c.PSA_ALG_SHAKE256_512"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_SHAKE256_512</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hash.html#c.PSA_ALG_SHAKE128_256"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_SHAKE128_256</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hash.html#c.PSA_ALG_SHAKE256_192"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_SHAKE256_192</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hash.html#c.PSA_ALG_SHAKE256_256"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_SHAKE256_256</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hash.html#c.PSA_ALG_SM3"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_SM3</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hash.html#c.PSA_ALG_ASCON_HASH256"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_ASCON_HASH256</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hash.html#c.PSA_ALG_BLAKE2S_HASH256"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_BLAKE2S_HASH256</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hash.html#c.PSA_ALG_BLAKE2SP_HASH256"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_BLAKE2SP_HASH256</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hash.html#c.PSA_ALG_BLAKE2B_HASH512"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_BLAKE2B_HASH512</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hash.html#c.PSA_ALG_BLAKE2BP_HASH512"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_BLAKE2BP_HASH512</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hash.html#c.PSA_ALG_IS_BLAKE2_HASH"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_IS_BLAKE2_HASH</span></code> (macro)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="hash.html#single-part-hashing-functions">10.2.2 Single-part hashing functions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="hash.html#c.psa_hash_compute"><code class="docutils literal notranslate"><span class="pre">psa_hash_compute</span></code> (function)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hash.html#c.psa_hash_compare"><code class="docutils literal notranslate"><span class="pre">psa_hash_compare</span></code> (function)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="hash.html#multi-part-hashing-operations">10.2.3 Multi-part hashing operations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="hash.html#c.psa_hash_operation_t"><code class="docutils literal notranslate"><span class="pre">psa_hash_operation_t</span></code> (typedef)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hash.html#c.PSA_HASH_OPERATION_INIT"><code class="docutils literal notranslate"><span class="pre">PSA_HASH_OPERATION_INIT</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hash.html#c.psa_hash_operation_init"><code class="docutils literal notranslate"><span class="pre">psa_hash_operation_init</span></code> (function)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hash.html#c.psa_hash_setup"><code class="docutils literal notranslate"><span class="pre">psa_hash_setup</span></code> (function)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hash.html#c.psa_hash_update"><code class="docutils literal notranslate"><span class="pre">psa_hash_update</span></code> (function)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hash.html#c.psa_hash_finish"><code class="docutils literal notranslate"><span class="pre">psa_hash_finish</span></code> (function)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hash.html#c.psa_hash_verify"><code class="docutils literal notranslate"><span class="pre">psa_hash_verify</span></code> (function)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hash.html#c.psa_hash_abort"><code class="docutils literal notranslate"><span class="pre">psa_hash_abort</span></code> (function)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hash.html#c.psa_hash_suspend"><code class="docutils literal notranslate"><span class="pre">psa_hash_suspend</span></code> (function)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hash.html#c.psa_hash_resume"><code class="docutils literal notranslate"><span class="pre">psa_hash_resume</span></code> (function)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hash.html#c.psa_hash_clone"><code class="docutils literal notranslate"><span class="pre">psa_hash_clone</span></code> (function)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="hash.html#support-macros">10.2.4 Support macros</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="hash.html#c.PSA_HASH_LENGTH"><code class="docutils literal notranslate"><span class="pre">PSA_HASH_LENGTH</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hash.html#c.PSA_HASH_MAX_SIZE"><code class="docutils literal notranslate"><span class="pre">PSA_HASH_MAX_SIZE</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hash.html#c.PSA_HASH_SUSPEND_OUTPUT_SIZE"><code class="docutils literal notranslate"><span class="pre">PSA_HASH_SUSPEND_OUTPUT_SIZE</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hash.html#c.PSA_HASH_SUSPEND_OUTPUT_MAX_SIZE"><code class="docutils literal notranslate"><span class="pre">PSA_HASH_SUSPEND_OUTPUT_MAX_SIZE</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hash.html#c.PSA_HASH_SUSPEND_ALGORITHM_FIELD_LENGTH"><code class="docutils literal notranslate"><span class="pre">PSA_HASH_SUSPEND_ALGORITHM_FIELD_LENGTH</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hash.html#c.PSA_HASH_SUSPEND_INPUT_LENGTH_FIELD_LENGTH"><code class="docutils literal notranslate"><span class="pre">PSA_HASH_SUSPEND_INPUT_LENGTH_FIELD_LENGTH</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hash.html#c.PSA_HASH_SUSPEND_HASH_STATE_FIELD_LENGTH"><code class="docutils literal notranslate"><span class="pre">PSA_HASH_SUSPEND_HASH_STATE_FIELD_LENGTH</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hash.html#c.PSA_HASH_BLOCK_LENGTH"><code class="docutils literal notranslate"><span class="pre">PSA_HASH_BLOCK_LENGTH</span></code> (macro)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="hash.html#hash-suspend-state">10.2.5 Hash suspend state</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="hash.html#hash-suspend-state-format">Hash suspend state format</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hash.html#hash-suspend-state-field-sizes">Hash suspend state field sizes</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="xof.html">10.3 Extendable-output functions (XOF)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="xof.html#xof-algorithms">10.3.1 XOF algorithms</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="xof.html#c.PSA_ALG_SHAKE128"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_SHAKE128</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xof.html#c.PSA_ALG_SHAKE256"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_SHAKE256</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xof.html#c.PSA_ALG_ASCON_XOF128"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_ASCON_XOF128</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xof.html#c.PSA_ALG_ASCON_CXOF128"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_ASCON_CXOF128</span></code> (macro)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="xof.html#multi-part-xof-operations">10.3.2 Multi-part XOF operations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="xof.html#c.psa_xof_operation_t"><code class="docutils literal notranslate"><span class="pre">psa_xof_operation_t</span></code> (typedef)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xof.html#c.PSA_XOF_OPERATION_INIT"><code class="docutils literal notranslate"><span class="pre">PSA_XOF_OPERATION_INIT</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xof.html#c.psa_xof_operation_init"><code class="docutils literal notranslate"><span class="pre">psa_xof_operation_init</span></code> (function)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xof.html#c.psa_xof_setup"><code class="docutils literal notranslate"><span class="pre">psa_xof_setup</span></code> (function)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xof.html#c.psa_xof_set_context"><code class="docutils literal notranslate"><span class="pre">psa_xof_set_context</span></code> (function)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xof.html#c.psa_xof_update"><code class="docutils literal notranslate"><span class="pre">psa_xof_update</span></code> (function)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xof.html#c.psa_xof_output"><code class="docutils literal notranslate"><span class="pre">psa_xof_output</span></code> (function)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xof.html#c.psa_xof_abort"><code class="docutils literal notranslate"><span class="pre">psa_xof_abort</span></code> (function)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="xof.html#support-macros">10.3.3 Support macros</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="xof.html#c.PSA_ALG_XOF_HAS_CONTEXT"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_XOF_HAS_CONTEXT</span></code> (macro)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="mac.html">10.4 Message authentication codes (MAC)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="mac.html#mac-algorithms">10.4.1 MAC algorithms</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="mac.html#c.PSA_ALG_HMAC"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_HMAC</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mac.html#c.PSA_ALG_CBC_MAC"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_CBC_MAC</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mac.html#c.PSA_ALG_CMAC"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_CMAC</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mac.html#c.PSA_ALG_BLAKE2_MAC"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_BLAKE2_MAC</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mac.html#c.PSA_ALG_TRUNCATED_MAC"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_TRUNCATED_MAC</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mac.html#c.PSA_ALG_FULL_LENGTH_MAC"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_FULL_LENGTH_MAC</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mac.html#c.PSA_ALG_AT_LEAST_THIS_LENGTH_MAC"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_AT_LEAST_THIS_LENGTH_MAC</span></code> (macro)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="mac.html#single-part-mac-functions">10.4.2 Single-part MAC functions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="mac.html#c.psa_mac_compute"><code class="docutils literal notranslate"><span class="pre">psa_mac_compute</span></code> (function)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mac.html#c.psa_mac_verify"><code class="docutils literal notranslate"><span class="pre">psa_mac_verify</span></code> (function)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="mac.html#multi-part-mac-operations">10.4.3 Multi-part MAC operations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="mac.html#c.psa_mac_operation_t"><code class="docutils literal notranslate"><span class="pre">psa_mac_operation_t</span></code> (typedef)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mac.html#c.PSA_MAC_OPERATION_INIT"><code class="docutils literal notranslate"><span class="pre">PSA_MAC_OPERATION_INIT</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mac.html#c.psa_mac_operation_init"><code class="docutils literal notranslate"><span class="pre">psa_mac_operation_init</span></code> (function)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mac.html#c.psa_mac_sign_setup"><code class="docutils literal notranslate"><span class="pre">psa_mac_sign_setup</span></code> (function)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mac.html#c.psa_mac_verify_setup"><code class="docutils literal notranslate"><span class="pre">psa_mac_verify_setup</span></code> (function)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mac.html#c.psa_mac_update"><code class="docutils literal notranslate"><span class="pre">psa_mac_update</span></code> (function)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mac.html#c.psa_mac_sign_finish"><code class="docutils literal notranslate"><span class="pre">psa_mac_sign_finish</span></code> (function)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mac.html#c.psa_mac_verify_finish"><code class="docutils literal notranslate"><span class="pre">psa_mac_verify_finish</span></code> (function)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mac.html#c.psa_mac_abort"><code class="docutils literal notranslate"><span class="pre">psa_mac_abort</span></code> (function)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="mac.html#support-macros">10.4.4 Support macros</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="mac.html#c.PSA_ALG_IS_HMAC"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_IS_HMAC</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mac.html#c.PSA_ALG_IS_BLAKE2_MAC"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_IS_BLAKE2_MAC</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mac.html#c.PSA_ALG_IS_BLOCK_CIPHER_MAC"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_IS_BLOCK_CIPHER_MAC</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mac.html#c.PSA_MAC_LENGTH"><code class="docutils literal notranslate"><span class="pre">PSA_MAC_LENGTH</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mac.html#c.PSA_MAC_MAX_SIZE"><code class="docutils literal notranslate"><span class="pre">PSA_MAC_MAX_SIZE</span></code> (macro)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="cipher.html">10.5 Unauthenticated ciphers</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="cipher.html#cipher-algorithms">10.5.1 Cipher algorithms</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cipher.html#c.PSA_ALG_STREAM_CIPHER"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_STREAM_CIPHER</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cipher.html#c.PSA_ALG_CTR"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_CTR</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cipher.html#c.PSA_ALG_CCM_STAR_NO_TAG"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_CCM_STAR_NO_TAG</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cipher.html#c.PSA_ALG_CFB"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_CFB</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cipher.html#c.PSA_ALG_OFB"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_OFB</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cipher.html#c.PSA_ALG_XTS"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_XTS</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cipher.html#c.PSA_ALG_ECB_NO_PADDING"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_ECB_NO_PADDING</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cipher.html#c.PSA_ALG_CBC_NO_PADDING"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_CBC_NO_PADDING</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cipher.html#c.PSA_ALG_CBC_PKCS7"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_CBC_PKCS7</span></code> (macro)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cipher.html#single-part-cipher-functions">10.5.2 Single-part cipher functions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cipher.html#c.psa_cipher_encrypt"><code class="docutils literal notranslate"><span class="pre">psa_cipher_encrypt</span></code> (function)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cipher.html#c.psa_cipher_decrypt"><code class="docutils literal notranslate"><span class="pre">psa_cipher_decrypt</span></code> (function)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cipher.html#multi-part-cipher-operations">10.5.3 Multi-part cipher operations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cipher.html#c.psa_cipher_operation_t"><code class="docutils literal notranslate"><span class="pre">psa_cipher_operation_t</span></code> (typedef)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cipher.html#c.PSA_CIPHER_OPERATION_INIT"><code class="docutils literal notranslate"><span class="pre">PSA_CIPHER_OPERATION_INIT</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cipher.html#c.psa_cipher_operation_init"><code class="docutils literal notranslate"><span class="pre">psa_cipher_operation_init</span></code> (function)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cipher.html#c.psa_cipher_encrypt_setup"><code class="docutils literal notranslate"><span class="pre">psa_cipher_encrypt_setup</span></code> (function)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cipher.html#c.psa_cipher_decrypt_setup"><code class="docutils literal notranslate"><span class="pre">psa_cipher_decrypt_setup</span></code> (function)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cipher.html#c.psa_cipher_generate_iv"><code class="docutils literal notranslate"><span class="pre">psa_cipher_generate_iv</span></code> (function)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cipher.html#c.psa_cipher_set_iv"><code class="docutils literal notranslate"><span class="pre">psa_cipher_set_iv</span></code> (function)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cipher.html#c.psa_cipher_update"><code class="docutils literal notranslate"><span class="pre">psa_cipher_update</span></code> (function)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cipher.html#c.psa_cipher_finish"><code class="docutils literal notranslate"><span class="pre">psa_cipher_finish</span></code> (function)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cipher.html#c.psa_cipher_abort"><code class="docutils literal notranslate"><span class="pre">psa_cipher_abort</span></code> (function)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cipher.html#support-macros">10.5.4 Support macros</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cipher.html#c.PSA_ALG_IS_STREAM_CIPHER"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_IS_STREAM_CIPHER</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cipher.html#c.PSA_ALG_CCM_STAR_ANY_TAG"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_CCM_STAR_ANY_TAG</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cipher.html#c.PSA_CIPHER_ENCRYPT_OUTPUT_SIZE"><code class="docutils literal notranslate"><span class="pre">PSA_CIPHER_ENCRYPT_OUTPUT_SIZE</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cipher.html#c.PSA_CIPHER_ENCRYPT_OUTPUT_MAX_SIZE"><code class="docutils literal notranslate"><span class="pre">PSA_CIPHER_ENCRYPT_OUTPUT_MAX_SIZE</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cipher.html#c.PSA_CIPHER_DECRYPT_OUTPUT_SIZE"><code class="docutils literal notranslate"><span class="pre">PSA_CIPHER_DECRYPT_OUTPUT_SIZE</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cipher.html#c.PSA_CIPHER_DECRYPT_OUTPUT_MAX_SIZE"><code class="docutils literal notranslate"><span class="pre">PSA_CIPHER_DECRYPT_OUTPUT_MAX_SIZE</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cipher.html#c.PSA_CIPHER_IV_LENGTH"><code class="docutils literal notranslate"><span class="pre">PSA_CIPHER_IV_LENGTH</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cipher.html#c.PSA_CIPHER_IV_MAX_SIZE"><code class="docutils literal notranslate"><span class="pre">PSA_CIPHER_IV_MAX_SIZE</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cipher.html#c.PSA_CIPHER_UPDATE_OUTPUT_SIZE"><code class="docutils literal notranslate"><span class="pre">PSA_CIPHER_UPDATE_OUTPUT_SIZE</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cipher.html#c.PSA_CIPHER_UPDATE_OUTPUT_MAX_SIZE"><code class="docutils literal notranslate"><span class="pre">PSA_CIPHER_UPDATE_OUTPUT_MAX_SIZE</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cipher.html#c.PSA_CIPHER_FINISH_OUTPUT_SIZE"><code class="docutils literal notranslate"><span class="pre">PSA_CIPHER_FINISH_OUTPUT_SIZE</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cipher.html#c.PSA_CIPHER_FINISH_OUTPUT_MAX_SIZE"><code class="docutils literal notranslate"><span class="pre">PSA_CIPHER_FINISH_OUTPUT_MAX_SIZE</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cipher.html#c.PSA_BLOCK_CIPHER_BLOCK_LENGTH"><code class="docutils literal notranslate"><span class="pre">PSA_BLOCK_CIPHER_BLOCK_LENGTH</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cipher.html#c.PSA_BLOCK_CIPHER_BLOCK_MAX_SIZE"><code class="docutils literal notranslate"><span class="pre">PSA_BLOCK_CIPHER_BLOCK_MAX_SIZE</span></code> (macro)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="aead.html">10.6 Authenticated encryption with associated data (AEAD)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="aead.html#aead-algorithms">10.6.1 AEAD algorithms</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="aead.html#c.PSA_ALG_CCM"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_CCM</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="aead.html#c.PSA_ALG_GCM"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_GCM</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="aead.html#c.PSA_ALG_CHACHA20_POLY1305"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_CHACHA20_POLY1305</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="aead.html#c.PSA_ALG_XCHACHA20_POLY1305"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_XCHACHA20_POLY1305</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="aead.html#c.PSA_ALG_ASCON_AEAD128"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_ASCON_AEAD128</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="aead.html#c.PSA_ALG_AEAD_WITH_SHORTENED_TAG"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_AEAD_WITH_SHORTENED_TAG</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="aead.html#c.PSA_ALG_AEAD_WITH_DEFAULT_LENGTH_TAG"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_AEAD_WITH_DEFAULT_LENGTH_TAG</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="aead.html#c.PSA_ALG_AEAD_WITH_AT_LEAST_THIS_LENGTH_TAG"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_AEAD_WITH_AT_LEAST_THIS_LENGTH_TAG</span></code> (macro)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="aead.html#single-part-aead-functions">10.6.2 Single-part AEAD functions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="aead.html#c.psa_aead_encrypt"><code class="docutils literal notranslate"><span class="pre">psa_aead_encrypt</span></code> (function)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="aead.html#c.psa_aead_decrypt"><code class="docutils literal notranslate"><span class="pre">psa_aead_decrypt</span></code> (function)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="aead.html#multi-part-aead-operations">10.6.3 Multi-part AEAD operations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="aead.html#c.psa_aead_operation_t"><code class="docutils literal notranslate"><span class="pre">psa_aead_operation_t</span></code> (typedef)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="aead.html#c.PSA_AEAD_OPERATION_INIT"><code class="docutils literal notranslate"><span class="pre">PSA_AEAD_OPERATION_INIT</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="aead.html#c.psa_aead_operation_init"><code class="docutils literal notranslate"><span class="pre">psa_aead_operation_init</span></code> (function)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="aead.html#c.psa_aead_encrypt_setup"><code class="docutils literal notranslate"><span class="pre">psa_aead_encrypt_setup</span></code> (function)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="aead.html#c.psa_aead_decrypt_setup"><code class="docutils literal notranslate"><span class="pre">psa_aead_decrypt_setup</span></code> (function)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="aead.html#c.psa_aead_set_lengths"><code class="docutils literal notranslate"><span class="pre">psa_aead_set_lengths</span></code> (function)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="aead.html#c.psa_aead_generate_nonce"><code class="docutils literal notranslate"><span class="pre">psa_aead_generate_nonce</span></code> (function)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="aead.html#c.psa_aead_set_nonce"><code class="docutils literal notranslate"><span class="pre">psa_aead_set_nonce</span></code> (function)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="aead.html#c.psa_aead_update_ad"><code class="docutils literal notranslate"><span class="pre">psa_aead_update_ad</span></code> (function)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="aead.html#c.psa_aead_update"><code class="docutils literal notranslate"><span class="pre">psa_aead_update</span></code> (function)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="aead.html#c.psa_aead_finish"><code class="docutils literal notranslate"><span class="pre">psa_aead_finish</span></code> (function)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="aead.html#c.psa_aead_verify"><code class="docutils literal notranslate"><span class="pre">psa_aead_verify</span></code> (function)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="aead.html#c.psa_aead_abort"><code class="docutils literal notranslate"><span class="pre">psa_aead_abort</span></code> (function)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="aead.html#support-macros">10.6.4 Support macros</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="aead.html#c.PSA_ALG_IS_AEAD_ON_BLOCK_CIPHER"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_IS_AEAD_ON_BLOCK_CIPHER</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="aead.html#c.PSA_AEAD_ENCRYPT_OUTPUT_SIZE"><code class="docutils literal notranslate"><span class="pre">PSA_AEAD_ENCRYPT_OUTPUT_SIZE</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="aead.html#c.PSA_AEAD_ENCRYPT_OUTPUT_MAX_SIZE"><code class="docutils literal notranslate"><span class="pre">PSA_AEAD_ENCRYPT_OUTPUT_MAX_SIZE</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="aead.html#c.PSA_AEAD_DECRYPT_OUTPUT_SIZE"><code class="docutils literal notranslate"><span class="pre">PSA_AEAD_DECRYPT_OUTPUT_SIZE</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="aead.html#c.PSA_AEAD_DECRYPT_OUTPUT_MAX_SIZE"><code class="docutils literal notranslate"><span class="pre">PSA_AEAD_DECRYPT_OUTPUT_MAX_SIZE</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="aead.html#c.PSA_AEAD_NONCE_LENGTH"><code class="docutils literal notranslate"><span class="pre">PSA_AEAD_NONCE_LENGTH</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="aead.html#c.PSA_AEAD_NONCE_MAX_SIZE"><code class="docutils literal notranslate"><span class="pre">PSA_AEAD_NONCE_MAX_SIZE</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="aead.html#c.PSA_AEAD_UPDATE_OUTPUT_SIZE"><code class="docutils literal notranslate"><span class="pre">PSA_AEAD_UPDATE_OUTPUT_SIZE</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="aead.html#c.PSA_AEAD_UPDATE_OUTPUT_MAX_SIZE"><code class="docutils literal notranslate"><span class="pre">PSA_AEAD_UPDATE_OUTPUT_MAX_SIZE</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="aead.html#c.PSA_AEAD_FINISH_OUTPUT_SIZE"><code class="docutils literal notranslate"><span class="pre">PSA_AEAD_FINISH_OUTPUT_SIZE</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="aead.html#c.PSA_AEAD_FINISH_OUTPUT_MAX_SIZE"><code class="docutils literal notranslate"><span class="pre">PSA_AEAD_FINISH_OUTPUT_MAX_SIZE</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="aead.html#c.PSA_AEAD_TAG_LENGTH"><code class="docutils literal notranslate"><span class="pre">PSA_AEAD_TAG_LENGTH</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="aead.html#c.PSA_AEAD_TAG_MAX_SIZE"><code class="docutils literal notranslate"><span class="pre">PSA_AEAD_TAG_MAX_SIZE</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="aead.html#c.PSA_AEAD_VERIFY_OUTPUT_SIZE"><code class="docutils literal notranslate"><span class="pre">PSA_AEAD_VERIFY_OUTPUT_SIZE</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="aead.html#c.PSA_AEAD_VERIFY_OUTPUT_MAX_SIZE"><code class="docutils literal notranslate"><span class="pre">PSA_AEAD_VERIFY_OUTPUT_MAX_SIZE</span></code> (macro)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="key-wrapping.html">10.7 Key wrapping</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="key-wrapping.html#key-wrapping-algorithms">10.7.1 Key-wrapping algorithms</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="key-wrapping.html#c.PSA_ALG_KW"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_KW</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="key-wrapping.html#c.PSA_ALG_KWP"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_KWP</span></code> (macro)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="key-wrapping.html#key-wrapping-functions">10.7.2 Key wrapping functions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="key-wrapping.html#c.psa_unwrap_key"><code class="docutils literal notranslate"><span class="pre">psa_unwrap_key</span></code> (function)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="key-wrapping.html#c.psa_wrap_key"><code class="docutils literal notranslate"><span class="pre">psa_wrap_key</span></code> (function)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="key-wrapping.html#support-macros">10.7.3 Support macros</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="key-wrapping.html#c.PSA_WRAP_KEY_OUTPUT_SIZE"><code class="docutils literal notranslate"><span class="pre">PSA_WRAP_KEY_OUTPUT_SIZE</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="key-wrapping.html#c.PSA_WRAP_KEY_PAIR_MAX_SIZE"><code class="docutils literal notranslate"><span class="pre">PSA_WRAP_KEY_PAIR_MAX_SIZE</span></code> (macro)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="key-derivation.html">10.8 Key derivation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="key-derivation.html#key-derivation-algorithms">10.8.1 Key-derivation algorithms</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="key-derivation.html#c.PSA_ALG_HKDF"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_HKDF</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="key-derivation.html#c.PSA_ALG_HKDF_EXTRACT"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_HKDF_EXTRACT</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="key-derivation.html#c.PSA_ALG_HKDF_EXPAND"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_HKDF_EXPAND</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="key-derivation.html#c.PSA_ALG_SP800_108_COUNTER_HMAC"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_SP800_108_COUNTER_HMAC</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="key-derivation.html#c.PSA_ALG_SP800_108_COUNTER_CMAC"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_SP800_108_COUNTER_CMAC</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="key-derivation.html#c.PSA_ALG_TLS12_PRF"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_TLS12_PRF</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="key-derivation.html#c.PSA_ALG_TLS12_PSK_TO_MS"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_TLS12_PSK_TO_MS</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="key-derivation.html#c.PSA_ALG_TLS12_ECJPAKE_TO_PMS"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_TLS12_ECJPAKE_TO_PMS</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="key-derivation.html#c.PSA_ALG_WPA3_SAE_H2E"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_WPA3_SAE_H2E</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="key-derivation.html#c.PSA_ALG_PBKDF2_HMAC"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_PBKDF2_HMAC</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="key-derivation.html#c.PSA_ALG_PBKDF2_AES_CMAC_PRF_128"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_PBKDF2_AES_CMAC_PRF_128</span></code> (macro)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="key-derivation.html#input-step-types">10.8.2 Input step types</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="key-derivation.html#c.psa_key_derivation_step_t"><code class="docutils literal notranslate"><span class="pre">psa_key_derivation_step_t</span></code> (typedef)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="key-derivation.html#c.PSA_KEY_DERIVATION_INPUT_SECRET"><code class="docutils literal notranslate"><span class="pre">PSA_KEY_DERIVATION_INPUT_SECRET</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="key-derivation.html#c.PSA_KEY_DERIVATION_INPUT_OTHER_SECRET"><code class="docutils literal notranslate"><span class="pre">PSA_KEY_DERIVATION_INPUT_OTHER_SECRET</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="key-derivation.html#c.PSA_KEY_DERIVATION_INPUT_PASSWORD"><code class="docutils literal notranslate"><span class="pre">PSA_KEY_DERIVATION_INPUT_PASSWORD</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="key-derivation.html#c.PSA_KEY_DERIVATION_INPUT_LABEL"><code class="docutils literal notranslate"><span class="pre">PSA_KEY_DERIVATION_INPUT_LABEL</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="key-derivation.html#c.PSA_KEY_DERIVATION_INPUT_CONTEXT"><code class="docutils literal notranslate"><span class="pre">PSA_KEY_DERIVATION_INPUT_CONTEXT</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="key-derivation.html#c.PSA_KEY_DERIVATION_INPUT_SALT"><code class="docutils literal notranslate"><span class="pre">PSA_KEY_DERIVATION_INPUT_SALT</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="key-derivation.html#c.PSA_KEY_DERIVATION_INPUT_INFO"><code class="docutils literal notranslate"><span class="pre">PSA_KEY_DERIVATION_INPUT_INFO</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="key-derivation.html#c.PSA_KEY_DERIVATION_INPUT_SEED"><code class="docutils literal notranslate"><span class="pre">PSA_KEY_DERIVATION_INPUT_SEED</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="key-derivation.html#c.PSA_KEY_DERIVATION_INPUT_COST"><code class="docutils literal notranslate"><span class="pre">PSA_KEY_DERIVATION_INPUT_COST</span></code> (macro)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="key-derivation.html#key-derivation-functions">10.8.3 Key-derivation functions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="key-derivation.html#c.psa_key_derivation_operation_t"><code class="docutils literal notranslate"><span class="pre">psa_key_derivation_operation_t</span></code> (typedef)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="key-derivation.html#c.PSA_KEY_DERIVATION_OPERATION_INIT"><code class="docutils literal notranslate"><span class="pre">PSA_KEY_DERIVATION_OPERATION_INIT</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="key-derivation.html#c.psa_key_derivation_operation_init"><code class="docutils literal notranslate"><span class="pre">psa_key_derivation_operation_init</span></code> (function)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="key-derivation.html#c.psa_key_derivation_setup"><code class="docutils literal notranslate"><span class="pre">psa_key_derivation_setup</span></code> (function)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="key-derivation.html#c.psa_key_derivation_get_capacity"><code class="docutils literal notranslate"><span class="pre">psa_key_derivation_get_capacity</span></code> (function)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="key-derivation.html#c.psa_key_derivation_set_capacity"><code class="docutils literal notranslate"><span class="pre">psa_key_derivation_set_capacity</span></code> (function)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="key-derivation.html#c.psa_key_derivation_input_bytes"><code class="docutils literal notranslate"><span class="pre">psa_key_derivation_input_bytes</span></code> (function)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="key-derivation.html#c.psa_key_derivation_input_integer"><code class="docutils literal notranslate"><span class="pre">psa_key_derivation_input_integer</span></code> (function)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="key-derivation.html#c.psa_key_derivation_input_key"><code class="docutils literal notranslate"><span class="pre">psa_key_derivation_input_key</span></code> (function)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="key-derivation.html#c.psa_key_derivation_output_bytes"><code class="docutils literal notranslate"><span class="pre">psa_key_derivation_output_bytes</span></code> (function)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="key-derivation.html#c.psa_key_derivation_output_key"><code class="docutils literal notranslate"><span class="pre">psa_key_derivation_output_key</span></code> (function)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="key-derivation.html#c.psa_key_derivation_output_key_custom"><code class="docutils literal notranslate"><span class="pre">psa_key_derivation_output_key_custom</span></code> (function)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="key-derivation.html#c.psa_key_derivation_verify_bytes"><code class="docutils literal notranslate"><span class="pre">psa_key_derivation_verify_bytes</span></code> (function)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="key-derivation.html#c.psa_key_derivation_verify_key"><code class="docutils literal notranslate"><span class="pre">psa_key_derivation_verify_key</span></code> (function)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="key-derivation.html#c.psa_key_derivation_abort"><code class="docutils literal notranslate"><span class="pre">psa_key_derivation_abort</span></code> (function)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="key-derivation.html#support-macros">10.8.4 Support macros</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="key-derivation.html#c.PSA_ALG_IS_KEY_DERIVATION_STRETCHING"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_IS_KEY_DERIVATION_STRETCHING</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="key-derivation.html#c.PSA_ALG_IS_HKDF"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_IS_HKDF</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="key-derivation.html#c.PSA_ALG_IS_HKDF_EXTRACT"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_IS_HKDF_EXTRACT</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="key-derivation.html#c.PSA_ALG_IS_HKDF_EXPAND"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_IS_HKDF_EXPAND</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="key-derivation.html#c.PSA_ALG_IS_SP800_108_COUNTER_HMAC"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_IS_SP800_108_COUNTER_HMAC</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="key-derivation.html#c.PSA_ALG_IS_TLS12_PRF"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_IS_TLS12_PRF</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="key-derivation.html#c.PSA_ALG_IS_TLS12_PSK_TO_MS"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_IS_TLS12_PSK_TO_MS</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="key-derivation.html#c.PSA_ALG_IS_PBKDF2_HMAC"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_IS_PBKDF2_HMAC</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="key-derivation.html#c.PSA_ALG_IS_WPA3_SAE_H2E"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_IS_WPA3_SAE_H2E</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="key-derivation.html#c.PSA_KEY_DERIVATION_UNLIMITED_CAPACITY"><code class="docutils literal notranslate"><span class="pre">PSA_KEY_DERIVATION_UNLIMITED_CAPACITY</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="key-derivation.html#c.PSA_TLS12_PSK_TO_MS_PSK_MAX_SIZE"><code class="docutils literal notranslate"><span class="pre">PSA_TLS12_PSK_TO_MS_PSK_MAX_SIZE</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="key-derivation.html#c.PSA_TLS12_ECJPAKE_TO_PMS_OUTPUT_SIZE"><code class="docutils literal notranslate"><span class="pre">PSA_TLS12_ECJPAKE_TO_PMS_OUTPUT_SIZE</span></code> (macro)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="signature.html">10.9 Asymmetric signature</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="signature.html#rsa-signature-algorithms">10.9.1 RSA signature algorithms</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="signature.html#c.PSA_ALG_RSA_PKCS1V15_SIGN"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_RSA_PKCS1V15_SIGN</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="signature.html#c.PSA_ALG_RSA_PKCS1V15_SIGN_RAW"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_RSA_PKCS1V15_SIGN_RAW</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="signature.html#c.PSA_ALG_RSA_PSS"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_RSA_PSS</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="signature.html#c.PSA_ALG_RSA_PSS_ANY_SALT"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_RSA_PSS_ANY_SALT</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="signature.html#c.PSA_ALG_IS_RSA_PKCS1V15_SIGN"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_IS_RSA_PKCS1V15_SIGN</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="signature.html#c.PSA_ALG_IS_RSA_PSS"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_IS_RSA_PSS</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="signature.html#c.PSA_ALG_IS_RSA_PSS_ANY_SALT"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_IS_RSA_PSS_ANY_SALT</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="signature.html#c.PSA_ALG_IS_RSA_PSS_STANDARD_SALT"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_IS_RSA_PSS_STANDARD_SALT</span></code> (macro)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="signature.html#ecdsa-signature-algorithms">10.9.2 ECDSA signature algorithms</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="signature.html#c.PSA_ALG_ECDSA"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_ECDSA</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="signature.html#c.PSA_ALG_ECDSA_ANY"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_ECDSA_ANY</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="signature.html#c.PSA_ALG_DETERMINISTIC_ECDSA"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_DETERMINISTIC_ECDSA</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="signature.html#c.PSA_ALG_IS_ECDSA"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_IS_ECDSA</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="signature.html#c.PSA_ALG_IS_DETERMINISTIC_ECDSA"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_IS_DETERMINISTIC_ECDSA</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="signature.html#c.PSA_ALG_IS_RANDOMIZED_ECDSA"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_IS_RANDOMIZED_ECDSA</span></code> (macro)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="signature.html#eddsa-signature-algorithms">10.9.3 EdDSA signature algorithms</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="signature.html#c.PSA_ALG_PURE_EDDSA"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_PURE_EDDSA</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="signature.html#c.PSA_ALG_EDDSA_CTX"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_EDDSA_CTX</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="signature.html#c.PSA_ALG_ED25519PH"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_ED25519PH</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="signature.html#c.PSA_ALG_ED448PH"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_ED448PH</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="signature.html#c.PSA_ALG_IS_HASH_EDDSA"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_IS_HASH_EDDSA</span></code> (macro)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="signature.html#stateless-hash-based-signature-algorithms">10.9.4 Stateless Hash-based signature algorithms</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="signature.html#c.PSA_ALG_SLH_DSA"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_SLH_DSA</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="signature.html#c.PSA_ALG_DETERMINISTIC_SLH_DSA"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_DETERMINISTIC_SLH_DSA</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="signature.html#c.PSA_ALG_HASH_SLH_DSA"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_HASH_SLH_DSA</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="signature.html#c.PSA_ALG_DETERMINISTIC_HASH_SLH_DSA"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_DETERMINISTIC_HASH_SLH_DSA</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="signature.html#c.PSA_ALG_IS_SLH_DSA"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_IS_SLH_DSA</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="signature.html#c.PSA_ALG_IS_HASH_SLH_DSA"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_IS_HASH_SLH_DSA</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="signature.html#c.PSA_ALG_IS_DETERMINISTIC_HASH_SLH_DSA"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_IS_DETERMINISTIC_HASH_SLH_DSA</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="signature.html#c.PSA_ALG_IS_HEDGED_HASH_SLH_DSA"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_IS_HEDGED_HASH_SLH_DSA</span></code> (macro)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="signature.html#module-lattice-based-signature-algorithms">10.9.5 Module Lattice-based signature algorithms</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="signature.html#c.PSA_ALG_ML_DSA"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_ML_DSA</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="signature.html#c.PSA_ALG_DETERMINISTIC_ML_DSA"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_DETERMINISTIC_ML_DSA</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="signature.html#c.PSA_ALG_HASH_ML_DSA"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_HASH_ML_DSA</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="signature.html#c.PSA_ALG_DETERMINISTIC_HASH_ML_DSA"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_DETERMINISTIC_HASH_ML_DSA</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="signature.html#c.PSA_ALG_IS_ML_DSA"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_IS_ML_DSA</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="signature.html#c.PSA_ALG_IS_HASH_ML_DSA"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_IS_HASH_ML_DSA</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="signature.html#c.PSA_ALG_IS_DETERMINISTIC_HASH_ML_DSA"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_IS_DETERMINISTIC_HASH_ML_DSA</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="signature.html#c.PSA_ALG_IS_HEDGED_HASH_ML_DSA"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_IS_HEDGED_HASH_ML_DSA</span></code> (macro)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="signature.html#leighton-micali-signature-algorithms">10.9.6 Leighton-Micali Signature algorithms</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="signature.html#c.PSA_ALG_LMS"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_LMS</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="signature.html#c.PSA_ALG_HSS"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_HSS</span></code> (macro)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="signature.html#xmss-and-xmss-mt-algorithms">10.9.7 XMSS and XMSS<sup>MT</sup> algorithms</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="signature.html#c.PSA_ALG_XMSS"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_XMSS</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="signature.html#c.PSA_ALG_XMSS_MT"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_XMSS_MT</span></code> (macro)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="signature.html#single-part-asymmetric-signature-functions">10.9.8 Single-part asymmetric signature functions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="signature.html#c.psa_sign_message"><code class="docutils literal notranslate"><span class="pre">psa_sign_message</span></code> (function)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="signature.html#c.psa_sign_message_with_context"><code class="docutils literal notranslate"><span class="pre">psa_sign_message_with_context</span></code> (function)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="signature.html#c.psa_verify_message"><code class="docutils literal notranslate"><span class="pre">psa_verify_message</span></code> (function)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="signature.html#c.psa_verify_message_with_context"><code class="docutils literal notranslate"><span class="pre">psa_verify_message_with_context</span></code> (function)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="signature.html#c.psa_sign_hash"><code class="docutils literal notranslate"><span class="pre">psa_sign_hash</span></code> (function)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="signature.html#c.psa_sign_hash_with_context"><code class="docutils literal notranslate"><span class="pre">psa_sign_hash_with_context</span></code> (function)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="signature.html#c.psa_verify_hash"><code class="docutils literal notranslate"><span class="pre">psa_verify_hash</span></code> (function)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="signature.html#c.psa_verify_hash_with_context"><code class="docutils literal notranslate"><span class="pre">psa_verify_hash_with_context</span></code> (function)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="signature.html#multi-part-asymmetric-signature-operations">10.9.9 Multi-part asymmetric signature operations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="signature.html#c.psa_sign_operation_t"><code class="docutils literal notranslate"><span class="pre">psa_sign_operation_t</span></code> (typedef)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="signature.html#c.PSA_SIGN_OPERATION_INIT"><code class="docutils literal notranslate"><span class="pre">PSA_SIGN_OPERATION_INIT</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="signature.html#c.psa_sign_operation_init"><code class="docutils literal notranslate"><span class="pre">psa_sign_operation_init</span></code> (function)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="signature.html#c.psa_sign_setup"><code class="docutils literal notranslate"><span class="pre">psa_sign_setup</span></code> (function)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="signature.html#c.psa_sign_set_context"><code class="docutils literal notranslate"><span class="pre">psa_sign_set_context</span></code> (function)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="signature.html#c.psa_sign_update"><code class="docutils literal notranslate"><span class="pre">psa_sign_update</span></code> (function)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="signature.html#c.psa_sign_finish"><code class="docutils literal notranslate"><span class="pre">psa_sign_finish</span></code> (function)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="signature.html#c.psa_sign_abort"><code class="docutils literal notranslate"><span class="pre">psa_sign_abort</span></code> (function)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="signature.html#c.psa_verify_operation_t"><code class="docutils literal notranslate"><span class="pre">psa_verify_operation_t</span></code> (typedef)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="signature.html#c.PSA_VERIFY_OPERATION_INIT"><code class="docutils literal notranslate"><span class="pre">PSA_VERIFY_OPERATION_INIT</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="signature.html#c.psa_verify_operation_init"><code class="docutils literal notranslate"><span class="pre">psa_verify_operation_init</span></code> (function)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="signature.html#c.psa_verify_setup"><code class="docutils literal notranslate"><span class="pre">psa_verify_setup</span></code> (function)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="signature.html#c.psa_verify_set_context"><code class="docutils literal notranslate"><span class="pre">psa_verify_set_context</span></code> (function)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="signature.html#c.psa_verify_update"><code class="docutils literal notranslate"><span class="pre">psa_verify_update</span></code> (function)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="signature.html#c.psa_verify_finish"><code class="docutils literal notranslate"><span class="pre">psa_verify_finish</span></code> (function)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="signature.html#c.psa_verify_abort"><code class="docutils literal notranslate"><span class="pre">psa_verify_abort</span></code> (function)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="signature.html#support-macros">10.9.10 Support macros</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="signature.html#c.PSA_ALG_IS_SIGN_MESSAGE"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_IS_SIGN_MESSAGE</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="signature.html#c.PSA_ALG_IS_SIGN_HASH"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_IS_SIGN_HASH</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="signature.html#c.PSA_ALG_IS_HASH_AND_SIGN"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_IS_HASH_AND_SIGN</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="signature.html#c.PSA_ALG_SIGN_SUPPORTS_CONTEXT"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_SIGN_SUPPORTS_CONTEXT</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="signature.html#c.PSA_ALG_ANY_HASH"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_ANY_HASH</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="signature.html#c.PSA_SIGN_OUTPUT_SIZE"><code class="docutils literal notranslate"><span class="pre">PSA_SIGN_OUTPUT_SIZE</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="signature.html#c.PSA_SIGNATURE_MAX_SIZE"><code class="docutils literal notranslate"><span class="pre">PSA_SIGNATURE_MAX_SIZE</span></code> (macro)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pk-encryption.html">10.10 Asymmetric encryption</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pk-encryption.html#asymmetric-encryption-algorithms">10.10.1 Asymmetric encryption algorithms</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pk-encryption.html#c.PSA_ALG_RSA_PKCS1V15_CRYPT"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_RSA_PKCS1V15_CRYPT</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pk-encryption.html#c.PSA_ALG_RSA_OAEP"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_RSA_OAEP</span></code> (macro)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pk-encryption.html#asymmetric-encryption-functions">10.10.2 Asymmetric encryption functions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pk-encryption.html#c.psa_asymmetric_encrypt"><code class="docutils literal notranslate"><span class="pre">psa_asymmetric_encrypt</span></code> (function)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pk-encryption.html#c.psa_asymmetric_decrypt"><code class="docutils literal notranslate"><span class="pre">psa_asymmetric_decrypt</span></code> (function)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pk-encryption.html#support-macros">10.10.3 Support macros</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pk-encryption.html#c.PSA_ALG_IS_RSA_OAEP"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_IS_RSA_OAEP</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pk-encryption.html#c.PSA_ASYMMETRIC_ENCRYPT_OUTPUT_SIZE"><code class="docutils literal notranslate"><span class="pre">PSA_ASYMMETRIC_ENCRYPT_OUTPUT_SIZE</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pk-encryption.html#c.PSA_ASYMMETRIC_ENCRYPT_OUTPUT_MAX_SIZE"><code class="docutils literal notranslate"><span class="pre">PSA_ASYMMETRIC_ENCRYPT_OUTPUT_MAX_SIZE</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pk-encryption.html#c.PSA_ASYMMETRIC_DECRYPT_OUTPUT_SIZE"><code class="docutils literal notranslate"><span class="pre">PSA_ASYMMETRIC_DECRYPT_OUTPUT_SIZE</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pk-encryption.html#c.PSA_ASYMMETRIC_DECRYPT_OUTPUT_MAX_SIZE"><code class="docutils literal notranslate"><span class="pre">PSA_ASYMMETRIC_DECRYPT_OUTPUT_MAX_SIZE</span></code> (macro)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="key-agreement.html">10.11 Key agreement</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="key-agreement.html#key-agreement-algorithms">10.11.1 Key-agreement algorithms</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="key-agreement.html#c.PSA_ALG_FFDH"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_FFDH</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="key-agreement.html#c.PSA_ALG_ECDH"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_ECDH</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="key-agreement.html#c.PSA_ALG_KEY_AGREEMENT"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_KEY_AGREEMENT</span></code> (macro)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="key-agreement.html#standalone-key-agreement">10.11.2 Standalone key agreement</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="key-agreement.html#c.psa_key_agreement"><code class="docutils literal notranslate"><span class="pre">psa_key_agreement</span></code> (function)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="key-agreement.html#c.psa_raw_key_agreement"><code class="docutils literal notranslate"><span class="pre">psa_raw_key_agreement</span></code> (function)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="key-agreement.html#combining-key-agreement-and-key-derivation">10.11.3 Combining key agreement and key derivation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="key-agreement.html#c.psa_key_derivation_key_agreement"><code class="docutils literal notranslate"><span class="pre">psa_key_derivation_key_agreement</span></code> (function)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="key-agreement.html#support-macros">10.11.4 Support macros</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="key-agreement.html#c.PSA_ALG_KEY_AGREEMENT_GET_BASE"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_KEY_AGREEMENT_GET_BASE</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="key-agreement.html#c.PSA_ALG_KEY_AGREEMENT_GET_KDF"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_KEY_AGREEMENT_GET_KDF</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="key-agreement.html#c.PSA_ALG_IS_STANDALONE_KEY_AGREEMENT"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_IS_STANDALONE_KEY_AGREEMENT</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="key-agreement.html#c.PSA_ALG_IS_RAW_KEY_AGREEMENT"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_IS_RAW_KEY_AGREEMENT</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="key-agreement.html#c.PSA_ALG_IS_FFDH"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_IS_FFDH</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="key-agreement.html#c.PSA_ALG_IS_ECDH"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_IS_ECDH</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="key-agreement.html#c.PSA_RAW_KEY_AGREEMENT_OUTPUT_SIZE"><code class="docutils literal notranslate"><span class="pre">PSA_RAW_KEY_AGREEMENT_OUTPUT_SIZE</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="key-agreement.html#c.PSA_RAW_KEY_AGREEMENT_OUTPUT_MAX_SIZE"><code class="docutils literal notranslate"><span class="pre">PSA_RAW_KEY_AGREEMENT_OUTPUT_MAX_SIZE</span></code> (macro)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="key-encapsulation.html">10.12 Key encapsulation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="key-encapsulation.html#elliptic-curve-integrated-encryption-scheme">10.12.1 Elliptic Curve Integrated Encryption Scheme</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="key-encapsulation.html#c.PSA_ALG_ECIES_SEC1"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_ECIES_SEC1</span></code> (macro)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="key-encapsulation.html#module-lattice-based-key-encapsulation-algorithm">10.12.2 Module Lattice-based key-encapsulation algorithm</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="key-encapsulation.html#c.PSA_ALG_ML_KEM"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_ML_KEM</span></code> (macro)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="key-encapsulation.html#key-encapsulation-functions">10.12.3 Key-encapsulation functions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="key-encapsulation.html#c.psa_encapsulate"><code class="docutils literal notranslate"><span class="pre">psa_encapsulate</span></code> (function)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="key-encapsulation.html#c.psa_decapsulate"><code class="docutils literal notranslate"><span class="pre">psa_decapsulate</span></code> (function)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="key-encapsulation.html#support-macros">10.12.4 Support macros</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="key-encapsulation.html#c.PSA_ENCAPSULATE_CIPHERTEXT_SIZE"><code class="docutils literal notranslate"><span class="pre">PSA_ENCAPSULATE_CIPHERTEXT_SIZE</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="key-encapsulation.html#c.PSA_ENCAPSULATE_CIPHERTEXT_MAX_SIZE"><code class="docutils literal notranslate"><span class="pre">PSA_ENCAPSULATE_CIPHERTEXT_MAX_SIZE</span></code> (macro)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pake.html">10.13 Password-authenticated key exchange (PAKE)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pake.html#common-api-for-pake">10.13.1 Common API for PAKE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pake.html#pake-primitives">10.13.2 PAKE primitives</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pake.html#c.psa_pake_primitive_t"><code class="docutils literal notranslate"><span class="pre">psa_pake_primitive_t</span></code> (typedef)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pake.html#c.psa_pake_primitive_type_t"><code class="docutils literal notranslate"><span class="pre">psa_pake_primitive_type_t</span></code> (typedef)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pake.html#c.PSA_PAKE_PRIMITIVE_TYPE_ECC"><code class="docutils literal notranslate"><span class="pre">PSA_PAKE_PRIMITIVE_TYPE_ECC</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pake.html#c.PSA_PAKE_PRIMITIVE_TYPE_DH"><code class="docutils literal notranslate"><span class="pre">PSA_PAKE_PRIMITIVE_TYPE_DH</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pake.html#c.psa_pake_family_t"><code class="docutils literal notranslate"><span class="pre">psa_pake_family_t</span></code> (typedef)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pake.html#c.PSA_PAKE_PRIMITIVE"><code class="docutils literal notranslate"><span class="pre">PSA_PAKE_PRIMITIVE</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pake.html#c.PSA_PAKE_PRIMITIVE_GET_TYPE"><code class="docutils literal notranslate"><span class="pre">PSA_PAKE_PRIMITIVE_GET_TYPE</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pake.html#c.PSA_PAKE_PRIMITIVE_GET_FAMILY"><code class="docutils literal notranslate"><span class="pre">PSA_PAKE_PRIMITIVE_GET_FAMILY</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pake.html#c.PSA_PAKE_PRIMITIVE_GET_BITS"><code class="docutils literal notranslate"><span class="pre">PSA_PAKE_PRIMITIVE_GET_BITS</span></code> (macro)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pake.html#pake-cipher-suites">10.13.3 PAKE cipher suites</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pake.html#c.psa_pake_cipher_suite_t"><code class="docutils literal notranslate"><span class="pre">psa_pake_cipher_suite_t</span></code> (typedef)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pake.html#c.PSA_PAKE_CIPHER_SUITE_INIT"><code class="docutils literal notranslate"><span class="pre">PSA_PAKE_CIPHER_SUITE_INIT</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pake.html#c.psa_pake_cipher_suite_init"><code class="docutils literal notranslate"><span class="pre">psa_pake_cipher_suite_init</span></code> (function)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pake.html#c.psa_pake_cs_get_algorithm"><code class="docutils literal notranslate"><span class="pre">psa_pake_cs_get_algorithm</span></code> (function)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pake.html#c.psa_pake_cs_set_algorithm"><code class="docutils literal notranslate"><span class="pre">psa_pake_cs_set_algorithm</span></code> (function)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pake.html#c.psa_pake_cs_get_primitive"><code class="docutils literal notranslate"><span class="pre">psa_pake_cs_get_primitive</span></code> (function)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pake.html#c.psa_pake_cs_set_primitive"><code class="docutils literal notranslate"><span class="pre">psa_pake_cs_set_primitive</span></code> (function)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pake.html#c.PSA_PAKE_CONFIRMED_KEY"><code class="docutils literal notranslate"><span class="pre">PSA_PAKE_CONFIRMED_KEY</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pake.html#c.PSA_PAKE_UNCONFIRMED_KEY"><code class="docutils literal notranslate"><span class="pre">PSA_PAKE_UNCONFIRMED_KEY</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pake.html#c.psa_pake_cs_get_key_confirmation"><code class="docutils literal notranslate"><span class="pre">psa_pake_cs_get_key_confirmation</span></code> (function)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pake.html#c.psa_pake_cs_set_key_confirmation"><code class="docutils literal notranslate"><span class="pre">psa_pake_cs_set_key_confirmation</span></code> (function)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pake.html#pake-roles">10.13.4 PAKE roles</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pake.html#c.psa_pake_role_t"><code class="docutils literal notranslate"><span class="pre">psa_pake_role_t</span></code> (typedef)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pake.html#c.PSA_PAKE_ROLE_NONE"><code class="docutils literal notranslate"><span class="pre">PSA_PAKE_ROLE_NONE</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pake.html#c.PSA_PAKE_ROLE_FIRST"><code class="docutils literal notranslate"><span class="pre">PSA_PAKE_ROLE_FIRST</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pake.html#c.PSA_PAKE_ROLE_SECOND"><code class="docutils literal notranslate"><span class="pre">PSA_PAKE_ROLE_SECOND</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pake.html#c.PSA_PAKE_ROLE_CLIENT"><code class="docutils literal notranslate"><span class="pre">PSA_PAKE_ROLE_CLIENT</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pake.html#c.PSA_PAKE_ROLE_SERVER"><code class="docutils literal notranslate"><span class="pre">PSA_PAKE_ROLE_SERVER</span></code> (macro)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pake.html#pake-step-types">10.13.5 PAKE step types</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pake.html#c.psa_pake_step_t"><code class="docutils literal notranslate"><span class="pre">psa_pake_step_t</span></code> (typedef)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pake.html#c.PSA_PAKE_STEP_KEY_SHARE"><code class="docutils literal notranslate"><span class="pre">PSA_PAKE_STEP_KEY_SHARE</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pake.html#c.PSA_PAKE_STEP_ZK_PUBLIC"><code class="docutils literal notranslate"><span class="pre">PSA_PAKE_STEP_ZK_PUBLIC</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pake.html#c.PSA_PAKE_STEP_ZK_PROOF"><code class="docutils literal notranslate"><span class="pre">PSA_PAKE_STEP_ZK_PROOF</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pake.html#c.PSA_PAKE_STEP_CONFIRM"><code class="docutils literal notranslate"><span class="pre">PSA_PAKE_STEP_CONFIRM</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pake.html#c.PSA_PAKE_STEP_SALT"><code class="docutils literal notranslate"><span class="pre">PSA_PAKE_STEP_SALT</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pake.html#c.PSA_PAKE_STEP_COMMIT"><code class="docutils literal notranslate"><span class="pre">PSA_PAKE_STEP_COMMIT</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pake.html#c.PSA_PAKE_STEP_CONFIRM_COUNT"><code class="docutils literal notranslate"><span class="pre">PSA_PAKE_STEP_CONFIRM_COUNT</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pake.html#c.PSA_PAKE_STEP_KEY_ID"><code class="docutils literal notranslate"><span class="pre">PSA_PAKE_STEP_KEY_ID</span></code> (macro)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pake.html#multi-part-pake-operations">10.13.6 Multi-part PAKE operations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pake.html#c.psa_pake_operation_t"><code class="docutils literal notranslate"><span class="pre">psa_pake_operation_t</span></code> (typedef)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pake.html#c.PSA_PAKE_OPERATION_INIT"><code class="docutils literal notranslate"><span class="pre">PSA_PAKE_OPERATION_INIT</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pake.html#c.psa_pake_operation_init"><code class="docutils literal notranslate"><span class="pre">psa_pake_operation_init</span></code> (function)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pake.html#c.psa_pake_setup"><code class="docutils literal notranslate"><span class="pre">psa_pake_setup</span></code> (function)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pake.html#c.psa_pake_set_role"><code class="docutils literal notranslate"><span class="pre">psa_pake_set_role</span></code> (function)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pake.html#c.psa_pake_set_user"><code class="docutils literal notranslate"><span class="pre">psa_pake_set_user</span></code> (function)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pake.html#c.psa_pake_set_peer"><code class="docutils literal notranslate"><span class="pre">psa_pake_set_peer</span></code> (function)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pake.html#c.psa_pake_set_context"><code class="docutils literal notranslate"><span class="pre">psa_pake_set_context</span></code> (function)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pake.html#c.psa_pake_output"><code class="docutils literal notranslate"><span class="pre">psa_pake_output</span></code> (function)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pake.html#c.psa_pake_input"><code class="docutils literal notranslate"><span class="pre">psa_pake_input</span></code> (function)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pake.html#c.psa_pake_get_shared_key"><code class="docutils literal notranslate"><span class="pre">psa_pake_get_shared_key</span></code> (function)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pake.html#c.psa_pake_abort"><code class="docutils literal notranslate"><span class="pre">psa_pake_abort</span></code> (function)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pake.html#pake-support-macros">10.13.7 PAKE support macros</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pake.html#c.PSA_PAKE_OUTPUT_SIZE"><code class="docutils literal notranslate"><span class="pre">PSA_PAKE_OUTPUT_SIZE</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pake.html#c.PSA_PAKE_OUTPUT_MAX_SIZE"><code class="docutils literal notranslate"><span class="pre">PSA_PAKE_OUTPUT_MAX_SIZE</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pake.html#c.PSA_PAKE_INPUT_SIZE"><code class="docutils literal notranslate"><span class="pre">PSA_PAKE_INPUT_SIZE</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pake.html#c.PSA_PAKE_INPUT_MAX_SIZE"><code class="docutils literal notranslate"><span class="pre">PSA_PAKE_INPUT_MAX_SIZE</span></code> (macro)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pake.html#the-j-pake-protocol">10.13.8 The J-PAKE protocol</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pake.html#j-pake-cipher-suites">J-PAKE cipher suites</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pake.html#j-pake-password-processing">J-PAKE password processing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pake.html#j-pake-operation">J-PAKE operation</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pake.html#setup">Setup</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pake.html#key-exchange">Key exchange</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pake.html#extract-shared-secret">Extract shared secret</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pake.html#j-pake-algorithms">10.13.9 J-PAKE algorithms</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pake.html#c.PSA_ALG_JPAKE"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_JPAKE</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pake.html#c.PSA_ALG_IS_JPAKE"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_IS_JPAKE</span></code> (macro)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pake.html#the-spake2-protocol">10.13.10 The SPAKE2+ protocol</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pake.html#spake2-cipher-suites">SPAKE2+ cipher suites</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pake.html#spake2-registration">SPAKE2+ registration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pake.html#spake2-operation">SPAKE2+ operation</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pake.html#id2">Setup</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pake.html#key-exchange-and-confirmation">Key exchange and confirmation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pake.html#id3">Extract shared secret</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pake.html#spake2-algorithms">10.13.11 SPAKE2+ algorithms</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pake.html#c.PSA_ALG_SPAKE2P_HMAC"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_SPAKE2P_HMAC</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pake.html#c.PSA_ALG_SPAKE2P_CMAC"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_SPAKE2P_CMAC</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pake.html#c.PSA_ALG_SPAKE2P_MATTER"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_SPAKE2P_MATTER</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pake.html#c.PSA_ALG_IS_SPAKE2P"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_IS_SPAKE2P</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pake.html#c.PSA_ALG_IS_SPAKE2P_HMAC"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_IS_SPAKE2P_HMAC</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pake.html#c.PSA_ALG_IS_SPAKE2P_CMAC"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_IS_SPAKE2P_CMAC</span></code> (macro)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pake.html#the-wpa3-sae-protocol">10.13.12 The WPA3-SAE protocol</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pake.html#wpa3-sae-cipher-suites">WPA3-SAE cipher suites</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pake.html#wpa3-sae-password-processing">WPA3-SAE password processing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pake.html#wpa3-sae-operation">WPA3-SAE operation</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pake.html#id6">Setup</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pake.html#commit">Commit</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pake.html#confirm">Confirm</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pake.html#id7">Extract shared secret</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pake.html#wpa3-sae-algorithms">10.13.13 WPA3-SAE algorithms</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pake.html#c.PSA_ALG_WPA3_SAE_FIXED"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_WPA3_SAE_FIXED</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pake.html#c.PSA_ALG_WPA3_SAE_GDH"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_WPA3_SAE_GDH</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pake.html#c.PSA_ALG_IS_WPA3_SAE"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_IS_WPA3_SAE</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pake.html#c.PSA_ALG_IS_WPA3_SAE_FIXED"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_IS_WPA3_SAE_FIXED</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pake.html#c.PSA_ALG_IS_WPA3_SAE_GDH"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_IS_WPA3_SAE_GDH</span></code> (macro)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pake.html#c.PSA_ALG_WPA3_SAE_ANY"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_WPA3_SAE_ANY</span></code> (macro)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="rng.html">10.14 Other cryptographic services</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="rng.html#random-number-generation">10.14.1 Random number generation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="rng.html#c.psa_generate_random"><code class="docutils literal notranslate"><span class="pre">psa_generate_random</span></code> (function)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &#169; 2018-2026 Arm Limited and/or its affiliates.
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

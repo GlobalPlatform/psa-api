@@ -1,0 +1,2949 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Index of API elements &#8212; PSA Certified Crypto API 1.5</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/basic.css?v=686e5160" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=f6a572b4" />
+    <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
+    <link rel="preconnect" type="text/css" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" type="text/css" href="https://fonts.gstatic.com" />
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;1,300;1,400&display=swap" />
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Mono:ital,wght@0,300;0,400;1,300&display=swap" />
+    <script src="_static/documentation_options.js?v=f8f0f945"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="index.html">
+              <img class="logo" src="_static/ARM_LOGO-2025_INK_RGB.svg" alt="Logo of PSA Certified Crypto API"/>
+            </a></p><hr />
+<h3><a href="index.html">PSA Certified<br />Crypto API</a></h3>
+IHI 0086<br/>
+Non-confidential<br/>
+Version 1.5.0
+<hr />
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="about/about.html">About this document</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="overview/intro.html">1 Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="overview/goals.html">2 Design goals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="overview/functionality.html">3 Functionality overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="overview/sample-arch.html">4 Sample architectures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="overview/conventions.html">5 Library conventions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="overview/implementation.html">6 Implementation considerations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="overview/usage.html">7 Usage considerations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/library/index.html">8 Library management reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/keys/index.html">9 Key management reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/ops/index.html">10 Cryptographic operation reference</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="appendix/example_header.html">A Example header file</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendix/encodings.html">B Algorithm and key type encoding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendix/specdef_values.html">C Example macro implementations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendix/sra.html">D Security Risk Assessment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendix/history.html">E Changes to the API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="#">Index of API elements</a></li>
+</ul>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+
+   <h1>Index of API elements</h1>
+
+   <div class="modindex-jumpbox">
+   <a href="#cap-PSA_A"><strong>PSA_A</strong></a> | 
+   <a href="#cap-PSA_B"><strong>PSA_B</strong></a> | 
+   <a href="#cap-PSA_C"><strong>PSA_C</strong></a> | 
+   <a href="#cap-PSA_D"><strong>PSA_D</strong></a> | 
+   <a href="#cap-PSA_E"><strong>PSA_E</strong></a> | 
+   <a href="#cap-PSA_G"><strong>PSA_G</strong></a> | 
+   <a href="#cap-PSA_H"><strong>PSA_H</strong></a> | 
+   <a href="#cap-PSA_I"><strong>PSA_I</strong></a> | 
+   <a href="#cap-PSA_K"><strong>PSA_K</strong></a> | 
+   <a href="#cap-PSA_M"><strong>PSA_M</strong></a> | 
+   <a href="#cap-PSA_P"><strong>PSA_P</strong></a> | 
+   <a href="#cap-PSA_R"><strong>PSA_R</strong></a> | 
+   <a href="#cap-PSA_S"><strong>PSA_S</strong></a> | 
+   <a href="#cap-PSA_T"><strong>PSA_T</strong></a> | 
+   <a href="#cap-PSA_U"><strong>PSA_U</strong></a> | 
+   <a href="#cap-PSA_V"><strong>PSA_V</strong></a> | 
+   <a href="#cap-PSA_W"><strong>PSA_W</strong></a> | 
+   <a href="#cap-PSA_X"><strong>PSA_X</strong></a>
+   </div>
+
+   <table class="indextable modindextable">
+     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
+     <tr class="cap" id="cap-PSA_A"><td></td><td>
+       <strong>PSA_A</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/aead.html#c.PSA_AEAD_DECRYPT_OUTPUT_MAX_SIZE"><code class="xref">PSA_AEAD_DECRYPT_OUTPUT_MAX_SIZE</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/aead.html#c.PSA_AEAD_DECRYPT_OUTPUT_SIZE"><code class="xref">PSA_AEAD_DECRYPT_OUTPUT_SIZE</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/aead.html#c.PSA_AEAD_ENCRYPT_OUTPUT_MAX_SIZE"><code class="xref">PSA_AEAD_ENCRYPT_OUTPUT_MAX_SIZE</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/aead.html#c.PSA_AEAD_ENCRYPT_OUTPUT_SIZE"><code class="xref">PSA_AEAD_ENCRYPT_OUTPUT_SIZE</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/aead.html#c.PSA_AEAD_FINISH_OUTPUT_MAX_SIZE"><code class="xref">PSA_AEAD_FINISH_OUTPUT_MAX_SIZE</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/aead.html#c.PSA_AEAD_FINISH_OUTPUT_SIZE"><code class="xref">PSA_AEAD_FINISH_OUTPUT_SIZE</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/aead.html#c.PSA_AEAD_NONCE_LENGTH"><code class="xref">PSA_AEAD_NONCE_LENGTH</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/aead.html#c.PSA_AEAD_NONCE_MAX_SIZE"><code class="xref">PSA_AEAD_NONCE_MAX_SIZE</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/aead.html#c.PSA_AEAD_OPERATION_INIT"><code class="xref">PSA_AEAD_OPERATION_INIT</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/aead.html#c.PSA_AEAD_TAG_LENGTH"><code class="xref">PSA_AEAD_TAG_LENGTH</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/aead.html#c.PSA_AEAD_TAG_MAX_SIZE"><code class="xref">PSA_AEAD_TAG_MAX_SIZE</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/aead.html#c.PSA_AEAD_UPDATE_OUTPUT_MAX_SIZE"><code class="xref">PSA_AEAD_UPDATE_OUTPUT_MAX_SIZE</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/aead.html#c.PSA_AEAD_UPDATE_OUTPUT_SIZE"><code class="xref">PSA_AEAD_UPDATE_OUTPUT_SIZE</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/aead.html#c.PSA_AEAD_VERIFY_OUTPUT_MAX_SIZE"><code class="xref">PSA_AEAD_VERIFY_OUTPUT_MAX_SIZE</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/aead.html#c.PSA_AEAD_VERIFY_OUTPUT_SIZE"><code class="xref">PSA_AEAD_VERIFY_OUTPUT_SIZE</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/aead.html#c.PSA_ALG_AEAD_WITH_AT_LEAST_THIS_LENGTH_TAG"><code class="xref">PSA_ALG_AEAD_WITH_AT_LEAST_THIS_LENGTH_TAG</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/aead.html#c.PSA_ALG_AEAD_WITH_DEFAULT_LENGTH_TAG"><code class="xref">PSA_ALG_AEAD_WITH_DEFAULT_LENGTH_TAG</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/aead.html#c.PSA_ALG_AEAD_WITH_SHORTENED_TAG"><code class="xref">PSA_ALG_AEAD_WITH_SHORTENED_TAG</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/hash.html#c.PSA_ALG_AES_MMO_ZIGBEE"><code class="xref">PSA_ALG_AES_MMO_ZIGBEE</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/signature.html#c.PSA_ALG_ANY_HASH"><code class="xref">PSA_ALG_ANY_HASH</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/aead.html#c.PSA_ALG_ASCON_AEAD128"><code class="xref">PSA_ALG_ASCON_AEAD128</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/xof.html#c.PSA_ALG_ASCON_CXOF128"><code class="xref">PSA_ALG_ASCON_CXOF128</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/hash.html#c.PSA_ALG_ASCON_HASH256"><code class="xref">PSA_ALG_ASCON_HASH256</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/xof.html#c.PSA_ALG_ASCON_XOF128"><code class="xref">PSA_ALG_ASCON_XOF128</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/mac.html#c.PSA_ALG_AT_LEAST_THIS_LENGTH_MAC"><code class="xref">PSA_ALG_AT_LEAST_THIS_LENGTH_MAC</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/hash.html#c.PSA_ALG_BLAKE2BP_HASH512"><code class="xref">PSA_ALG_BLAKE2BP_HASH512</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/hash.html#c.PSA_ALG_BLAKE2B_HASH512"><code class="xref">PSA_ALG_BLAKE2B_HASH512</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/hash.html#c.PSA_ALG_BLAKE2SP_HASH256"><code class="xref">PSA_ALG_BLAKE2SP_HASH256</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/hash.html#c.PSA_ALG_BLAKE2S_HASH256"><code class="xref">PSA_ALG_BLAKE2S_HASH256</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/mac.html#c.PSA_ALG_BLAKE2_MAC"><code class="xref">PSA_ALG_BLAKE2_MAC</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/mac.html#c.PSA_ALG_CBC_MAC"><code class="xref">PSA_ALG_CBC_MAC</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/cipher.html#c.PSA_ALG_CBC_NO_PADDING"><code class="xref">PSA_ALG_CBC_NO_PADDING</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/cipher.html#c.PSA_ALG_CBC_PKCS7"><code class="xref">PSA_ALG_CBC_PKCS7</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/aead.html#c.PSA_ALG_CCM"><code class="xref">PSA_ALG_CCM</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/cipher.html#c.PSA_ALG_CCM_STAR_ANY_TAG"><code class="xref">PSA_ALG_CCM_STAR_ANY_TAG</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/cipher.html#c.PSA_ALG_CCM_STAR_NO_TAG"><code class="xref">PSA_ALG_CCM_STAR_NO_TAG</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/cipher.html#c.PSA_ALG_CFB"><code class="xref">PSA_ALG_CFB</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/aead.html#c.PSA_ALG_CHACHA20_POLY1305"><code class="xref">PSA_ALG_CHACHA20_POLY1305</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/mac.html#c.PSA_ALG_CMAC"><code class="xref">PSA_ALG_CMAC</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/cipher.html#c.PSA_ALG_CTR"><code class="xref">PSA_ALG_CTR</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/signature.html#c.PSA_ALG_DETERMINISTIC_ECDSA"><code class="xref">PSA_ALG_DETERMINISTIC_ECDSA</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/signature.html#c.PSA_ALG_DETERMINISTIC_HASH_ML_DSA"><code class="xref">PSA_ALG_DETERMINISTIC_HASH_ML_DSA</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/signature.html#c.PSA_ALG_DETERMINISTIC_HASH_SLH_DSA"><code class="xref">PSA_ALG_DETERMINISTIC_HASH_SLH_DSA</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/signature.html#c.PSA_ALG_DETERMINISTIC_ML_DSA"><code class="xref">PSA_ALG_DETERMINISTIC_ML_DSA</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/signature.html#c.PSA_ALG_DETERMINISTIC_SLH_DSA"><code class="xref">PSA_ALG_DETERMINISTIC_SLH_DSA</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/cipher.html#c.PSA_ALG_ECB_NO_PADDING"><code class="xref">PSA_ALG_ECB_NO_PADDING</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/key-agreement.html#c.PSA_ALG_ECDH"><code class="xref">PSA_ALG_ECDH</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/signature.html#c.PSA_ALG_ECDSA"><code class="xref">PSA_ALG_ECDSA</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/signature.html#c.PSA_ALG_ECDSA_ANY"><code class="xref">PSA_ALG_ECDSA_ANY</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/key-encapsulation.html#c.PSA_ALG_ECIES_SEC1"><code class="xref">PSA_ALG_ECIES_SEC1</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/signature.html#c.PSA_ALG_ED25519PH"><code class="xref">PSA_ALG_ED25519PH</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/signature.html#c.PSA_ALG_ED448PH"><code class="xref">PSA_ALG_ED448PH</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/signature.html#c.PSA_ALG_EDDSA_CTX"><code class="xref">PSA_ALG_EDDSA_CTX</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/key-agreement.html#c.PSA_ALG_FFDH"><code class="xref">PSA_ALG_FFDH</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/mac.html#c.PSA_ALG_FULL_LENGTH_MAC"><code class="xref">PSA_ALG_FULL_LENGTH_MAC</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/aead.html#c.PSA_ALG_GCM"><code class="xref">PSA_ALG_GCM</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/algorithms.html#c.PSA_ALG_GET_HASH"><code class="xref">PSA_ALG_GET_HASH</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/signature.html#c.PSA_ALG_HASH_ML_DSA"><code class="xref">PSA_ALG_HASH_ML_DSA</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/signature.html#c.PSA_ALG_HASH_SLH_DSA"><code class="xref">PSA_ALG_HASH_SLH_DSA</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/key-derivation.html#c.PSA_ALG_HKDF"><code class="xref">PSA_ALG_HKDF</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/key-derivation.html#c.PSA_ALG_HKDF_EXPAND"><code class="xref">PSA_ALG_HKDF_EXPAND</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/key-derivation.html#c.PSA_ALG_HKDF_EXTRACT"><code class="xref">PSA_ALG_HKDF_EXTRACT</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/mac.html#c.PSA_ALG_HMAC"><code class="xref">PSA_ALG_HMAC</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/signature.html#c.PSA_ALG_HSS"><code class="xref">PSA_ALG_HSS</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/algorithms.html#c.PSA_ALG_IS_AEAD"><code class="xref">PSA_ALG_IS_AEAD</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/aead.html#c.PSA_ALG_IS_AEAD_ON_BLOCK_CIPHER"><code class="xref">PSA_ALG_IS_AEAD_ON_BLOCK_CIPHER</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/algorithms.html#c.PSA_ALG_IS_ASYMMETRIC_ENCRYPTION"><code class="xref">PSA_ALG_IS_ASYMMETRIC_ENCRYPTION</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/hash.html#c.PSA_ALG_IS_BLAKE2_HASH"><code class="xref">PSA_ALG_IS_BLAKE2_HASH</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/mac.html#c.PSA_ALG_IS_BLAKE2_MAC"><code class="xref">PSA_ALG_IS_BLAKE2_MAC</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/mac.html#c.PSA_ALG_IS_BLOCK_CIPHER_MAC"><code class="xref">PSA_ALG_IS_BLOCK_CIPHER_MAC</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/algorithms.html#c.PSA_ALG_IS_CIPHER"><code class="xref">PSA_ALG_IS_CIPHER</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/signature.html#c.PSA_ALG_IS_DETERMINISTIC_ECDSA"><code class="xref">PSA_ALG_IS_DETERMINISTIC_ECDSA</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/signature.html#c.PSA_ALG_IS_DETERMINISTIC_HASH_ML_DSA"><code class="xref">PSA_ALG_IS_DETERMINISTIC_HASH_ML_DSA</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/signature.html#c.PSA_ALG_IS_DETERMINISTIC_HASH_SLH_DSA"><code class="xref">PSA_ALG_IS_DETERMINISTIC_HASH_SLH_DSA</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/key-agreement.html#c.PSA_ALG_IS_ECDH"><code class="xref">PSA_ALG_IS_ECDH</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/signature.html#c.PSA_ALG_IS_ECDSA"><code class="xref">PSA_ALG_IS_ECDSA</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/key-agreement.html#c.PSA_ALG_IS_FFDH"><code class="xref">PSA_ALG_IS_FFDH</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/algorithms.html#c.PSA_ALG_IS_HASH"><code class="xref">PSA_ALG_IS_HASH</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/signature.html#c.PSA_ALG_IS_HASH_AND_SIGN"><code class="xref">PSA_ALG_IS_HASH_AND_SIGN</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/signature.html#c.PSA_ALG_IS_HASH_EDDSA"><code class="xref">PSA_ALG_IS_HASH_EDDSA</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/signature.html#c.PSA_ALG_IS_HASH_ML_DSA"><code class="xref">PSA_ALG_IS_HASH_ML_DSA</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/signature.html#c.PSA_ALG_IS_HASH_SLH_DSA"><code class="xref">PSA_ALG_IS_HASH_SLH_DSA</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/signature.html#c.PSA_ALG_IS_HEDGED_HASH_ML_DSA"><code class="xref">PSA_ALG_IS_HEDGED_HASH_ML_DSA</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/signature.html#c.PSA_ALG_IS_HEDGED_HASH_SLH_DSA"><code class="xref">PSA_ALG_IS_HEDGED_HASH_SLH_DSA</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/key-derivation.html#c.PSA_ALG_IS_HKDF"><code class="xref">PSA_ALG_IS_HKDF</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/key-derivation.html#c.PSA_ALG_IS_HKDF_EXPAND"><code class="xref">PSA_ALG_IS_HKDF_EXPAND</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/key-derivation.html#c.PSA_ALG_IS_HKDF_EXTRACT"><code class="xref">PSA_ALG_IS_HKDF_EXTRACT</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/mac.html#c.PSA_ALG_IS_HMAC"><code class="xref">PSA_ALG_IS_HMAC</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/pake.html#c.PSA_ALG_IS_JPAKE"><code class="xref">PSA_ALG_IS_JPAKE</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/algorithms.html#c.PSA_ALG_IS_KEY_AGREEMENT"><code class="xref">PSA_ALG_IS_KEY_AGREEMENT</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/algorithms.html#c.PSA_ALG_IS_KEY_DERIVATION"><code class="xref">PSA_ALG_IS_KEY_DERIVATION</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/key-derivation.html#c.PSA_ALG_IS_KEY_DERIVATION_STRETCHING"><code class="xref">PSA_ALG_IS_KEY_DERIVATION_STRETCHING</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/algorithms.html#c.PSA_ALG_IS_KEY_ENCAPSULATION"><code class="xref">PSA_ALG_IS_KEY_ENCAPSULATION</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/algorithms.html#c.PSA_ALG_IS_KEY_WRAP"><code class="xref">PSA_ALG_IS_KEY_WRAP</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/algorithms.html#c.PSA_ALG_IS_MAC"><code class="xref">PSA_ALG_IS_MAC</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/signature.html#c.PSA_ALG_IS_ML_DSA"><code class="xref">PSA_ALG_IS_ML_DSA</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/algorithms.html#c.PSA_ALG_IS_PAKE"><code class="xref">PSA_ALG_IS_PAKE</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/key-derivation.html#c.PSA_ALG_IS_PBKDF2_HMAC"><code class="xref">PSA_ALG_IS_PBKDF2_HMAC</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/signature.html#c.PSA_ALG_IS_RANDOMIZED_ECDSA"><code class="xref">PSA_ALG_IS_RANDOMIZED_ECDSA</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/key-agreement.html#c.PSA_ALG_IS_RAW_KEY_AGREEMENT"><code class="xref">PSA_ALG_IS_RAW_KEY_AGREEMENT</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/pk-encryption.html#c.PSA_ALG_IS_RSA_OAEP"><code class="xref">PSA_ALG_IS_RSA_OAEP</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/signature.html#c.PSA_ALG_IS_RSA_PKCS1V15_SIGN"><code class="xref">PSA_ALG_IS_RSA_PKCS1V15_SIGN</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/signature.html#c.PSA_ALG_IS_RSA_PSS"><code class="xref">PSA_ALG_IS_RSA_PSS</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/signature.html#c.PSA_ALG_IS_RSA_PSS_ANY_SALT"><code class="xref">PSA_ALG_IS_RSA_PSS_ANY_SALT</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/signature.html#c.PSA_ALG_IS_RSA_PSS_STANDARD_SALT"><code class="xref">PSA_ALG_IS_RSA_PSS_STANDARD_SALT</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/algorithms.html#c.PSA_ALG_IS_SIGN"><code class="xref">PSA_ALG_IS_SIGN</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/signature.html#c.PSA_ALG_IS_SIGN_HASH"><code class="xref">PSA_ALG_IS_SIGN_HASH</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/signature.html#c.PSA_ALG_IS_SIGN_MESSAGE"><code class="xref">PSA_ALG_IS_SIGN_MESSAGE</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/signature.html#c.PSA_ALG_IS_SLH_DSA"><code class="xref">PSA_ALG_IS_SLH_DSA</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/key-derivation.html#c.PSA_ALG_IS_SP800_108_COUNTER_HMAC"><code class="xref">PSA_ALG_IS_SP800_108_COUNTER_HMAC</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/pake.html#c.PSA_ALG_IS_SPAKE2P"><code class="xref">PSA_ALG_IS_SPAKE2P</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/pake.html#c.PSA_ALG_IS_SPAKE2P_CMAC"><code class="xref">PSA_ALG_IS_SPAKE2P_CMAC</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/pake.html#c.PSA_ALG_IS_SPAKE2P_HMAC"><code class="xref">PSA_ALG_IS_SPAKE2P_HMAC</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/key-agreement.html#c.PSA_ALG_IS_STANDALONE_KEY_AGREEMENT"><code class="xref">PSA_ALG_IS_STANDALONE_KEY_AGREEMENT</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/cipher.html#c.PSA_ALG_IS_STREAM_CIPHER"><code class="xref">PSA_ALG_IS_STREAM_CIPHER</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/key-derivation.html#c.PSA_ALG_IS_TLS12_PRF"><code class="xref">PSA_ALG_IS_TLS12_PRF</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/key-derivation.html#c.PSA_ALG_IS_TLS12_PSK_TO_MS"><code class="xref">PSA_ALG_IS_TLS12_PSK_TO_MS</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/algorithms.html#c.PSA_ALG_IS_WILDCARD"><code class="xref">PSA_ALG_IS_WILDCARD</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/pake.html#c.PSA_ALG_IS_WPA3_SAE"><code class="xref">PSA_ALG_IS_WPA3_SAE</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/pake.html#c.PSA_ALG_IS_WPA3_SAE_FIXED"><code class="xref">PSA_ALG_IS_WPA3_SAE_FIXED</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/pake.html#c.PSA_ALG_IS_WPA3_SAE_GDH"><code class="xref">PSA_ALG_IS_WPA3_SAE_GDH</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/key-derivation.html#c.PSA_ALG_IS_WPA3_SAE_H2E"><code class="xref">PSA_ALG_IS_WPA3_SAE_H2E</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/algorithms.html#c.PSA_ALG_IS_XOF"><code class="xref">PSA_ALG_IS_XOF</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/pake.html#c.PSA_ALG_JPAKE"><code class="xref">PSA_ALG_JPAKE</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/key-agreement.html#c.PSA_ALG_KEY_AGREEMENT"><code class="xref">PSA_ALG_KEY_AGREEMENT</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/key-agreement.html#c.PSA_ALG_KEY_AGREEMENT_GET_BASE"><code class="xref">PSA_ALG_KEY_AGREEMENT_GET_BASE</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/key-agreement.html#c.PSA_ALG_KEY_AGREEMENT_GET_KDF"><code class="xref">PSA_ALG_KEY_AGREEMENT_GET_KDF</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/key-wrapping.html#c.PSA_ALG_KW"><code class="xref">PSA_ALG_KW</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/key-wrapping.html#c.PSA_ALG_KWP"><code class="xref">PSA_ALG_KWP</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/signature.html#c.PSA_ALG_LMS"><code class="xref">PSA_ALG_LMS</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/hash.html#c.PSA_ALG_MD2"><code class="xref">PSA_ALG_MD2</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/hash.html#c.PSA_ALG_MD4"><code class="xref">PSA_ALG_MD4</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/hash.html#c.PSA_ALG_MD5"><code class="xref">PSA_ALG_MD5</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/signature.html#c.PSA_ALG_ML_DSA"><code class="xref">PSA_ALG_ML_DSA</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/key-encapsulation.html#c.PSA_ALG_ML_KEM"><code class="xref">PSA_ALG_ML_KEM</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/algorithms.html#c.PSA_ALG_NONE"><code class="xref">PSA_ALG_NONE</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/cipher.html#c.PSA_ALG_OFB"><code class="xref">PSA_ALG_OFB</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/key-derivation.html#c.PSA_ALG_PBKDF2_AES_CMAC_PRF_128"><code class="xref">PSA_ALG_PBKDF2_AES_CMAC_PRF_128</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/key-derivation.html#c.PSA_ALG_PBKDF2_HMAC"><code class="xref">PSA_ALG_PBKDF2_HMAC</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/signature.html#c.PSA_ALG_PURE_EDDSA"><code class="xref">PSA_ALG_PURE_EDDSA</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/hash.html#c.PSA_ALG_RIPEMD160"><code class="xref">PSA_ALG_RIPEMD160</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/pk-encryption.html#c.PSA_ALG_RSA_OAEP"><code class="xref">PSA_ALG_RSA_OAEP</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/pk-encryption.html#c.PSA_ALG_RSA_PKCS1V15_CRYPT"><code class="xref">PSA_ALG_RSA_PKCS1V15_CRYPT</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/signature.html#c.PSA_ALG_RSA_PKCS1V15_SIGN"><code class="xref">PSA_ALG_RSA_PKCS1V15_SIGN</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/signature.html#c.PSA_ALG_RSA_PKCS1V15_SIGN_RAW"><code class="xref">PSA_ALG_RSA_PKCS1V15_SIGN_RAW</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/signature.html#c.PSA_ALG_RSA_PSS"><code class="xref">PSA_ALG_RSA_PSS</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/signature.html#c.PSA_ALG_RSA_PSS_ANY_SALT"><code class="xref">PSA_ALG_RSA_PSS_ANY_SALT</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/hash.html#c.PSA_ALG_SHA3_224"><code class="xref">PSA_ALG_SHA3_224</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/hash.html#c.PSA_ALG_SHA3_256"><code class="xref">PSA_ALG_SHA3_256</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/hash.html#c.PSA_ALG_SHA3_384"><code class="xref">PSA_ALG_SHA3_384</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/hash.html#c.PSA_ALG_SHA3_512"><code class="xref">PSA_ALG_SHA3_512</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/xof.html#c.PSA_ALG_SHAKE128"><code class="xref">PSA_ALG_SHAKE128</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/hash.html#c.PSA_ALG_SHAKE128_256"><code class="xref">PSA_ALG_SHAKE128_256</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/xof.html#c.PSA_ALG_SHAKE256"><code class="xref">PSA_ALG_SHAKE256</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/hash.html#c.PSA_ALG_SHAKE256_192"><code class="xref">PSA_ALG_SHAKE256_192</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/hash.html#c.PSA_ALG_SHAKE256_256"><code class="xref">PSA_ALG_SHAKE256_256</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/hash.html#c.PSA_ALG_SHAKE256_512"><code class="xref">PSA_ALG_SHAKE256_512</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/hash.html#c.PSA_ALG_SHA_1"><code class="xref">PSA_ALG_SHA_1</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/hash.html#c.PSA_ALG_SHA_224"><code class="xref">PSA_ALG_SHA_224</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/hash.html#c.PSA_ALG_SHA_256"><code class="xref">PSA_ALG_SHA_256</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/hash.html#c.PSA_ALG_SHA_256_192"><code class="xref">PSA_ALG_SHA_256_192</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/hash.html#c.PSA_ALG_SHA_384"><code class="xref">PSA_ALG_SHA_384</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/hash.html#c.PSA_ALG_SHA_512"><code class="xref">PSA_ALG_SHA_512</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/hash.html#c.PSA_ALG_SHA_512_224"><code class="xref">PSA_ALG_SHA_512_224</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/hash.html#c.PSA_ALG_SHA_512_256"><code class="xref">PSA_ALG_SHA_512_256</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/signature.html#c.PSA_ALG_SIGN_SUPPORTS_CONTEXT"><code class="xref">PSA_ALG_SIGN_SUPPORTS_CONTEXT</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/signature.html#c.PSA_ALG_SLH_DSA"><code class="xref">PSA_ALG_SLH_DSA</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/hash.html#c.PSA_ALG_SM3"><code class="xref">PSA_ALG_SM3</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/key-derivation.html#c.PSA_ALG_SP800_108_COUNTER_CMAC"><code class="xref">PSA_ALG_SP800_108_COUNTER_CMAC</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/key-derivation.html#c.PSA_ALG_SP800_108_COUNTER_HMAC"><code class="xref">PSA_ALG_SP800_108_COUNTER_HMAC</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/pake.html#c.PSA_ALG_SPAKE2P_CMAC"><code class="xref">PSA_ALG_SPAKE2P_CMAC</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/pake.html#c.PSA_ALG_SPAKE2P_HMAC"><code class="xref">PSA_ALG_SPAKE2P_HMAC</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/pake.html#c.PSA_ALG_SPAKE2P_MATTER"><code class="xref">PSA_ALG_SPAKE2P_MATTER</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/cipher.html#c.PSA_ALG_STREAM_CIPHER"><code class="xref">PSA_ALG_STREAM_CIPHER</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/key-derivation.html#c.PSA_ALG_TLS12_ECJPAKE_TO_PMS"><code class="xref">PSA_ALG_TLS12_ECJPAKE_TO_PMS</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/key-derivation.html#c.PSA_ALG_TLS12_PRF"><code class="xref">PSA_ALG_TLS12_PRF</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/key-derivation.html#c.PSA_ALG_TLS12_PSK_TO_MS"><code class="xref">PSA_ALG_TLS12_PSK_TO_MS</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/mac.html#c.PSA_ALG_TRUNCATED_MAC"><code class="xref">PSA_ALG_TRUNCATED_MAC</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/pake.html#c.PSA_ALG_WPA3_SAE_ANY"><code class="xref">PSA_ALG_WPA3_SAE_ANY</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/pake.html#c.PSA_ALG_WPA3_SAE_FIXED"><code class="xref">PSA_ALG_WPA3_SAE_FIXED</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/pake.html#c.PSA_ALG_WPA3_SAE_GDH"><code class="xref">PSA_ALG_WPA3_SAE_GDH</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/key-derivation.html#c.PSA_ALG_WPA3_SAE_H2E"><code class="xref">PSA_ALG_WPA3_SAE_H2E</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/aead.html#c.PSA_ALG_XCHACHA20_POLY1305"><code class="xref">PSA_ALG_XCHACHA20_POLY1305</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/signature.html#c.PSA_ALG_XMSS"><code class="xref">PSA_ALG_XMSS</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/signature.html#c.PSA_ALG_XMSS_MT"><code class="xref">PSA_ALG_XMSS_MT</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/xof.html#c.PSA_ALG_XOF_HAS_CONTEXT"><code class="xref">PSA_ALG_XOF_HAS_CONTEXT</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/cipher.html#c.PSA_ALG_XTS"><code class="xref">PSA_ALG_XTS</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/pk-encryption.html#c.PSA_ASYMMETRIC_DECRYPT_OUTPUT_MAX_SIZE"><code class="xref">PSA_ASYMMETRIC_DECRYPT_OUTPUT_MAX_SIZE</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/pk-encryption.html#c.PSA_ASYMMETRIC_DECRYPT_OUTPUT_SIZE"><code class="xref">PSA_ASYMMETRIC_DECRYPT_OUTPUT_SIZE</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/pk-encryption.html#c.PSA_ASYMMETRIC_ENCRYPT_OUTPUT_MAX_SIZE"><code class="xref">PSA_ASYMMETRIC_ENCRYPT_OUTPUT_MAX_SIZE</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/pk-encryption.html#c.PSA_ASYMMETRIC_ENCRYPT_OUTPUT_SIZE"><code class="xref">PSA_ASYMMETRIC_ENCRYPT_OUTPUT_SIZE</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/aead.html#c.psa_aead_abort"><code class="xref">psa_aead_abort</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/aead.html#c.psa_aead_decrypt"><code class="xref">psa_aead_decrypt</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/aead.html#c.psa_aead_decrypt_setup"><code class="xref">psa_aead_decrypt_setup</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/aead.html#c.psa_aead_encrypt"><code class="xref">psa_aead_encrypt</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/aead.html#c.psa_aead_encrypt_setup"><code class="xref">psa_aead_encrypt_setup</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/aead.html#c.psa_aead_finish"><code class="xref">psa_aead_finish</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/aead.html#c.psa_aead_generate_nonce"><code class="xref">psa_aead_generate_nonce</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/aead.html#c.psa_aead_operation_init"><code class="xref">psa_aead_operation_init</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/aead.html#c.psa_aead_operation_t"><code class="xref">psa_aead_operation_t</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/aead.html#c.psa_aead_set_lengths"><code class="xref">psa_aead_set_lengths</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/aead.html#c.psa_aead_set_nonce"><code class="xref">psa_aead_set_nonce</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/aead.html#c.psa_aead_update"><code class="xref">psa_aead_update</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/aead.html#c.psa_aead_update_ad"><code class="xref">psa_aead_update_ad</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/aead.html#c.psa_aead_verify"><code class="xref">psa_aead_verify</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/algorithms.html#c.psa_algorithm_t"><code class="xref">psa_algorithm_t</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/pk-encryption.html#c.psa_asymmetric_decrypt"><code class="xref">psa_asymmetric_decrypt</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/pk-encryption.html#c.psa_asymmetric_encrypt"><code class="xref">psa_asymmetric_encrypt</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/management.html#c.psa_attach_key"><code class="xref">psa_attach_key</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
+     <tr class="cap" id="cap-PSA_B"><td></td><td>
+       <strong>PSA_B</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/cipher.html#c.PSA_BLOCK_CIPHER_BLOCK_LENGTH"><code class="xref">PSA_BLOCK_CIPHER_BLOCK_LENGTH</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/cipher.html#c.PSA_BLOCK_CIPHER_BLOCK_MAX_SIZE"><code class="xref">PSA_BLOCK_CIPHER_BLOCK_MAX_SIZE</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
+     <tr class="cap" id="cap-PSA_C"><td></td><td>
+       <strong>PSA_C</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/cipher.html#c.PSA_CIPHER_DECRYPT_OUTPUT_MAX_SIZE"><code class="xref">PSA_CIPHER_DECRYPT_OUTPUT_MAX_SIZE</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/cipher.html#c.PSA_CIPHER_DECRYPT_OUTPUT_SIZE"><code class="xref">PSA_CIPHER_DECRYPT_OUTPUT_SIZE</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/cipher.html#c.PSA_CIPHER_ENCRYPT_OUTPUT_MAX_SIZE"><code class="xref">PSA_CIPHER_ENCRYPT_OUTPUT_MAX_SIZE</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/cipher.html#c.PSA_CIPHER_ENCRYPT_OUTPUT_SIZE"><code class="xref">PSA_CIPHER_ENCRYPT_OUTPUT_SIZE</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/cipher.html#c.PSA_CIPHER_FINISH_OUTPUT_MAX_SIZE"><code class="xref">PSA_CIPHER_FINISH_OUTPUT_MAX_SIZE</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/cipher.html#c.PSA_CIPHER_FINISH_OUTPUT_SIZE"><code class="xref">PSA_CIPHER_FINISH_OUTPUT_SIZE</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/cipher.html#c.PSA_CIPHER_IV_LENGTH"><code class="xref">PSA_CIPHER_IV_LENGTH</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/cipher.html#c.PSA_CIPHER_IV_MAX_SIZE"><code class="xref">PSA_CIPHER_IV_MAX_SIZE</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/cipher.html#c.PSA_CIPHER_OPERATION_INIT"><code class="xref">PSA_CIPHER_OPERATION_INIT</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/cipher.html#c.PSA_CIPHER_UPDATE_OUTPUT_MAX_SIZE"><code class="xref">PSA_CIPHER_UPDATE_OUTPUT_MAX_SIZE</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/cipher.html#c.PSA_CIPHER_UPDATE_OUTPUT_SIZE"><code class="xref">PSA_CIPHER_UPDATE_OUTPUT_SIZE</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/library/library.html#c.PSA_CRYPTO_API_VERSION_MAJOR"><code class="xref">PSA_CRYPTO_API_VERSION_MAJOR</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/library/library.html#c.PSA_CRYPTO_API_VERSION_MINOR"><code class="xref">PSA_CRYPTO_API_VERSION_MINOR</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/management.html#c.PSA_CUSTOM_KEY_PARAMETERS_INIT"><code class="xref">PSA_CUSTOM_KEY_PARAMETERS_INIT</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/policy.html#c.psa_check_key_usage"><code class="xref">psa_check_key_usage</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/cipher.html#c.psa_cipher_abort"><code class="xref">psa_cipher_abort</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/cipher.html#c.psa_cipher_decrypt"><code class="xref">psa_cipher_decrypt</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/cipher.html#c.psa_cipher_decrypt_setup"><code class="xref">psa_cipher_decrypt_setup</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/cipher.html#c.psa_cipher_encrypt"><code class="xref">psa_cipher_encrypt</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/cipher.html#c.psa_cipher_encrypt_setup"><code class="xref">psa_cipher_encrypt_setup</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/cipher.html#c.psa_cipher_finish"><code class="xref">psa_cipher_finish</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/cipher.html#c.psa_cipher_generate_iv"><code class="xref">psa_cipher_generate_iv</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/cipher.html#c.psa_cipher_operation_init"><code class="xref">psa_cipher_operation_init</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/cipher.html#c.psa_cipher_operation_t"><code class="xref">psa_cipher_operation_t</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/cipher.html#c.psa_cipher_set_iv"><code class="xref">psa_cipher_set_iv</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/cipher.html#c.psa_cipher_update"><code class="xref">psa_cipher_update</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/management.html#c.psa_copy_key"><code class="xref">psa_copy_key</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/library/library.html#c.psa_crypto_init"><code class="xref">psa_crypto_init</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/management.html#c.psa_custom_key_parameters_t"><code class="xref">psa_custom_key_parameters_t</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
+     <tr class="cap" id="cap-PSA_D"><td></td><td>
+       <strong>PSA_D</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/types.html#c.PSA_DH_FAMILY_RFC3526"><code class="xref">PSA_DH_FAMILY_RFC3526</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/types.html#c.PSA_DH_FAMILY_RFC7919"><code class="xref">PSA_DH_FAMILY_RFC7919</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/key-encapsulation.html#c.psa_decapsulate"><code class="xref">psa_decapsulate</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/management.html#c.psa_destroy_key"><code class="xref">psa_destroy_key</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/types.html#c.psa_dh_family_t"><code class="xref">psa_dh_family_t</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
+     <tr class="cap" id="cap-PSA_E"><td></td><td>
+       <strong>PSA_E</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/types.html#c.PSA_ECC_FAMILY_BRAINPOOL_P_R1"><code class="xref">PSA_ECC_FAMILY_BRAINPOOL_P_R1</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/types.html#c.PSA_ECC_FAMILY_FRP"><code class="xref">PSA_ECC_FAMILY_FRP</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/types.html#c.PSA_ECC_FAMILY_MONTGOMERY"><code class="xref">PSA_ECC_FAMILY_MONTGOMERY</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/types.html#c.PSA_ECC_FAMILY_SECP_K1"><code class="xref">PSA_ECC_FAMILY_SECP_K1</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/types.html#c.PSA_ECC_FAMILY_SECP_R1"><code class="xref">PSA_ECC_FAMILY_SECP_R1</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/types.html#c.PSA_ECC_FAMILY_SECP_R2"><code class="xref">PSA_ECC_FAMILY_SECP_R2</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/types.html#c.PSA_ECC_FAMILY_SECT_K1"><code class="xref">PSA_ECC_FAMILY_SECT_K1</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/types.html#c.PSA_ECC_FAMILY_SECT_R1"><code class="xref">PSA_ECC_FAMILY_SECT_R1</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/types.html#c.PSA_ECC_FAMILY_SECT_R2"><code class="xref">PSA_ECC_FAMILY_SECT_R2</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/types.html#c.PSA_ECC_FAMILY_TWISTED_EDWARDS"><code class="xref">PSA_ECC_FAMILY_TWISTED_EDWARDS</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/key-encapsulation.html#c.PSA_ENCAPSULATE_CIPHERTEXT_MAX_SIZE"><code class="xref">PSA_ENCAPSULATE_CIPHERTEXT_MAX_SIZE</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/key-encapsulation.html#c.PSA_ENCAPSULATE_CIPHERTEXT_SIZE"><code class="xref">PSA_ENCAPSULATE_CIPHERTEXT_SIZE</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/library/status.html#c.PSA_ERROR_INSUFFICIENT_ENTROPY"><code class="xref">PSA_ERROR_INSUFFICIENT_ENTROPY</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/library/status.html#c.PSA_ERROR_INVALID_PADDING"><code class="xref">PSA_ERROR_INVALID_PADDING</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/management.html#c.PSA_EXPORT_ASYMMETRIC_KEY_MAX_SIZE"><code class="xref">PSA_EXPORT_ASYMMETRIC_KEY_MAX_SIZE</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/management.html#c.PSA_EXPORT_KEY_OUTPUT_SIZE"><code class="xref">PSA_EXPORT_KEY_OUTPUT_SIZE</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/management.html#c.PSA_EXPORT_KEY_PAIR_MAX_SIZE"><code class="xref">PSA_EXPORT_KEY_PAIR_MAX_SIZE</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/management.html#c.PSA_EXPORT_PUBLIC_KEY_MAX_SIZE"><code class="xref">PSA_EXPORT_PUBLIC_KEY_MAX_SIZE</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/management.html#c.PSA_EXPORT_PUBLIC_KEY_OUTPUT_SIZE"><code class="xref">PSA_EXPORT_PUBLIC_KEY_OUTPUT_SIZE</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/types.html#c.psa_ecc_family_t"><code class="xref">psa_ecc_family_t</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/key-encapsulation.html#c.psa_encapsulate"><code class="xref">psa_encapsulate</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/management.html#c.psa_export_key"><code class="xref">psa_export_key</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/management.html#c.psa_export_public_key"><code class="xref">psa_export_public_key</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
+     <tr class="cap" id="cap-PSA_G"><td></td><td>
+       <strong>PSA_G</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/management.html#c.psa_generate_key"><code class="xref">psa_generate_key</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/management.html#c.psa_generate_key_custom"><code class="xref">psa_generate_key_custom</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/rng.html#c.psa_generate_random"><code class="xref">psa_generate_random</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/policy.html#c.psa_get_key_algorithm"><code class="xref">psa_get_key_algorithm</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/attributes.html#c.psa_get_key_attributes"><code class="xref">psa_get_key_attributes</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/types.html#c.psa_get_key_bits"><code class="xref">psa_get_key_bits</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/ids.html#c.psa_get_key_id"><code class="xref">psa_get_key_id</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/lifetimes.html#c.psa_get_key_lifetime"><code class="xref">psa_get_key_lifetime</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/types.html#c.psa_get_key_type"><code class="xref">psa_get_key_type</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/policy.html#c.psa_get_key_usage_flags"><code class="xref">psa_get_key_usage_flags</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
+     <tr class="cap" id="cap-PSA_H"><td></td><td>
+       <strong>PSA_H</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/hash.html#c.PSA_HASH_BLOCK_LENGTH"><code class="xref">PSA_HASH_BLOCK_LENGTH</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/hash.html#c.PSA_HASH_LENGTH"><code class="xref">PSA_HASH_LENGTH</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/hash.html#c.PSA_HASH_MAX_SIZE"><code class="xref">PSA_HASH_MAX_SIZE</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/hash.html#c.PSA_HASH_OPERATION_INIT"><code class="xref">PSA_HASH_OPERATION_INIT</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/hash.html#c.PSA_HASH_SUSPEND_ALGORITHM_FIELD_LENGTH"><code class="xref">PSA_HASH_SUSPEND_ALGORITHM_FIELD_LENGTH</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/hash.html#c.PSA_HASH_SUSPEND_HASH_STATE_FIELD_LENGTH"><code class="xref">PSA_HASH_SUSPEND_HASH_STATE_FIELD_LENGTH</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/hash.html#c.PSA_HASH_SUSPEND_INPUT_LENGTH_FIELD_LENGTH"><code class="xref">PSA_HASH_SUSPEND_INPUT_LENGTH_FIELD_LENGTH</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/hash.html#c.PSA_HASH_SUSPEND_OUTPUT_MAX_SIZE"><code class="xref">PSA_HASH_SUSPEND_OUTPUT_MAX_SIZE</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/hash.html#c.PSA_HASH_SUSPEND_OUTPUT_SIZE"><code class="xref">PSA_HASH_SUSPEND_OUTPUT_SIZE</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/hash.html#c.psa_hash_abort"><code class="xref">psa_hash_abort</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/hash.html#c.psa_hash_clone"><code class="xref">psa_hash_clone</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/hash.html#c.psa_hash_compare"><code class="xref">psa_hash_compare</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/hash.html#c.psa_hash_compute"><code class="xref">psa_hash_compute</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/hash.html#c.psa_hash_finish"><code class="xref">psa_hash_finish</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/hash.html#c.psa_hash_operation_init"><code class="xref">psa_hash_operation_init</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/hash.html#c.psa_hash_operation_t"><code class="xref">psa_hash_operation_t</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/hash.html#c.psa_hash_resume"><code class="xref">psa_hash_resume</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/hash.html#c.psa_hash_setup"><code class="xref">psa_hash_setup</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/hash.html#c.psa_hash_suspend"><code class="xref">psa_hash_suspend</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/hash.html#c.psa_hash_update"><code class="xref">psa_hash_update</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/hash.html#c.psa_hash_verify"><code class="xref">psa_hash_verify</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
+     <tr class="cap" id="cap-PSA_I"><td></td><td>
+       <strong>PSA_I</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/management.html#c.psa_import_key"><code class="xref">psa_import_key</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
+     <tr class="cap" id="cap-PSA_K"><td></td><td>
+       <strong>PSA_K</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/attributes.html#c.PSA_KEY_ATTRIBUTES_INIT"><code class="xref">PSA_KEY_ATTRIBUTES_INIT</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/key-derivation.html#c.PSA_KEY_DERIVATION_INPUT_CONTEXT"><code class="xref">PSA_KEY_DERIVATION_INPUT_CONTEXT</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/key-derivation.html#c.PSA_KEY_DERIVATION_INPUT_COST"><code class="xref">PSA_KEY_DERIVATION_INPUT_COST</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/key-derivation.html#c.PSA_KEY_DERIVATION_INPUT_INFO"><code class="xref">PSA_KEY_DERIVATION_INPUT_INFO</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/key-derivation.html#c.PSA_KEY_DERIVATION_INPUT_LABEL"><code class="xref">PSA_KEY_DERIVATION_INPUT_LABEL</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/key-derivation.html#c.PSA_KEY_DERIVATION_INPUT_OTHER_SECRET"><code class="xref">PSA_KEY_DERIVATION_INPUT_OTHER_SECRET</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/key-derivation.html#c.PSA_KEY_DERIVATION_INPUT_PASSWORD"><code class="xref">PSA_KEY_DERIVATION_INPUT_PASSWORD</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/key-derivation.html#c.PSA_KEY_DERIVATION_INPUT_SALT"><code class="xref">PSA_KEY_DERIVATION_INPUT_SALT</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/key-derivation.html#c.PSA_KEY_DERIVATION_INPUT_SECRET"><code class="xref">PSA_KEY_DERIVATION_INPUT_SECRET</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/key-derivation.html#c.PSA_KEY_DERIVATION_INPUT_SEED"><code class="xref">PSA_KEY_DERIVATION_INPUT_SEED</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/key-derivation.html#c.PSA_KEY_DERIVATION_OPERATION_INIT"><code class="xref">PSA_KEY_DERIVATION_OPERATION_INIT</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/key-derivation.html#c.PSA_KEY_DERIVATION_UNLIMITED_CAPACITY"><code class="xref">PSA_KEY_DERIVATION_UNLIMITED_CAPACITY</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/ids.html#c.PSA_KEY_ID_NULL"><code class="xref">PSA_KEY_ID_NULL</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/ids.html#c.PSA_KEY_ID_USER_MAX"><code class="xref">PSA_KEY_ID_USER_MAX</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/ids.html#c.PSA_KEY_ID_USER_MIN"><code class="xref">PSA_KEY_ID_USER_MIN</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/ids.html#c.PSA_KEY_ID_VENDOR_MAX"><code class="xref">PSA_KEY_ID_VENDOR_MAX</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/ids.html#c.PSA_KEY_ID_VENDOR_MIN"><code class="xref">PSA_KEY_ID_VENDOR_MIN</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/lifetimes.html#c.PSA_KEY_LIFETIME_FROM_PERSISTENCE_AND_LOCATION"><code class="xref">PSA_KEY_LIFETIME_FROM_PERSISTENCE_AND_LOCATION</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/lifetimes.html#c.PSA_KEY_LIFETIME_GET_LOCATION"><code class="xref">PSA_KEY_LIFETIME_GET_LOCATION</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/lifetimes.html#c.PSA_KEY_LIFETIME_GET_PERSISTENCE"><code class="xref">PSA_KEY_LIFETIME_GET_PERSISTENCE</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/lifetimes.html#c.PSA_KEY_LIFETIME_IS_VOLATILE"><code class="xref">PSA_KEY_LIFETIME_IS_VOLATILE</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/lifetimes.html#c.PSA_KEY_LIFETIME_PERSISTENT"><code class="xref">PSA_KEY_LIFETIME_PERSISTENT</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/lifetimes.html#c.PSA_KEY_LIFETIME_VOLATILE"><code class="xref">PSA_KEY_LIFETIME_VOLATILE</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/lifetimes.html#c.PSA_KEY_LOCATION_LOCAL_STORAGE"><code class="xref">PSA_KEY_LOCATION_LOCAL_STORAGE</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/lifetimes.html#c.PSA_KEY_LOCATION_PRIMARY_SECURE_ELEMENT"><code class="xref">PSA_KEY_LOCATION_PRIMARY_SECURE_ELEMENT</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/lifetimes.html#c.PSA_KEY_PERSISTENCE_DEFAULT"><code class="xref">PSA_KEY_PERSISTENCE_DEFAULT</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/lifetimes.html#c.PSA_KEY_PERSISTENCE_READ_ONLY"><code class="xref">PSA_KEY_PERSISTENCE_READ_ONLY</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/lifetimes.html#c.PSA_KEY_PERSISTENCE_VOLATILE"><code class="xref">PSA_KEY_PERSISTENCE_VOLATILE</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/types.html#c.PSA_KEY_TYPE_AES"><code class="xref">PSA_KEY_TYPE_AES</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/types.html#c.PSA_KEY_TYPE_ARC4"><code class="xref">PSA_KEY_TYPE_ARC4</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/types.html#c.PSA_KEY_TYPE_ARIA"><code class="xref">PSA_KEY_TYPE_ARIA</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/types.html#c.PSA_KEY_TYPE_ASCON"><code class="xref">PSA_KEY_TYPE_ASCON</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/types.html#c.PSA_KEY_TYPE_BLAKE2"><code class="xref">PSA_KEY_TYPE_BLAKE2</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/types.html#c.PSA_KEY_TYPE_CAMELLIA"><code class="xref">PSA_KEY_TYPE_CAMELLIA</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/types.html#c.PSA_KEY_TYPE_CHACHA20"><code class="xref">PSA_KEY_TYPE_CHACHA20</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/types.html#c.PSA_KEY_TYPE_DERIVE"><code class="xref">PSA_KEY_TYPE_DERIVE</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/types.html#c.PSA_KEY_TYPE_DES"><code class="xref">PSA_KEY_TYPE_DES</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/types.html#c.PSA_KEY_TYPE_DH_GET_FAMILY"><code class="xref">PSA_KEY_TYPE_DH_GET_FAMILY</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/types.html#c.PSA_KEY_TYPE_DH_KEY_PAIR"><code class="xref">PSA_KEY_TYPE_DH_KEY_PAIR</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/types.html#c.PSA_KEY_TYPE_DH_PUBLIC_KEY"><code class="xref">PSA_KEY_TYPE_DH_PUBLIC_KEY</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/types.html#c.PSA_KEY_TYPE_ECC_GET_FAMILY"><code class="xref">PSA_KEY_TYPE_ECC_GET_FAMILY</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/types.html#c.PSA_KEY_TYPE_ECC_KEY_PAIR"><code class="xref">PSA_KEY_TYPE_ECC_KEY_PAIR</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/types.html#c.PSA_KEY_TYPE_ECC_PUBLIC_KEY"><code class="xref">PSA_KEY_TYPE_ECC_PUBLIC_KEY</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/types.html#c.PSA_KEY_TYPE_HMAC"><code class="xref">PSA_KEY_TYPE_HMAC</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/types.html#c.PSA_KEY_TYPE_HSS_PUBLIC_KEY"><code class="xref">PSA_KEY_TYPE_HSS_PUBLIC_KEY</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/types.html#c.PSA_KEY_TYPE_IS_ASYMMETRIC"><code class="xref">PSA_KEY_TYPE_IS_ASYMMETRIC</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/types.html#c.PSA_KEY_TYPE_IS_DH"><code class="xref">PSA_KEY_TYPE_IS_DH</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/types.html#c.PSA_KEY_TYPE_IS_DH_KEY_PAIR"><code class="xref">PSA_KEY_TYPE_IS_DH_KEY_PAIR</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/types.html#c.PSA_KEY_TYPE_IS_DH_PUBLIC_KEY"><code class="xref">PSA_KEY_TYPE_IS_DH_PUBLIC_KEY</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/types.html#c.PSA_KEY_TYPE_IS_ECC"><code class="xref">PSA_KEY_TYPE_IS_ECC</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/types.html#c.PSA_KEY_TYPE_IS_ECC_KEY_PAIR"><code class="xref">PSA_KEY_TYPE_IS_ECC_KEY_PAIR</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/types.html#c.PSA_KEY_TYPE_IS_ECC_PUBLIC_KEY"><code class="xref">PSA_KEY_TYPE_IS_ECC_PUBLIC_KEY</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/types.html#c.PSA_KEY_TYPE_IS_KEY_PAIR"><code class="xref">PSA_KEY_TYPE_IS_KEY_PAIR</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/types.html#c.PSA_KEY_TYPE_IS_ML_DSA"><code class="xref">PSA_KEY_TYPE_IS_ML_DSA</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/types.html#c.PSA_KEY_TYPE_IS_ML_KEM"><code class="xref">PSA_KEY_TYPE_IS_ML_KEM</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/types.html#c.PSA_KEY_TYPE_IS_PUBLIC_KEY"><code class="xref">PSA_KEY_TYPE_IS_PUBLIC_KEY</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/types.html#c.PSA_KEY_TYPE_IS_RSA"><code class="xref">PSA_KEY_TYPE_IS_RSA</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/types.html#c.PSA_KEY_TYPE_IS_SLH_DSA"><code class="xref">PSA_KEY_TYPE_IS_SLH_DSA</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/types.html#c.PSA_KEY_TYPE_IS_SLH_DSA_KEY_PAIR"><code class="xref">PSA_KEY_TYPE_IS_SLH_DSA_KEY_PAIR</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/types.html#c.PSA_KEY_TYPE_IS_SLH_DSA_PUBLIC_KEY"><code class="xref">PSA_KEY_TYPE_IS_SLH_DSA_PUBLIC_KEY</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/types.html#c.PSA_KEY_TYPE_IS_SPAKE2P"><code class="xref">PSA_KEY_TYPE_IS_SPAKE2P</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/types.html#c.PSA_KEY_TYPE_IS_SPAKE2P_KEY_PAIR"><code class="xref">PSA_KEY_TYPE_IS_SPAKE2P_KEY_PAIR</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/types.html#c.PSA_KEY_TYPE_IS_SPAKE2P_PUBLIC_KEY"><code class="xref">PSA_KEY_TYPE_IS_SPAKE2P_PUBLIC_KEY</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/types.html#c.PSA_KEY_TYPE_IS_UNSTRUCTURED"><code class="xref">PSA_KEY_TYPE_IS_UNSTRUCTURED</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/types.html#c.PSA_KEY_TYPE_IS_WPA3_SAE_DH"><code class="xref">PSA_KEY_TYPE_IS_WPA3_SAE_DH</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/types.html#c.PSA_KEY_TYPE_IS_WPA3_SAE_ECC"><code class="xref">PSA_KEY_TYPE_IS_WPA3_SAE_ECC</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/types.html#c.PSA_KEY_TYPE_KEY_PAIR_OF_PUBLIC_KEY"><code class="xref">PSA_KEY_TYPE_KEY_PAIR_OF_PUBLIC_KEY</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/types.html#c.PSA_KEY_TYPE_LMS_PUBLIC_KEY"><code class="xref">PSA_KEY_TYPE_LMS_PUBLIC_KEY</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/types.html#c.PSA_KEY_TYPE_ML_DSA_KEY_PAIR"><code class="xref">PSA_KEY_TYPE_ML_DSA_KEY_PAIR</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/types.html#c.PSA_KEY_TYPE_ML_DSA_PUBLIC_KEY"><code class="xref">PSA_KEY_TYPE_ML_DSA_PUBLIC_KEY</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/types.html#c.PSA_KEY_TYPE_ML_KEM_KEY_PAIR"><code class="xref">PSA_KEY_TYPE_ML_KEM_KEY_PAIR</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/types.html#c.PSA_KEY_TYPE_ML_KEM_PUBLIC_KEY"><code class="xref">PSA_KEY_TYPE_ML_KEM_PUBLIC_KEY</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/types.html#c.PSA_KEY_TYPE_NONE"><code class="xref">PSA_KEY_TYPE_NONE</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/types.html#c.PSA_KEY_TYPE_PASSWORD"><code class="xref">PSA_KEY_TYPE_PASSWORD</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/types.html#c.PSA_KEY_TYPE_PASSWORD_HASH"><code class="xref">PSA_KEY_TYPE_PASSWORD_HASH</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/types.html#c.PSA_KEY_TYPE_PEPPER"><code class="xref">PSA_KEY_TYPE_PEPPER</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/types.html#c.PSA_KEY_TYPE_PUBLIC_KEY_OF_KEY_PAIR"><code class="xref">PSA_KEY_TYPE_PUBLIC_KEY_OF_KEY_PAIR</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/types.html#c.PSA_KEY_TYPE_RAW_DATA"><code class="xref">PSA_KEY_TYPE_RAW_DATA</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/types.html#c.PSA_KEY_TYPE_RSA_KEY_PAIR"><code class="xref">PSA_KEY_TYPE_RSA_KEY_PAIR</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/types.html#c.PSA_KEY_TYPE_RSA_PUBLIC_KEY"><code class="xref">PSA_KEY_TYPE_RSA_PUBLIC_KEY</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/types.html#c.PSA_KEY_TYPE_SLH_DSA_GET_FAMILY"><code class="xref">PSA_KEY_TYPE_SLH_DSA_GET_FAMILY</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/types.html#c.PSA_KEY_TYPE_SLH_DSA_KEY_PAIR"><code class="xref">PSA_KEY_TYPE_SLH_DSA_KEY_PAIR</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/types.html#c.PSA_KEY_TYPE_SLH_DSA_PUBLIC_KEY"><code class="xref">PSA_KEY_TYPE_SLH_DSA_PUBLIC_KEY</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/types.html#c.PSA_KEY_TYPE_SM4"><code class="xref">PSA_KEY_TYPE_SM4</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/types.html#c.PSA_KEY_TYPE_SPAKE2P_GET_FAMILY"><code class="xref">PSA_KEY_TYPE_SPAKE2P_GET_FAMILY</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/types.html#c.PSA_KEY_TYPE_SPAKE2P_KEY_PAIR"><code class="xref">PSA_KEY_TYPE_SPAKE2P_KEY_PAIR</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/types.html#c.PSA_KEY_TYPE_SPAKE2P_PUBLIC_KEY"><code class="xref">PSA_KEY_TYPE_SPAKE2P_PUBLIC_KEY</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/types.html#c.PSA_KEY_TYPE_WPA3_SAE_DH"><code class="xref">PSA_KEY_TYPE_WPA3_SAE_DH</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/types.html#c.PSA_KEY_TYPE_WPA3_SAE_DH_GET_FAMILY"><code class="xref">PSA_KEY_TYPE_WPA3_SAE_DH_GET_FAMILY</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/types.html#c.PSA_KEY_TYPE_WPA3_SAE_ECC"><code class="xref">PSA_KEY_TYPE_WPA3_SAE_ECC</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/types.html#c.PSA_KEY_TYPE_WPA3_SAE_ECC_GET_FAMILY"><code class="xref">PSA_KEY_TYPE_WPA3_SAE_ECC_GET_FAMILY</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/types.html#c.PSA_KEY_TYPE_XCHACHA20"><code class="xref">PSA_KEY_TYPE_XCHACHA20</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/types.html#c.PSA_KEY_TYPE_XMSS_MT_PUBLIC_KEY"><code class="xref">PSA_KEY_TYPE_XMSS_MT_PUBLIC_KEY</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/types.html#c.PSA_KEY_TYPE_XMSS_PUBLIC_KEY"><code class="xref">PSA_KEY_TYPE_XMSS_PUBLIC_KEY</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/policy.html#c.PSA_KEY_USAGE_CACHE"><code class="xref">PSA_KEY_USAGE_CACHE</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/policy.html#c.PSA_KEY_USAGE_COPY"><code class="xref">PSA_KEY_USAGE_COPY</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/policy.html#c.PSA_KEY_USAGE_DECRYPT"><code class="xref">PSA_KEY_USAGE_DECRYPT</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/policy.html#c.PSA_KEY_USAGE_DERIVE"><code class="xref">PSA_KEY_USAGE_DERIVE</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/policy.html#c.PSA_KEY_USAGE_DERIVE_PUBLIC"><code class="xref">PSA_KEY_USAGE_DERIVE_PUBLIC</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/policy.html#c.PSA_KEY_USAGE_ENCRYPT"><code class="xref">PSA_KEY_USAGE_ENCRYPT</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/policy.html#c.PSA_KEY_USAGE_EXPORT"><code class="xref">PSA_KEY_USAGE_EXPORT</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/policy.html#c.PSA_KEY_USAGE_SIGN_HASH"><code class="xref">PSA_KEY_USAGE_SIGN_HASH</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/policy.html#c.PSA_KEY_USAGE_SIGN_MESSAGE"><code class="xref">PSA_KEY_USAGE_SIGN_MESSAGE</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/policy.html#c.PSA_KEY_USAGE_UNWRAP"><code class="xref">PSA_KEY_USAGE_UNWRAP</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/policy.html#c.PSA_KEY_USAGE_VERIFY_DERIVATION"><code class="xref">PSA_KEY_USAGE_VERIFY_DERIVATION</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/policy.html#c.PSA_KEY_USAGE_VERIFY_HASH"><code class="xref">PSA_KEY_USAGE_VERIFY_HASH</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/policy.html#c.PSA_KEY_USAGE_VERIFY_MESSAGE"><code class="xref">PSA_KEY_USAGE_VERIFY_MESSAGE</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/policy.html#c.PSA_KEY_USAGE_WRAP"><code class="xref">PSA_KEY_USAGE_WRAP</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/key-agreement.html#c.psa_key_agreement"><code class="xref">psa_key_agreement</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/attributes.html#c.psa_key_attributes_init"><code class="xref">psa_key_attributes_init</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/attributes.html#c.psa_key_attributes_t"><code class="xref">psa_key_attributes_t</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/key-derivation.html#c.psa_key_derivation_abort"><code class="xref">psa_key_derivation_abort</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/key-derivation.html#c.psa_key_derivation_get_capacity"><code class="xref">psa_key_derivation_get_capacity</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/key-derivation.html#c.psa_key_derivation_input_bytes"><code class="xref">psa_key_derivation_input_bytes</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/key-derivation.html#c.psa_key_derivation_input_integer"><code class="xref">psa_key_derivation_input_integer</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/key-derivation.html#c.psa_key_derivation_input_key"><code class="xref">psa_key_derivation_input_key</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/key-agreement.html#c.psa_key_derivation_key_agreement"><code class="xref">psa_key_derivation_key_agreement</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/key-derivation.html#c.psa_key_derivation_operation_init"><code class="xref">psa_key_derivation_operation_init</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/key-derivation.html#c.psa_key_derivation_operation_t"><code class="xref">psa_key_derivation_operation_t</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/key-derivation.html#c.psa_key_derivation_output_bytes"><code class="xref">psa_key_derivation_output_bytes</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/key-derivation.html#c.psa_key_derivation_output_key"><code class="xref">psa_key_derivation_output_key</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/key-derivation.html#c.psa_key_derivation_output_key_custom"><code class="xref">psa_key_derivation_output_key_custom</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/key-derivation.html#c.psa_key_derivation_set_capacity"><code class="xref">psa_key_derivation_set_capacity</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/key-derivation.html#c.psa_key_derivation_setup"><code class="xref">psa_key_derivation_setup</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/key-derivation.html#c.psa_key_derivation_step_t"><code class="xref">psa_key_derivation_step_t</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/key-derivation.html#c.psa_key_derivation_verify_bytes"><code class="xref">psa_key_derivation_verify_bytes</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/key-derivation.html#c.psa_key_derivation_verify_key"><code class="xref">psa_key_derivation_verify_key</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/ids.html#c.psa_key_id_t"><code class="xref">psa_key_id_t</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/lifetimes.html#c.psa_key_lifetime_t"><code class="xref">psa_key_lifetime_t</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/lifetimes.html#c.psa_key_location_t"><code class="xref">psa_key_location_t</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/lifetimes.html#c.psa_key_persistence_t"><code class="xref">psa_key_persistence_t</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/types.html#c.psa_key_type_t"><code class="xref">psa_key_type_t</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/policy.html#c.psa_key_usage_t"><code class="xref">psa_key_usage_t</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
+     <tr class="cap" id="cap-PSA_M"><td></td><td>
+       <strong>PSA_M</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/mac.html#c.PSA_MAC_LENGTH"><code class="xref">PSA_MAC_LENGTH</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/mac.html#c.PSA_MAC_MAX_SIZE"><code class="xref">PSA_MAC_MAX_SIZE</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/mac.html#c.PSA_MAC_OPERATION_INIT"><code class="xref">PSA_MAC_OPERATION_INIT</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/mac.html#c.psa_mac_abort"><code class="xref">psa_mac_abort</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/mac.html#c.psa_mac_compute"><code class="xref">psa_mac_compute</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/mac.html#c.psa_mac_operation_init"><code class="xref">psa_mac_operation_init</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/mac.html#c.psa_mac_operation_t"><code class="xref">psa_mac_operation_t</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/mac.html#c.psa_mac_sign_finish"><code class="xref">psa_mac_sign_finish</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/mac.html#c.psa_mac_sign_setup"><code class="xref">psa_mac_sign_setup</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/mac.html#c.psa_mac_update"><code class="xref">psa_mac_update</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/mac.html#c.psa_mac_verify"><code class="xref">psa_mac_verify</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/mac.html#c.psa_mac_verify_finish"><code class="xref">psa_mac_verify_finish</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/mac.html#c.psa_mac_verify_setup"><code class="xref">psa_mac_verify_setup</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
+     <tr class="cap" id="cap-PSA_P"><td></td><td>
+       <strong>PSA_P</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/pake.html#c.PSA_PAKE_CIPHER_SUITE_INIT"><code class="xref">PSA_PAKE_CIPHER_SUITE_INIT</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/pake.html#c.PSA_PAKE_CONFIRMED_KEY"><code class="xref">PSA_PAKE_CONFIRMED_KEY</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/pake.html#c.PSA_PAKE_INPUT_MAX_SIZE"><code class="xref">PSA_PAKE_INPUT_MAX_SIZE</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/pake.html#c.PSA_PAKE_INPUT_SIZE"><code class="xref">PSA_PAKE_INPUT_SIZE</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/pake.html#c.PSA_PAKE_OPERATION_INIT"><code class="xref">PSA_PAKE_OPERATION_INIT</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/pake.html#c.PSA_PAKE_OUTPUT_MAX_SIZE"><code class="xref">PSA_PAKE_OUTPUT_MAX_SIZE</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/pake.html#c.PSA_PAKE_OUTPUT_SIZE"><code class="xref">PSA_PAKE_OUTPUT_SIZE</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/pake.html#c.PSA_PAKE_PRIMITIVE"><code class="xref">PSA_PAKE_PRIMITIVE</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/pake.html#c.PSA_PAKE_PRIMITIVE_GET_BITS"><code class="xref">PSA_PAKE_PRIMITIVE_GET_BITS</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/pake.html#c.PSA_PAKE_PRIMITIVE_GET_FAMILY"><code class="xref">PSA_PAKE_PRIMITIVE_GET_FAMILY</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/pake.html#c.PSA_PAKE_PRIMITIVE_GET_TYPE"><code class="xref">PSA_PAKE_PRIMITIVE_GET_TYPE</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/pake.html#c.PSA_PAKE_PRIMITIVE_TYPE_DH"><code class="xref">PSA_PAKE_PRIMITIVE_TYPE_DH</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/pake.html#c.PSA_PAKE_PRIMITIVE_TYPE_ECC"><code class="xref">PSA_PAKE_PRIMITIVE_TYPE_ECC</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/pake.html#c.PSA_PAKE_ROLE_CLIENT"><code class="xref">PSA_PAKE_ROLE_CLIENT</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/pake.html#c.PSA_PAKE_ROLE_FIRST"><code class="xref">PSA_PAKE_ROLE_FIRST</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/pake.html#c.PSA_PAKE_ROLE_NONE"><code class="xref">PSA_PAKE_ROLE_NONE</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/pake.html#c.PSA_PAKE_ROLE_SECOND"><code class="xref">PSA_PAKE_ROLE_SECOND</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/pake.html#c.PSA_PAKE_ROLE_SERVER"><code class="xref">PSA_PAKE_ROLE_SERVER</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/pake.html#c.PSA_PAKE_STEP_COMMIT"><code class="xref">PSA_PAKE_STEP_COMMIT</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/pake.html#c.PSA_PAKE_STEP_CONFIRM"><code class="xref">PSA_PAKE_STEP_CONFIRM</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/pake.html#c.PSA_PAKE_STEP_CONFIRM_COUNT"><code class="xref">PSA_PAKE_STEP_CONFIRM_COUNT</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/pake.html#c.PSA_PAKE_STEP_KEY_ID"><code class="xref">PSA_PAKE_STEP_KEY_ID</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/pake.html#c.PSA_PAKE_STEP_KEY_SHARE"><code class="xref">PSA_PAKE_STEP_KEY_SHARE</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/pake.html#c.PSA_PAKE_STEP_SALT"><code class="xref">PSA_PAKE_STEP_SALT</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/pake.html#c.PSA_PAKE_STEP_ZK_PROOF"><code class="xref">PSA_PAKE_STEP_ZK_PROOF</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/pake.html#c.PSA_PAKE_STEP_ZK_PUBLIC"><code class="xref">PSA_PAKE_STEP_ZK_PUBLIC</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/pake.html#c.PSA_PAKE_UNCONFIRMED_KEY"><code class="xref">PSA_PAKE_UNCONFIRMED_KEY</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/pake.html#c.psa_pake_abort"><code class="xref">psa_pake_abort</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/pake.html#c.psa_pake_cipher_suite_init"><code class="xref">psa_pake_cipher_suite_init</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/pake.html#c.psa_pake_cipher_suite_t"><code class="xref">psa_pake_cipher_suite_t</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/pake.html#c.psa_pake_cs_get_algorithm"><code class="xref">psa_pake_cs_get_algorithm</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/pake.html#c.psa_pake_cs_get_key_confirmation"><code class="xref">psa_pake_cs_get_key_confirmation</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/pake.html#c.psa_pake_cs_get_primitive"><code class="xref">psa_pake_cs_get_primitive</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/pake.html#c.psa_pake_cs_set_algorithm"><code class="xref">psa_pake_cs_set_algorithm</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/pake.html#c.psa_pake_cs_set_key_confirmation"><code class="xref">psa_pake_cs_set_key_confirmation</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/pake.html#c.psa_pake_cs_set_primitive"><code class="xref">psa_pake_cs_set_primitive</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/pake.html#c.psa_pake_family_t"><code class="xref">psa_pake_family_t</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/pake.html#c.psa_pake_get_shared_key"><code class="xref">psa_pake_get_shared_key</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/pake.html#c.psa_pake_input"><code class="xref">psa_pake_input</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/pake.html#c.psa_pake_operation_init"><code class="xref">psa_pake_operation_init</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/pake.html#c.psa_pake_operation_t"><code class="xref">psa_pake_operation_t</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/pake.html#c.psa_pake_output"><code class="xref">psa_pake_output</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/pake.html#c.psa_pake_primitive_t"><code class="xref">psa_pake_primitive_t</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/pake.html#c.psa_pake_primitive_type_t"><code class="xref">psa_pake_primitive_type_t</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/pake.html#c.psa_pake_role_t"><code class="xref">psa_pake_role_t</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/pake.html#c.psa_pake_set_context"><code class="xref">psa_pake_set_context</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/pake.html#c.psa_pake_set_peer"><code class="xref">psa_pake_set_peer</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/pake.html#c.psa_pake_set_role"><code class="xref">psa_pake_set_role</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/pake.html#c.psa_pake_set_user"><code class="xref">psa_pake_set_user</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/pake.html#c.psa_pake_setup"><code class="xref">psa_pake_setup</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/pake.html#c.psa_pake_step_t"><code class="xref">psa_pake_step_t</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/management.html#c.psa_purge_key"><code class="xref">psa_purge_key</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
+     <tr class="cap" id="cap-PSA_R"><td></td><td>
+       <strong>PSA_R</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/key-agreement.html#c.PSA_RAW_KEY_AGREEMENT_OUTPUT_MAX_SIZE"><code class="xref">PSA_RAW_KEY_AGREEMENT_OUTPUT_MAX_SIZE</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/key-agreement.html#c.PSA_RAW_KEY_AGREEMENT_OUTPUT_SIZE"><code class="xref">PSA_RAW_KEY_AGREEMENT_OUTPUT_SIZE</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/key-agreement.html#c.psa_raw_key_agreement"><code class="xref">psa_raw_key_agreement</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/attributes.html#c.psa_reset_key_attributes"><code class="xref">psa_reset_key_attributes</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
+     <tr class="cap" id="cap-PSA_S"><td></td><td>
+       <strong>PSA_S</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/signature.html#c.PSA_SIGNATURE_MAX_SIZE"><code class="xref">PSA_SIGNATURE_MAX_SIZE</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/signature.html#c.PSA_SIGN_OPERATION_INIT"><code class="xref">PSA_SIGN_OPERATION_INIT</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/signature.html#c.PSA_SIGN_OUTPUT_SIZE"><code class="xref">PSA_SIGN_OUTPUT_SIZE</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/types.html#c.PSA_SLH_DSA_FAMILY_SHA2_F"><code class="xref">PSA_SLH_DSA_FAMILY_SHA2_F</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/types.html#c.PSA_SLH_DSA_FAMILY_SHA2_S"><code class="xref">PSA_SLH_DSA_FAMILY_SHA2_S</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/types.html#c.PSA_SLH_DSA_FAMILY_SHAKE_F"><code class="xref">PSA_SLH_DSA_FAMILY_SHAKE_F</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/types.html#c.PSA_SLH_DSA_FAMILY_SHAKE_S"><code class="xref">PSA_SLH_DSA_FAMILY_SHAKE_S</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/policy.html#c.psa_set_key_algorithm"><code class="xref">psa_set_key_algorithm</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/types.html#c.psa_set_key_bits"><code class="xref">psa_set_key_bits</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/ids.html#c.psa_set_key_id"><code class="xref">psa_set_key_id</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/lifetimes.html#c.psa_set_key_lifetime"><code class="xref">psa_set_key_lifetime</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/types.html#c.psa_set_key_type"><code class="xref">psa_set_key_type</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/policy.html#c.psa_set_key_usage_flags"><code class="xref">psa_set_key_usage_flags</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/signature.html#c.psa_sign_abort"><code class="xref">psa_sign_abort</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/signature.html#c.psa_sign_finish"><code class="xref">psa_sign_finish</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/signature.html#c.psa_sign_hash"><code class="xref">psa_sign_hash</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/signature.html#c.psa_sign_hash_with_context"><code class="xref">psa_sign_hash_with_context</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/signature.html#c.psa_sign_message"><code class="xref">psa_sign_message</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/signature.html#c.psa_sign_message_with_context"><code class="xref">psa_sign_message_with_context</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/signature.html#c.psa_sign_operation_init"><code class="xref">psa_sign_operation_init</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/signature.html#c.psa_sign_operation_t"><code class="xref">psa_sign_operation_t</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/signature.html#c.psa_sign_set_context"><code class="xref">psa_sign_set_context</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/signature.html#c.psa_sign_setup"><code class="xref">psa_sign_setup</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/signature.html#c.psa_sign_update"><code class="xref">psa_sign_update</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/keys/types.html#c.psa_slh_dsa_family_t"><code class="xref">psa_slh_dsa_family_t</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
+     <tr class="cap" id="cap-PSA_T"><td></td><td>
+       <strong>PSA_T</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/key-derivation.html#c.PSA_TLS12_ECJPAKE_TO_PMS_OUTPUT_SIZE"><code class="xref">PSA_TLS12_ECJPAKE_TO_PMS_OUTPUT_SIZE</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/key-derivation.html#c.PSA_TLS12_PSK_TO_MS_PSK_MAX_SIZE"><code class="xref">PSA_TLS12_PSK_TO_MS_PSK_MAX_SIZE</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
+     <tr class="cap" id="cap-PSA_U"><td></td><td>
+       <strong>PSA_U</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/key-wrapping.html#c.psa_unwrap_key"><code class="xref">psa_unwrap_key</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
+     <tr class="cap" id="cap-PSA_V"><td></td><td>
+       <strong>PSA_V</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/signature.html#c.PSA_VERIFY_OPERATION_INIT"><code class="xref">PSA_VERIFY_OPERATION_INIT</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/signature.html#c.psa_verify_abort"><code class="xref">psa_verify_abort</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/signature.html#c.psa_verify_finish"><code class="xref">psa_verify_finish</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/signature.html#c.psa_verify_hash"><code class="xref">psa_verify_hash</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/signature.html#c.psa_verify_hash_with_context"><code class="xref">psa_verify_hash_with_context</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/signature.html#c.psa_verify_message"><code class="xref">psa_verify_message</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/signature.html#c.psa_verify_message_with_context"><code class="xref">psa_verify_message_with_context</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/signature.html#c.psa_verify_operation_init"><code class="xref">psa_verify_operation_init</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/signature.html#c.psa_verify_operation_t"><code class="xref">psa_verify_operation_t</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/signature.html#c.psa_verify_set_context"><code class="xref">psa_verify_set_context</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/signature.html#c.psa_verify_setup"><code class="xref">psa_verify_setup</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/signature.html#c.psa_verify_update"><code class="xref">psa_verify_update</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
+     <tr class="cap" id="cap-PSA_W"><td></td><td>
+       <strong>PSA_W</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/key-wrapping.html#c.PSA_WRAP_KEY_OUTPUT_SIZE"><code class="xref">PSA_WRAP_KEY_OUTPUT_SIZE</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/key-wrapping.html#c.PSA_WRAP_KEY_PAIR_MAX_SIZE"><code class="xref">PSA_WRAP_KEY_PAIR_MAX_SIZE</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/key-wrapping.html#c.psa_wrap_key"><code class="xref">psa_wrap_key</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
+     <tr class="cap" id="cap-PSA_X"><td></td><td>
+       <strong>PSA_X</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/xof.html#c.PSA_XOF_OPERATION_INIT"><code class="xref">PSA_XOF_OPERATION_INIT</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/xof.html#c.psa_xof_abort"><code class="xref">psa_xof_abort</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/xof.html#c.psa_xof_operation_init"><code class="xref">psa_xof_operation_init</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/xof.html#c.psa_xof_operation_t"><code class="xref">psa_xof_operation_t</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/xof.html#c.psa_xof_output"><code class="xref">psa_xof_output</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/xof.html#c.psa_xof_set_context"><code class="xref">psa_xof_set_context</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/xof.html#c.psa_xof_setup"><code class="xref">psa_xof_setup</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="api/ops/xof.html#c.psa_xof_update"><code class="xref">psa_xof_update</code></a></td><td>
+       <em></em></td></tr>
+   </table>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &#169; 2018-2026 Arm Limited and/or its affiliates.
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

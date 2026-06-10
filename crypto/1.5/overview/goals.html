@@ -1,0 +1,303 @@
+---
+---
+
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta property="og:title" content="2 Design goals" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="{{ page.url | absolute_url }}" />
+<link rel="canonical" href="{{ page.url | absolute_url }}" />
+<meta property="og:site_name" content="PSA Certified Crypto API 1.5" />
+<meta property="og:description" content="Suitable for constrained devices: The interface is suitable for a vast range of devices: from special-purpose cryptographic processors that process data with a built-in key, to constrained devices ..." />
+<meta name="description" content="Suitable for constrained devices: The interface is suitable for a vast range of devices: from special-purpose cryptographic processors that process data with a built-in key, to constrained devices ..." />
+
+    <title>2 Design goals &#8212; PSA Certified Crypto API 1.5</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/basic.css?v=686e5160" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=f6a572b4" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+    <link rel="preconnect" type="text/css" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" type="text/css" href="https://fonts.gstatic.com" />
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;1,300;1,400&display=swap" />
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Mono:ital,wght@0,300;0,400;1,300&display=swap" />
+    <script src="../_static/documentation_options.js?v=f8f0f945"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="3 Functionality overview" href="functionality.html" />
+    <link rel="prev" title="1 Introduction" href="intro.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/ARM_LOGO-2025_INK_RGB.svg" alt="Logo of PSA Certified Crypto API"/>
+            </a></p><hr />
+<h3><a href="../index.html">PSA Certified<br />Crypto API</a></h3>
+IHI 0086<br/>
+Non-confidential<br/>
+Version 1.5.0
+<hr />
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../about/about.html">About this document</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="intro.html">1 Introduction</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">2 Design goals</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#suitable-for-constrained-devices">2.1 Suitable for constrained devices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#a-keystore-interface">2.2 A keystore interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#optional-isolation">2.3 Optional isolation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#choice-of-algorithms">2.4 Choice of algorithms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ease-of-use">2.5 Ease of use</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#example-use-cases">2.6 Example use cases</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#network-security-tls">2.6.1 Network Security (TLS)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#secure-storage">2.6.2 Secure Storage</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#network-credentials">2.6.3 Network Credentials</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#device-pairing">2.6.4 Device Pairing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#secure-boot">2.6.5 Secure Boot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#attestation">2.6.6 Attestation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#factory-provisioning">2.6.7 Factory Provisioning</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="functionality.html">3 Functionality overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sample-arch.html">4 Sample architectures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="conventions.html">5 Library conventions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="implementation.html">6 Implementation considerations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">7 Usage considerations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/library/index.html">8 Library management reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/keys/index.html">9 Key management reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/ops/index.html">10 Cryptographic operation reference</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/example_header.html">A Example header file</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/encodings.html">B Algorithm and key type encoding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/specdef_values.html">C Example macro implementations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/sra.html">D Security Risk Assessment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/history.html">E Changes to the API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../atg_c-identifiers.html">Index of API elements</a></li>
+</ul>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="design-goals">
+<span id="id1"></span><h1><span class="section-number">2 </span>Design goals<a class="headerlink" href="#design-goals" title="Link to this heading">¶</a></h1>
+<section id="suitable-for-constrained-devices">
+<span id="scalable"></span><h2><span class="section-number">2.1 </span>Suitable for constrained devices<a class="headerlink" href="#suitable-for-constrained-devices" title="Link to this heading">¶</a></h2>
+<p>The interface is suitable for a vast range of devices: from special-purpose
+cryptographic processors that process data with a built-in key, to constrained
+devices running custom application code, such as microcontrollers, and
+multi-application devices, such as servers. Consequentially, the interface is
+scalable and modular.</p>
+<ul class="simple">
+<li><p><em>Scalable</em>: devices only need to implement the functionality that they will
+use.</p></li>
+<li><p><em>Modular</em>: larger devices implement larger subsets of the same interface,
+rather than different interfaces.</p></li>
+</ul>
+<p>In this interface, all operations on unbounded amounts of data
+allow <em>multi-part</em> processing, as long as the calculations on the data are
+performed in a streaming manner. This means that the application does not need
+to store the whole message in memory at one time. As a result, this
+specification is suitable for very constrained devices, including those where
+memory is very limited.</p>
+<p>Memory outside the keystore boundary is managed by the application. An
+implementation of the interface is not required to retain any state between
+function calls, apart from the content of the keystore and other data that must
+be kept inside the keystore security boundary.</p>
+<p>The interface does not expose the representation of keys and intermediate data,
+except when required for interchange. This allows each implementation to choose
+optimal data representations. Implementations with multiple components are also
+free to choose which memory area to use for internal data.</p>
+</section>
+<section id="a-keystore-interface">
+<span id="keystore"></span><h2><span class="section-number">2.2 </span>A keystore interface<a class="headerlink" href="#a-keystore-interface" title="Link to this heading">¶</a></h2>
+<p>The specification allows cryptographic operations to be performed on a key to
+which the application does not have direct access. Except where required for
+interchange, applications access all keys indirectly, by an identifier. The key
+material corresponding to that identifier can reside inside a security boundary
+that prevents it from being extracted, except as permitted by a policy that is
+defined when the key is created.</p>
+</section>
+<section id="optional-isolation">
+<span id="isolation"></span><h2><span class="section-number">2.3 </span>Optional isolation<a class="headerlink" href="#optional-isolation" title="Link to this heading">¶</a></h2>
+<p>Implementations can isolate the cryptoprocessor from the calling application,
+and can further isolate multiple calling applications. The interface allows the
+implementation to be separated between a frontend and a backend. In an isolated
+implementation, the frontend is the part of the implementation that is located
+in the same isolation boundary as the application, which the application
+accesses by function calls. The backend is the part of the implementation that
+is located in a different environment, which is protected from the frontend.
+Various technologies can provide protection, for example:</p>
+<ul class="simple">
+<li><p>Process isolation in an operating system.</p></li>
+<li><p>Partition isolation, either with a virtual machine or a partition manager.</p></li>
+<li><p>Physical separation between devices.</p></li>
+</ul>
+<p>Communication between the frontend and backend is beyond the scope of this
+specification.</p>
+<p>In an isolated implementation, the backend can serve more than one
+implementation instance. In this case, a single backend communicates with
+multiple instances of the frontend. The backend must enforce <a class="reference internal" href="../about/about.html#term-caller-isolation"><span class="term">caller isolation</span></a>:
+it must ensure that assets of one frontend are not visible to any
+other frontend. The mechanism for identifying callers is beyond the scope of this
+specification. An implementation that provides caller isolation must document
+the identification mechanism. An implementation that provides caller isolation must
+document any implementation-specific extension of the API that enables frontend
+instances to share data in any form.</p>
+<p>An isolated implementation that only has a single frontend provides <a class="reference internal" href="../about/about.html#term-cryptoprocessor-isolation"><span class="term">cryptoprocessor isolation</span></a>.</p>
+<p>In summary, there are three types of implementation:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="../about/about.html#term-no-isolation"><span class="term">No isolation</span></a>: there is no security boundary between the application and the
+cryptoprocessor. For example, a statically or dynamically linked library is
+an implementation with no isolation.</p></li>
+<li><p><a class="reference internal" href="../about/about.html#term-cryptoprocessor-isolation"><span class="term">Cryptoprocessor isolation</span></a>: there is a security boundary between the
+application and the cryptoprocessor, but the cryptoprocessor does not
+communicate with other applications. For example, a cryptoprocessor chip that
+is a companion to an application processor is an implementation with
+cryptoprocessor isolation.</p></li>
+<li><p><a class="reference internal" href="../about/about.html#term-caller-isolation"><span class="term">Caller isolation</span></a>: there are multiple application instances, with a security
+boundary between the application instances among themselves, as well as
+between the cryptoprocessor and the application instances. For example, a
+cryptography service in a multi-process environment is an implementation with
+caller and cryptoprocessor isolation.</p></li>
+</ul>
+</section>
+<section id="choice-of-algorithms">
+<span id="algorithm-agility"></span><h2><span class="section-number">2.4 </span>Choice of algorithms<a class="headerlink" href="#choice-of-algorithms" title="Link to this heading">¶</a></h2>
+<p>The specification defines a low-level cryptographic interface, where the caller
+explicitly chooses which algorithm and which security parameters they use. This
+is necessary to implement protocols that are inescapable in various use cases.
+The design of the interface enables applications to implement widely-used
+protocols and data exchange formats, as well as custom ones.</p>
+<p>As a consequence, all cryptographic functionality operates according to the
+precise algorithm specified by the caller. However, this does not apply to
+device-internal functionality, which does not involve any form of
+interoperability, such as random number generation. The specification does not
+include generic higher-level interfaces, where the implementation chooses the
+best algorithm for a purpose. However, higher-level libraries can be built on
+top of the Crypto API.</p>
+<p>Another consequence is that the specification permits the use of algorithms, key
+sizes and other parameters that, while known to be insecure, might be necessary to
+support legacy protocols or legacy data. Where major weaknesses are known, the
+algorithm descriptions give applicable warnings. However, the lack of a warning
+both does not and cannot indicate that an algorithm is secure in all circumstances.
+Application developers need to research the security of the protocols and
+algorithms that they plan to use to determine if these meet their requirements.</p>
+<p>The interface facilitates algorithm agility. As a consequence, cryptographic
+primitives are presented through generic functions with a parameter indicating
+the specific choice of algorithm. For example, there is a single function to
+calculate a message digest, which takes a parameter that identifies the specific
+hash algorithm.</p>
+</section>
+<section id="ease-of-use">
+<span id="usability"></span><h2><span class="section-number">2.5 </span>Ease of use<a class="headerlink" href="#ease-of-use" title="Link to this heading">¶</a></h2>
+<p>The interface is designed to be as user-friendly as possible, given the
+aforementioned constraints on suitability for various types of devices and on
+the freedom to choose algorithms.</p>
+<p>In particular, the code flows are designed to reduce the risk of dangerous
+misuse. The interface is designed in part to make it harder to misuse. Where
+possible, it is designed so that
+typical mistakes result in test failures, rather than subtle security issues.
+Implementations avoid leaking data when a function is called with invalid
+parameters, to the extent allowed by the C language and by implementation size
+constraints.</p>
+</section>
+<section id="example-use-cases">
+<h2><span class="section-number">2.6 </span>Example use cases<a class="headerlink" href="#example-use-cases" title="Link to this heading">¶</a></h2>
+<p>This section lists some of the use cases that were considered during the design
+of the Crypto API. This list is not exhaustive, nor are all implementations required to
+support all use cases.</p>
+<section id="network-security-tls">
+<h3><span class="section-number">2.6.1 </span>Network Security (TLS)<a class="headerlink" href="#network-security-tls" title="Link to this heading">¶</a></h3>
+<p>The API provides all of the cryptographic primitives needed to establish TLS
+connections.</p>
+</section>
+<section id="secure-storage">
+<h3><span class="section-number">2.6.2 </span>Secure Storage<a class="headerlink" href="#secure-storage" title="Link to this heading">¶</a></h3>
+<p>The API provides all primitives related to storage encryption, block or
+file-based, with master encryption keys stored inside a key store.</p>
+</section>
+<section id="network-credentials">
+<h3><span class="section-number">2.6.3 </span>Network Credentials<a class="headerlink" href="#network-credentials" title="Link to this heading">¶</a></h3>
+<p>The API provides network credential management inside a key store, for example,
+for X.509-based authentication or pre-shared keys on enterprise networks.</p>
+</section>
+<section id="device-pairing">
+<h3><span class="section-number">2.6.4 </span>Device Pairing<a class="headerlink" href="#device-pairing" title="Link to this heading">¶</a></h3>
+<p>The API provides support for key-agreement protocols that are often used for
+secure pairing of devices over wireless channels. For example, the pairing of an
+NFC token or a Bluetooth device might use key-agreement protocols upon
+first use.</p>
+</section>
+<section id="secure-boot">
+<h3><span class="section-number">2.6.5 </span>Secure Boot<a class="headerlink" href="#secure-boot" title="Link to this heading">¶</a></h3>
+<p>The API provides primitives for use during firmware integrity and authenticity
+validation, during a secure or trusted boot process.</p>
+</section>
+<section id="attestation">
+<h3><span class="section-number">2.6.6 </span>Attestation<a class="headerlink" href="#attestation" title="Link to this heading">¶</a></h3>
+<p>The API provides primitives used in attestation activities. Attestation is the
+ability for a device to sign an array of bytes with a device private key and
+return the result to the caller. There are several use cases; ranging from attestation
+of the device state, to the ability to generate a key pair and prove that it has
+been generated inside a secure key store. The API provides access to the
+algorithms commonly used for attestation.</p>
+</section>
+<section id="factory-provisioning">
+<h3><span class="section-number">2.6.7 </span>Factory Provisioning<a class="headerlink" href="#factory-provisioning" title="Link to this heading">¶</a></h3>
+<p>Most IoT devices receive a unique identity during the factory provisioning
+process, or once they have been deployed to the field. This API provides the APIs necessary for
+populating a device with keys that represent that identity.</p>
+</section>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &#169; 2018-2026 Arm Limited and/or its affiliates.
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

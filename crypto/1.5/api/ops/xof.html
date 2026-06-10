@@ -1,0 +1,562 @@
+---
+---
+
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta property="og:title" content="10.3 Extendable-output functions (XOF)" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="{{ page.url | absolute_url }}" />
+<link rel="canonical" href="{{ page.url | absolute_url }}" />
+<meta property="og:site_name" content="PSA Certified Crypto API 1.5" />
+<meta property="og:description" content="An eXtendable-Output Function (XOF) is similar to a cryptographic hash, transforming an arbitrary amount of input data into pseudorandom output. Unlike hash algorithms, an XOF can produce an arbitr..." />
+<meta name="description" content="An eXtendable-Output Function (XOF) is similar to a cryptographic hash, transforming an arbitrary amount of input data into pseudorandom output. Unlike hash algorithms, an XOF can produce an arbitr..." />
+
+    <title>10.3 Extendable-output functions (XOF) &#8212; PSA Certified Crypto API 1.5</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/basic.css?v=686e5160" />
+    <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css?v=f6a572b4" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
+    <link rel="preconnect" type="text/css" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" type="text/css" href="https://fonts.gstatic.com" />
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;1,300;1,400&display=swap" />
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Mono:ital,wght@0,300;0,400;1,300&display=swap" />
+    <script src="../../_static/documentation_options.js?v=f8f0f945"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script>window.MathJax = {"chtml": {"mtextInheritFont": false, "mtextFont": "Lato-Light"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="10.4 Message authentication codes (MAC)" href="mac.html" />
+    <link rel="prev" title="10.2 Message digests (Hashes)" href="hash.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../index.html">
+              <img class="logo" src="../../_static/ARM_LOGO-2025_INK_RGB.svg" alt="Logo of PSA Certified Crypto API"/>
+            </a></p><hr />
+<h3><a href="../../index.html">PSA Certified<br />Crypto API</a></h3>
+IHI 0086<br/>
+Non-confidential<br/>
+Version 1.5.0
+<hr />
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../about/about.html">About this document</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../overview/intro.html">1 Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview/goals.html">2 Design goals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview/functionality.html">3 Functionality overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview/sample-arch.html">4 Sample architectures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview/conventions.html">5 Library conventions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview/implementation.html">6 Implementation considerations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview/usage.html">7 Usage considerations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../library/index.html">8 Library management reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../keys/index.html">9 Key management reference</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">10 Cryptographic operation reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="algorithms.html">10.1 Algorithms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hash.html">10.2 Message digests (Hashes)</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">10.3 Extendable-output functions (XOF)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#xof-algorithms">10.3.1 XOF algorithms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#multi-part-xof-operations">10.3.2 Multi-part XOF operations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#support-macros">10.3.3 Support macros</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="mac.html">10.4 Message authentication codes (MAC)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cipher.html">10.5 Unauthenticated ciphers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="aead.html">10.6 Authenticated encryption with associated data (AEAD)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="key-wrapping.html">10.7 Key wrapping</a></li>
+<li class="toctree-l2"><a class="reference internal" href="key-derivation.html">10.8 Key derivation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="signature.html">10.9 Asymmetric signature</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pk-encryption.html">10.10 Asymmetric encryption</a></li>
+<li class="toctree-l2"><a class="reference internal" href="key-agreement.html">10.11 Key agreement</a></li>
+<li class="toctree-l2"><a class="reference internal" href="key-encapsulation.html">10.12 Key encapsulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pake.html">10.13 Password-authenticated key exchange (PAKE)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rng.html">10.14 Other cryptographic services</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../appendix/example_header.html">A Example header file</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../appendix/encodings.html">B Algorithm and key type encoding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../appendix/specdef_values.html">C Example macro implementations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../appendix/sra.html">D Security Risk Assessment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../appendix/history.html">E Changes to the API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../atg_c-identifiers.html">Index of API elements</a></li>
+</ul>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="extendable-output-functions-xof">
+<span id="xof"></span><h1><span class="section-number">10.3 </span>Extendable-output functions (XOF)<a class="headerlink" href="#extendable-output-functions-xof" title="Link to this heading">¶</a></h1>
+<p>An eXtendable-Output Function (XOF) is similar to a cryptographic hash, transforming an arbitrary amount of input data into pseudorandom output.
+Unlike hash algorithms, an XOF can produce an arbitrary amount of output.</p>
+<p>XOF algorithms are often used as a building block in other algorithms, as they are suitable for use in hashing, key-derivation, and as a pseudorandom function (PRF).</p>
+<p>In the Crypto API, support for XOF algorithms is provided by the <a class="reference internal" href="#c.psa_xof_operation_t" title="psa_xof_operation_t"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_xof_operation_t</span></code></a> <a class="reference internal" href="../../overview/functionality.html#multi-part-operations"><span class="std std-ref">multi-part operation</span></a>, and XOF algorithm identifiers.
+A multi-part XOF operation is used as follows:</p>
+<ol class="arabic simple">
+<li><p>Initialize the <a class="reference internal" href="#c.psa_xof_operation_t" title="psa_xof_operation_t"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_xof_operation_t</span></code></a> object to zero, or by assigning the value of the associated macro <a class="reference internal" href="#c.PSA_XOF_OPERATION_INIT" title="PSA_XOF_OPERATION_INIT"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_XOF_OPERATION_INIT</span></code></a>.</p></li>
+<li><p>Call <a class="reference internal" href="#c.psa_xof_setup" title="psa_xof_setup"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_xof_setup()</span></code></a> to specify the required XOF algorithm.</p></li>
+<li><p>If the algorithm has a context, call <a class="reference internal" href="#c.psa_xof_set_context" title="psa_xof_set_context"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_xof_set_context()</span></code></a> to provide the context value.</p></li>
+<li><p>Call the <a class="reference internal" href="#c.psa_xof_update" title="psa_xof_update"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_xof_update()</span></code></a> function on successive chunks of the input data.</p></li>
+<li><p>After input is complete, call <a class="reference internal" href="#c.psa_xof_output" title="psa_xof_output"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_xof_output()</span></code></a> one or more times to extract successive chunks of output.</p></li>
+<li><p>When output is complete, call <a class="reference internal" href="#c.psa_xof_abort" title="psa_xof_abort"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_xof_abort()</span></code></a> to end the operation.</p></li>
+</ol>
+<p>To abort the operation or recover from an error, call <a class="reference internal" href="#c.psa_xof_abort" title="psa_xof_abort"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_xof_abort()</span></code></a>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For an XOF algorithm:</p>
+<ul class="simple">
+<li><p>The result does not depend on how the overall input is fragmented.
+For example, calling <a class="reference internal" href="#c.psa_xof_update" title="psa_xof_update"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_xof_update()</span></code></a> twice with input <span class="math notranslate nohighlight">\(i_1\)</span> and <span class="math notranslate nohighlight">\(i_2\)</span> has the same effect as calling <a class="reference internal" href="#c.psa_xof_update" title="psa_xof_update"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_xof_update()</span></code></a> once with the concatenation <span class="math notranslate nohighlight">\(i_1\ ||\ i_2\)</span>.</p></li>
+<li><p>The overall output does not depend on how the output is fragmented.
+If the output is considered as a stream of bytes, <a class="reference internal" href="#c.psa_xof_output" title="psa_xof_output"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_xof_output()</span></code></a> is an operation that reads bytes in sequence from the stream of data.</p></li>
+</ul>
+</div>
+<section id="xof-algorithms">
+<span id="id1"></span><h2><span class="section-number">10.3.1 </span>XOF algorithms<a class="headerlink" href="#xof-algorithms" title="Link to this heading">¶</a></h2>
+<section id="c.PSA_ALG_SHAKE128">
+<h3><code class="docutils literal notranslate"><span class="pre">PSA_ALG_SHAKE128</span></code> (macro)<a class="headerlink" href="#c.PSA_ALG_SHAKE128" title="Link to this heading">¶</a></h3>
+<p>The SHAKE128 XOF algorithm.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">Added in version 1.4.</span></p>
+</div>
+<pre class="literal-block">#define <a class="reference internal" href="#c.PSA_ALG_SHAKE128" title="PSA_ALG_SHAKE128">PSA_ALG_SHAKE128</a> ((<a class="reference internal" href="algorithms.html#c.psa_algorithm_t" title="psa_algorithm_t">psa_algorithm_t</a>)0x0D000100)</pre>
+<p>SHAKE128 is one of the KECCAK family of algorithms.</p>
+<p>SHAKE128 is defined in <span><em>FIPS Publication 202: SHA-3 Standard: Permutation-Based Hash and Extendable-Output Functions</em> <a class="reference internal" href="../../about/about.html#cite-fips202"><span class="cite">[FIPS202]</span></a></span>.</p>
+<p>Some fixed output-length hash algorithms based on SHAKE128 are also provided in the Crypto API:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="hash.html#c.PSA_ALG_SHAKE128_256" title="PSA_ALG_SHAKE128_256"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_ALG_SHAKE128_256</span></code></a></p></li>
+</ul>
+</section>
+<section id="c.PSA_ALG_SHAKE256">
+<h3><code class="docutils literal notranslate"><span class="pre">PSA_ALG_SHAKE256</span></code> (macro)<a class="headerlink" href="#c.PSA_ALG_SHAKE256" title="Link to this heading">¶</a></h3>
+<p>The SHAKE256 XOF algorithm.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">Added in version 1.4.</span></p>
+</div>
+<pre class="literal-block">#define <a class="reference internal" href="#c.PSA_ALG_SHAKE256" title="PSA_ALG_SHAKE256">PSA_ALG_SHAKE256</a> ((<a class="reference internal" href="algorithms.html#c.psa_algorithm_t" title="psa_algorithm_t">psa_algorithm_t</a>)0x0D000200)</pre>
+<p>SHAKE256 is one of the KECCAK family of algorithms.</p>
+<p>SHAKE256 is defined in <a class="reference internal" href="../../about/about.html#cite-fips202"><span class="cite atg_c atg_c-cite">[FIPS202]</span></a>.</p>
+<p>Some fixed output-length hash algorithms based on SHAKE256 are also provided in the Crypto API:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="hash.html#c.PSA_ALG_SHAKE256_192" title="PSA_ALG_SHAKE256_192"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_ALG_SHAKE256_192</span></code></a></p></li>
+<li><p><a class="reference internal" href="hash.html#c.PSA_ALG_SHAKE256_256" title="PSA_ALG_SHAKE256_256"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_ALG_SHAKE256_256</span></code></a></p></li>
+<li><p><a class="reference internal" href="hash.html#c.PSA_ALG_SHAKE256_512" title="PSA_ALG_SHAKE256_512"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_ALG_SHAKE256_512</span></code></a></p></li>
+</ul>
+</section>
+<section id="c.PSA_ALG_ASCON_XOF128">
+<h3><code class="docutils literal notranslate"><span class="pre">PSA_ALG_ASCON_XOF128</span></code> (macro)<a class="headerlink" href="#c.PSA_ALG_ASCON_XOF128" title="Link to this heading">¶</a></h3>
+<p>The Ascon-XOF128 XOF algorithm.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">Added in version 1.4.</span></p>
+</div>
+<pre class="literal-block">#define <a class="reference internal" href="#c.PSA_ALG_ASCON_XOF128" title="PSA_ALG_ASCON_XOF128">PSA_ALG_ASCON_XOF128</a> ((<a class="reference internal" href="algorithms.html#c.psa_algorithm_t" title="psa_algorithm_t">psa_algorithm_t</a>)0x0D000300)</pre>
+<p>Ascon-XOF128 is defined in <span><em>NIST Special Publication 800-232: Ascon-Based Lightweight Cryptography Standards for Constrained Devices</em> <a class="reference internal" href="../../about/about.html#cite-sp800-232"><span class="cite">[SP800-232]</span></a></span> §5.2.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>To use the Ascon-Hash256 hash algorithm, see <a class="reference internal" href="hash.html#c.PSA_ALG_ASCON_HASH256" title="PSA_ALG_ASCON_HASH256"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_ALG_ASCON_HASH256</span></code></a>.</p>
+</div>
+</section>
+<section id="c.PSA_ALG_ASCON_CXOF128">
+<h3><code class="docutils literal notranslate"><span class="pre">PSA_ALG_ASCON_CXOF128</span></code> (macro)<a class="headerlink" href="#c.PSA_ALG_ASCON_CXOF128" title="Link to this heading">¶</a></h3>
+<p>The Ascon-CXOF128 XOF algorithm, with context.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">Added in version 1.4.</span></p>
+</div>
+<pre class="literal-block">#define <a class="reference internal" href="#c.PSA_ALG_ASCON_CXOF128" title="PSA_ALG_ASCON_CXOF128">PSA_ALG_ASCON_CXOF128</a> ((<a class="reference internal" href="algorithms.html#c.psa_algorithm_t" title="psa_algorithm_t">psa_algorithm_t</a>)0x0D008300)</pre>
+<p>Ascon-CXOF128 is defined in <span><em>NIST Special Publication 800-232: Ascon-Based Lightweight Cryptography Standards for Constrained Devices</em> <a class="reference internal" href="../../about/about.html#cite-sp800-232"><span class="cite">[SP800-232]</span></a></span> §5.3.</p>
+<p>The context value must be provided by calling <a class="reference internal" href="#c.psa_xof_set_context" title="psa_xof_set_context"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_xof_set_context()</span></code></a> on the XOF multi-part operation, before providing any input data.</p>
+</section>
+</section>
+<section id="multi-part-xof-operations">
+<h2><span class="section-number">10.3.2 </span>Multi-part XOF operations<a class="headerlink" href="#multi-part-xof-operations" title="Link to this heading">¶</a></h2>
+<section id="c.psa_xof_operation_t">
+<h3><code class="docutils literal notranslate"><span class="pre">psa_xof_operation_t</span></code> (typedef)<a class="headerlink" href="#c.psa_xof_operation_t" title="Link to this heading">¶</a></h3>
+<p>The type of the state object for multi-part XOF operations.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">Added in version 1.4.</span></p>
+</div>
+<pre class="literal-block">typedef <em><a class="reference internal" href="../../overview/implementation.html#implementation-defined-type"><span class="std std-ref">/* implementation-defined type */</span></a></em> <a class="reference internal" href="#c.psa_xof_operation_t" title="psa_xof_operation_t">psa_xof_operation_t</a>;</pre>
+<p>Before calling any function on an XOF operation object, the application must initialize it by any of the following means:</p>
+<ul>
+<li><p>Set the object to all-bits-zero, for example:</p>
+<pre class="literal-block"><a class="reference internal" href="#c.psa_xof_operation_t" title="psa_xof_operation_t">psa_xof_operation_t</a> operation;
+memset(&amp;operation, 0, sizeof(operation));</pre>
+</li>
+<li><p>Initialize the object to logical zero values by declaring the object as static or global without an explicit initializer, for example:</p>
+<pre class="literal-block">static <a class="reference internal" href="#c.psa_xof_operation_t" title="psa_xof_operation_t">psa_xof_operation_t</a> operation;</pre>
+</li>
+<li><p>Initialize the object to the initializer <a class="reference internal" href="#c.PSA_XOF_OPERATION_INIT" title="PSA_XOF_OPERATION_INIT"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_XOF_OPERATION_INIT</span></code></a>, for example:</p>
+<pre class="literal-block"><a class="reference internal" href="#c.psa_xof_operation_t" title="psa_xof_operation_t">psa_xof_operation_t</a> operation = <a class="reference internal" href="#c.PSA_XOF_OPERATION_INIT" title="PSA_XOF_OPERATION_INIT">PSA_XOF_OPERATION_INIT</a>;</pre>
+</li>
+<li><p>Assign the result of the function <a class="reference internal" href="#c.psa_xof_operation_init" title="psa_xof_operation_init"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_xof_operation_init()</span></code></a> to the object, for example:</p>
+<pre class="literal-block"><a class="reference internal" href="#c.psa_xof_operation_t" title="psa_xof_operation_t">psa_xof_operation_t</a> operation;
+operation = <a class="reference internal" href="#c.psa_xof_operation_init" title="psa_xof_operation_init">psa_xof_operation_init</a>();</pre>
+</li>
+</ul>
+<p>This is an implementation-defined type.
+Applications that make assumptions about the content of this object will result in implementation-specific behavior, and are non-portable.</p>
+</section>
+<section id="c.PSA_XOF_OPERATION_INIT">
+<h3><code class="docutils literal notranslate"><span class="pre">PSA_XOF_OPERATION_INIT</span></code> (macro)<a class="headerlink" href="#c.PSA_XOF_OPERATION_INIT" title="Link to this heading">¶</a></h3>
+<p>This macro returns a suitable initializer for an XOF operation object of type <a class="reference internal" href="#c.psa_xof_operation_t" title="psa_xof_operation_t"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_xof_operation_t</span></code></a>.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">Added in version 1.4.</span></p>
+</div>
+<pre class="literal-block">#define <a class="reference internal" href="#c.PSA_XOF_OPERATION_INIT" title="PSA_XOF_OPERATION_INIT">PSA_XOF_OPERATION_INIT</a> <em><a class="reference internal" href="../../overview/implementation.html#implementation-defined-value"><span class="std std-ref">/* implementation-defined value */</span></a></em></pre>
+</section>
+<section id="c.psa_xof_operation_init">
+<h3><code class="docutils literal notranslate"><span class="pre">psa_xof_operation_init</span></code> (function)<a class="headerlink" href="#c.psa_xof_operation_init" title="Link to this heading">¶</a></h3>
+<p>Return an initial value for an XOF operation object.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">Added in version 1.4.</span></p>
+</div>
+<pre class="literal-block"><a class="reference internal" href="#c.psa_xof_operation_t" title="psa_xof_operation_t">psa_xof_operation_t</a> <a class="reference internal" href="#c.psa_xof_operation_init" title="psa_xof_operation_init">psa_xof_operation_init</a>(void);</pre>
+<p class="rubric">Returns: <a class="reference internal" href="#c.psa_xof_operation_t" title="psa_xof_operation_t"><code class="docutils literal notranslate"><span class="pre">psa_xof_operation_t</span></code></a></p>
+</section>
+<section id="c.psa_xof_setup">
+<h3><code class="docutils literal notranslate"><span class="pre">psa_xof_setup</span></code> (function)<a class="headerlink" href="#c.psa_xof_setup" title="Link to this heading">¶</a></h3>
+<p>Set up an XOF operation.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">Added in version 1.4.</span></p>
+</div>
+<pre class="literal-block">psa_status_t <a class="reference internal" href="#c.psa_xof_setup" title="psa_xof_setup">psa_xof_setup</a>(<a class="reference internal" href="#c.psa_xof_operation_t" title="psa_xof_operation_t">psa_xof_operation_t</a> * operation,
+                           <a class="reference internal" href="algorithms.html#c.psa_algorithm_t" title="psa_algorithm_t">psa_algorithm_t</a> alg);</pre>
+<p class="rubric">Parameters</p>
+<div class="apisubitem docutils container">
+<dl class="simple">
+<dt><p><code class="docutils literal notranslate"><span class="pre">operation</span></code></p>
+</dt><dd><p>The operation object to set up.
+It must have been initialized as per the documentation for <a class="reference internal" href="#c.psa_xof_operation_t" title="psa_xof_operation_t"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_xof_operation_t</span></code></a> and not yet in use.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">alg</span></code></p>
+</dt><dd><p>The XOF algorithm to compute: a value of type <a class="reference internal" href="algorithms.html#c.psa_algorithm_t" title="psa_algorithm_t"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_algorithm_t</span></code></a> such that <a class="reference internal" href="algorithms.html#c.PSA_ALG_IS_XOF" title="PSA_ALG_IS_XOF"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_IS_XOF</span></code></a><code class="docutils literal notranslate"><span class="pre">(</span></code><code class="docutils literal notranslate"><span class="pre">alg</span></code><code class="docutils literal notranslate"><span class="pre">)</span></code> is true.</p>
+</dd>
+</dl>
+</div>
+<p class="rubric">Returns: <code class="docutils literal notranslate"><span class="pre">psa_status_t</span></code></p>
+<div class="apisubitem docutils container">
+<dl class="simple">
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_SUCCESS</span></code></p>
+</dt><dd><p>Success. The operation is now active.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_BAD_STATE</span></code></p>
+</dt><dd><p>The following conditions can result in this error:</p>
+<ul class="simple">
+<li><p>The operation state is not valid: it must be inactive.</p></li>
+<li><p>The library requires initializing by a call to <a class="reference internal" href="../library/library.html#c.psa_crypto_init" title="psa_crypto_init"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_crypto_init()</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_INVALID_ARGUMENT</span></code></p>
+</dt><dd><p><code class="docutils literal notranslate"><span class="pre">alg</span></code> is not an XOF algorithm.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_NOT_SUPPORTED</span></code></p>
+</dt><dd><p><code class="docutils literal notranslate"><span class="pre">alg</span></code> is not supported or is not an XOF algorithm.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_INSUFFICIENT_MEMORY</span></code></p>
+</dt><dd></dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_COMMUNICATION_FAILURE</span></code></p>
+</dt><dd></dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_CORRUPTION_DETECTED</span></code></p>
+</dt><dd></dd>
+</dl>
+</div>
+<p class="rubric">Description</p>
+<p>The sequence of operations to generate XOF output is as follows:</p>
+<ol class="arabic simple">
+<li><p>Allocate an XOF operation object which will be passed to all the functions listed here.</p></li>
+<li><p>Initialize the operation object with one of the methods described in the documentation for <a class="reference internal" href="#c.psa_xof_operation_t" title="psa_xof_operation_t"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_xof_operation_t</span></code></a>, e.g. <a class="reference internal" href="#c.PSA_XOF_OPERATION_INIT" title="PSA_XOF_OPERATION_INIT"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_XOF_OPERATION_INIT</span></code></a>.</p></li>
+<li><p>Call <a class="reference internal" href="#c.psa_xof_setup" title="psa_xof_setup"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_xof_setup()</span></code></a> to specify the algorithm.</p></li>
+<li><p>For an XOF algorithm that has a context, call <a class="reference internal" href="#c.psa_xof_set_context" title="psa_xof_set_context"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_xof_set_context()</span></code></a> to provide the context.</p></li>
+<li><p>Call <a class="reference internal" href="#c.psa_xof_update" title="psa_xof_update"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_xof_update()</span></code></a> zero, one, or more times, passing a fragment of the input each time.</p></li>
+<li><p>To extract XOF output data, call <a class="reference internal" href="#c.psa_xof_output" title="psa_xof_output"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_xof_output()</span></code></a> one or more times.</p></li>
+</ol>
+<p>After a successful call to <a class="reference internal" href="#c.psa_xof_setup" title="psa_xof_setup"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_xof_setup()</span></code></a>, the operation is active, and the application must eventually terminate the operation with a call to <a class="reference internal" href="#c.psa_xof_abort" title="psa_xof_abort"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_xof_abort()</span></code></a>.</p>
+<p>If <a class="reference internal" href="#c.psa_xof_setup" title="psa_xof_setup"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_xof_setup()</span></code></a> returns an error, the operation object is unchanged.
+If a subsequent function call with an active operation returns an error, the operation enters an error state.</p>
+<p>To abandon an active operation, or reset an operation in an error state, call <a class="reference internal" href="#c.psa_xof_abort" title="psa_xof_abort"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_xof_abort()</span></code></a>.</p>
+<p>See <a class="reference internal" href="../../overview/functionality.html#multi-part-operations"><span class="secref">Multi-part operations</span></a>.</p>
+</section>
+<section id="c.psa_xof_set_context">
+<h3><code class="docutils literal notranslate"><span class="pre">psa_xof_set_context</span></code> (function)<a class="headerlink" href="#c.psa_xof_set_context" title="Link to this heading">¶</a></h3>
+<p>Provide a context for a multi-part XOF operation.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">Added in version 1.4.</span></p>
+</div>
+<pre class="literal-block">psa_status_t <a class="reference internal" href="#c.psa_xof_set_context" title="psa_xof_set_context">psa_xof_set_context</a>(<a class="reference internal" href="#c.psa_xof_operation_t" title="psa_xof_operation_t">psa_xof_operation_t</a> * operation,
+                                 const uint8_t * context,
+                                 size_t context_length);</pre>
+<p class="rubric">Parameters</p>
+<div class="apisubitem docutils container">
+<dl class="simple">
+<dt><p><code class="docutils literal notranslate"><span class="pre">operation</span></code></p>
+</dt><dd><p>Active XOF operation.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">context</span></code></p>
+</dt><dd><p>Buffer containing the context value.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">context_length</span></code></p>
+</dt><dd><p>Size of the <code class="docutils literal notranslate"><span class="pre">context</span></code> buffer in bytes.</p>
+</dd>
+</dl>
+</div>
+<p class="rubric">Returns: <code class="docutils literal notranslate"><span class="pre">psa_status_t</span></code></p>
+<div class="apisubitem docutils container">
+<dl class="simple">
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_SUCCESS</span></code></p>
+</dt><dd><p>Success.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_BAD_STATE</span></code></p>
+</dt><dd><p>The following conditions can result in this error:</p>
+<ul class="simple">
+<li><p>The operation state is not valid: it must be active, and no call to <a class="reference internal" href="#c.psa_xof_set_context" title="psa_xof_set_context"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_xof_set_context()</span></code></a>, <a class="reference internal" href="#c.psa_xof_update" title="psa_xof_update"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_xof_update()</span></code></a>, or <a class="reference internal" href="#c.psa_xof_output" title="psa_xof_output"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_xof_output()</span></code></a> has been made.</p></li>
+<li><p>The library requires initializing by a call to <a class="reference internal" href="../library/library.html#c.psa_crypto_init" title="psa_crypto_init"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_crypto_init()</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_INVALID_ARGUMENT</span></code></p>
+</dt><dd><p>The following conditions can result in this error:</p>
+<ul class="simple">
+<li><p>The algorithm does not support a context value.
+See <a class="reference internal" href="#c.PSA_ALG_XOF_HAS_CONTEXT" title="PSA_ALG_XOF_HAS_CONTEXT"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_ALG_XOF_HAS_CONTEXT()</span></code></a>.</p></li>
+<li><p>The context value is not valid for the XOF algorithm.</p></li>
+</ul>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_NOT_SUPPORTED</span></code></p>
+</dt><dd><p>The context value is not supported by this implementation.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_INSUFFICIENT_MEMORY</span></code></p>
+</dt><dd></dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_COMMUNICATION_FAILURE</span></code></p>
+</dt><dd></dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_CORRUPTION_DETECTED</span></code></p>
+</dt><dd></dd>
+</dl>
+</div>
+<p class="rubric">Description</p>
+<p>This function sets the context value in a multi-part XOF operation, when using an XOF algorithm that has a context parameter.</p>
+<p>The application must call <a class="reference internal" href="#c.psa_xof_setup" title="psa_xof_setup"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_xof_setup()</span></code></a> before calling this function.
+For an XOF algorithm with a context parameter, this function must be called immediately after <a class="reference internal" href="#c.psa_xof_setup" title="psa_xof_setup"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_xof_setup()</span></code></a>, before calling any other function on the XOF operation.</p>
+<p>This function must not be called if the XOF algorithm does not have a context parameter.
+The macro <a class="reference internal" href="#c.PSA_ALG_XOF_HAS_CONTEXT" title="PSA_ALG_XOF_HAS_CONTEXT"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_ALG_XOF_HAS_CONTEXT()</span></code></a> can be used to determine if a context value is required for the XOF algorithm.</p>
+<p>If this function returns an error status, the operation enters an error state and must be aborted by calling <a class="reference internal" href="#c.psa_xof_abort" title="psa_xof_abort"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_xof_abort()</span></code></a>.</p>
+</section>
+<section id="c.psa_xof_update">
+<h3><code class="docutils literal notranslate"><span class="pre">psa_xof_update</span></code> (function)<a class="headerlink" href="#c.psa_xof_update" title="Link to this heading">¶</a></h3>
+<p>Add input to a multi-part XOF operation.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">Added in version 1.4.</span></p>
+</div>
+<pre class="literal-block">psa_status_t <a class="reference internal" href="#c.psa_xof_update" title="psa_xof_update">psa_xof_update</a>(<a class="reference internal" href="#c.psa_xof_operation_t" title="psa_xof_operation_t">psa_xof_operation_t</a> * operation,
+                            const uint8_t * input,
+                            size_t input_length);</pre>
+<p class="rubric">Parameters</p>
+<div class="apisubitem docutils container">
+<dl class="simple">
+<dt><p><code class="docutils literal notranslate"><span class="pre">operation</span></code></p>
+</dt><dd><p>Active XOF operation.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">input</span></code></p>
+</dt><dd><p>Buffer containing the input fragment.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">input_length</span></code></p>
+</dt><dd><p>Size of the <code class="docutils literal notranslate"><span class="pre">input</span></code> buffer in bytes.</p>
+</dd>
+</dl>
+</div>
+<p class="rubric">Returns: <code class="docutils literal notranslate"><span class="pre">psa_status_t</span></code></p>
+<div class="apisubitem docutils container">
+<dl class="simple">
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_SUCCESS</span></code></p>
+</dt><dd><p>Success.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_BAD_STATE</span></code></p>
+</dt><dd><p>The following conditions can result in this error:</p>
+<ul class="simple">
+<li><p>The operation state is not valid: it must be active, and no call to <a class="reference internal" href="#c.psa_xof_output" title="psa_xof_output"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_xof_output()</span></code></a> has been made.</p></li>
+<li><p>The library requires initializing by a call to <a class="reference internal" href="../library/library.html#c.psa_crypto_init" title="psa_crypto_init"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_crypto_init()</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_INVALID_ARGUMENT</span></code></p>
+</dt><dd><p>The total input for the operation is too large for the XOF algorithm.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_NOT_SUPPORTED</span></code></p>
+</dt><dd><p>The total input for the operation is too large for the implementation.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_INSUFFICIENT_MEMORY</span></code></p>
+</dt><dd></dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_COMMUNICATION_FAILURE</span></code></p>
+</dt><dd></dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_CORRUPTION_DETECTED</span></code></p>
+</dt><dd></dd>
+</dl>
+</div>
+<p class="rubric">Description</p>
+<p>The application must call <a class="reference internal" href="#c.psa_xof_setup" title="psa_xof_setup"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_xof_setup()</span></code></a> before calling this function.</p>
+<p>This function can be called zero, one, or more times to provide input for the XOF.
+The input to the XOF is only finalized on the first call to <a class="reference internal" href="#c.psa_xof_output" title="psa_xof_output"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_xof_output()</span></code></a>.</p>
+<p><a class="reference internal" href="#c.psa_xof_update" title="psa_xof_update"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_xof_update()</span></code></a> cannot be called on an XOF operation once <a class="reference internal" href="#c.psa_xof_output" title="psa_xof_output"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_xof_output()</span></code></a> has been called on the operation.</p>
+<p>If this function returns an error status, the operation enters an error state and must be aborted by calling <a class="reference internal" href="#c.psa_xof_abort" title="psa_xof_abort"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_xof_abort()</span></code></a>.</p>
+</section>
+<section id="c.psa_xof_output">
+<h3><code class="docutils literal notranslate"><span class="pre">psa_xof_output</span></code> (function)<a class="headerlink" href="#c.psa_xof_output" title="Link to this heading">¶</a></h3>
+<p>Extract data from an XOF operation.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">Added in version 1.4.</span></p>
+</div>
+<pre class="literal-block">psa_status_t <a class="reference internal" href="#c.psa_xof_output" title="psa_xof_output">psa_xof_output</a>(<a class="reference internal" href="#c.psa_xof_operation_t" title="psa_xof_operation_t">psa_xof_operation_t</a> * operation,
+                            uint8_t * output,
+                            size_t output_length);</pre>
+<p class="rubric">Parameters</p>
+<div class="apisubitem docutils container">
+<dl class="simple">
+<dt><p><code class="docutils literal notranslate"><span class="pre">operation</span></code></p>
+</dt><dd><p>Active XOF operation.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">output</span></code></p>
+</dt><dd><p>Buffer where the output will be written.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">output_length</span></code></p>
+</dt><dd><p>Number of bytes to output.</p>
+</dd>
+</dl>
+</div>
+<p class="rubric">Returns: <code class="docutils literal notranslate"><span class="pre">psa_status_t</span></code></p>
+<div class="apisubitem docutils container">
+<dl class="simple">
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_SUCCESS</span></code></p>
+</dt><dd><p>Success.
+The first <code class="docutils literal notranslate"><span class="pre">output_length</span></code> bytes of <code class="docutils literal notranslate"><span class="pre">output</span></code> contain the data.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_BAD_STATE</span></code></p>
+</dt><dd><p>The following conditions can result in this error:</p>
+<ul class="simple">
+<li><p>The operation state is not valid: it must be active.</p></li>
+<li><p>The library requires initializing by a call to <a class="reference internal" href="../library/library.html#c.psa_crypto_init" title="psa_crypto_init"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_crypto_init()</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_INSUFFICIENT_MEMORY</span></code></p>
+</dt><dd></dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_COMMUNICATION_FAILURE</span></code></p>
+</dt><dd></dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_CORRUPTION_DETECTED</span></code></p>
+</dt><dd></dd>
+</dl>
+</div>
+<p class="rubric">Description</p>
+<p>This function calculates output bytes from the XOF algorithm and returns those bytes.
+If the key derivation’s output is viewed as a stream of bytes, this function consumes the requested number of bytes from the stream and returns them to the caller.</p>
+<p>The application must call <a class="reference internal" href="#c.psa_xof_setup" title="psa_xof_setup"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_xof_setup()</span></code></a> and supply all input data, using calls to <a class="reference internal" href="#c.psa_xof_update" title="psa_xof_update"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_xof_update()</span></code></a>, before calling this function.
+The input to the XOF is finalized on the first call to <a class="reference internal" href="#c.psa_xof_output" title="psa_xof_output"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_xof_output()</span></code></a> before data is extracted from the XOF.</p>
+<p>If this function returns an error status, the operation enters an error state and must be aborted by calling <a class="reference internal" href="#c.psa_xof_abort" title="psa_xof_abort"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_xof_abort()</span></code></a>.</p>
+</section>
+<section id="c.psa_xof_abort">
+<h3><code class="docutils literal notranslate"><span class="pre">psa_xof_abort</span></code> (function)<a class="headerlink" href="#c.psa_xof_abort" title="Link to this heading">¶</a></h3>
+<p>Abort an XOF operation.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">Added in version 1.4.</span></p>
+</div>
+<pre class="literal-block">psa_status_t <a class="reference internal" href="#c.psa_xof_abort" title="psa_xof_abort">psa_xof_abort</a>(<a class="reference internal" href="#c.psa_xof_operation_t" title="psa_xof_operation_t">psa_xof_operation_t</a> * operation);</pre>
+<p class="rubric">Parameters</p>
+<div class="apisubitem docutils container">
+<dl class="simple">
+<dt><p><code class="docutils literal notranslate"><span class="pre">operation</span></code></p>
+</dt><dd><p>Initialized XOF operation.</p>
+</dd>
+</dl>
+</div>
+<p class="rubric">Returns: <code class="docutils literal notranslate"><span class="pre">psa_status_t</span></code></p>
+<div class="apisubitem docutils container">
+<dl class="simple">
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_SUCCESS</span></code></p>
+</dt><dd><p>Success.
+The operation object can now be discarded or reused.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_BAD_STATE</span></code></p>
+</dt><dd><p>The library requires initializing by a call to <a class="reference internal" href="../library/library.html#c.psa_crypto_init" title="psa_crypto_init"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_crypto_init()</span></code></a>.</p>
+</dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_COMMUNICATION_FAILURE</span></code></p>
+</dt><dd></dd>
+<dt><p><code class="docutils literal notranslate"><span class="pre">PSA_ERROR_CORRUPTION_DETECTED</span></code></p>
+</dt><dd></dd>
+</dl>
+</div>
+<p class="rubric">Description</p>
+<p>Aborting an operation frees all associated resources except for the <code class="docutils literal notranslate"><span class="pre">operation</span></code> object itself.
+Once aborted, the operation object can be reused for another operation by calling <a class="reference internal" href="#c.psa_xof_setup" title="psa_xof_setup"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_xof_setup()</span></code></a> again.</p>
+<p>This function can be called any time after the operation object has been initialized by one of the methods described in <a class="reference internal" href="#c.psa_xof_operation_t" title="psa_xof_operation_t"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_xof_operation_t</span></code></a>.</p>
+<p>In particular, calling <a class="reference internal" href="#c.psa_xof_abort" title="psa_xof_abort"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_xof_abort()</span></code></a> after the operation has been terminated by a call to <a class="reference internal" href="#c.psa_xof_abort" title="psa_xof_abort"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_xof_abort()</span></code></a> is safe and has no effect.</p>
+</section>
+</section>
+<section id="support-macros">
+<h2><span class="section-number">10.3.3 </span>Support macros<a class="headerlink" href="#support-macros" title="Link to this heading">¶</a></h2>
+<section id="c.PSA_ALG_XOF_HAS_CONTEXT">
+<h3><code class="docutils literal notranslate"><span class="pre">PSA_ALG_XOF_HAS_CONTEXT</span></code> (macro)<a class="headerlink" href="#c.PSA_ALG_XOF_HAS_CONTEXT" title="Link to this heading">¶</a></h3>
+<p>Whether the specified XOF algorithm has a context parameter.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">Added in version 1.4.</span></p>
+</div>
+<pre class="literal-block">#define <a class="reference internal" href="#c.PSA_ALG_XOF_HAS_CONTEXT" title="PSA_ALG_XOF_HAS_CONTEXT">PSA_ALG_XOF_HAS_CONTEXT</a>(alg) <em><a class="reference internal" href="../../overview/implementation.html#specification-defined-value"><span class="std std-ref">/* specification-defined value */</span></a></em></pre>
+<p class="rubric">Parameters</p>
+<div class="apisubitem docutils container">
+<dl class="simple">
+<dt><p><code class="docutils literal notranslate"><span class="pre">alg</span></code></p>
+</dt><dd><p>An XOF algorithm identifier: a value of type <a class="reference internal" href="algorithms.html#c.psa_algorithm_t" title="psa_algorithm_t"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_algorithm_t</span></code></a> such that <a class="reference internal" href="algorithms.html#c.PSA_ALG_IS_XOF" title="PSA_ALG_IS_XOF"><code class="docutils literal notranslate"><span class="pre">PSA_ALG_IS_XOF</span></code></a><code class="docutils literal notranslate"><span class="pre">(</span></code><code class="docutils literal notranslate"><span class="pre">alg</span></code><code class="docutils literal notranslate"><span class="pre">)</span></code> is true.</p>
+</dd>
+</dl>
+</div>
+<p class="rubric">Returns</p>
+<p><code class="docutils literal notranslate"><span class="pre">1</span></code> if <code class="docutils literal notranslate"><span class="pre">alg</span></code> is an XOF algorithm that has a context parameter.
+<code class="docutils literal notranslate"><span class="pre">0</span></code> if <code class="docutils literal notranslate"><span class="pre">alg</span></code> is an XOF algorithm that does not have a context parameter.
+This macro can return either <code class="docutils literal notranslate"><span class="pre">0</span></code> or <code class="docutils literal notranslate"><span class="pre">1</span></code> if <code class="docutils literal notranslate"><span class="pre">alg</span></code> is not a supported XOF algorithm identifier.</p>
+</section>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &#169; 2018-2026 Arm Limited and/or its affiliates.
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

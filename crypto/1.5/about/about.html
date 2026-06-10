@@ -1,0 +1,823 @@
+---
+---
+
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta property="og:title" content="About this document" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="{{ page.url | absolute_url }}" />
+<link rel="canonical" href="{{ page.url | absolute_url }}" />
+<meta property="og:site_name" content="PSA Certified Crypto API 1.5" />
+<meta property="og:description" content="Release information: The change history table lists the changes that have been made to this document. Document revision history:,,,, Date, Version, Confidentiality, Change,,, January 2019, 1.0 Beta..." />
+<meta name="description" content="Release information: The change history table lists the changes that have been made to this document. Document revision history:,,,, Date, Version, Confidentiality, Change,,, January 2019, 1.0 Beta..." />
+
+    <title>About this document &#8212; PSA Certified Crypto API 1.5</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/basic.css?v=686e5160" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=f6a572b4" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+    <link rel="preconnect" type="text/css" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" type="text/css" href="https://fonts.gstatic.com" />
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;1,300;1,400&display=swap" />
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Mono:ital,wght@0,300;0,400;1,300&display=swap" />
+    <script src="../_static/documentation_options.js?v=f8f0f945"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="1 Introduction" href="../overview/intro.html" />
+    <link rel="prev" title="PSA Certified Crypto API 1.5" href="../index.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/ARM_LOGO-2025_INK_RGB.svg" alt="Logo of PSA Certified Crypto API"/>
+            </a></p><hr />
+<h3><a href="../index.html">PSA Certified<br />Crypto API</a></h3>
+IHI 0086<br/>
+Non-confidential<br/>
+Version 1.5.0
+<hr />
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">About this document</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#release-information">Release information</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#license">License</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#references">References</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#terms-and-abbreviations">Terms and abbreviations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#potential-for-change">Potential for change</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#conventions">Conventions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#feedback">Feedback</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../overview/intro.html">1 Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../overview/goals.html">2 Design goals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../overview/functionality.html">3 Functionality overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../overview/sample-arch.html">4 Sample architectures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../overview/conventions.html">5 Library conventions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../overview/implementation.html">6 Implementation considerations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../overview/usage.html">7 Usage considerations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/library/index.html">8 Library management reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/keys/index.html">9 Key management reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/ops/index.html">10 Cryptographic operation reference</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/example_header.html">A Example header file</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/encodings.html">B Algorithm and key type encoding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/specdef_values.html">C Example macro implementations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/sra.html">D Security Risk Assessment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/history.html">E Changes to the API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../atg_c-identifiers.html">Index of API elements</a></li>
+</ul>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="about-this-document">
+<span id="id1"></span><h1>About this document<a class="headerlink" href="#about-this-document" title="Link to this heading">¶</a></h1>
+<section id="release-information">
+<span id="release-info"></span><h2>Release information<a class="headerlink" href="#release-information" title="Link to this heading">¶</a></h2>
+<p>The change history table lists the changes that have been made to this document.</p>
+<table class="longtable docutils align-default" id="id7">
+<caption><span class="caption-number">Table 1 </span><span class="caption-text">Document revision history</span><a class="headerlink" href="#id7" title="Link to this table">¶</a></caption>
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 15.0%" />
+<col style="width: 20.0%" />
+<col style="width: 45.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Date</p></th>
+<th class="head"><p>Version</p></th>
+<th class="head"><p>Confidentiality</p></th>
+<th class="head"><p>Change</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>January 2019</p></td>
+<td><p>1.0 Beta 1</p></td>
+<td><p>Non-confidential</p></td>
+<td><p>First public beta release.</p></td>
+</tr>
+<tr class="row-odd"><td><p>February 2019</p></td>
+<td><p>1.0 Beta 2</p></td>
+<td><p>Non-confidential</p></td>
+<td><p>Update for release with other PSA Certified API specifications.</p></td>
+</tr>
+<tr class="row-even"><td><p>May 2019</p></td>
+<td><p>1.0 Beta 3</p></td>
+<td><p>Non-confidential</p></td>
+<td><p>Update for release with other PSA Certified API specifications.</p></td>
+</tr>
+<tr class="row-odd"><td><p>February 2020</p></td>
+<td><p>1.0</p></td>
+<td><p>Non-confidential</p></td>
+<td><p>1.0 API finalized.</p></td>
+</tr>
+<tr class="row-even"><td><p>August 2020</p></td>
+<td><p>1.0.1</p></td>
+<td><p>Non-confidential</p></td>
+<td><p>Update to fix errors and provide clarifications.</p></td>
+</tr>
+<tr class="row-odd"><td><p>February 2022</p></td>
+<td><p>1.1.0</p></td>
+<td><p>Non-confidential</p></td>
+<td><p>New API for EdDSA, password hashing and key stretching.</p>
+<p>Many significant clarifications and improvements across the documentation.</p>
+</td>
+</tr>
+<tr class="row-even"><td><p>October 2022</p></td>
+<td><p>1.1.1</p></td>
+<td><p>Non-confidential</p></td>
+<td><p>Relicensed as open source under CC BY-SA 4.0.</p>
+<p>Improve support for TLS.</p>
+</td>
+</tr>
+<tr class="row-odd"><td><p>March 2023</p></td>
+<td><p>1.1.2</p></td>
+<td><p>Non-confidential</p></td>
+<td><p>Clarifications and fixes</p></td>
+</tr>
+<tr class="row-even"><td><p>February 2024</p></td>
+<td><p>1.2.0</p></td>
+<td><p>Non-confidential</p></td>
+<td><p>Better support for key agreement.</p>
+<p>New algorithms for Zigbee, XChaCha, TLS 1.2, and key derivation.</p>
+</td>
+</tr>
+<tr class="row-odd"><td><p>March 2024</p></td>
+<td><p>1.2.1</p></td>
+<td><p>Non-confidential</p></td>
+<td><p>Clarifications and fixes</p></td>
+</tr>
+<tr class="row-even"><td><p>March 2025</p></td>
+<td><p>1.3.0</p></td>
+<td><p>Non-confidential</p></td>
+<td><p>Integrated the PAKE extension.</p>
+<p>New API for key encapsulation.</p>
+<p>Support for additional key generation parameters.</p>
+</td>
+</tr>
+<tr class="row-odd"><td><p>June 2025</p></td>
+<td><p>1.3.1</p></td>
+<td><p>Non-confidential</p></td>
+<td><p>Clarifications and fixes</p></td>
+</tr>
+<tr class="row-even"><td><p>September 2025</p></td>
+<td><p>1.3.2</p></td>
+<td><p>Non-confidential</p></td>
+<td><p>GlobalPlatform governance of PSA Certified evaluation scheme.</p></td>
+</tr>
+<tr class="row-odd"><td><p>November 2025</p></td>
+<td><p>1.4.0</p></td>
+<td><p>Non-confidential</p></td>
+<td><p>New algorithms for signatures with context, eXtended Output Functions, key wrapping, WPA3-SAE, and Ascon.</p>
+<p>Added key query and key registration functions.</p>
+</td>
+</tr>
+<tr class="row-even"><td><p>January 2026</p></td>
+<td><p>1.4.1</p></td>
+<td><p>Non-confidential</p></td>
+<td><p>Clarifications.</p></td>
+</tr>
+<tr class="row-odd"><td><p>June 2026</p></td>
+<td><p>1.5</p></td>
+<td><p>Non-confidential</p></td>
+<td><p>Integrated the PQC extension.</p>
+<p>New algorithms for BLAKE2 and multi-part asymmetric signature operations.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>The detailed changes in each release are described in <a class="reference internal" href="../appendix/history.html#changes"><span class="secref">Document change history</span></a>.</p>
+</section>
+<p><span class="sectiontitle">PSA Certified Crypto API</span></p>
+<p>Copyright © 2018-2026 Arm Limited and/or its affiliates. The copyright statement reflects the fact that some
+draft issues of this document have been released, to a limited circulation.</p>
+<section id="license">
+<span id="id2"></span><h2>License<a class="headerlink" href="#license" title="Link to this heading">¶</a></h2>
+<div class="license docutils container">
+<p><span class="sectiontitle">Text and illustrations</span></p>
+<p>Text and illustrations in this work are licensed under Attribution-ShareAlike 4.0 International (CC BY-SA 4.0). To view a copy of the license, visit <a class="reference external" href="https://creativecommons.org/licenses/by-sa/4.0">creativecommons.org/licenses/by-sa/4.0</a>.</p>
+<p><strong>Grant of patent license</strong>. Subject to the terms and conditions of this license (both the CC BY-SA 4.0 Public License and this Patent License), each Licensor hereby grants to You a perpetual, worldwide, non-exclusive, no-charge, royalty-free, irrevocable (except as stated in this section) patent license to make, have made, use, offer to sell, sell, import, and otherwise transfer the Licensed Material, where such license applies only to those patent claims licensable by such Licensor that are necessarily infringed by their contribution(s) alone or by combination of their contribution(s) with the Licensed Material to which such contribution(s) was submitted. If You institute patent litigation against any entity (including a cross-claim or counterclaim in a lawsuit) alleging that the Licensed Material or a contribution incorporated within the Licensed Material constitutes direct or contributory patent infringement, then any licenses granted to You under this license for that Licensed Material shall terminate as of the date such litigation is filed.</p>
+<p>The Arm trademarks featured here are registered trademarks or trademarks of Arm Limited (or its subsidiaries) in the US and/or elsewhere. All rights reserved. Please visit <a class="reference external" href="https://arm.com/company/policies/trademarks">arm.com/company/policies/trademarks</a> for more information about Arm’s trademarks.</p>
+<p><span class="sectiontitle">About the license</span></p>
+<p>The language in the additional patent license is largely identical to that in section 3 of the Apache License, Version 2.0 (Apache 2.0), with two exceptions:</p>
+<ol class="arabic simple">
+<li><p>Changes are made related to the defined terms, to align those defined terms with the terminology in CC BY-SA 4.0 rather than Apache 2.0 (for example, changing “Work” to “Licensed Material”).</p></li>
+<li><p>The scope of the defensive termination clause is changed from “any patent licenses granted to You” to “any licenses granted to You”. This change is intended to help maintain a healthy ecosystem by providing additional protection to the community against patent litigation claims.</p></li>
+</ol>
+<p>To view the full text of the Apache 2.0 license, visit <a class="reference external" href="https://apache.org/licenses/LICENSE-2.0">apache.org/licenses/LICENSE-2.0</a>.</p>
+<p><span class="sectiontitle">Source code</span></p>
+<p>Source code samples in this work are licensed under the Apache License, Version 2.0 (the “License”); you may not use such samples except in compliance with the License. You may obtain a copy of the License at <a class="reference external" href="https://apache.org/licenses/LICENSE-2.0">apache.org/licenses/LICENSE-2.0</a>.</p>
+<p>Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an “AS IS” BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</p>
+<p>See the License for the specific language governing permissions and limitations under the License.</p>
+</div>
+</section>
+<section id="references">
+<span id="id3"></span><h2>References<a class="headerlink" href="#references" title="Link to this heading">¶</a></h2>
+<p>This document refers to the following documents.</p>
+<table class="longtable docutils align-default" id="id8">
+<caption><span class="caption-number">Table 2 </span><span class="caption-text">Arm documents referenced by this document</span><a class="headerlink" href="#id8" title="Link to this table">¶</a></caption>
+<colgroup>
+<col style="width: 19.0%" />
+<col style="width: 19.0%" />
+<col style="width: 61.9%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Ref</p></th>
+<th class="head"><p>Document Number</p></th>
+<th class="head"><p>Title</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><span class="target" id="cite-psm"></span>[PSM]</p></td>
+<td><p>ARM DEN 0128</p></td>
+<td><p><em>Platform Security Model</em>. <a class="reference external" href="https://developer.arm.com/documentation/den0128">developer.arm.com/documentation/den0128</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="target" id="cite-psa-ffm"></span>[PSA-FFM]</p></td>
+<td><p>ARM DEN 0063</p></td>
+<td><p><em>Arm® Platform Security Architecture Firmware Framework</em>. <a class="reference external" href="https://developer.arm.com/documentation/den0063">developer.arm.com/documentation/den0063</a></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="target" id="cite-psa-stat"></span>[PSA-STAT]</p></td>
+<td><p>ARM IHI 0097</p></td>
+<td><p><em>PSA Certified Status code API</em>. <a class="reference external" href="https://arm-software.github.io/psa-api/status-code">arm-software.github.io/psa-api/status-code</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="target" id="cite-psa-pqc"></span>[PSA-PQC]</p></td>
+<td><p>ARM AES 0119</p></td>
+<td><p><em>PSA Certified Crypto API 1.4 PQC Extension</em>. <a class="reference external" href="https://arm-software.github.io/psa-api/crypto">arm-software.github.io/psa-api/crypto</a></p></td>
+</tr>
+</tbody>
+</table>
+<table class="longtable docutils align-default" id="id9">
+<caption><span class="caption-number">Table 3 </span><span class="caption-text">Other documents referenced by this document</span><a class="headerlink" href="#id9" title="Link to this table">¶</a></caption>
+<colgroup>
+<col style="width: 19.0%" />
+<col style="width: 81.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Ref</p></th>
+<th class="head"><p>Title</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><span class="target" id="cite-blake2"></span>[BLAKE2]</p></td>
+<td><p>Jean-Philippe Aumasson, Samuel Neves, Zooko Wilcox-O’Hearn, Christian Winnerlein, <em>BLAKE2: simpler, smaller, fast as MD5</em>, January 2013. <a class="reference external" href="https://blake2.net/blake2.pdf">blake2.net/blake2.pdf</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="target" id="cite-c99"></span>[C99]</p></td>
+<td><p>ISO/IEC, <em>ISO/IEC 9899:1999 — Programming Languages — C</em>, December 1999. <a class="reference external" href="https://www.iso.org/standard/29237.html">www.iso.org/standard/29237.html</a></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="target" id="cite-chacha20"></span>[CHACHA20]</p></td>
+<td><p>Bernstein, D., <em>ChaCha, a variant of Salsa20</em>, January 2008. <a class="reference external" href="http://cr.yp.to/chacha/chacha-20080128.pdf">http://cr.yp.to/chacha/chacha-20080128.pdf</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="target" id="cite-clulow"></span>[CLULOW]</p></td>
+<td><p>Clulow, Jolyon, <em>On the Security of PKCS #11</em>, 2003. <a class="reference external" href="https://link.springer.com/chapter/10.1007/978-3-540-45238-6_32">link.springer.com/chapter/10.1007/978-3-540-45238-6_32</a></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="target" id="cite-cstc0002"></span>[CSTC0002]</p></td>
+<td><p>Cryptography Standardization Technical Committee, <em>GM/T 0002-2012: SM4 block cipher algorithm</em>, March 2012. </p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="target" id="cite-cstc0004"></span>[CSTC0004]</p></td>
+<td><p>Cryptography Standardization Technical Committee, <em>GM/T 0004-2012: SM3 cryptographic hash algorithm</em>, March 2012. </p></td>
+</tr>
+<tr class="row-even"><td><p><span class="target" id="cite-curve25519"></span>[Curve25519]</p></td>
+<td><p>Bernstein et al., <em>Curve25519: new Diffie-Hellman speed records</em>, LNCS 3958, 2006. <a class="reference external" href="https://www.iacr.org/archive/pkc2006/39580209/39580209.pdf">www.iacr.org/archive/pkc2006/39580209/39580209.pdf</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="target" id="cite-curve448"></span>[Curve448]</p></td>
+<td><p>Hamburg, <em>Ed448-Goldilocks, a new elliptic curve</em>, NIST ECC Workshop, 2015. <a class="reference external" href="https://eprint.iacr.org/2015/625.pdf">eprint.iacr.org/2015/625.pdf</a></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="target" id="cite-ed25519"></span>[Ed25519]</p></td>
+<td><p>Bernstein et al., <em>Twisted Edwards curves</em>, Africacrypt, 2008. <a class="reference external" href="https://eprint.iacr.org/2008/013.pdf">eprint.iacr.org/2008/013.pdf</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="target" id="cite-ed448"></span>[Ed448]</p></td>
+<td><p>Hamburg, <em>Ed448-Goldilocks, a new elliptic curve</em>, NIST ECC Workshop, 2015. <a class="reference external" href="https://eprint.iacr.org/2015/625.pdf">eprint.iacr.org/2015/625.pdf</a></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="target" id="cite-fips180-4"></span>[FIPS180-4]</p></td>
+<td><p>NIST, <em>FIPS Publication 180-4: Secure Hash Standard (SHS)</em>, August 2015. <a class="reference external" href="https://doi.org/10.6028/NIST.FIPS.180-4">doi.org/10.6028/NIST.FIPS.180-4</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="target" id="cite-fips186-4"></span>[FIPS186-4]</p></td>
+<td><p>NIST, <em>FIPS Publication 186-4: Digital Signature Standard (DSS)</em>, July 2013. <a class="reference external" href="https://doi.org/10.6028/NIST.FIPS.186-4">doi.org/10.6028/NIST.FIPS.186-4</a></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="target" id="cite-fips197"></span>[FIPS197]</p></td>
+<td><p>NIST, <em>FIPS Publication 197: Advanced Encryption Standard (AES)</em>, November 2001. <a class="reference external" href="https://doi.org/10.6028/NIST.FIPS.197">doi.org/10.6028/NIST.FIPS.197</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="target" id="cite-fips202"></span>[FIPS202]</p></td>
+<td><p>NIST, <em>FIPS Publication 202: SHA-3 Standard: Permutation-Based Hash and Extendable-Output Functions</em>, August 2015. <a class="reference external" href="https://doi.org/10.6028/NIST.FIPS.202">doi.org/10.6028/NIST.FIPS.202</a></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="target" id="cite-fips203"></span>[FIPS203]</p></td>
+<td><p>NIST, <em>FIPS Publication 203: Module-Lattice-Based Key-Encapsulation Mechanism Standard</em>, August 2024. <a class="reference external" href="https://doi.org/10.6028/NIST.FIPS.203">doi.org/10.6028/NIST.FIPS.203</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="target" id="cite-fips204"></span>[FIPS204]</p></td>
+<td><p>NIST, <em>FIPS Publication 204: Module-Lattice-Based Digital Signature Standard</em>, August 2024. <a class="reference external" href="https://doi.org/10.6028/NIST.FIPS.204">doi.org/10.6028/NIST.FIPS.204</a></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="target" id="cite-fips205"></span>[FIPS205]</p></td>
+<td><p>NIST, <em>FIPS Publication 205: Stateless Hash-Based Digital Signature Standard</em>, August 2024. <a class="reference external" href="https://doi.org/10.6028/NIST.FIPS.205">doi.org/10.6028/NIST.FIPS.205</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="target" id="cite-frp"></span>[FRP]</p></td>
+<td><p>Agence nationale de la sécurité des systèmes d’information, <em>Publication d’un paramétrage de courbe elliptique visant des applications de passeport électronique et de l’administration électronique française</em>, 21 November 2011. <a class="reference external" href="https://www.ssi.gouv.fr/agence/rayonnement-scientifique/publications-scientifiques/articles-ouvrages-actes">www.ssi.gouv.fr/agence/rayonnement-scientifique/publications-scientifiques/articles-ouvrages-actes</a></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="target" id="cite-ieee-802-11"></span>[IEEE-802.11]</p></td>
+<td><p>IEEE, <em>IEEE 802.11-2024: Wireless LAN Medium Access Control (MAC) and Physical Layer (PHY) Specifications</em>, 2024. <a class="reference external" href="https://standards.ieee.org/ieee/802.11/10548/">standards.ieee.org/ieee/802.11/10548/</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="target" id="cite-ieee-ccm"></span>[IEEE-CCM]</p></td>
+<td><p>IEEE, <em>IEEE Standard for Low-Rate Wireless Networks</em>, 2020. <a class="reference external" href="https://standards.ieee.org/ieee/802.15.4/7029/">standards.ieee.org/ieee/802.15.4/7029/</a></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="target" id="cite-ieee-xts"></span>[IEEE-XTS]</p></td>
+<td><p>IEEE, <em>1619-2018 — IEEE Standard for Cryptographic Protection of Data on Block-Oriented Storage Devices</em>, January 2019. <a class="reference external" href="https://ieeexplore.ieee.org/servlet/opac?punumber=8637986">ieeexplore.ieee.org/servlet/opac?punumber=8637986</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="target" id="cite-iso10118"></span>[ISO10118]</p></td>
+<td><p>ISO/IEC, <em>ISO/IEC 10118-3:2018 IT Security techniques — Hash-functions — Part 3: Dedicated hash-functions</em>, October 2018. <a class="reference external" href="https://www.iso.org/standard/67116.html">www.iso.org/standard/67116.html</a></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="target" id="cite-iso9797"></span>[ISO9797]</p></td>
+<td><p>ISO/IEC, <em>ISO/IEC 9797-1:2011 Information technology — Security techniques — Message Authentication Codes (MACs) — Part 1: Mechanisms using a block cipher</em>, March 2011. <a class="reference external" href="https://www.iso.org/standard/50375.html">www.iso.org/standard/50375.html</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="target" id="cite-mailtrust"></span>[MailTrusT]</p></td>
+<td><p>TeleTrusT, <em>MailTrusT Version 2 Algorithmen</em>, March 1999. <a class="reference external" href="https://www.teletrust.de/fileadmin/files/ag8_mttv2-6.pdf">www.teletrust.de/fileadmin/files/ag8_mttv2-6.pdf</a></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="target" id="cite-matter"></span>[MATTER]</p></td>
+<td><p>CSA, <em>Matter Specification, Version 1.2</em>, October 2023. <a class="reference external" href="https://csa-iot.org/all-solutions/matter/">csa-iot.org/all-solutions/matter/</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="target" id="cite-nist-pqc"></span>[NIST-PQC]</p></td>
+<td><p>NIST, <em>Post-Quantum Cryptography</em>, PQC Project page. <a class="reference external" href="https://nist.gov/pqcrypto">nist.gov/pqcrypto</a></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="target" id="cite-ntt-cam"></span>[NTT-CAM]</p></td>
+<td><p>NTT Corporation and Mitsubishi Electric Corporation, <em>Specification of Camellia — a 128-bit Block Cipher</em>, September 2001. <a class="reference external" href="https://info.isl.ntt.co.jp/crypt/eng/camellia/specifications">info.isl.ntt.co.jp/crypt/eng/camellia/specifications</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="target" id="cite-rfc-1319"></span>[RFC1319]</p></td>
+<td><p>IETF, <em>The MD2 Message-Digest Algorithm</em>, April 1992. <a class="reference external" href="https://tools.ietf.org/html/rfc1319.html">tools.ietf.org/html/rfc1319.html</a></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="target" id="cite-rfc-1320"></span>[RFC1320]</p></td>
+<td><p>IETF, <em>The MD4 Message-Digest Algorithm</em>, April 1992. <a class="reference external" href="https://tools.ietf.org/html/rfc1320.html">tools.ietf.org/html/rfc1320.html</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="target" id="cite-rfc-1321"></span>[RFC1321]</p></td>
+<td><p>IETF, <em>The MD5 Message-Digest Algorithm</em>, April 1992. <a class="reference external" href="https://tools.ietf.org/html/rfc1321.html">tools.ietf.org/html/rfc1321.html</a></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="target" id="cite-rfc-2104"></span>[RFC2104]</p></td>
+<td><p>IETF, <em>HMAC: Keyed-Hashing for Message Authentication</em>, February 1997. <a class="reference external" href="https://tools.ietf.org/html/rfc2104.html">tools.ietf.org/html/rfc2104.html</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="target" id="cite-rfc-2315"></span>[RFC2315]</p></td>
+<td><p>IETF, <em>PKCS #7: Cryptographic Message Syntax Version 1.5</em>, March 1998. <a class="reference external" href="https://tools.ietf.org/html/rfc2315.html">tools.ietf.org/html/rfc2315.html</a></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="target" id="cite-rfc-3279"></span>[RFC3279]</p></td>
+<td><p>IETF, <em>Algorithms and Identifiers for the Internet X.509 Public Key Infrastructure Certificate and Certificate Revocation List (CRL) Profile</em>, April 2002. <a class="reference external" href="https://tools.ietf.org/html/rfc3279.html">tools.ietf.org/html/rfc3279.html</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="target" id="cite-rfc-3394"></span>[RFC3394]</p></td>
+<td><p>IETF, <em>Advanced Encryption Standard (AES) Key Wrap Algorithm</em>, September 2002. <a class="reference external" href="https://tools.ietf.org/html/rfc3394.html">tools.ietf.org/html/rfc3394.html</a></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="target" id="cite-rfc-3526"></span>[RFC3526]</p></td>
+<td><p>IETF, <em>More Modular Exponential (MODP) Diffie-Hellman groups for Internet Key Exchange (IKE)</em>, May 2003. <a class="reference external" href="https://tools.ietf.org/html/rfc3526.html">tools.ietf.org/html/rfc3526.html</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="target" id="cite-rfc-3610"></span>[RFC3610]</p></td>
+<td><p>IETF, <em>Counter with CBC-MAC (CCM)</em>, September 2003. <a class="reference external" href="https://tools.ietf.org/html/rfc3610">tools.ietf.org/html/rfc3610</a></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="target" id="cite-rfc-3713"></span>[RFC3713]</p></td>
+<td><p>IETF, <em>A Description of the Camellia Encryption Algorithm</em>, April 2004. <a class="reference external" href="https://tools.ietf.org/html/rfc3713">tools.ietf.org/html/rfc3713</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="target" id="cite-rfc-4279"></span>[RFC4279]</p></td>
+<td><p>IETF, <em>Pre-Shared Key Ciphersuites for Transport Layer Security (TLS)</em>, December 2005. <a class="reference external" href="https://tools.ietf.org/html/rfc4279.html">tools.ietf.org/html/rfc4279.html</a></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="target" id="cite-rfc-4615"></span>[RFC4615]</p></td>
+<td><p>IETF, <em>The Advanced Encryption Standard-Cipher-based Message Authentication Code-Pseudo-Random Function-128 (AES-CMAC-PRF-128) Algorithm for the Internet Key Exchange Protocol (IKE)</em>, August 2006. <a class="reference external" href="https://tools.ietf.org/html/rfc4615.html">tools.ietf.org/html/rfc4615.html</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="target" id="cite-rfc-5116"></span>[RFC5116]</p></td>
+<td><p>IETF, <em>An Interface and Algorithms for Authenticated Encryption</em>, January 2008. <a class="reference external" href="https://tools.ietf.org/html/rfc5116.html">tools.ietf.org/html/rfc5116.html</a></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="target" id="cite-rfc-5246"></span>[RFC5246]</p></td>
+<td><p>IETF, <em>The Transport Layer Security (TLS) Protocol Version 1.2</em>, August 2008. <a class="reference external" href="https://tools.ietf.org/html/rfc5246.html">tools.ietf.org/html/rfc5246.html</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="target" id="cite-rfc-5489"></span>[RFC5489]</p></td>
+<td><p>IETF, <em>ECDHE_PSK Cipher Suites for Transport Layer Security (TLS)</em>, March 2009. <a class="reference external" href="https://tools.ietf.org/html/rfc5489.html">tools.ietf.org/html/rfc5489.html</a></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="target" id="cite-rfc-5639"></span>[RFC5639]</p></td>
+<td><p>IETF, <em>Elliptic Curve Cryptography (ECC) Brainpool Standard Curves and Curve Generation</em>, March 2010. <a class="reference external" href="https://tools.ietf.org/html/rfc5639.html">tools.ietf.org/html/rfc5639.html</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="target" id="cite-rfc-5649"></span>[RFC5649]</p></td>
+<td><p>IETF, <em>Advanced Encryption Standard (AES) Key Wrap with Padding Algorithm</em>, August 2009. <a class="reference external" href="https://tools.ietf.org/html/rfc5649.html">tools.ietf.org/html/rfc5649.html</a></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="target" id="cite-rfc-5794"></span>[RFC5794]</p></td>
+<td><p>IETF, <em>A Description of the ARIA Encryption Algorithm</em>, March 2010. <a class="reference external" href="https://datatracker.ietf.org/doc/html/rfc5794">datatracker.ietf.org/doc/html/rfc5794</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="target" id="cite-rfc-5869"></span>[RFC5869]</p></td>
+<td><p>IETF, <em>HMAC-based Extract-and-Expand Key Derivation Function (HKDF)</em>, May 2010. <a class="reference external" href="https://tools.ietf.org/html/rfc5869.html">tools.ietf.org/html/rfc5869.html</a></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="target" id="cite-rfc-5915"></span>[RFC5915]</p></td>
+<td><p>IETF, <em>Elliptic Curve Private Key Structure</em>, June 2010. <a class="reference external" href="https://tools.ietf.org/html/rfc5915.html">tools.ietf.org/html/rfc5915.html</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="target" id="cite-rfc-5958"></span>[RFC5958]</p></td>
+<td><p>IETF, <em>Asymmetric Key Packages</em>, August 2010. <a class="reference external" href="https://tools.ietf.org/html/rfc5958.html">tools.ietf.org/html/rfc5958.html</a></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="target" id="cite-rfc-6979"></span>[RFC6979]</p></td>
+<td><p>IETF, <em>Deterministic Usage of the Digital Signature Algorithm (DSA) and Elliptic Curve Digital Signature Algorithm (ECDSA)</em>, August 2013. <a class="reference external" href="https://tools.ietf.org/html/rfc6979.html">tools.ietf.org/html/rfc6979.html</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="target" id="cite-rfc-7693"></span>[RFC7693]</p></td>
+<td><p>J-P. Aumasson, M-J. Saarinen, <em>The BLAKE2 Cryptographic Hash and Message Authentication Code (MAC)</em>, November 2015. <a class="reference external" href="https://tools.ietf.org/html/rfc7693.html">tools.ietf.org/html/rfc7693.html</a></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="target" id="cite-rfc-7748"></span>[RFC7748]</p></td>
+<td><p>IETF, <em>Elliptic Curves for Security</em>, January 2016. <a class="reference external" href="https://tools.ietf.org/html/rfc7748.html">tools.ietf.org/html/rfc7748.html</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="target" id="cite-rfc-7919"></span>[RFC7919]</p></td>
+<td><p>IETF, <em>Negotiated Finite Field Diffie-Hellman Ephemeral Parameters for Transport Layer Security (TLS)</em>, August 2016. <a class="reference external" href="https://tools.ietf.org/html/rfc7919.html">tools.ietf.org/html/rfc7919.html</a></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="target" id="cite-rfc-8017"></span>[RFC8017]</p></td>
+<td><p>IETF, <em>PKCS #1: RSA Cryptography Specifications Version 2.2</em>, November 2016. <a class="reference external" href="https://tools.ietf.org/html/rfc8017.html">tools.ietf.org/html/rfc8017.html</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="target" id="cite-rfc-8018"></span>[RFC8018]</p></td>
+<td><p>IETF, <em>PKCS #5: Password-Based Cryptography Specification Version 2.1</em>, January 2017. <a class="reference external" href="https://tools.ietf.org/html/rfc8018.html">tools.ietf.org/html/rfc8018.html</a></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="target" id="cite-rfc-8032"></span>[RFC8032]</p></td>
+<td><p>IRTF, <em>Edwards-Curve Digital Signature Algorithm (EdDSA)</em>, January 2017. <a class="reference external" href="https://tools.ietf.org/html/rfc8032.html">tools.ietf.org/html/rfc8032.html</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="target" id="cite-rfc-8235"></span>[RFC8235]</p></td>
+<td><p>IETF, <em>Schnorr Non-interactive Zero-Knowledge Proof</em>, September 2017. <a class="reference external" href="https://tools.ietf.org/html/rfc8235.html">tools.ietf.org/html/rfc8235.html</a></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="target" id="cite-rfc-8236"></span>[RFC8236]</p></td>
+<td><p>IETF, <em>J-PAKE: Password-Authenticated Key Exchange by Juggling</em>, September 2017. <a class="reference external" href="https://tools.ietf.org/html/rfc8236.html">tools.ietf.org/html/rfc8236.html</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="target" id="cite-rfc-8391"></span>[RFC8391]</p></td>
+<td><p>IRTF, <em>XMSS: eXtended Merkle Signature Scheme</em>, May 2018. <a class="reference external" href="https://tools.ietf.org/html/rfc8391">tools.ietf.org/html/rfc8391</a></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="target" id="cite-rfc-8439"></span>[RFC8439]</p></td>
+<td><p>IRTF, <em>ChaCha20 and Poly1305 for IETF Protocols</em>, June 2018. <a class="reference external" href="https://tools.ietf.org/html/rfc8439.html">tools.ietf.org/html/rfc8439.html</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="target" id="cite-rfc-8554"></span>[RFC8554]</p></td>
+<td><p>IRTF, <em>Leighton-Micali Hash-Based Signatures</em>, April 2019. <a class="reference external" href="https://tools.ietf.org/html/rfc8554">tools.ietf.org/html/rfc8554</a></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="target" id="cite-rfc-8702"></span>[RFC8702]</p></td>
+<td><p>IETF, <em>Use of the SHAKE One-Way Hash Functions in the Cryptographic Message Syntax (CMS)</em>, January 2020. <a class="reference external" href="https://tools.ietf.org/html/rfc8702.html">tools.ietf.org/html/rfc8702.html</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="target" id="cite-rfc-9383"></span>[RFC9383]</p></td>
+<td><p>IETF, <em>SPAKE2+, an Augmented Password-Authenticated Key Exchange (PAKE) Protocol</em>, September 2023. <a class="reference external" href="https://tools.ietf.org/html/rfc9383.html">tools.ietf.org/html/rfc9383.html</a></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="target" id="cite-rfc-9688"></span>[RFC9688]</p></td>
+<td><p>IETF, <em>Use of the SHA3 One-Way Hash Functions in the Cryptographic Message Syntax (CMS)</em>, November 2024. <a class="reference external" href="https://tools.ietf.org/html/rfc9688.html">tools.ietf.org/html/rfc9688.html</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="target" id="cite-rfc-9802"></span>[RFC9802]</p></td>
+<td><p>IETF, <em>Use of the HSS and XMSS Hash-Based Signature Algorithms in Internet X.509 Public Key Infrastructure</em>, June 2025. <a class="reference external" href="https://tools.ietf.org/html/rfc9802">tools.ietf.org/html/rfc9802</a></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="target" id="cite-rfc-9858"></span>[RFC9858]</p></td>
+<td><p>IRTF, <em>Additional Parameter sets for HSS/LMS Hash-Based Signatures</em>, October 2025. <a class="reference external" href="https://tools.ietf.org/html/rfc9858">tools.ietf.org/html/rfc9858</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="target" id="cite-rfc-9881"></span>[RFC9881]</p></td>
+<td><p>IETF, <em>Internet X.509 Public Key Infrastructure — Algorithm Identifiers for the Module-Lattice-Based Digital Signature Algorithm (ML-DSA)</em>, October 2025. <a class="reference external" href="https://tools.ietf.org/html/rfc9881">tools.ietf.org/html/rfc9881</a></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="target" id="cite-rfc-9909"></span>[RFC9909]</p></td>
+<td><p>IETF, <em>Internet X.509 Public Key Infrastructure — Algorithm Identifiers for the Stateless Hash-Based Digital Signature Algorithm (SLH-DSA)</em>, December 2025. <a class="reference external" href="https://tools.ietf.org/html/rfc9909">tools.ietf.org/html/rfc9909</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="target" id="cite-rfc-9935"></span>[RFC9935]</p></td>
+<td><p>IETF, <em>Internet X.509 Public Key Infrastructure - Algorithm Identifiers for Module-Lattice-Based Key-Encapsulation Mechanism (ML-KEM)</em>, March 2026. <a class="reference external" href="https://tools.ietf.org/html/rfc9935">tools.ietf.org/html/rfc9935</a></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="target" id="cite-ripemd"></span>[RIPEMD]</p></td>
+<td><p>Dobbertin, Bosselaers and Preneel, <em>RIPEMD-160: A Strengthened Version of RIPEMD</em>, April 1996. <a class="reference external" href="https://homes.esat.kuleuven.be/~bosselae/ripemd160.html">homes.esat.kuleuven.be/~bosselae/ripemd160.html</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="target" id="cite-sec1"></span>[SEC1]</p></td>
+<td><p>Standards for Efficient Cryptography, <em>SEC 1: Elliptic Curve Cryptography</em>, May 2009. <a class="reference external" href="https://www.secg.org/sec1-v2.pdf">www.secg.org/sec1-v2.pdf</a></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="target" id="cite-sec2"></span>[SEC2]</p></td>
+<td><p>Standards for Efficient Cryptography, <em>SEC 2: Recommended Elliptic Curve Domain Parameters</em>, January 2010. <a class="reference external" href="https://www.secg.org/sec2-v2.pdf">www.secg.org/sec2-v2.pdf</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="target" id="cite-sec2v1"></span>[SEC2v1]</p></td>
+<td><p>Standards for Efficient Cryptography, <em>SEC 2: Recommended Elliptic Curve Domain Parameters, Version 1.0</em>, September 2000. <a class="reference external" href="https://www.secg.org/SEC2-Ver-1.0.pdf">www.secg.org/SEC2-Ver-1.0.pdf</a></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="target" id="cite-sm3-draft"></span>[SM3-draft]</p></td>
+<td><p>Sean Shen, XiaoDong Lee, Ronald Henry Tse, Wong Wai Kit, Paul Yang, <em>The SM3 Cryptographic Hash Function (Draft 02)</em>, July 2018. <a class="reference external" href="https://datatracker.ietf.org/doc/html/draft-sca-cfrg-sm3-02">datatracker.ietf.org/doc/html/draft-sca-cfrg-sm3-02</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="target" id="cite-sp800-108"></span>[SP800-108]</p></td>
+<td><p>NIST, <em>NIST Special Publication 800-108r1: Recommendation for Key Derivation Using Pseudorandom Functions</em>, August 2022. <a class="reference external" href="https://doi.org/10.6028/NIST.SP.800-108r1">doi.org/10.6028/NIST.SP.800-108r1</a></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="target" id="cite-sp800-208"></span>[SP800-208]</p></td>
+<td><p>NIST, <em>NIST Special Publication 800-208: Recommendation for Stateful Hash-Based Signature Schemes</em>, October 2020. <a class="reference external" href="https://doi.org/10.6028/NIST.SP.800-208">doi.org/10.6028/NIST.SP.800-208</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="target" id="cite-sp800-232"></span>[SP800-232]</p></td>
+<td><p>NIST, <em>NIST Special Publication 800-232: Ascon-Based Lightweight Cryptography Standards for Constrained Devices</em>, August 2025. <a class="reference external" href="https://doi.org/10.6028/NIST.SP.800-232">doi.org/10.6028/NIST.SP.800-232</a></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="target" id="cite-sp800-30"></span>[SP800-30]</p></td>
+<td><p>NIST, <em>NIST Special Publication 800-30 Revision 1: Guide for Conducting Risk Assessments</em>, September 2012. <a class="reference external" href="https://doi.org/10.6028/NIST.SP.800-30r1">doi.org/10.6028/NIST.SP.800-30r1</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="target" id="cite-sp800-38a"></span>[SP800-38A]</p></td>
+<td><p>NIST, <em>NIST Special Publication 800-38A: Recommendation for Block Cipher Modes of Operation: Methods and Techniques</em>, December 2001. <a class="reference external" href="https://doi.org/10.6028/NIST.SP.800-38A">doi.org/10.6028/NIST.SP.800-38A</a></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="target" id="cite-sp800-38b"></span>[SP800-38B]</p></td>
+<td><p>NIST, <em>NIST Special Publication 800-38B: Recommendation for Block Cipher Modes of Operation: the CMAC Mode for Authentication</em>, May 2005. <a class="reference external" href="https://doi.org/10.6028/NIST.SP.800-38B">doi.org/10.6028/NIST.SP.800-38B</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="target" id="cite-sp800-38d"></span>[SP800-38D]</p></td>
+<td><p>NIST, <em>NIST Special Publication 800-38D: Recommendation for Block Cipher Modes of Operation: Galois/Counter Mode (GCM) and GMAC</em>, November 2007. <a class="reference external" href="https://doi.org/10.6028/NIST.SP.800-38D">doi.org/10.6028/NIST.SP.800-38D</a></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="target" id="cite-sp800-38f"></span>[SP800-38F]</p></td>
+<td><p>NIST, <em>NIST Special Publication 800-38F: Recommendation for Block Cipher Modes of Operation: Methods for Key Wrapping</em>, December 2012. <a class="reference external" href="https://doi.org/10.6028/NIST.SP.800-38F">doi.org/10.6028/NIST.SP.800-38F</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="target" id="cite-sp800-56a"></span>[SP800-56A]</p></td>
+<td><p>NIST, <em>NIST Special Publication 800-56A: Recommendation for Pair-Wise Key-Establishment Schemes Using Discrete Logarithm Cryptography</em>, April 2018. <a class="reference external" href="https://doi.org/10.6028/NIST.SP.800-56Ar3">doi.org/10.6028/NIST.SP.800-56Ar3</a></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="target" id="cite-sp800-67"></span>[SP800-67]</p></td>
+<td><p>NIST, <em>NIST Special Publication 800-67: Recommendation for the Triple Data Encryption Algorithm (TDEA) Block Cipher</em>, November 2017. <a class="reference external" href="https://doi.org/10.6028/NIST.SP.800-67r2">doi.org/10.6028/NIST.SP.800-67r2</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="target" id="cite-spake2p-2"></span>[SPAKE2P-2]</p></td>
+<td><p>IETF, <em>SPAKE2+, an Augmented PAKE (Draft 02)</em>, December 2020. <a class="reference external" href="https://datatracker.ietf.org/doc/draft-bar-cfrg-spake2plus-02">datatracker.ietf.org/doc/draft-bar-cfrg-spake2plus-02</a></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="target" id="cite-thread"></span>[THREAD]</p></td>
+<td><p>Thread Group, <em>Thread Specification 1.3.0</em>, July 2022. <a class="reference external" href="https://www.threadgroup.org/ThreadSpec">www.threadgroup.org/ThreadSpec</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="target" id="cite-tls-ecjpake"></span>[TLS-ECJPAKE]</p></td>
+<td><p>Cragie, Hao, <em>Elliptic Curve J-PAKE Cipher Suites for Transport Layer Security (TLS)</em>, June 2016. <a class="reference external" href="https://datatracker.ietf.org/doc/html/draft-cragie-tls-ecjpake-01">datatracker.ietf.org/doc/html/draft-cragie-tls-ecjpake-01</a></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="target" id="cite-x9-62"></span>[X9-62]</p></td>
+<td><p>ANSI, <em>Public Key Cryptography For The Financial Services Industry: The Elliptic Curve Digital Signature Algorithm (ECDSA)</em>. <a class="reference external" href="https://standards.globalspec.com/std/1955141/ANSI%20X9.62">standards.globalspec.com/std/1955141/ANSI%20X9.62</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="target" id="cite-xchacha"></span>[XCHACHA]</p></td>
+<td><p>Arciszewski, <em>XChaCha: eXtended-nonce ChaCha and AEAD_XChaCha20_Poly1305</em>, January 2020. <a class="reference external" href="https://datatracker.ietf.org/doc/html/draft-irtf-cfrg-xchacha-03">datatracker.ietf.org/doc/html/draft-irtf-cfrg-xchacha-03</a></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="target" id="cite-zigbee"></span>[ZIGBEE]</p></td>
+<td><p>zigbee alliance, <em>zigbee Specification</em>, April 2017. <a class="reference external" href="https://csa-iot.org/wp-content/uploads/2022/01/docs-05-3474-22-0csg-zigbee-specification-1.pdf">csa-iot.org/wp-content/uploads/2022/01/docs-05-3474-22-0csg-zigbee-specification-1.pdf</a></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="terms-and-abbreviations">
+<span id="terms"></span><h2>Terms and abbreviations<a class="headerlink" href="#terms-and-abbreviations" title="Link to this heading">¶</a></h2>
+<p>This document uses the following terms and abbreviations.</p>
+<table class="longtable docutils align-default" id="id10">
+<caption><span class="caption-number">Table 4 </span><span class="caption-text">Terms and abbreviations</span><a class="headerlink" href="#id10" title="Link to this table">¶</a></caption>
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 75.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Term</p></th>
+<th class="head"><p>Meaning</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><span class="target" id="term-aead"></span><span>AEAD</span></p></td>
+<td><p><a class="reference internal" href="#term-authenticated-encryption-with-associated-data"><span class="term">Authenticated Encryption with Associated Data</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="target" id="term-algorithm"></span><span>Algorithm</span></p></td>
+<td><p>A finite sequence of steps to perform a particular operation.</p>
+<p>In this specification, an algorithm is a <a class="reference internal" href="#term-cipher"><span class="term">cipher</span></a> or a related function.
+Other texts call this a cryptographic mechanism.</p>
+</td>
+</tr>
+<tr class="row-even"><td><p><span class="target" id="term-api"></span><span>API</span></p></td>
+<td><p>Application Programming Interface.</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="target" id="term-asymmetric"></span><span>Asymmetric</span></p></td>
+<td><p>See <a class="reference internal" href="#term-public-key-cryptography"><span class="term">Public-key cryptography</span></a>.</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="target" id="term-authenticated-encryption-with-associated-data"></span><span>Authenticated Encryption with Associated Data (AEAD)</span></p></td>
+<td><p>A type of encryption that
+provides confidentiality and authenticity of data using <a class="reference internal" href="#term-symmetric"><span class="term">symmetric</span></a> keys.</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="target" id="term-byte"></span><span>Byte</span></p></td>
+<td><p>In this specification, a unit of storage comprising eight bits, also called an octet.</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="target" id="term-caller-isolation"></span><span>Caller isolation</span></p></td>
+<td><p>Property of an implementation in which there are multiple application instances, with a security
+boundary between the application instances, as well as between the cryptoprocessor and the
+application instances.</p>
+<p>See <a class="reference internal" href="../overview/goals.html#isolation"><span class="secref">Optional isolation</span></a>.</p>
+</td>
+</tr>
+<tr class="row-odd"><td><p><span class="target" id="term-cipher"></span><span>Cipher</span></p></td>
+<td><p>An algorithm used for encryption or decryption with a <a class="reference internal" href="#term-symmetric"><span class="term">symmetric</span></a> key.</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="target" id="term-cryptoprocessor"></span><span>Cryptoprocessor</span></p></td>
+<td><p>The component that performs cryptographic operations.
+A cryptoprocessor might contain a <a class="reference internal" href="#term-keystore"><span class="term">keystore</span></a> and countermeasures against a range of physical and timing attacks.</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="target" id="term-cryptoprocessor-isolation"></span><span>Cryptoprocessor isolation</span></p></td>
+<td><p>Property of an implementation in which there is a security boundary between the application and the
+cryptoprocessor, but the cryptoprocessor does not communicate with other applications.</p>
+<p>See <a class="reference internal" href="../overview/goals.html#isolation"><span class="secref">Optional isolation</span></a>.</p>
+</td>
+</tr>
+<tr class="row-even"><td><p><span class="target" id="term-hash"></span><span>Hash</span></p></td>
+<td><p>A cryptographic hash function, or the value returned by such a function.</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="target" id="term-hmac"></span><span>HMAC</span></p></td>
+<td><p>A type of <a class="reference internal" href="#term-mac"><span class="term">MAC</span></a> that uses a cryptographic key with a <a class="reference internal" href="#term-hash"><span class="term">hash</span></a> function.</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="target" id="term-implementation-defined"></span><span class="sc">Implementation defined</span></p></td>
+<td><p>Behavior that is not defined by the architecture, but is defined and documented by individual implementations.</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="target" id="term-initialization-vector"></span><span>Initialization vector (IV)</span></p></td>
+<td><p>An additional input that is not part of the message. It is used to prevent an attacker from making any
+correlation between cipher text and plain text.</p>
+<p>This specification uses the term for such initial inputs
+in all contexts. For example, the initial counter in CTR mode is called the IV.</p>
+</td>
+</tr>
+<tr class="row-even"><td><p><span class="target" id="term-isolation"></span><span>Isolation</span></p></td>
+<td><p>Property of an implementation in which there is a security boundary between the application and the
+cryptoprocessor.</p>
+<p>See <a class="reference internal" href="../overview/goals.html#isolation"><span class="secref">Optional isolation</span></a>.</p>
+</td>
+</tr>
+<tr class="row-odd"><td><p><span class="target" id="term-iv"></span><span>IV</span></p></td>
+<td><p><a class="reference internal" href="#term-initialization-vector"><span class="term">Initialization vector</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="target" id="term-kdf"></span><span>KDF</span></p></td>
+<td><p><a class="reference internal" href="#term-key-derivation-function"><span class="term">Key Derivation Function</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="target" id="term-key-agreement"></span><span>Key agreement</span></p></td>
+<td><p>An algorithm for two or more parties to establish a common secret key.</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="target" id="term-key-derivation-function"></span><span>Key Derivation Function (KDF)</span></p></td>
+<td><p>Key Derivation Function. An algorithm for deriving keys from secret material.</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="target" id="term-key-identifier"></span><span>Key identifier</span></p></td>
+<td><p>A reference to a cryptographic key. Key identifiers in the Crypto API are 32-bit integers.</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="target" id="term-key-policy"></span><span>Key policy</span></p></td>
+<td><p>Key metadata that describes and restricts what a key can be used for.</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="target" id="term-key-size"></span><span>Key size</span></p></td>
+<td><p>The size of a key as defined by common conventions for each key type.
+For keys that are built from several numbers of strings, this is the size of a particular one of these numbers or strings.</p>
+<p>This specification expresses key sizes in bits.</p>
+</td>
+</tr>
+<tr class="row-even"><td><p><span class="target" id="term-key-type"></span><span>Key type</span></p></td>
+<td><p>Key metadata that describes the structure and content of a key.</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="target" id="term-keystore"></span><span>Keystore</span></p></td>
+<td><p>A hardware or software component that protects, stores, and manages cryptographic keys.</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="target" id="term-lifetime"></span><span>Lifetime</span></p></td>
+<td><p>Key metadata that describes when a key is destroyed.</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="target" id="term-mac"></span><span>MAC</span></p></td>
+<td><p><a class="reference internal" href="#term-message-authentication-code"><span class="term">Message Authentication Code</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="target" id="term-message-authentication-code"></span><span>Message Authentication Code (MAC)</span></p></td>
+<td><p>A short piece of information used to authenticate a message.
+It is created and verified using a <a class="reference internal" href="#term-symmetric"><span class="term">symmetric</span></a> key.</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="target" id="term-message-digest"></span><span>Message digest</span></p></td>
+<td><p>A <a class="reference internal" href="#term-hash"><span class="term">hash</span></a> of a message. Used to determine if a message has been tampered.</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="target" id="term-multi-part-operation"></span><span>Multi-part operation</span></p></td>
+<td><p>An <a class="reference internal" href="#term-api"><span class="term">API</span></a> which splits a single cryptographic operation into a sequence of separate steps.</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="target" id="term-no-isolation"></span><span>No isolation</span></p></td>
+<td><p>Property of an implementation in which there is no security boundary between the application and the
+cryptoprocessor.</p>
+<p>See <a class="reference internal" href="../overview/goals.html#isolation"><span class="secref">Optional isolation</span></a>.</p>
+</td>
+</tr>
+<tr class="row-even"><td><p><span class="target" id="term-non-extractable-key"></span><span>Non-extractable key</span></p></td>
+<td><p>A key with a <a class="reference internal" href="#term-key-policy"><span class="term">key policy</span></a> that prevents it from being read by ordinary means.</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="target" id="term-nonce"></span><span>Nonce</span></p></td>
+<td><p>Used as an input for certain <a class="reference internal" href="#term-aead"><span class="term">AEAD</span></a> algorithms.
+Nonces must not be reused with the same key because this can break a cryptographic protocol.</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="target" id="term-persistent-key"></span><span>Persistent key</span></p></td>
+<td><p>A key that is stored in protected non-volatile memory.</p>
+<p>See <a class="reference internal" href="../api/keys/lifetimes.html#key-lifetimes"><span class="secref">Key lifetimes</span></a>.</p>
+</td>
+</tr>
+<tr class="row-odd"><td><p><span class="target" id="term-post-quantum-cryptography"></span><span>Post-Quantum Cryptography (PQC)</span></p></td>
+<td><p>A cryptographic scheme that relies on mathematical problems that do not have efficient algorithms for either classical or quantum computing.</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="target" id="term-pqc"></span><span>PQC</span></p></td>
+<td><p><a class="reference internal" href="#term-post-quantum-cryptography"><span class="term">Post-Quantum Cryptography</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="target" id="term-psa"></span><span>PSA</span></p></td>
+<td><p>Platform Security Architecture</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="target" id="term-public-key-cryptography"></span><span>Public-key cryptography</span></p></td>
+<td><p>A type of cryptographic system that uses key pairs. A keypair consists of a (secret) private key
+and a public key (not secret). A public-key cryptographic algorithm can be used for key distribution
+and for digital signatures.</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="target" id="term-salt"></span><span>Salt</span></p></td>
+<td><p>Used as an input for certain algorithms, such as key derivations.</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="target" id="term-signature"></span><span>Signature</span></p></td>
+<td><p>The output of a digital signature scheme that uses an <a class="reference internal" href="#term-asymmetric"><span class="term">asymmetric</span></a> keypair. Used to establish who produced a message.</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="target" id="term-single-part-function"></span><span>Single-part function</span></p></td>
+<td><p>An <a class="reference internal" href="#term-api"><span class="term">API</span></a> that implements the cryptographic operation in a single function call.</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="target" id="term-specification-defined"></span><span class="sc">Specification defined</span></p></td>
+<td><p>Behavior that is defined by this specification.</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="target" id="term-symmetric"></span><span>Symmetric</span></p></td>
+<td><p>A type of cryptographic algorithm that uses a single key. A symmetric key can be used with
+a block cipher or a stream cipher.</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="target" id="term-volatile-key"></span><span>Volatile key</span></p></td>
+<td><p>A key that has a short lifespan and is guaranteed not to exist after a restart of an application instance.</p>
+<p>See <a class="reference internal" href="../api/keys/lifetimes.html#key-lifetimes"><span class="secref">Key lifetimes</span></a>.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="potential-for-change">
+<span id="id4"></span><h2>Potential for change<a class="headerlink" href="#potential-for-change" title="Link to this heading">¶</a></h2>
+<p>The contents of this specification are stable for version 1.5.</p>
+<p>The following may change in updates to the version 1.5 specification:</p>
+<ul class="simple">
+<li><p>Small optional feature additions.</p></li>
+<li><p>Clarifications.</p></li>
+</ul>
+<p>Significant additions, or any changes that affect the compatibility of the interfaces defined in this specification will only be included in a new major or minor version of the specification.</p>
+</section>
+<section id="conventions">
+<span id="id5"></span><h2>Conventions<a class="headerlink" href="#conventions" title="Link to this heading">¶</a></h2>
+<section id="typographical-conventions">
+<h3>Typographical conventions<a class="headerlink" href="#typographical-conventions" title="Link to this heading">¶</a></h3>
+<p>The typographical conventions are:</p>
+<dl>
+<dt><em>italic</em></dt><dd><p>Introduces special terminology, and denotes citations.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">monospace</span></code></dt><dd><p>Used for assembler syntax descriptions, pseudocode, and source code examples.</p>
+<p>Also used in the main text for instruction mnemonics and for references to
+other items appearing in assembler syntax descriptions, pseudocode, and
+source code examples.</p>
+</dd>
+<dt><span class="sc">small capitals</span></dt><dd><p>Used for some common terms such as <span class="sc">implementation defined</span>.</p>
+<p>Used for a few terms that have specific technical meanings, and are included
+in the <em>Terms and abbreviations</em>.</p>
+</dd>
+<dt><span class="issue">Red text</span></dt><dd><p>Indicates an open issue.</p>
+</dd>
+<dt><span class="anchor">Blue text</span></dt><dd><p>Indicates a link. This can be</p>
+<ul class="simple">
+<li><p>A cross-reference to another location within the document</p></li>
+<li><p>A URL, for example <a class="reference external" href="https://example.com">example.com</a></p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="numbers">
+<h3>Numbers<a class="headerlink" href="#numbers" title="Link to this heading">¶</a></h3>
+<p>Numbers are normally written in decimal. Binary numbers are preceded by 0b, and
+hexadecimal numbers by <code class="docutils literal notranslate"><span class="pre">0x</span></code>.</p>
+<p>In both cases, the prefix and the associated value are written in a monospace
+font, for example <code class="docutils literal notranslate"><span class="pre">0xFFFF0000</span></code>. To improve readability, long numbers can be
+written with an underscore separator between every four characters, for example
+<code class="docutils literal notranslate"><span class="pre">0xFFFF_0000_0000_0000</span></code>. Ignore any underscores when interpreting the value of
+a number.</p>
+</section>
+</section>
+<section id="feedback">
+<span id="current-status"></span><span id="id6"></span><h2>Feedback<a class="headerlink" href="#feedback" title="Link to this heading">¶</a></h2>
+<p>We welcome feedback on the PSA Certified API documentation.</p>
+<p>If you have comments on the content of this book, visit <a class="reference external" href="https://github.com/arm-software/psa-api/issues">github.com/arm-software/psa-api/issues</a> to create a new issue at the PSA Certified API GitHub project. Give:</p>
+<ul class="simple">
+<li><p>The title (PSA Certified Crypto API).</p></li>
+<li><p>The number and issue (IHI 0086 1.5.0).</p></li>
+<li><p>The location in the document to which your comments apply.</p></li>
+<li><p>A concise explanation of your comments.</p></li>
+</ul>
+<p>We also welcome general suggestions for additions and improvements.</p>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &#169; 2018-2026 Arm Limited and/or its affiliates.
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

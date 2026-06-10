@@ -1,0 +1,795 @@
+---
+---
+
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta property="og:title" content="4 Security Risk Assessment" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="{{ page.url | absolute_url }}" />
+<link rel="canonical" href="{{ page.url | absolute_url }}" />
+<meta property="og:site_name" content="PSA Certified Crypto API 1.5" />
+<meta property="og:description" content="This Security Risk Assessment (SRA) analyses the security of the Crypto API itself, not of any specific implementation of the API, or any specific use of the API. However, the security of an implem..." />
+<meta name="description" content="This Security Risk Assessment (SRA) analyses the security of the Crypto API itself, not of any specific implementation of the API, or any specific use of the API. However, the security of an implem..." />
+
+    <title>4 Security Risk Assessment &#8212; PSA Certified Crypto API 1.5</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/basic.css?v=686e5160" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=f6a572b4" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+    <link rel="preconnect" type="text/css" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" type="text/css" href="https://fonts.gstatic.com" />
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;1,300;1,400&display=swap" />
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Mono:ital,wght@0,300;0,400;1,300&display=swap" />
+    <script src="../_static/documentation_options.js?v=f8f0f945"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="5 Changes to the API" href="history.html" />
+    <link rel="prev" title="3 Example macro implementations" href="specdef_values.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/ARM_LOGO-2025_INK_RGB.svg" alt="Logo of PSA Certified Crypto API"/>
+            </a></p><hr />
+<h3><a href="../index.html">PSA Certified<br />Crypto API</a></h3>
+IHI 0086<br/>
+Non-confidential<br/>
+Version 1.5.0
+<hr />
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../about/about.html">About this document</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../overview/intro.html">1 Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../overview/goals.html">2 Design goals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../overview/functionality.html">3 Functionality overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../overview/sample-arch.html">4 Sample architectures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../overview/conventions.html">5 Library conventions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../overview/implementation.html">6 Implementation considerations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../overview/usage.html">7 Usage considerations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/library/index.html">8 Library management reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/keys/index.html">9 Key management reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/ops/index.html">10 Cryptographic operation reference</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="example_header.html">A Example header file</a></li>
+<li class="toctree-l1"><a class="reference internal" href="encodings.html">B Algorithm and key type encoding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="specdef_values.html">C Example macro implementations</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">D Security Risk Assessment</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#architecture">D.1 Architecture</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#system-definition">D.1.1 System definition</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#assets-and-stakeholders">D.1.2 Assets and stakeholders</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#security-goals">D.1.3 Security goals</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#threat-model">D.2 Threat Model</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#adversarial-models">D.2.1 Adversarial models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#threats-and-attacks">D.2.2 Threats and attacks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#risk-assessment">D.2.3 Risk assessment</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#mitigations">D.3 Mitigations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#objectives">D.3.1 Objectives</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#requirements">D.3.2 Requirements</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#remediation-residual-risk">D.4 Remediation &amp; residual risk</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#implementation-remediations">D.4.1 Implementation remediations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#residual-risk">D.4.2 Residual risk</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="history.html">E Changes to the API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../atg_c-identifiers.html">Index of API elements</a></li>
+</ul>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="security-risk-assessment">
+<span id="sra"></span><h1><span class="section-number">D </span>Security Risk Assessment<a class="headerlink" href="#security-risk-assessment" title="Link to this heading">¶</a></h1>
+<p>This Security Risk Assessment (SRA) analyses the security of the Crypto API itself, not of any specific implementation of the API, or any specific use of the API. However, the security of an implementation of the Crypto API depends on the implementation design, the capabilities of the system in which it is deployed, and the need to address some of the threats identified in this assessment.</p>
+<p>To enable the Crypto API to be suitable for a wider range of security use cases, this SRA considers a broad range of adversarial models and threats to the application and the implementation, as well as to the API.</p>
+<p>This approach allows the assessment to identify API design requirements that affect the ability for an implementation to mitigate threats that do not directly attack the API.</p>
+<p>The scope is described in <a class="reference internal" href="#adversarial-models"><span class="secref">Adversarial models</span></a>.</p>
+<section id="architecture">
+<h2><span class="section-number">D.1 </span>Architecture<a class="headerlink" href="#architecture" title="Link to this heading">¶</a></h2>
+<section id="system-definition">
+<h3><span class="section-number">D.1.1 </span>System definition<a class="headerlink" href="#system-definition" title="Link to this heading">¶</a></h3>
+<p><span><a class="reference internal" href="#fig-system-entities"><span class="numref">Figure 34</span></a></span> shows the Crypto API as the defined interface that an Application uses to interact with the Cryptoprocessor.</p>
+<figure class="align-default" id="fig-system-entities">
+<img alt="../_images/system-entities.svg" src="../_images/system-entities.svg" />
+<figcaption>
+<p><span class="caption-number">Figure 34 </span><span class="caption-text">Crypto API</span><a class="headerlink" href="#fig-system-entities" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
+<section id="assumptions-constraints-and-interacting-entities">
+<h4>Assumptions, constraints, and interacting entities<a class="headerlink" href="#assumptions-constraints-and-interacting-entities" title="Link to this heading">¶</a></h4>
+<p>This SRA makes the following assumptions about the Crypto API design:</p>
+<ul class="simple">
+<li><p>The API does not provide arguments that identify the caller, because they can be spoofed easily, and cannot be relied upon. It is assumed that the implementation of the API can determine the caller identity, where this is required. See <a class="reference internal" href="../overview/goals.html#isolation"><span class="secref">Optional isolation</span></a>.</p></li>
+<li><p>The API does not prevent the use of mitigations that are required by an implementation of the API. See <a class="reference internal" href="#remediation"><span class="secref">Implementation remediations</span></a>.</p></li>
+<li><p>The API follows best-practices for C interface design, reducing the risk of exploitable errors in the application and implementation code. See <a class="reference internal" href="../overview/goals.html#usability"><span class="secref">Ease of use</span></a>.</p></li>
+</ul>
+</section>
+<section id="trust-boundaries-and-information-flow">
+<span id="dfd"></span><h4>Trust boundaries and information flow<a class="headerlink" href="#trust-boundaries-and-information-flow" title="Link to this heading">¶</a></h4>
+<p>The Crypto API is the interface available to the programmer, and is the main attack surface that is analyzed here. However, to ensure that the API enables the mitigation of other threats to an implementation, we also consider the system context in which the Crypto API is used.</p>
+<p><span><a class="reference internal" href="#fig-dfd-no-isolation"><span class="numref">Figure 35</span></a></span> shows the data flow for a typical application usage of the Crypto API, for example, to exchange ciphertext with an external system, or for at rest protection in system non-volatile storage. The Application uses the Crypto API to interact with the Cryptoprocessor. The Cryptoprocessor stores persistent keys in a Key Store.</p>
+<figure class="align-default" id="fig-dfd-no-isolation">
+<img alt="../_images/dfd_no_isolation.svg" src="../_images/dfd_no_isolation.svg" />
+<figcaption>
+<p><span class="caption-number">Figure 35 </span><span class="caption-text">Crypto API dataflow diagram for an implementation with no isolation</span><a class="headerlink" href="#fig-dfd-no-isolation" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
+<p>For some adversarial models, <a class="reference internal" href="../about/about.html#term-cryptoprocessor-isolation"><span class="term">Cryptoprocessor isolation</span></a> or <a class="reference internal" href="../about/about.html#term-caller-isolation"><span class="term">Caller isolation</span></a> is required in the implementation to achieve the security goals. See <a class="reference internal" href="#security-goals"><span class="secref">Security goals</span></a>, and remediations R.1 and R.2 in <a class="reference internal" href="#remediation"><span class="secref">Implementation remediations</span></a>.</p>
+<p>The Cryptoprocessor can optionally include a trust boundary within its implementation of the API. The trust boundary shown in <span><a class="reference internal" href="#fig-dfd-crypto-isolation"><span class="numref">Figure 36</span></a></span> corresponds to Cryptoprocessor isolation. The Cryptoprocessor boundary protects the confidentiality and integrity of the Cryptoprocessor and Key Store state from system components that are outside of the boundary.</p>
+<figure class="align-default" id="fig-dfd-crypto-isolation">
+<img alt="../_images/dfd_crypto_isolation.svg" src="../_images/dfd_crypto_isolation.svg" />
+<figcaption>
+<p><span class="caption-number">Figure 36 </span><span class="caption-text">Crypto API dataflow diagram for an implementation with cryptoprocessor isolation</span><a class="headerlink" href="#fig-dfd-crypto-isolation" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
+<p>If the implementation supports multiple, independent client Applications within the system, each Application has its own view of the Cryptoprocessor and key store. The additional trust boundaries required for a caller isolated implementation are shown in <span><a class="reference internal" href="#fig-dfd-caller-isolation"><span class="numref">Figure 37</span></a></span>. The Application boundary restricts the capabilities of the Application, and protects the confidentiality and integrity of system state from the Application.</p>
+<figure class="align-default" id="fig-dfd-caller-isolation">
+<img alt="../_images/dfd_caller_isolation.svg" src="../_images/dfd_caller_isolation.svg" />
+<figcaption>
+<p><span class="caption-number">Figure 37 </span><span class="caption-text">Crypto API dataflow diagram for an implementation with caller isolation</span><a class="headerlink" href="#fig-dfd-caller-isolation" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
+</section>
+</section>
+<section id="assets-and-stakeholders">
+<h3><span class="section-number">D.1.2 </span>Assets and stakeholders<a class="headerlink" href="#assets-and-stakeholders" title="Link to this heading">¶</a></h3>
+<ol class="arabic">
+<li><p>Cryptographic keys and key-related assets. This includes the key properties, such as the key type, identity and policies.</p>
+<p>Stakeholders can include the SiP, the OEM, the system or application owner. Owners of a key need to be able to use the key for cryptographic operations, such as encryption or signature, and where permitted, delete, copy or extract the key.</p>
+<p>Disclosure of the cryptographic key material to an attacker defeats the protection that the use of cryptography provides. Modification of cryptographic key material or key properties by an attacker has the same end result. These allow an attacker access to the assets that are protected by the key.</p>
+</li>
+<li><p>Other cryptographic assets, for example, intermediate calculation values and RNG state.</p>
+<p>Disclosure or modification of these assets can enable recovery of cryptographic keys, and loss of cryptographic protection.</p>
+</li>
+<li><p>Application input/output data and cryptographic operation state.</p>
+<p>Application data is only provided to the Cryptoprocessor for cryptographic operations, and its stakeholder is the application owner.</p>
+<p>Disclosure of this data — whether it is plaintext, or other data or state — to an attacker defeats the protection that the use of cryptography provides. Modification of this data can have the same effect.</p>
+</li>
+</ol>
+</section>
+<section id="security-goals">
+<span id="id1"></span><h3><span class="section-number">D.1.3 </span>Security goals<a class="headerlink" href="#security-goals" title="Link to this heading">¶</a></h3>
+<p>Cryptography is used as a mitigation to the risk of disclosure or tampering with data assets that require protection, where isolation of the attacker from the data asset is unavailable or inadequate. Using cryptography introduces new threats related to the incorrect use of cryptography and mismanagement of cryptographic keys. <span><a class="reference internal" href="#table-sg"><span class="numref">Table 47</span></a></span> lists the security goals for the Crypto API to address these threats.</p>
+<table class="longtable docutils align-default" id="table-sg">
+<caption><span class="caption-number">Table 47 </span><span class="caption-text">Security goals</span><a class="headerlink" href="#table-sg" title="Link to this table">¶</a></caption>
+<colgroup>
+<col style="width: 10.0%" />
+<col style="width: 90.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Id</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>G.1</p></td>
+<td><p>An attacker shall not be able to disclose the plaintext corresponding to a ciphertext for which they do not own the correct key.</p></td>
+</tr>
+<tr class="row-odd"><td><p>G.2</p></td>
+<td><p>An attacker shall not be able to generate authenticated material for which they do not own the correct key.</p></td>
+</tr>
+<tr class="row-even"><td><p>G.3</p></td>
+<td><p>An attacker shall not be able to exfiltrate keys or other private information stored by the Crypto API.</p></td>
+</tr>
+<tr class="row-odd"><td><p>G.4</p></td>
+<td><p>An attacker shall not be able to alter any state held by the implementation of the Crypto API, such as internal keys or other private information (for example, certificates, signatures, etc.).</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="threat-model">
+<h2><span class="section-number">D.2 </span>Threat Model<a class="headerlink" href="#threat-model" title="Link to this heading">¶</a></h2>
+<section id="adversarial-models">
+<span id="id2"></span><h3><span class="section-number">D.2.1 </span>Adversarial models<a class="headerlink" href="#adversarial-models" title="Link to this heading">¶</a></h3>
+<p>The API itself has limited ability to mitigate threats. However, mitigation of some of the threats within the cryptoprocessor can place requirements on the API design. This analysis considers a broad attack surface, to also identify requirements that enable the mitigation of specific threats within a cryptoprocessor implementation.</p>
+<p><span><a class="reference internal" href="#table-adversaries"><span class="numref">Table 48</span></a></span> describes the adversarial models that are considered in this assessment.</p>
+<p>A specific implementation of the Crypto API might not include all of these adversarial models within its own threat model. In this case, the related threats, risks, and mitigations might not be required for that implementation.</p>
+<table class="longtable docutils align-default" id="table-adversaries">
+<caption><span class="caption-number">Table 48 </span><span class="caption-text">Adversarial models</span><a class="headerlink" href="#table-adversaries" title="Link to this table">¶</a></caption>
+<colgroup>
+<col style="width: 10.0%" />
+<col style="width: 90.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Id</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>M.0</p></td>
+<td><p>The Adversary is capable of accessing data that is outside the Security Perimeter of the system and on commonly accessible channels, such as messages in transit or data in storage.</p>
+<p>This includes, but is not limited to:</p>
+<ul class="simple">
+<li><p>Read any input and output.</p></li>
+<li><p>Provide, forge, replay or modify input.</p></li>
+<li><p>Attempt to gain read/write access to external storage devices.</p></li>
+<li><p>Perform timings on the operations being done by the target machine, either in normal operation or as a response to crafted inputs. For example, timing attacks on web servers.</p></li>
+</ul>
+<p>Once access to data is obtained, we do not make a further case distinction of the Adversarial Model depending on other capabilities. For example, the ability to perform cryptanalysis on intercepted ciphertext.</p>
+</td>
+</tr>
+<tr class="row-odd"><td><p>M.1</p></td>
+<td><p>The Adversary is capable of mounting attacks from software.</p>
+<p>This includes, but is not limited to:</p>
+<ul class="simple">
+<li><p>Software exploitation.</p></li>
+<li><p>Side channel analysis that that relies on software-exposed, built-in hardware features to perform physical unit and time measurements.</p></li>
+<li><p>Attacks that exploit access to any memory mapped configuration, monitoring, debug register.</p></li>
+<li><p>Software-induced glitching of resources, for example Row hammer, or crashing the CPU by running intensive tasks.</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td><p>M.2</p></td>
+<td><p>The Adversary is capable of mounting simple, passive hardware attacks. This Adversary has physical access to the hardware.</p>
+<p>This includes, but is not limited to:</p>
+<ul class="simple">
+<li><p>Side channel analyses that require external measurement devices. For example, this can utilize leakage sources such as EM emissions, power consumption, photonic emission, or acoustic channels.</p></li>
+<li><p>Plugging malicious hardware into an unmodified system.</p></li>
+<li><p>Passive SoC or memory interposition.</p></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Adversarial models that are outside the scope of this assessment are shown in <span><a class="reference internal" href="#table-out-of-scope-adversaries"><span class="numref">Table 49</span></a></span>.</p>
+<table class="longtable docutils align-default" id="table-out-of-scope-adversaries">
+<caption><span class="caption-number">Table 49 </span><span class="caption-text">Adversarial models that are outside the scope of this SRA</span><a class="headerlink" href="#table-out-of-scope-adversaries" title="Link to this table">¶</a></caption>
+<colgroup>
+<col style="width: 10.0%" />
+<col style="width: 90.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Id</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>M.3</p></td>
+<td><p>The Adversary is capable of mounting sophisticated and active physical attacks.</p>
+<p>This includes, but is not limited to:</p>
+<ul class="simple">
+<li><p>Interposing memory and blocking, replaying, and injecting transactions, this requires a much more precise timing than passive eavesdropping.</p></li>
+<li><p>Replacing or adding chips on the motherboard.</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td><p>M.4</p></td>
+<td><p>The Adversary is capable of performing invasive silicon microsurgery.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="threats-and-attacks">
+<h3><span class="section-number">D.2.2 </span>Threats and attacks<a class="headerlink" href="#threats-and-attacks" title="Link to this heading">¶</a></h3>
+<p><span><a class="reference internal" href="#table-threats"><span class="numref">Table 50</span></a></span> describes threats to the Security Goals, and provides examples of corresponding attacks. This table identifies which Security goals are affected by the attacks, and which Adversarial model or models are required to execute the attack.</p>
+<p>See <a class="reference internal" href="#risk-assessment"><span class="secref">Risk assessment</span></a> for an evaluation of the risks posed by these threats, <a class="reference internal" href="#mitigations"><span class="secref">Mitigations</span></a> for mitigation requirements in the API design, and <a class="reference internal" href="#remediation"><span class="secref">Implementation remediations</span></a> for mitigation recommendations in the cryptoprocessor implementation.</p>
+<table class="longtable docutils align-default" id="table-threats">
+<caption><span class="caption-number">Table 50 </span><span class="caption-text">Threats and attacks</span><a class="headerlink" href="#table-threats" title="Link to this table">¶</a></caption>
+<colgroup>
+<col style="width: 8.0%" />
+<col style="width: 20.0%" />
+<col style="width: 8.0%" />
+<col style="width: 8.0%" />
+<col style="width: 56.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Threat</p></th>
+<th class="head"></th>
+<th class="head"></th>
+<th class="head"></th>
+<th class="head"><p>Attack (Examples)</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>Id</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Goals</p></th>
+<th class="head"><p>Models</p></th>
+<th class="head"><p>Id: Description</p>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>T.1</p></td>
+<td><p>Use of insecure or incorrectly implemented cryptography</p></td>
+<td><p>G.1 G.2</p></td>
+<td><p>M.0</p></td>
+<td><p><strong>A.C1</strong>: Using a cryptographic algorithm that is not adequately secure for the application use case can permit an attacker to recover the application plaintext from attacker-accessible data.</p>
+<p><strong>A.C2</strong>: Using a cryptographic algorithm that is not adequately secure for the application use case can permit an attacker to inject forged authenticated material into application data in transit or in storage.</p>
+<p><strong>A.C3</strong>: Using an insecure cryptographic algorithm, or one that is incorrectly implemented can permit an attacker to recover the cryptographic key. Key recovery enables the attacker to reveal encrypted plaintexts, and inject forged authenticated data.</p>
+</td>
+</tr>
+<tr class="row-even"><td><p>T.2</p></td>
+<td><p>Misuse of cryptographic algorithms</p></td>
+<td><p>G.1 G.2</p></td>
+<td><p>M.0</p></td>
+<td><p><strong>A.C4</strong>: Reusing a cryptographic key with different algorithms can result in cryptanalysis attacks on the ciphertexts or signatures which enable an attacker to recover the plaintext, or the key itself.</p>
+</td>
+</tr>
+<tr class="row-odd"><td><p>T.3</p></td>
+<td><p>Recover non-extractable key through the API</p></td>
+<td><p>G.3</p></td>
+<td><p>M.1</p></td>
+<td><p><strong>A.C5</strong>: The attacker uses an indirect mechanism provided by the API to extract a key that is not intended to be extractable.</p>
+<p><strong>A.C6</strong>: The attacker uses a mechanism provided by the API to enable brute-force recovery of a non-extractable key. For example, <span><em>On the Security of PKCS #11</em> <a class="reference internal" href="../about/about.html#cite-clulow"><span class="cite">[CLULOW]</span></a></span> describes various flaws in the design of the PKCS #11 interface standard that enable an attacker to recover secret and non-extractable keys.</p>
+</td>
+</tr>
+<tr class="row-even"><td><p>T.4</p></td>
+<td><p>Illegal inputs to the API</p></td>
+<td><p>G.3 G.4</p></td>
+<td><p>M.1</p></td>
+<td><p><strong>A.60</strong>: Using a pointer to memory that does not belong to the application, in an attempt to make the cryptoprocessor read or write memory that is inaccessible to the application.</p>
+<p><strong>A.70</strong>: Passing out-of-range values, or incorrectly formatted data, to provoke incorrect behavior in the cryptoprocessor.</p>
+<p><strong>A.61</strong>: Providing invalid buffer lengths to cause out-of-bounds read or write access within the cryptoprocessor.</p>
+<p><strong>A.62</strong>: Call API functions in an invalid sequence to provoke incorrect operation of the cryptoprocessor.</p>
+</td>
+</tr>
+<tr class="row-odd"><td><p>T.5</p></td>
+<td><p>Direct access to cryptoprocessor state</p></td>
+<td><p>G.3 G.4</p></td>
+<td><p>M.1</p></td>
+<td><p><strong>A.C7</strong>: Without a cryptoprocessor boundary, an attacker can directly access the cryptoprocessor state from an application. See <span><a class="reference internal" href="#fig-dfd-no-isolation"><span class="numref">Figure 35</span></a></span>.</p>
+<p><strong>A.C8</strong>: A misconfigured cryptoprocessor boundary can allow an attacker to directly access the cryptoprocessor state from an Application.</p>
+</td>
+</tr>
+<tr class="row-even"><td><p>T.6</p></td>
+<td><p>Access and use another application’s assets</p></td>
+<td><p>G.1 G.2</p></td>
+<td><p>M.1</p></td>
+<td><p><strong>A.C9</strong>: Without application boundaries, the cryptoprocessor provides a unified view of the application assets. All keys are accessible to all callers of the Crypto API. See <span><a class="reference internal" href="#fig-dfd-caller-isolation"><span class="numref">Figure 37</span></a></span>.</p>
+<p><strong>A.C10</strong>: The attacker can spoof the application identity within a caller-isolated implementation to gain access to another application’s assets.</p>
+</td>
+</tr>
+<tr class="row-odd"><td><p>T.7</p></td>
+<td><p>Data-dependent timing</p></td>
+<td><p>G.1 G.3</p></td>
+<td><p>M.1</p></td>
+<td><p><strong>A.C11</strong> Measuring the time for operations in the cryptoprocessor or the application, and using the differential in results to assist in recovery of the key or plaintext.</p>
+</td>
+</tr>
+<tr class="row-even"><td><p>T.8</p></td>
+<td><p>Memory manipulation</p></td>
+<td><p>G.4</p></td>
+<td><p>M.2</p></td>
+<td><p><strong>A.19</strong>: Corrupt application or cryptoprocessor state via a fault, causing incorrect operation of the cryptoprocessor.</p></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td></td>
+<td></td>
+<td><p>M.1</p></td>
+<td><p><strong>A.59</strong>: Modifying function parameters in memory, while the cryptoprocessor is accessing the parameter memory, to cause incorrect operation of the cryptoprocessor.</p>
+</td>
+</tr>
+<tr class="row-even"><td><p>T.9</p></td>
+<td><p>Side channels</p></td>
+<td><p>G.1 G.3</p></td>
+<td><p>M.2</p></td>
+<td><p><strong>A.C12</strong> Taking measurements from physical side-channels during cryptoprocessor operation, and using this data to recover keys or plaintext. For example, using power or EM measurements.</p></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td></td>
+<td></td>
+<td><p>M.1</p></td>
+<td><p><strong>A.C13</strong> Taking measurements from shared-resource side-channels during cryptoprocessor operation, and using this data to recover keys or plaintext. For example, attacks using a shared cache.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="risk-assessment">
+<span id="id3"></span><h3><span class="section-number">D.2.3 </span>Risk assessment<a class="headerlink" href="#risk-assessment" title="Link to this heading">¶</a></h3>
+<p>The risk ratings in <span><a class="reference internal" href="#table-risks"><span class="numref">Table 51</span></a></span> follow a version of the risk assessment scheme in <span><em>NIST Special Publication 800-30 Revision 1: Guide for Conducting Risk Assessments</em> <a class="reference internal" href="../about/about.html#cite-sp800-30"><span class="cite">[SP800-30]</span></a></span>. Likelihood of an attack and its impact are evaluated independently, and then they are combined to obtain the overall risk of the attack.</p>
+<p>The risk assessment is used to prioritize the threats that require mitigation. This helps to identify the mitigations that have the highest priority for implementation. Mitigations are described in <a class="reference internal" href="#mitigations"><span class="secref">Mitigations</span></a> and <a class="reference internal" href="#remediation"><span class="secref">Implementation remediations</span></a>.</p>
+<p>It is recommended that this assessment is repeated for a specific implementation or product, taking into consideration the Adversarial models that are within scope, and re-evaluating the impact based on the assets at risk. <span><a class="reference internal" href="#table-risks"><span class="numref">Table 51</span></a></span> repeats the association in <span><a class="reference internal" href="#table-threats"><span class="numref">Table 50</span></a></span> between an Adversarial model and the Threats that it enables. This aids filtering of the assessment based on the models that are in scope for a specific implementation.</p>
+<table class="longtable docutils align-default" id="table-risks">
+<caption><span class="caption-number">Table 51 </span><span class="caption-text">Risk assessment</span><a class="headerlink" href="#table-risks" title="Link to this table">¶</a></caption>
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Adversarial Model</p></th>
+<th class="head"><p>Threat/Attack</p></th>
+<th class="head"><p>Likelihood</p></th>
+<th class="head"><p>Impact <sup>a</sup></p></th>
+<th class="head"><p>Risk</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>M.0</p></td>
+<td><p>T.1</p></td>
+<td><p>High</p></td>
+<td><p>Medium</p></td>
+<td><p>Medium</p></td>
+</tr>
+<tr class="row-odd"><td><p>M.0</p></td>
+<td><p>T.2</p></td>
+<td><p>High</p></td>
+<td><p>Medium</p></td>
+<td><p>Medium</p></td>
+</tr>
+<tr class="row-even"><td><p>M.1</p></td>
+<td><p>T.3</p></td>
+<td><p>Medium</p></td>
+<td><p>High</p></td>
+<td><p>Medium</p></td>
+</tr>
+<tr class="row-odd"><td><p>M.1</p></td>
+<td><p>T.4</p></td>
+<td><p>High</p></td>
+<td><p>Medium</p></td>
+<td><p>Medium</p></td>
+</tr>
+<tr class="row-even"><td><p>M.1</p></td>
+<td><p>T.5</p></td>
+<td><p>High</p></td>
+<td><p>Very high</p></td>
+<td><p>Very high</p></td>
+</tr>
+<tr class="row-odd"><td><p>M.1</p></td>
+<td><p>T.6</p></td>
+<td><p>High</p></td>
+<td><p>High</p></td>
+<td><p>High</p></td>
+</tr>
+<tr class="row-even"><td><p>M.1</p></td>
+<td><p>T.7</p></td>
+<td><p>Medium</p></td>
+<td><p>Medium</p></td>
+<td><p>Medium</p></td>
+</tr>
+<tr class="row-odd"><td><p>M.1</p></td>
+<td><p>T.8/A.59</p></td>
+<td><p>Medium</p></td>
+<td><p>Medium</p></td>
+<td><p>Medium</p></td>
+</tr>
+<tr class="row-even"><td><p>M.2</p></td>
+<td><p>T.8/A.19</p></td>
+<td><p>Low</p></td>
+<td><p>Medium</p></td>
+<td><p>Low</p></td>
+</tr>
+<tr class="row-odd"><td><p>M.2</p></td>
+<td><p>T.9/A.C12</p></td>
+<td><p>Low</p></td>
+<td><p>High</p></td>
+<td><p>Medium</p></td>
+</tr>
+<tr class="row-even"><td><p>M.1</p></td>
+<td><p>T.9/A.C13</p></td>
+<td><p>Medium</p></td>
+<td><p>High</p></td>
+<td><p>Medium</p></td>
+</tr>
+</tbody>
+</table>
+<ol class="loweralpha simple">
+<li><p>The impact of an attack is dependent on the impact of the disclosure or modification of the application data that is cryptographically protected. This is ultimately determined by the requirements and risk assessment for the product which is using the Crypto API. <span><a class="reference internal" href="#table-risks"><span class="numref">Table 51</span></a></span> allocates the impact as follows:</p>
+<ul class="simple">
+<li><p>‘Medium’ if unspecified cryptoprocessor state or application data assets are affected.</p></li>
+<li><p>‘High’ if an application’s cryptographic assets are affected.</p></li>
+<li><p>‘Very High’ if all cryptoprocessor assets are affected.</p></li>
+</ul>
+</li>
+</ol>
+</section>
+</section>
+<section id="mitigations">
+<span id="id4"></span><h2><span class="section-number">D.3 </span>Mitigations<a class="headerlink" href="#mitigations" title="Link to this heading">¶</a></h2>
+<section id="objectives">
+<h3><span class="section-number">D.3.1 </span>Objectives<a class="headerlink" href="#objectives" title="Link to this heading">¶</a></h3>
+<p>The objectives in <span><a class="reference internal" href="#table-objectives"><span class="numref">Table 52</span></a></span> are a high-level description of what the design must achieve in order to mitigate the threats. Detailed requirements that describe how the API or cryptoprocessor implementation can deliver the objectives are provided in <a class="reference internal" href="#mitigation-requirements"><span class="secref">Requirements</span></a> and <a class="reference internal" href="#remediation"><span class="secref">Implementation remediations</span></a>.</p>
+<table class="longtable docutils align-default" id="table-objectives">
+<caption><span class="caption-number">Table 52 </span><span class="caption-text">Mitigation objectives</span><a class="headerlink" href="#table-objectives" title="Link to this table">¶</a></caption>
+<colgroup>
+<col style="width: 7.7%" />
+<col style="width: 53.8%" />
+<col style="width: 38.5%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Id</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Threats addressed</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>O.1</p></td>
+<td><p>Hide keys from the application</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p>Keys are never directly manipulated by application software. Instead keys are referred to by handle, removing the need to deal with sensitive key material inside applications. This form of API is also suitable for secure elements, based on tamper-resistant hardware, that never reveal cryptographic keys.</p></td>
+<td><p>T.1 T.2 T.3 — see <a class="reference internal" href="../overview/goals.html#keystore"><span class="secref">A keystore interface</span></a>.</p>
+<p>T.5 T.6 — to mitigate T.5 and T.6, the implementation must provide some form of isolation. See <a class="reference internal" href="../overview/goals.html#isolation"><span class="secref">Optional isolation</span></a>.</p>
+</td>
+</tr>
+<tr class="row-even"><td><p>O.2</p></td>
+<td><p>Limit key usage</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p>Associate each key with a policy that limits the use of the key. The policy is defined by the application when the key is created, after which it is immutable.</p></td>
+<td><p>T.2 T.3 — see <a class="reference internal" href="../api/keys/policy.html#key-policy"><span class="secref">Key policies</span></a>.</p></td>
+</tr>
+<tr class="row-even"><td><p>O.3</p></td>
+<td><p>Best-practice cryptography</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p>An application developer-oriented API to achieve practical cryptography: the Crypto API offers services that are oriented towards the application of cryptographic methods like encrypt, sign, verify. This enables the implementation to focus on best-practice implementation of the cryptographic primitive, and the application developer on correct selection and use of those primitives.</p></td>
+<td><p>T.1 T.2 T.7 T.8 — see <a class="reference internal" href="../overview/goals.html#usability"><span class="secref">Ease of use</span></a>.</p></td>
+</tr>
+<tr class="row-even"><td><p>O.4</p></td>
+<td><p>Algorithm agility</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p>Cryptographic functions are not tied to a specific cryptographic algorithm. Primitives are designated at run-time. This simplifies updating an application to use a more secure algorithm, and makes it easier to implement dynamic selection of cryptographic algorithms within an application.</p></td>
+<td><p>T.1 — see <a class="reference internal" href="../overview/goals.html#algorithm-agility"><span class="secref">Choice of algorithms</span></a>.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="requirements">
+<span id="mitigation-requirements"></span><h3><span class="section-number">D.3.2 </span>Requirements<a class="headerlink" href="#requirements" title="Link to this heading">¶</a></h3>
+<p>The design of the API can mitigate, or enable a cryptoprocessor to mitigate, some of the identified attacks. <span><a class="reference internal" href="#tab-security-requirements"><span class="numref">Table 53</span></a></span> describes these mitigations. Mitigations that are delegated to the cryptoprocessor or application are described in <a class="reference internal" href="#remediation"><span class="secref">Implementation remediations</span></a>.</p>
+<table class="longtable docutils align-default" id="tab-security-requirements">
+<caption><span class="caption-number">Table 53 </span><span class="caption-text">Security requirements</span><a class="headerlink" href="#tab-security-requirements" title="Link to this table">¶</a></caption>
+<colgroup>
+<col style="width: 7.7%" />
+<col style="width: 30.8%" />
+<col style="width: 30.8%" />
+<col style="width: 30.8%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Id</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>API impact</p></th>
+<th class="head"><p>Threats/attacks addressed</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>SR.1 (O.1)</p></td>
+<td><p>Key values are not exposed by the API, except when importing or exporting a key.</p></td>
+<td><p>The full key policy must be provided at the time a key is created. See <a class="reference internal" href="../overview/functionality.html#key-overview"><span class="secref">Key management</span></a>.</p></td>
+<td><p>T.3/A.C5 — key values are hidden by the API.</p></td>
+</tr>
+<tr class="row-odd"><td><p>SR.2 (O.2)</p></td>
+<td><p>The policy for a key must be set when the key is created, and be immutable afterward.</p></td>
+<td><p>The full key policy must be provided at the time a key is created. See <a class="reference internal" href="../api/keys/attributes.html#c.psa_key_attributes_t" title="psa_key_attributes_t"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_key_attributes_t</span></code></a>.</p></td>
+<td><p>T.3/A.C5 — once created, the key usage permissions cannot be changed to permit export.</p>
+<p>T.2/A.C4— once created, a key cannot be repurposed by changing its policy.</p>
+</td>
+</tr>
+<tr class="row-even"><td><p>SR.3 (O.2)</p></td>
+<td><p>The key policy must control the algorithms that the key can be used with, and the functions of the API that the key can be used with.</p></td>
+<td><p>The key policy must include usage permissions, and permitted-algorithm attributes. See <a class="reference internal" href="../api/keys/policy.html#key-policy"><span class="secref">Key policies</span></a>.</p></td>
+<td><p>T.2/A.C4 — a key cannot be reused with different algorithms.</p></td>
+</tr>
+<tr class="row-odd"><td><p>SR.4 (O.1)</p></td>
+<td><p>Key export must be controlled by the key policy.</p></td>
+<td><p>See <a class="reference internal" href="../api/keys/policy.html#c.PSA_KEY_USAGE_EXPORT" title="PSA_KEY_USAGE_EXPORT"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">PSA_KEY_USAGE_EXPORT</span></code></a>.</p></td>
+<td><p>T.3/A.C5 — a key can only be extracted from the cryptoprocessor if explicitly permitted by the key creator.</p></td>
+</tr>
+<tr class="row-even"><td><p>SR.5 (O.1)</p></td>
+<td><p>The policy of a copied key must not provide rights that are not permitted by the original key policy.</p></td>
+<td><p>See <a class="reference internal" href="../api/keys/management.html#c.psa_copy_key" title="psa_copy_key"><code class="xref any atg_c atg_c-ref docutils literal notranslate"><span class="pre">psa_copy_key()</span></code></a>.</p></td>
+<td><p>T.3/A.C5 — a copy of a key cannot be exported if the original could not be exported.</p>
+<p>T.3/A.C4 — a copy of a key cannot be used in different algorithm to the original.</p>
+</td>
+</tr>
+<tr class="row-odd"><td><p>SR.6 (O.3)</p></td>
+<td><p>Unless explicitly required by the use case, the API must not define cryptographic algorithms with known security weaknesses. If possible, deprecated algorithms should not be included.</p></td>
+<td><p>Algorithm inclusion is based on use cases. Warnings are provided for algorithms and operations with known security weaknesses, and recommendations made to use alternative algorithms.</p></td>
+<td><p>T.1/A.C1 A.C2 A.C3</p></td>
+</tr>
+<tr class="row-even"><td><p>SR.7 (O.4)</p></td>
+<td><p>The API design must make it easy to change to a different algorithm of the same type.</p></td>
+<td><p>Cryptographic operation functions select the specific algorithm based on parameters passed at runtime. See <a class="reference internal" href="../api/keys/types.html#key-types"><span class="secref">Key types</span></a> and <a class="reference internal" href="../api/ops/algorithms.html#algorithms"><span class="secref">Algorithms</span></a>.</p></td>
+<td><p>T.1/A.C1 A.C2 A.C3</p></td>
+</tr>
+<tr class="row-odd"><td><p>SR.8 (O.1)</p></td>
+<td><p>Key-derivation functions that expose part of the key value, or make part of the key value easily recoverable, must not be provided in the API.</p></td>
+<td></td>
+<td><p>T.3/A.C6</p></td>
+</tr>
+<tr class="row-even"><td><p>SR.9 (O.3)</p></td>
+<td><p>Constant values defined by the API must be designed to resist bit faults.</p></td>
+<td><p>Key type values explicitly consider single-bit faults, see <a class="reference internal" href="encodings.html#key-type-encoding"><span class="secref">Key type encoding</span></a>. <sup>a</sup></p>
+<p>Success and error status codes differ by multiple bits, see <a class="reference internal" href="../api/library/status.html#status-codes"><span class="secref">Status codes</span></a>. <sup>b</sup></p>
+</td>
+<td><p>T.8/A.19 — enablement only, mitigation is delegated to the implementation.</p></td>
+</tr>
+<tr class="row-odd"><td><p>SR.10 (O.3)</p></td>
+<td><p>The API design must permit the implementation of operations with data-independent timing.</p></td>
+<td><p>Provision of comparison functions for MAC, hash and key-derivation operations.</p></td>
+<td><p>T.7/A.C11 — enablement only, mitigation is delegated to the implementation.</p></td>
+</tr>
+<tr class="row-even"><td><p>SR.11 (O.3)</p></td>
+<td><p>Specify behavior for memory shared between the application and cryptoprocessor, including where multiple parameters overlap.</p></td>
+<td><p>Standardize the result when parameters overlap, see <a class="reference internal" href="../overview/conventions.html#buffer-overlap"><span class="secref">Overlap between parameters</span></a>.</p></td>
+<td><p>T.8/A.59 — enablement only, mitigation is delegated to the implementation.</p></td>
+</tr>
+<tr class="row-odd"><td><p>SR.12 (O.1) (O.2)</p></td>
+<td><p>The API must permit the implementation to isolate the cryptoprocessor, to prevent access to keys without using the API.</p></td>
+<td><p>No use of shared memory between application and cryptoprocessor, except as function parameters.</p></td>
+<td><p>T.5/A.C7 — enablement only, mitigation is delegated to the implementation.</p></td>
+</tr>
+<tr class="row-even"><td><p>SR.13 (O.3)</p></td>
+<td><p>The API design must permit the implementation of operations using mitigation techniques that resist side-channel attacks.</p></td>
+<td><p>Operations that use random blinding to resist side-channel attacks, can return RNG-specific error codes.</p>
+<p>See also SR.12, which enables the cryptoprocessor to be fully isolated, and implemented within a separate security processor.</p>
+</td>
+<td><p>T.9 — enablement only, mitigation is delegated to the implementation.</p></td>
+</tr>
+</tbody>
+</table>
+<ol class="loweralpha simple">
+<li><p>Limited resistance to bit faults is still valuable in systems where memory may be susceptible to single-bit flip attacks, for example, Rowhammer on some types of DRAM.</p></li>
+<li><p>Unlike key type values, algorithm identifiers used in cryptographic operations are verified against a the permitted-algorithm in the key policy. This provides a mitigation for a bit fault in an algorithm identifier value, without requiring error detection within the algorithm identifier itself.</p></li>
+</ol>
+</section>
+</section>
+<section id="remediation-residual-risk">
+<h2><span class="section-number">D.4 </span>Remediation &amp; residual risk<a class="headerlink" href="#remediation-residual-risk" title="Link to this heading">¶</a></h2>
+<section id="implementation-remediations">
+<span id="remediation"></span><h3><span class="section-number">D.4.1 </span>Implementation remediations<a class="headerlink" href="#implementation-remediations" title="Link to this heading">¶</a></h3>
+<p><span><a class="reference internal" href="#tab-remediation"><span class="numref">Table 54</span></a></span> includes all recommended remediations for an implementation, assuming the full adversarial model described in <a class="reference internal" href="#adversarial-models"><span class="secref">Adversarial models</span></a>. When an implementation has a subset of the adversarial models, then individual remediations can be excluded from an implementation, if the associated threat is not relevant for that implementation.</p>
+<table class="longtable docutils align-default" id="tab-remediation">
+<caption><span class="caption-number">Table 54 </span><span class="caption-text">Implementation remediations</span><a class="headerlink" href="#tab-remediation" title="Link to this table">¶</a></caption>
+<colgroup>
+<col style="width: 7.7%" />
+<col style="width: 30.8%" />
+<col style="width: 61.5%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Id</p></th>
+<th class="head"><p>Identified gap</p></th>
+<th class="head"><p>Suggested remediation</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>R.1 (O.1) (O.3)</p></td>
+<td><p>T.5 — direct access to cryptoprocessor state.</p></td>
+<td><p>The cryptoprocessor implementation provides <a class="reference internal" href="../about/about.html#term-cryptoprocessor-isolation"><span class="term">cryptoprocessor isolation</span></a> or <a class="reference internal" href="../about/about.html#term-caller-isolation"><span class="term">caller isolation</span></a>, to isolate the application from the cryptoprocessor state, and from volatile and persistent key material.</p></td>
+</tr>
+<tr class="row-odd"><td><p>R.2 (O.1) (O.3)</p></td>
+<td><p>T.6 — access and use another application’s assets.</p></td>
+<td><p>The cryptoprocessor implementation provides <a class="reference internal" href="../about/about.html#term-caller-isolation"><span class="term">caller isolation</span></a>, and maintains separate cryptoprocessor state for each application. Each application must only be able to access its own keys and ongoing operations.</p>
+<p>Caller isolation requires that the implementation can securely identify the caller of the Crypto API.</p>
+</td>
+</tr>
+<tr class="row-even"><td><p>R.3 (O.3)</p></td>
+<td><p>T.4/A.60 A.61 — using illegal memory inputs.</p></td>
+<td><p>The cryptoprocessor implementation validates that memory buffers provided by the application are accessible by the application.</p></td>
+</tr>
+<tr class="row-odd"><td><p>R.4 (O.3)</p></td>
+<td><p>T.4/A.70 — providing invalid formatted data.</p></td>
+<td><p>The cryptoprocessor implementation checks that imported key data is valid before use.</p></td>
+</tr>
+<tr class="row-even"><td><p>R.5 (O.3)</p></td>
+<td><p>T.4/A.62 — call the API in an invalid operation sequence.</p></td>
+<td><p>The cryptoprocessor implementation enforces the correct sequencing of calls in multi-part operations. See <a class="reference internal" href="../overview/functionality.html#multi-part-operations"><span class="secref">Multi-part operations</span></a>.</p></td>
+</tr>
+<tr class="row-odd"><td><p>R.6 (O.1) (O.3)</p></td>
+<td><p>T.3/A.C5 A.C6 — indirect key disclosure via the API.</p></td>
+<td><p>Cryptoprocessor implementation-specific extensions to the API must avoid providing mechanisms that can extract or recover key values, such as trivial key-derivation algorithms.</p></td>
+</tr>
+<tr class="row-even"><td><p>R.8 (O.3)</p></td>
+<td><p>T.8/A.59 — concurrent modification of parameter memory.</p></td>
+<td><p>The cryptoprocessor implementation treats application memory as untrusted and volatile, typically by not reading the same memory location twice. See <a class="reference internal" href="../overview/conventions.html#stability-of-parameters"><span class="secref">Stability of parameters</span></a>.</p></td>
+</tr>
+<tr class="row-odd"><td><p>R.9 (O.3)</p></td>
+<td><p>T.2/A.C4 — incorrect cryptographic parameters.</p></td>
+<td><p>The cryptoprocessor implementation validates the key attributes and other parameters used for a cryptographic operation, to ensure these conform to the API specification and to the specification of the algorithm itself.</p></td>
+</tr>
+<tr class="row-even"><td><p>R.10 (O.3)</p></td>
+<td><p>T.1/A.C1 A.C2 A.C3 — insecure cryptographic algorithms.</p></td>
+<td><p>The cryptoprocessor does not support deprecated cryptographic algorithms, unless justified by specific use case requirements.</p></td>
+</tr>
+<tr class="row-odd"><td><p>R.11 (O.3)</p></td>
+<td><p>T.7/A.C11 — data-independent timing.</p></td>
+<td><p>The cryptoprocessor implements cryptographic operations with data-independent timing.</p></td>
+</tr>
+<tr class="row-even"><td><p>R.12 (O.3)</p></td>
+<td><p>T.9 — side-channels.</p></td>
+<td><p>The cryptoprocessor implements resistance to side-channels.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="residual-risk">
+<h3><span class="section-number">D.4.2 </span>Residual risk<a class="headerlink" href="#residual-risk" title="Link to this heading">¶</a></h3>
+<p>Threats T.2-T.4, and T.7-T.9 are fully mitigated in the API design, as described in <a class="reference internal" href="#mitigations"><span class="secref">Mitigations</span></a>, or the cryptoprocessor implementation, as described in <a class="reference internal" href="#remediation"><span class="secref">Implementation remediations</span></a>.</p>
+<p><span><a class="reference internal" href="#tab-residual-risk"><span class="numref">Table 55</span></a></span> describes the remaining risks related to T.1, T.5, and T.6 that cannot be mitigated fully by the API or cryptoprocessor implementation. Responsibility for managing these risks lies with the application developers and system integrators.</p>
+<table class="longtable docutils align-default" id="tab-residual-risk">
+<caption><span class="caption-number">Table 55 </span><span class="caption-text">Residual risk</span><a class="headerlink" href="#tab-residual-risk" title="Link to this table">¶</a></caption>
+<colgroup>
+<col style="width: 7.7%" />
+<col style="width: 30.8%" />
+<col style="width: 61.5%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Id</p></th>
+<th class="head"><p>Threat/attack</p></th>
+<th class="head"><p>Suggested remediations</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>RR.1</p></td>
+<td><p>T.1</p></td>
+<td><p>Selection of appropriately secure protocols, algorithms and key sizes is the responsibility of the application developer.</p></td>
+</tr>
+<tr class="row-odd"><td><p>RR.2</p></td>
+<td><p>T.5</p></td>
+<td><p>Correct isolation of the cryptoprocessor is the responsibility of the cryptoprocessor and system implementation.</p></td>
+</tr>
+<tr class="row-even"><td><p>RR.3</p></td>
+<td><p>T.6</p></td>
+<td><p>Correct identification of the application client is the responsibility of the cryptoprocessor and system implementation.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &#169; 2018-2026 Arm Limited and/or its affiliates.
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>
