@@ -4,7 +4,7 @@ description: The official place for the latest published documents of the PSA Ce
 ---
 
 <!--
-SPDX-FileCopyrightText: Copyright 2022-2026 Arm Limited and/or its affiliates <open-source-office@arm.com>
+SPDX-FileCopyrightText: Copyright 2022-2026 Arm Limited and/or its affiliates
 SPDX-License-Identifier: CC-BY-SA-4.0
 -->
 

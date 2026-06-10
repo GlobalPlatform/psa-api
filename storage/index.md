@@ -4,7 +4,7 @@ description: The Secure Storage API supports data protection services on the dev
 ---
 
 <!--
-SPDX-FileCopyrightText: Copyright 2022-2025 Arm Limited and/or its affiliates <open-source-office@arm.com>
+SPDX-FileCopyrightText: Copyright 2022-2025 Arm Limited and/or its affiliates
 SPDX-License-Identifier: CC-BY-SA-4.0
 -->
 

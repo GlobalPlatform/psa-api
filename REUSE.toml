@@ -1,0 +1,45 @@
+version = 1
+
+[[annotations]]
+path = [
+  "attestation/**/*.html",
+  "attestation/**/*.pdf",
+  "attestation/**/objects.inv",
+  "attestation/**/searchindex.js",
+  "crypto/**/*.html",
+  "crypto/**/*.pdf",
+  "crypto/**/objects.inv",
+  "crypto/**/searchindex.js",
+  "crypto-driver/**/*.html",
+  "crypto-driver/**/*.pdf",
+  "crypto-driver/**/objects.inv",
+  "crypto-driver/**/searchindex.js",
+  "fwu/**/*.html",
+  "fwu/**/*.pdf",
+  "fwu/**/objects.inv",
+  "fwu/**/searchindex.js",
+  "status-code/**/*.html",
+  "status-code/**/*.pdf",
+  "status-code/**/objects.inv",
+  "status-code/**/searchindex.js",
+  "storage/**/*.html",
+  "storage/**/*.pdf",
+  "storage/**/objects.inv",
+  "storage/**/searchindex.js",
+]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "Copyright 2017-2026 Arm Limited and/or its affiliates"
+SPDX-License-Identifier = "CC-BY-SA-4.0 AND Apache-2.0 AND LicenseRef-Patent-license"
+
+[[annotations]]
+path = [
+  "attestation/**/_images/*.svg",
+  "crypto/**/_images/*.svg",
+  "crypto-driver/**/_images/*.svg",
+  "fwu/**/_images/*.svg",
+  "status-code/**/_images/*.svg",
+  "storage/**/_images/*.svg",
+]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "Copyright 2017-2026 Arm Limited and/or its affiliates"
+SPDX-License-Identifier = "CC-BY-SA-4.0 AND LicenseRef-Patent-license"

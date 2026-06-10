@@ -4,7 +4,7 @@ description: The Attestation API provides a way to obtain a health-check token f
 ---
 
 <!--
-SPDX-FileCopyrightText: Copyright 2022, 2025-2026 Arm Limited and/or its affiliates <open-source-office@arm.com>
+SPDX-FileCopyrightText: Copyright 2022, 2025-2026 Arm Limited and/or its affiliates
 SPDX-License-Identifier: CC-BY-SA-4.0
 -->
 
