@@ -160,7 +160,7 @@ Managing key attributes
     .. retval:: PSA_ERROR_DATA_CORRUPT
     .. retval:: PSA_ERROR_DATA_INVALID
     .. retval:: PSA_ERROR_BAD_STATE
-        The library requires initializing by a call to `psa_crypto_init()`.
+        The library requires initializing. See :secref:`library-init`.
 
     This function first resets the attribute object as with `psa_reset_key_attributes()`. It then copies the attributes of the given key into the given attribute object.
 

@@ -323,7 +323,7 @@ Single-part MAC functions
     .. retval:: PSA_ERROR_DATA_CORRUPT
     .. retval:: PSA_ERROR_DATA_INVALID
     .. retval:: PSA_ERROR_BAD_STATE
-        The library requires initializing by a call to `psa_crypto_init()`.
+        The library requires initializing. See :secref:`library-init`.
 
     .. note::
         To verify the MAC of a message against an expected value, use `psa_mac_verify()` instead. Beware that comparing integrity or authenticity data such as MAC values with a function such as ``memcmp()`` is risky because the time taken by the comparison might leak information about the MAC value which could allow an attacker to guess a valid MAC and thereby bypass security controls.
@@ -376,7 +376,7 @@ Single-part MAC functions
     .. retval:: PSA_ERROR_DATA_CORRUPT
     .. retval:: PSA_ERROR_DATA_INVALID
     .. retval:: PSA_ERROR_BAD_STATE
-        The library requires initializing by a call to `psa_crypto_init()`.
+        The library requires initializing. See :secref:`library-init`.
 
 Multi-part MAC operations
 -------------------------
@@ -469,7 +469,7 @@ Multi-part MAC operations
         The following conditions can result in this error:
 
         *   The operation state is not valid: it must be inactive.
-        *   The library requires initializing by a call to `psa_crypto_init()`.
+        *   The library requires initializing. See :secref:`library-init`.
 
     This function sets up the calculation of the message authentication code (MAC) of a byte string. To verify the MAC of a message against an expected value, use `psa_mac_verify_setup()` instead.
 
@@ -532,7 +532,7 @@ Multi-part MAC operations
         The following conditions can result in this error:
 
         *   The operation state is not valid: it must be inactive.
-        *   The library requires initializing by a call to `psa_crypto_init()`.
+        *   The library requires initializing. See :secref:`library-init`.
 
     This function sets up the verification of the message authentication code (MAC) of a byte string against an expected value.
 
@@ -574,7 +574,7 @@ Multi-part MAC operations
         The following conditions can result in this error:
 
         *   The operation state is not valid: it must be active.
-        *   The library requires initializing by a call to `psa_crypto_init()`.
+        *   The library requires initializing. See :secref:`library-init`.
     .. retval:: PSA_ERROR_INVALID_ARGUMENT
         The total input for the operation is too large for the MAC algorithm.
     .. retval:: PSA_ERROR_NOT_SUPPORTED
@@ -618,7 +618,7 @@ Multi-part MAC operations
         The following conditions can result in this error:
 
         *   The operation state is not valid: it must be an active mac sign operation.
-        *   The library requires initializing by a call to `psa_crypto_init()`.
+        *   The library requires initializing. See :secref:`library-init`.
     .. retval:: PSA_ERROR_BUFFER_TOO_SMALL
         The size of the ``mac`` buffer is too small.
         `PSA_MAC_LENGTH()` or `PSA_MAC_MAX_SIZE` can be used to determine a sufficient buffer size.
@@ -660,7 +660,7 @@ Multi-part MAC operations
         The following conditions can result in this error:
 
         *   The operation state is not valid: it must be an active mac verify operation.
-        *   The library requires initializing by a call to `psa_crypto_init()`.
+        *   The library requires initializing. See :secref:`library-init`.
     .. retval:: PSA_ERROR_INSUFFICIENT_MEMORY
     .. retval:: PSA_ERROR_COMMUNICATION_FAILURE
     .. retval:: PSA_ERROR_CORRUPTION_DETECTED
@@ -690,7 +690,7 @@ Multi-part MAC operations
     .. retval:: PSA_ERROR_COMMUNICATION_FAILURE
     .. retval:: PSA_ERROR_CORRUPTION_DETECTED
     .. retval:: PSA_ERROR_BAD_STATE
-        The library requires initializing by a call to `psa_crypto_init()`.
+        The library requires initializing. See :secref:`library-init`.
 
     Aborting an operation frees all associated resources except for the ``operation`` object itself. Once aborted, the operation object can be reused for another operation by calling `psa_mac_sign_setup()` or `psa_mac_verify_setup()` again.
 

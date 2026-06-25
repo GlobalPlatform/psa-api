@@ -46,7 +46,7 @@ application specifies the key identifier when the key is created and when
 using the key.
 
 The lifetime attribute of a persistent key indicates how and where it is stored. The default lifetime value for a persistent key is `PSA_KEY_LIFETIME_PERSISTENT`, which corresponds to a default storage area. This specification defines how implementations can provide other lifetime values corresponding to
-different storage areas with different retention policies, or to secure elements
+different storage areas with different retention policies, or to :term:`secure element`\ s
 with different security characteristics.
 
 To create a persistent key:

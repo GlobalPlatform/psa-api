@@ -118,7 +118,7 @@ Asymmetric encryption functions
     .. retval:: PSA_ERROR_DATA_INVALID
     .. retval:: PSA_ERROR_INSUFFICIENT_ENTROPY
     .. retval:: PSA_ERROR_BAD_STATE
-        The library requires initializing by a call to `psa_crypto_init()`.
+        The library requires initializing. See :secref:`library-init`.
 
     *   For `PSA_ALG_RSA_PKCS1V15_CRYPT`, no salt is supported.
 
@@ -186,7 +186,7 @@ Asymmetric encryption functions
     .. retval:: PSA_ERROR_INVALID_PADDING
         The algorithm uses padding, and the input does not contain valid padding.
     .. retval:: PSA_ERROR_BAD_STATE
-        The library requires initializing by a call to `psa_crypto_init()`.
+        The library requires initializing. See :secref:`library-init`.
 
     *   For `PSA_ALG_RSA_PKCS1V15_CRYPT`, no salt is supported.
 

@@ -177,7 +177,7 @@ Key wrapping functions
     .. retval:: PSA_ERROR_DATA_INVALID
     .. retval:: PSA_ERROR_CORRUPTION_DETECTED
     .. retval:: PSA_ERROR_BAD_STATE
-        The library requires initializing by a call to `psa_crypto_init()`.
+        The library requires initializing. See :secref:`library-init`.
 
     The key is unwrapped and extracted from the provided ``data`` buffer. Its location, policy, and type are taken from ``attributes``.
 
@@ -266,7 +266,7 @@ Key wrapping functions
     .. retval:: PSA_ERROR_DATA_INVALID
     .. retval:: PSA_ERROR_INSUFFICIENT_MEMORY
     .. retval:: PSA_ERROR_BAD_STATE
-        The library requires initializing by a call to `psa_crypto_init()`.
+        The library requires initializing. See :secref:`library-init`.
 
     Wrap a key from the key store into a data buffer using a specified key-wrapping algorithm and key-wrapping key.
     On success, the output contains the wrapped key value.

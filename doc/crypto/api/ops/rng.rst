@@ -32,7 +32,7 @@ Random number generation
     .. retval:: PSA_ERROR_COMMUNICATION_FAILURE
     .. retval:: PSA_ERROR_CORRUPTION_DETECTED
     .. retval:: PSA_ERROR_BAD_STATE
-        The library requires initializing by a call to `psa_crypto_init()`.
+        The library requires initializing. See :secref:`library-init`.
 
     .. warning::
         This function **can** fail! Callers MUST check the return status and MUST NOT use the content of the output buffer if the return status is not :code:`PSA_SUCCESS`.
