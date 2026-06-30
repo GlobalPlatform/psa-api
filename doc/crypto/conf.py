@@ -1,7 +1,8 @@
 # SPDX-FileCopyrightText: Copyright 2018-2026 Arm Limited and/or its affiliates
+# SPDX-FileCopyrightText: Copyright 2026 GlobalPlatform
 # SPDX-License-Identifier: CC-BY-SA-4.0 AND LicenseRef-Patent-license
 
-# PSA Certified API document configuration
+# PSA API document configuration
 #
 # This is used to generate all of the sphinx configuration data and determine
 # the document file name etc.
@@ -11,12 +12,10 @@ doc_info = {
     'template': 'psa-api-2026',
 
     # Document title, MANDATORY
-    'title': 'PSA Certified\nCrypto API',
-    'author': 'Arm Limited',
+    'title': 'PSA Crypto API',
 
     # Document copyright date, default to year of 'date'
     'copyright_date': '2018-2026',
-    'copyright': 'Arm Limited and/or its affiliates',
 
     # Document identifier, marked as open issue if not provided
     'doc_id': 'GPD_SPE_086',

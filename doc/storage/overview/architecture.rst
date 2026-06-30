@@ -1,4 +1,5 @@
 ﻿.. SPDX-FileCopyrightText: Copyright 2018-2019, 2022 Arm Limited and/or its affiliates
+.. SPDX-FileCopyrightText: Copyright 2026 GlobalPlatform
 .. SPDX-License-Identifier: CC-BY-SA-4.0 AND LicenseRef-Patent-license
 
 Architecture
@@ -25,7 +26,7 @@ Most embedded microprocessors (MCU) have on-chip flash storage that can be made 
 
 In addition, many platforms also have external storage that requires confidentiality, integrity, and replay protection from attackers with physical access to the device.
 
-By providing consistent APIs for accessing storage, software in both the :term:`NSPE` and :term:`SPE` can be written in a platform-independent manner. This improves portability between platforms that implement the PSA Certified APIs.
+By providing consistent APIs for accessing storage, software in both the :term:`NSPE` and :term:`SPE` can be written in a platform-independent manner. This improves portability between platforms that implement the PSA APIs.
 
 The Protected Storage API
 -------------------------

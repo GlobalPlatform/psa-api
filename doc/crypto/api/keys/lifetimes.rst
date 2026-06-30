@@ -1,4 +1,5 @@
 .. SPDX-FileCopyrightText: Copyright 2018-2025 Arm Limited and/or its affiliates
+.. SPDX-FileCopyrightText: Copyright 2026 GlobalPlatform
 .. SPDX-License-Identifier: CC-BY-SA-4.0 AND LicenseRef-Patent-license
 
 .. header:: psa/crypto
@@ -126,14 +127,14 @@ Key lifetime encoding
                 Implementations should support this value if they support persistent keys at all. Applications should use this value if they have no specific needs that are only met by implementation-specific features.
 
         *   -   ``2 - 127``
-            -   Persistent key with a PSA Certified API-specified lifetime.
+            -   Persistent key with a PSA API-specified lifetime.
 
-                The |API| does not define the meaning of these values, but another PSA Certified API may do so.
+                The |API| does not define the meaning of these values, but another PSA API may do so.
 
         *   -   ``128 - 254``
             -   Persistent key with a vendor-specified lifetime.
 
-                No PSA Certified API will define the meaning of these values, so implementations may choose the meaning freely. As a guideline, higher persistence levels should cause a key to survive more management events than lower levels.
+                No PSA API will define the meaning of these values, so implementations may choose the meaning freely. As a guideline, higher persistence levels should cause a key to survive more management events than lower levels.
 
         *   -   :code:`255 = PSA_KEY_PERSISTENCE_READ_ONLY`
             -   Read-only or write-once key.
@@ -178,12 +179,12 @@ Key lifetime encoding
         *   -   ``2 - 0x7fffff``
             -   Other locations defined by a PSA specification.
 
-                The |API| does not currently assign any meaning to these locations, but future versions of this specification or other PSA Certified APIs may do so.
+                The |API| does not currently assign any meaning to these locations, but future versions of this specification or other PSA APIs may do so.
 
         *   -   ``0x800000 - 0xffffff``
             -   Vendor-defined locations.
 
-                No PSA Certified API will assign a meaning to locations in this range.
+                No PSA API will assign a meaning to locations in this range.
 
     .. note::
 

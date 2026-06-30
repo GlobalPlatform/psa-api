@@ -1,5 +1,6 @@
 <!--
 SPDX-FileCopyrightText: Copyright 2018-2026 Arm Limited
+SPDX-FileCopyrightText: Copyright 2026 GlobalPlatform
 SPDX-License-Identifier: Apache-2.0
 -->
 
@@ -133,7 +134,7 @@ Prefer:
 
 Avoid:
 
-- `Arm recommends that ...`
+- `<organization> recommends that ...`
 - `We recommend that ...`
 
 This keeps advisory specification text independent of a motivated speaker, while still
@@ -470,7 +471,7 @@ Example:
    :include: psa/error.h
 
    /* This file is a reference template for implementation of the
-    * PSA Certified Crypto API v1.5
+    * PSA Crypto API v1.5
     */
 ```
 
@@ -2513,4 +2514,5 @@ The mitigation is described in :m:`isolate-components`.
 
 ----
 
-*Copyright 2018-2026 Arm Limited*
+*Copyright 2018-2026 Arm Limited*\
+*Copyright 2026 GlobalPlatform*

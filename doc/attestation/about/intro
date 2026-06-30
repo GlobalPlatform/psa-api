@@ -1,4 +1,5 @@
 .. SPDX-FileCopyrightText: Copyright 2018-2020, 2022-2026 Arm Limited and/or its affiliates
+.. SPDX-FileCopyrightText: Copyright 2026 GlobalPlatform
 .. SPDX-License-Identifier: CC-BY-SA-4.0 AND LicenseRef-Patent-license
 
 .. introduction::
@@ -7,7 +8,7 @@
 
    .. rubric:: About the |API|
 
-   The interface described in this document is a PSA Certified API, that provides a verifiable report of the state of the platform. The platform attestation service is provided by the :term:`Platform Root of Trust` and is described in :cite-title:`PSM`.
+   The interface described in this document is a PSA API, that provides a verifiable report of the state of the platform. The platform attestation service is provided by the :term:`Platform Root of Trust` and is described in :cite-title:`PSM`.
 
    The format of the attestation report that is produced by the |API| is specified in :rfc-title:`9783`.
 
@@ -20,9 +21,9 @@
    *  A set of common use cases. See :secref:`use cases`.
    *  The associated Application Programming Interface (API). See :secref:`api`.
 
-   The |API| can be used either to directly produce verifiable evidence about the platform state in the context of a challenge-response interaction, or as a way to bootstrap trust in other attestation schemes. The PSA Certified framework provides the generic security features allowing OEM and service providers to integrate various attestation schemes on top of the Platform Root of Trust.
+   The |API| can be used either to directly produce verifiable evidence about the platform state in the context of a challenge-response interaction, or as a way to bootstrap trust in other attestation schemes. The PSA framework provides the generic security features allowing OEM and service providers to integrate various attestation schemes on top of the Platform Root of Trust.
 
-   You can find additional resources relating to the |API| here at :url:`arm-software.github.io/psa-api/attestation`, and find other PSA Certified APIs here at :url:`arm-software.github.io/psa-api`.
+   You can find additional resources relating to the |API| here at :url:`arm-software.github.io/psa-api/attestation`, and find other PSA APIs here at :url:`arm-software.github.io/psa-api`.
 
 .. audience::
 

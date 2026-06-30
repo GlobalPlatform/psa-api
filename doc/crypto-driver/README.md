@@ -1,5 +1,6 @@
 <!--
 SPDX-FileCopyrightText: Copyright 2025 Arm Limited and/or its affiliates
+SPDX-FileCopyrightText: Copyright 2026 GlobalPlatform
 SPDX-License-Identifier: CC-BY-SA-4.0
 -->
 
@@ -17,4 +18,5 @@ Current directory | Configuration and table of contents
 
 ----
 
-*Copyright 2025, Arm Limited and/or its affiliates*
+*Copyright 2025 Arm Limited and/or its affiliates*\
+*Copyright 2026 GlobalPlatform*

@@ -1,4 +1,5 @@
 .. SPDX-FileCopyrightText: Copyright 2026 Arm Limited
+.. SPDX-FileCopyrightText: Copyright 2026 GlobalPlatform
 .. SPDX-License-Identifier: CC-BY-SA-4.0 AND LicenseRef-Patent-license
 
 .. _introduction:
@@ -94,7 +95,7 @@ Introduction
 .. insert-section:: Revision History
    :section: release-info
 
-   PSA Certified API documents use the following versioning scheme:
+   PSA API documents use the following versioning scheme:
 
    *  Those with version x.0 are major releases.
    *  Those versioned x.1, x.2, etc., are minor releases where changes typically introduce supplementary items that do not impact backward compatibility or interoperability of the specifications.

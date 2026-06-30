@@ -1,4 +1,5 @@
 .. SPDX-FileCopyrightText: Copyright 2022, 2024-2026 Arm Limited and/or its affiliates
+.. SPDX-FileCopyrightText: Copyright 2026 GlobalPlatform
 .. SPDX-License-Identifier: CC-BY-SA-4.0 AND LicenseRef-Patent-license
 
 .. _change-history:
@@ -13,7 +14,7 @@ Document and API Changes
 Changes in the draft GlobalPlatform publication revision
 --------------------------------------------------------
 
-*  Migrated the document to the 2026 PSA Certified API template.
+*  Migrated the document to the 2026 PSA API template.
 
    This changes the document front matter structure and publication styling, without changing the API.
 
@@ -43,8 +44,8 @@ Changes between version 1.0.0 and version 1.0.1
 
 *  Moved the specification of the common error codes into a separate specification.
 *  Relicensed the document under Attribution-ShareAlike 4.0 International with a patent license derived from Apache License 2.0. See :secref:`license`.
-*  Generalized the definitions of the error codes to better fit all PSA Certified APIs.
-*  Added definitions from other PSA Certified APIs:
+*  Generalized the definitions of the error codes to better fit all PSA APIs.
+*  Added definitions from other PSA APIs:
 
    -  `PSA_ERROR_CORRUPTION_DETECTED`
    -  `PSA_ERROR_DATA_CORRUPT`

@@ -1,5 +1,6 @@
 <!--
 SPDX-FileCopyrightText: Copyright 2022 Arm Limited and/or its affiliates
+SPDX-FileCopyrightText: Copyright 2026 GlobalPlatform
 SPDX-License-Identifier: CC-BY-SA-4.0
 -->
 
@@ -7,11 +8,11 @@ SPDX-License-Identifier: CC-BY-SA-4.0
 
 The main copy of this project is hosted on GitHub: https://github.com/globalplatform/psa-api.
 
-Anyone may contribute to the PSA Certified API project. Contributions are licensed under the same license that is used for distibution, and must be made with a [Developer Certificate of Origin][DCO] (DCO) attestation as described below. See the [LICENSE][license] file for details of the license.
+Anyone may contribute to the PSA API project. Contributions are licensed under the same license that is used for distibution, and must be made with a [Developer Certificate of Origin][DCO] (DCO) attestation as described below. See the [LICENSE][license] file for details of the license.
 
-PSA Certified API discussion and development uses this GitHub repository. See the [Issues][issues] and [Pull requests][prs] for a full list of current discussions, or to start a new one.
+PSA API discussion and development uses this GitHub repository. See the [Issues][issues] and [Pull requests][prs] for a full list of current discussions, or to start a new one.
 
-Alternatively, you can find issues related to a particular API on the API-specific project boards. Follow the links from the [main page][spec-list].
+Issues and PRs are labeled with the relevant API specification.
 
 ## DCO Attestation
 
@@ -50,3 +51,8 @@ d) I understand and agree that this project and the contribution
 [issues]:       https://github.com/globalplatform/psa-api/issues
 [prs]:          https://github.com/globalplatform/psa-api/pulls
 [spec-list]:    https://github.com/globalplatform/psa-api#specifications
+
+----
+
+*Copyright 2022 Arm Limited and/or its affiliates*\
+*Copyright 2026 GlobalPlatform*

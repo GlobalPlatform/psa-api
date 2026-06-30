@@ -1,4 +1,5 @@
 .. SPDX-FileCopyrightText: Copyright 2018-2019, 2022-2025 Arm Limited and/or its affiliates
+.. SPDX-FileCopyrightText: Copyright 2026 GlobalPlatform
 .. SPDX-License-Identifier: CC-BY-SA-4.0 AND LicenseRef-Patent-license
 
 API Reference
@@ -7,7 +8,7 @@ API Reference
 Status codes
 ------------
 
-The |API| uses the status code definitions that are shared with the other PSA Certified APIs.
+The |API| uses the status code definitions that are shared with the other PSA APIs.
 
 The following elements are defined in :file:`psa/error.h` from :cite-title:`PSA STAT`:
 
@@ -31,7 +32,7 @@ These definitions must be available to an application that includes either of th
 
 .. admonition:: Implementation note
 
-   An implementation is permitted to define the status code interface elements within the |API| header files, or to define them via inclusion of a :file:`psa/error.h` header file that is shared with the implementation of other PSA Certified APIs.
+   An implementation is permitted to define the status code interface elements within the |API| header files, or to define them via inclusion of a :file:`psa/error.h` header file that is shared with the implementation of other PSA APIs.
 
 General Definitions
 -------------------
@@ -44,7 +45,7 @@ General Definitions
     :system-include: stddef.h stdint.h
 
     /* This file is a reference template for implementation of the
-     * PSA Certified Secure Storage API v1.0
+     * PSA Secure Storage API v1.0
      *
      * This file includes common definitions
      */
@@ -116,7 +117,7 @@ Internal Trusted Storage API
     :include: psa/error.h psa/storage_common.h
 
     /* This file is a reference template for implementation of the
-     * PSA Certified Secure Storage API v1.0
+     * PSA Secure Storage API v1.0
      *
      * This file describes the Internal Trusted Storage API
      */
@@ -327,7 +328,7 @@ Protected Storage API
     :include: psa/error.h psa/storage_common.h
 
     /* This file is a reference template for implementation of the
-     * PSA Certified Secure Storage API v1.0
+     * PSA Secure Storage API v1.0
      *
      * This file describes the Protected Storage API
      */

@@ -1,4 +1,5 @@
 .. SPDX-FileCopyrightText: Copyright 2018-2026 Arm Limited and/or its affiliates
+.. SPDX-FileCopyrightText: Copyright 2026 GlobalPlatform
 .. SPDX-License-Identifier: CC-BY-SA-4.0 AND LicenseRef-Patent-license
 
 .. _status-codes:
@@ -6,7 +7,7 @@
 Status codes
 ------------
 
-The |API| uses the status code definitions that are shared with the other PSA Certified APIs. The |API| also provides some |API|-specific status codes, see :secref:`specific-errors`.
+The |API| uses the status code definitions that are shared with the other PSA APIs. The |API| also provides some |API|-specific status codes, see :secref:`specific-errors`.
 
 The following elements are defined in :file:`psa/error.h` from :cite-title:`PSA STAT`:
 
@@ -40,7 +41,7 @@ These definitions must be available to an application that includes the :file:`p
 
 .. admonition:: Implementation note
 
-   An implementation is permitted to define the status code interface elements within the :file:`psa/crypto.h` header file, or to define them via inclusion of a :file:`psa/error.h` header file that is shared with the implementation of other PSA Certified APIs.
+   An implementation is permitted to define the status code interface elements within the :file:`psa/crypto.h` header file, or to define them via inclusion of a :file:`psa/error.h` header file that is shared with the implementation of other PSA APIs.
 
 Common error codes
 ^^^^^^^^^^^^^^^^^^
