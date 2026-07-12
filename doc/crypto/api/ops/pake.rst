@@ -1852,7 +1852,7 @@ After setup, the key exchange and confirmation flow for SPAKE2+ is as follows.
         // Set shareV
         psa_pake_input(&spake2p_p, PSA_PAKE_STEP_KEY_SHARE, ...);
         // Set confirmV
-        psa_pake_input(&spake2p_p, PSA_PAKE_STEP_KEY_CONFIRM, ...);
+        psa_pake_input(&spake2p_p, PSA_PAKE_STEP_CONFIRM, ...);
 
 **Prover**
     To get the Prover key confirmation value to send to the Verifier, call:
