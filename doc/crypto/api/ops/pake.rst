@@ -2354,7 +2354,7 @@ Confirm
     .. code-block:: xref
 
         // Set send-confirm counter
-        psa_pake_input(&wpa3_sae, PSA_PAKE_STEP_SEND_CONFIRM, ...);
+        psa_pake_input(&wpa3_sae, PSA_PAKE_STEP_CONFIRM_COUNT, ...);
         // Get combined send-confirm || confirm value
         psa_pake_output(&wpa3_sae, PSA_PAKE_STEP_CONFIRM, ...);
 
@@ -2392,7 +2392,7 @@ Extract shared secret
 
         // Get K_shared
         psa_key_id_t shared_key;
-        psa_pake_get_shared_key(&spake2p_p, &att, &shared_key);
+        psa_pake_get_shared_key(&wpa3_sae, &att, &shared_key);
 
 The shared secret that is produced by WPA3-SAE is pseudorandom.
 Although it can be used directly as an encryption key, it is recommended to use the shared secret as an input to a key-derivation operation to produce additional cryptographic keys.
