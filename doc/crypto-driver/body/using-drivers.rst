@@ -1,4 +1,5 @@
 ..  SPDX-FileCopyrightText: Copyright 2020-2025 Arm Limited and/or its affiliates
+..  SPDX-FileCopyrightText: Copyright 2026 GlobalPlatform
 ..  SPDX-License-Identifier: CC-BY-SA-4.0
 
 .. _using-drivers:
@@ -39,7 +40,7 @@ For example, the following snippet creates an AES-GCM key which is only accessib
 Lifetimes and locations
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-The PSA Certified Crypto API defines `lifetimes <https://arm-software.github.io/psa-api/crypto/1.3/api/keys/lifetimes.html#key-lifetimes>`__ as an attribute of a key that indicates where the key is stored and which application and system actions will create and destroy it.
+The PSA Crypto API defines `lifetimes <https://arm-software.github.io/psa-api/crypto/1.3/api/keys/lifetimes.html#key-lifetimes>`__ as an attribute of a key that indicates where the key is stored and which application and system actions will create and destroy it.
 The lifetime is expressed as a 32-bit value (``typedef uint32_t psa_key_lifetime_t``).
 An upcoming version of the Crypto API defines more structure for lifetime values to separate these two aspects of the lifetime:
 

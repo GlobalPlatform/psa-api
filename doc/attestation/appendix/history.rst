@@ -1,4 +1,5 @@
 .. SPDX-FileCopyrightText: Copyright 2018-2020, 2022-2026 Arm Limited and/or its affiliates
+.. SPDX-FileCopyrightText: Copyright 2026 GlobalPlatform
 .. SPDX-License-Identifier: CC-BY-SA-4.0 AND LicenseRef-Patent-license
 
 .. _document-history:
@@ -17,7 +18,7 @@ Document history
     * - TBD
       - *Draft GlobalPlatform publication revision*
 
-        * Migrated the document to the 2026 PSA Certified API template.
+        * Migrated the document to the 2026 PSA API template.
         * Changed the document front matter structure and publication styling, without changing the API.
 
     * - June 2019

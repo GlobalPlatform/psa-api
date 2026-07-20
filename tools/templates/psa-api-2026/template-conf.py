@@ -1,4 +1,5 @@
 # SPDX-FileCopyrightText: Copyright 2018-2026 Arm Limited
+# SPDX-FileCopyrightText: Copyright 2026 GlobalPlatform
 # SPDX-License-Identifier: Apache-2.0
 
 # -*- coding: utf-8 -*-
@@ -92,8 +93,8 @@ template_info['front_sections'] = [
 template_info['numfig_sec_depth'] = 1
 template_info['page_break'] = 'chapter'
 
-doc_info.setdefault('author', 'The PSA Certified API contributors')
-doc_info.setdefault('copyright', 'The PSA Certified API contributors')
+doc_info.setdefault('author', 'The PSA API contributors')
+doc_info.setdefault('copyright', 'The PSA API contributors')
 doc_info.setdefault('feedback', 'visit :url:`github.com/globalplatform/psa-api/issues`' +
-                                ' to create a new issue at the PSA Certified API GitHub project')
-doc_info.setdefault('license', 'psa-certified-api-license')
+                                ' to create a new issue at the PSA API GitHub project')
+doc_info.setdefault('license', 'psa-api-license')

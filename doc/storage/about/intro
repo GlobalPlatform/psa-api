@@ -1,4 +1,5 @@
 ﻿.. SPDX-FileCopyrightText: Copyright 2018-2019, 2022,2025 Arm Limited and/or its affiliates
+.. SPDX-FileCopyrightText: Copyright 2026 GlobalPlatform
 .. SPDX-License-Identifier: CC-BY-SA-4.0 AND LicenseRef-Patent-license
 
 .. introduction::
@@ -7,7 +8,7 @@
 
    .. rubric:: About the |API|
 
-   The interface described in this document is a PSA Certified API, that provides key/value storage interfaces for use with device-protected storage. The |API| describes two interfaces for storage:
+   The interface described in this document is a PSA API, that provides key/value storage interfaces for use with device-protected storage. The |API| describes two interfaces for storage:
 
    .. csv-table::
       :widths: 3 7
@@ -19,7 +20,7 @@
 
    If there are no :term:`Application Root of Trust` (ARoT) services that rely on it, the Protected Storage API can be implemented in the :term:`NSPE`. Otherwise, the Protected Storage API must be implemented in an ARoT within the :term:`SPE`.
 
-   You can find additional resources relating to the |API| here at :url:`arm-software.github.io/psa-api/storage`, and find other PSA Certified APIs here at :url:`arm-software.github.io/psa-api`.
+   You can find additional resources relating to the |API| here at :url:`arm-software.github.io/psa-api/storage`, and find other PSA APIs here at :url:`arm-software.github.io/psa-api`.
 
 .. audience::
 

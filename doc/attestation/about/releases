@@ -1,4 +1,5 @@
 .. SPDX-FileCopyrightText: Copyright 2018-2020, 2022-2025 Arm Limited and/or its affiliates
+.. SPDX-FileCopyrightText: Copyright 2026 GlobalPlatform
 .. SPDX-License-Identifier: CC-BY-SA-4.0 AND LicenseRef-Patent-license
 
 .. Releases of this specification
@@ -15,9 +16,9 @@
 
     First stable release with 1.0 API finalized.
 
-    Uses the PSA Certified API common error status codes.
+    Uses the PSA API common error status codes.
 
-    Modified the API parameters to align with other PSA Certified APIs.
+    Modified the API parameters to align with other PSA APIs.
 
     Updated the claims and lifecycle to match the latest Platform Security Model.
 

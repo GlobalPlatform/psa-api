@@ -1,4 +1,5 @@
 .. SPDX-FileCopyrightText: Copyright 2022, 2024 Arm Limited and/or its affiliates
+.. SPDX-FileCopyrightText: Copyright 2026 GlobalPlatform
 .. SPDX-License-Identifier: CC-BY-SA-4.0 AND LicenseRef-Patent-license
 
 .. release:: 1.0.1
@@ -7,7 +8,7 @@
 
     Definition of status codes moved to a separate specification.
 
-    Incorporated some error codes from other PSA Certified APIs.
+    Incorporated some error codes from other PSA APIs.
 
     Relicensed as open source under CC BY-SA 4.0.
 

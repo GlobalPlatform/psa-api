@@ -1,10 +1,11 @@
 # SPDX-FileCopyrightText: Copyright 2018-2026 Arm Limited
+# SPDX-FileCopyrightText: Copyright 2026 GlobalPlatform
 # SPDX-License-Identifier: Apache-2.0
 
 # -*- coding: utf-8 -*-
 #
 # This is a common set of configuration options for using Sphinx to build
-# PSA Certified API specifications. Project specific definitions are contained in
+# PSA API specifications. Project specific definitions are contained in
 # the conf.py file that forms the master document directory.
 #
 # This script is included and executed as part of conf.py, it is not a

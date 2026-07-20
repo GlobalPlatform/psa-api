@@ -1,4 +1,5 @@
 .. SPDX-FileCopyrightText: Copyright 2020-2025 Arm Limited and/or its affiliates
+.. SPDX-FileCopyrightText: Copyright 2026 GlobalPlatform
 .. SPDX-License-Identifier: CC-BY-SA-4.0 AND LicenseRef-Patent-license
 
 .. _change-history:
@@ -11,7 +12,7 @@ Changes in the draft GlobalPlatform publication revision
 
 .. rubric:: General changes
 
-*   Migrated the document to the 2026 PSA Certified API template.
+*   Migrated the document to the 2026 PSA API template.
 
     This changes the document front matter structure and publication styling, without changing the API.
 
@@ -102,7 +103,7 @@ Changes between version *0.7* and *1.0 Beta*
       -  :code:`PSA_ERROR_DECRYPTION_FAILURE`
       -  :code:`PSA_ERROR_MISSING_MANIFEST`
 
-   *  Standardize the use of error codes, aligning with other PSA Certified APIs:
+   *  Standardize the use of error codes, aligning with other PSA APIs:
 
       -  Use :code:`PSA_ERROR_BAD_STATE` when operations are called in the wrong sequence.
       -  Use :code:`PSA_ERROR_DOES_NOT_EXIST` when operations are called with an unknown component Id.

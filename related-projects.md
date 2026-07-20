@@ -1,9 +1,10 @@
 <!--
 SPDX-FileCopyrightText: Copyright 2022, 2025 Arm Limited and/or its affiliates
+SPDX-FileCopyrightText: Copyright 2026 GlobalPlatform
 SPDX-License-Identifier: CC-BY-SA-4.0
 -->
 
-# Known implementations and projects related to the PSA Certified APIs
+# Known implementations and projects related to the PSA APIs
 
 Updated Sep 2025.
 
@@ -12,7 +13,7 @@ Updated Sep 2025.
 - The reference implementation for PSA Crypto API can be found inside Mbed TLS.
   [mbed-tls.readthedocs.io/en/latest](https://mbed-tls.readthedocs.io/en/latest/)
 
-- Other PSA Certified APIs are included in the TF-M project.
+- Other PSA APIs are included in the TF-M project.
   [www.trustedfirmware.org/projects/tf-m](https://www.trustedfirmware.org/projects/tf-m/)
 
 - Trusted Services implements those services in a Trusted Execution Environment on Cortex A processors.
@@ -30,7 +31,7 @@ Updated Sep 2025.
 ## Crypto driver implementations
 
 The PSA Crypto Driver Interface complements the Crypto API.
-Initially developed as part of the Mbed TLS project, development now continues as part of the PSA Certified API project.
+Initially developed as part of the Mbed TLS project, development now continues as part of the PSA API project.
 
 The aim of the Driver Interface is to simplify the integration of cryptographic peripherals, secure elements, and optimized software into implementations of the Crypto API. See [doc/crypto-driver/psa-driver-interface.rst](doc/crypto-driver/psa-driver-interface.rst).
 
@@ -71,5 +72,5 @@ The aim of the Driver Interface is to simplify the integration of cryptographic 
 
 ----
 
-*Copyright 2022, 2025 Arm Limited and/or its affiliates*
-
+*Copyright 2022, 2025 Arm Limited and/or its affiliates*\
+*Copyright 2026 GlobalPlatform*

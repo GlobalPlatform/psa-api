@@ -1,7 +1,8 @@
 .. SPDX-FileCopyrightText: Copyright 2025 Arm Limited and/or its affiliates
+.. SPDX-FileCopyrightText: Copyright 2026 GlobalPlatform
 .. SPDX-License-Identifier: CC-BY-SA-4.0 AND LicenseRef-Patent-license
 
 .. reference:: PSA CRYPT
-    :title: PSA Certified Crypto API
+    :title: PSA Crypto API
     :doc_id: Arm IHI 0086
     :url: arm-software.github.io/psa-api/crypto

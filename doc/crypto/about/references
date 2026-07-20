@@ -1,4 +1,5 @@
 .. SPDX-FileCopyrightText: Copyright 2020-2026 Arm Limited and/or its affiliates
+.. SPDX-FileCopyrightText: Copyright 2026 GlobalPlatform
 .. SPDX-License-Identifier: CC-BY-SA-4.0 AND LicenseRef-Patent-license
 
 .. reference:: PSM
@@ -9,7 +10,7 @@
    :url: psacertified.org/development-resources/building-in-security/threat-models/
 
 .. reference:: PSA STAT
-   :title: PSA Certified Status code API
+   :title: PSA Status code API
    :kind: normative
    :doc_id: Arm IHI 0097
    :url: arm-software.github.io/psa-api/status-code
@@ -416,7 +417,7 @@
    :url: www.threadgroup.org/ThreadSpec
 
 .. reference:: PSA PQC
-   :title: PSA Certified Crypto API 1.4 PQC Extension
+   :title: PSA Crypto API 1.4 PQC Extension
    :doc_id: Arm AES 0119
    :url: arm-software.github.io/psa-api/crypto
 

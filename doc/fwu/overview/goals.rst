@@ -1,4 +1,5 @@
 .. SPDX-FileCopyrightText: Copyright 2020-2023, 2026 Arm Limited and/or its affiliates
+.. SPDX-FileCopyrightText: Copyright 2026 GlobalPlatform
 .. SPDX-License-Identifier: CC-BY-SA-4.0 AND LicenseRef-Patent-license
 
 .. _intro:
@@ -40,7 +41,7 @@ The remainder of this document includes:
 *   A description of the interface design. See :secref:`programming-model`.
 *   A detailed definition of the API. See :secref:`api-reference`.
 
-The appendixes provide additional information:
+The appendices provide additional information:
 
 *  A sample header file containing all of the API elements. See :secref:`appendix-example-header`.
 *  Some example code demonstrating various use cases. See :secref:`examples`.

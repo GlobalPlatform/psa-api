@@ -1,11 +1,12 @@
 <!--
 SPDX-FileCopyrightText: Copyright 2022, 2024 Arm Limited and/or its affiliates
+SPDX-FileCopyrightText: Copyright 2026 GlobalPlatform
 SPDX-License-Identifier: CC-BY-SA-4.0
 -->
 
-# PSA Certified API Examples
+# PSA API Examples
 
-This folder includes examples of both usage, and implementation, of the PSA Certified APIs.
+This folder includes examples of both usage, and implementation, of the PSA APIs.
 
 Each example includes a README that explains the example, and how to use it.
 
@@ -18,4 +19,5 @@ Each example includes a README that explains the example, and how to use it.
 
 ----
 
-*Copyright 2022, 2024, Arm Limited and/or its affiliates*
+*Copyright 2022, 2024 Arm Limited and/or its affiliates*\
+*Copyright 2026 GlobalPlatform*

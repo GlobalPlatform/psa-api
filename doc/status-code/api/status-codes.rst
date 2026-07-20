@@ -1,4 +1,5 @@
 .. SPDX-FileCopyrightText: Copyright 2017-2022, 2024 Arm Limited and/or its affiliates
+.. SPDX-FileCopyrightText: Copyright 2026 GlobalPlatform
 .. SPDX-License-Identifier: CC-BY-SA-4.0 AND LicenseRef-Patent-license
 
 Status codes
@@ -9,14 +10,14 @@ Status codes
 Overview
 --------
 
-The PSA Certified APIs are often implemented together in a larger framework. For example, the :cite-title:`TF-M` project implements all of the PSA functional APIs as Root of Trust Services within the Secure Processing Environment that it provides. Using a common definition for status and error codes enables easier integration and inter-operation of these APIs.
+The PSA APIs are often implemented together in a larger framework. For example, the :cite-title:`TF-M` project implements all of the PSA functional APIs as Root of Trust Services within the Secure Processing Environment that it provides. Using a common definition for status and error codes enables easier integration and inter-operation of these APIs.
 
-The PSA Certified APIs use the convention that status codes that are negative indicate an error, and zero or positive values indicate success. These are identified in the API by the `psa_status_t` type.
+The PSA APIs use the convention that status codes that are negative indicate an error, and zero or positive values indicate success. These are identified in the API by the `psa_status_t` type.
 
-Status codes ``-129`` to ``-248`` are for use by PSA Certified API specifications. These codes are defined in the current PSA specifications, or are reserved for future PSA specifications. Status codes in this range are used in the following ways:
+Status codes ``-129`` to ``-248`` are for use by PSA API specifications. These codes are defined in the current PSA specifications, or are reserved for future PSA specifications. Status codes in this range are used in the following ways:
 
-*  A set of standard error codes that cover failure conditions that are common to more than one PSA Certified API.
-*  Error codes that are specific to an individual PSA Certified API.
+*  A set of standard error codes that cover failure conditions that are common to more than one PSA API.
+*  Error codes that are specific to an individual PSA API.
 
 Status codes in this range must only be used as defined in a PSA specification.
 
@@ -25,7 +26,7 @@ In the context of an implementation of :cite-title:`PSA FFM`:
 *  The :term:`Secure Partition Manager` (SPM) implementation can define error codes in the range ``-249`` to ``-256`` for :sc:`IMPLEMENTATION DEFINED` purposes.
 *  A :term:`Root of Trust Service` (RoT Service) can define additional error codes in the ranges ``-1`` to ``-128`` and ``-257`` to ``MIN_INT32`` for RoT Service-specific error conditions.
 
-:numref:`tab-error-codes` defines the common error codes and reserved ranges for the PSA Certified APIs. See the error code macros and function definitions in :secref:`api` for details on their usage.
+:numref:`tab-error-codes` defines the common error codes and reserved ranges for the PSA APIs. See the error code macros and function definitions in :secref:`api` for details on their usage.
 
 .. csv-table:: Standard error codes
    :name: tab-error-codes
@@ -55,13 +56,13 @@ In the context of an implementation of :cite-title:`PSA FFM`:
    ``PSA_ERROR_COMMUNICATION_FAILURE``, ``-145``, Communication failure with another component.
    ``PSA_ERROR_STORAGE_FAILURE``, ``-146``, Storage failure that may have led to data loss.
    ``PSA_ERROR_HARDWARE_FAILURE``, ``-147``, General hardware failure.
-   *Reserved*, ``-148``, Reserved for PSA Certified APIs.
+   *Reserved*, ``-148``, Reserved for PSA APIs.
    ``PSA_ERROR_INVALID_SIGNATURE``, ``-149``, "A signature, MAC or hash is incorrect."
-   *Reserved*, ``-150``, Reserved for PSA Certified APIs.
+   *Reserved*, ``-150``, Reserved for PSA APIs.
    ``PSA_ERROR_CORRUPTION_DETECTED``, ``-151``, Internal data has been tampered with.
    ``PSA_ERROR_DATA_CORRUPT``, ``-152``, Stored data has been corrupted.
    ``PSA_ERROR_DATA_INVALID``, ``-153``,  Data read from storage is not valid.
-   *Reserved*, ``-154`` to ``-247``, Reserved for PSA Certified APIs.
+   *Reserved*, ``-154`` to ``-247``, Reserved for PSA APIs.
    ``PSA_OPERATION_INCOMPLETE``, ``-248``, The requested operation is not finished.
    *SPM Implementation error*, ``-249`` to ``-256``, Reserved for the SPM implementation.
    *API-specific error*, ``<= -257``, API-specific error code.
@@ -79,17 +80,17 @@ API Reference
    :c++:
    :system-include: stddef.h stdint.h
 
-   // This file is a reference template for implementation of the PSA Certified Status code API
+   // This file is a reference template for implementation of the PSA Status code API
 
-These are common status and error codes for all PSA Certified APIs, and for SPM and RoT Service APIs. See :secref:`error-codes` for a summary of the status codes.
+These are common status and error codes for all PSA APIs, and for SPM and RoT Service APIs. See :secref:`error-codes` for a summary of the status codes.
 
 The API elements described in the following sections :std:numref:`status-type` to :std:numref:`status-pending`, must be defined in a header file :file:`psa/error.h`. See :secref:`reference-headers` for a reference version of this header file.
 
-It is permitted for these API elements to also be defined in header files that are part of an implementation of another PSA Certified API, for example, in :file:`psa/crypto.h`.
+It is permitted for these API elements to also be defined in header files that are part of an implementation of another PSA API, for example, in :file:`psa/crypto.h`.
 
 .. admonition:: Implementation note
 
-   In an implementation of any PSA Certified API, it essential that the status code macros are defined precisely as shown in the API specifications and reference header files. In particular, there is no white-space in the definition.
+   In an implementation of any PSA API, it essential that the status code macros are defined precisely as shown in the API specifications and reference header files. In particular, there is no white-space in the definition.
 
    The C language only permits a macro definition to be repeated within a compilation, if every definition is identical, including the white-space separation.
 
@@ -102,7 +103,7 @@ Status type
    :guard: PSA_SUCCESS
    :comment: Prevent multiple definitions of psa_status_t, if PSA_SUCCESS is already defined in an external header
 
-   .. summary:: A status code type used for all PSA Certified APIs.
+   .. summary:: A status code type used for all PSA APIs.
 
    A zero or positive value indicates success, the interpretation of the value depends on the specific operation.
 

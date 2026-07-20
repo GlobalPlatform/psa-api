@@ -1,4 +1,5 @@
 .. SPDX-FileCopyrightText: Copyright 2018-2020, 2022-2026 Arm Limited and/or its affiliates
+.. SPDX-FileCopyrightText: Copyright 2026 GlobalPlatform
 .. SPDX-License-Identifier: CC-BY-SA-4.0 AND LicenseRef-Patent-license
 
 .. _api:
@@ -14,7 +15,7 @@ API reference
     :system-include: stddef.h stdint.h
 
     /* This file is a reference template for implementation of the
-     * PSA Certified Attestation API v2.0
+     * PSA Attestation API v2.0
      */
 
 The |API| defines a header file that is provided by the implementation. The header is :file:`psa/initial_attestation.h`.
@@ -34,7 +35,7 @@ Pointers to input parameters may be in read-only memory. Output parameters must 
 Status codes
 ------------
 
-The |API| uses the status code definitions that are shared with the other PSA Certified APIs.
+The |API| uses the status code definitions that are shared with the other PSA APIs.
 
 The following elements are defined in :file:`psa/error.h` from :cite-title:`PSA STAT`:
 
@@ -53,7 +54,7 @@ These definitions must be available to an application that includes the :file:`p
 
 .. admonition:: Implementation note
 
-   An implementation is permitted to define the status code interface elements within :file:`psa/initial_attestation.h`, or to define them via inclusion of a :file:`psa/error.h` header file that is shared with the implementation of other PSA Certified APIs.
+   An implementation is permitted to define the status code interface elements within :file:`psa/initial_attestation.h`, or to define them via inclusion of a :file:`psa/error.h` header file that is shared with the implementation of other PSA APIs.
 
 
 General definitions

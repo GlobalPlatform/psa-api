@@ -1,4 +1,5 @@
 .. SPDX-FileCopyrightText: Copyright 2020-2026 Arm Limited and/or its affiliates
+.. SPDX-FileCopyrightText: Copyright 2026 GlobalPlatform
 .. SPDX-License-Identifier: CC-BY-SA-4.0 AND LicenseRef-Patent-license
 
 .. introduction::
@@ -7,11 +8,11 @@
 
    .. rubric:: About the |API|
 
-   The interface described in this document is a PSA Certified API, that provides a portable programming interface to firmware update and installation operations on a wide range of hardware.
+   The interface described in this document is a PSA API, that provides a portable programming interface to firmware update and installation operations on a wide range of hardware.
 
    The interface enables the software and systems that manage and deliver a firmware update to a device, to be developed independently from the hardware-specific mechanisms required to apply the update to the device. Reusing the deployment and delivery system for firmware updates reduces the complexity of providing firmware updates across a diverse set of managed devices.
 
-   You can find additional resources relating to the |API| here at :url:`arm-software.github.io/psa-api/fwu`, and find other PSA Certified APIs here at :url:`arm-software.github.io/psa-api`.
+   You can find additional resources relating to the |API| here at :url:`arm-software.github.io/psa-api/fwu`, and find other PSA APIs here at :url:`arm-software.github.io/psa-api`.
 
 .. audience::
 

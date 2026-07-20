@@ -1,4 +1,5 @@
 .. SPDX-FileCopyrightText: Copyright 2025-2026 Arm Limited and/or its affiliates
+.. SPDX-FileCopyrightText: Copyright 2026 GlobalPlatform
 .. SPDX-License-Identifier: CC-BY-SA-4.0 AND LicenseRef-Patent-license
 
 .. introduction::
@@ -7,7 +8,7 @@
 
    .. rubric:: About the |API|
 
-   This document describes an interface for cryptoprocessor drivers within an implementation of the PSA Certified Crypto API. This interface complements :cite-title:`PSA CRYPT`, which describes the interface between a Crypto API implementation and an application.
+   This document describes an interface for cryptoprocessor drivers within an implementation of the PSA Crypto API. This interface complements :cite-title:`PSA CRYPT`, which describes the interface between a Crypto API implementation and an application.
 
    In the remainder of this document:
 
@@ -38,4 +39,4 @@
 
    *  Software cryptographic drivers to be integrated into a framework that uses the |API|.
    *  Software drivers for cryptographic hardware to be integrated into a framework that uses the |API|.
-   *  Frameworks that use the |API| to integrate software and hardware providers of cryptographic services. This includes implementations of the PSA Certified Crypto API that provide extensibility via the |API|.
+   *  Frameworks that use the |API| to integrate software and hardware providers of cryptographic services. This includes implementations of the PSA Crypto API that provide extensibility via the |API|.

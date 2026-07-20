@@ -1,4 +1,5 @@
 .. SPDX-FileCopyrightText: Copyright 2022, 2025-2026 Arm Limited and/or its affiliates
+.. SPDX-FileCopyrightText: Copyright 2026 GlobalPlatform
 .. SPDX-License-Identifier: CC-BY-SA-4.0 AND LicenseRef-Patent-license
 
 .. introduction::
@@ -7,15 +8,15 @@
 
    .. rubric:: About the |API|
 
-   The interface described in this document is a PSA Certified API, that provides a shared set of interface definitions used by other PSA Certified APIs.
+   The interface described in this document is a PSA API, that provides a shared set of interface definitions used by other PSA APIs.
 
-   You can find additional resources relating to the |API| here at :url:`arm-software.github.io/psa-api/status-code`, and find other PSA Certified APIs here at :url:`arm-software.github.io/psa-api`.
+   You can find additional resources relating to the |API| here at :url:`arm-software.github.io/psa-api/status-code`, and find other PSA APIs here at :url:`arm-software.github.io/psa-api`.
 
 .. audience::
 
    This document is intended primarily for the use of developers of:
 
-   *  PSA Certified API specifications.
-   *  Implementations of PSA Certified APIs.
-   *  Frameworks that provide access to security services via the PSA Certified APIs.
-   *  Client applications and Root of Trust Services that use any of the PSA Certified APIs.
+   *  PSA API specifications.
+   *  Implementations of PSA APIs.
+   *  Frameworks that provide access to security services via the PSA APIs.
+   *  Client applications and Root of Trust Services that use any of the PSA APIs.

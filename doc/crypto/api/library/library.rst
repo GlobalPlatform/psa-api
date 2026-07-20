@@ -1,4 +1,5 @@
 .. SPDX-FileCopyrightText: Copyright 2018-2026 Arm Limited and/or its affiliates
+.. SPDX-FileCopyrightText: Copyright 2026 GlobalPlatform
 .. SPDX-License-Identifier: CC-BY-SA-4.0 AND LicenseRef-Patent-license
 
 |API| library
@@ -14,7 +15,7 @@
     :include: psa/error.h
 
     /* This file is a reference template for implementation of the
-     * PSA Certified Crypto API v1.5
+     * PSA Crypto API v1.5
      */
 
 

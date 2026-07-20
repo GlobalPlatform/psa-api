@@ -1,5 +1,5 @@
-
 .. SPDX-FileCopyrightText: Copyright 2020-2025 Arm Limited and/or its affiliates
+.. SPDX-FileCopyrightText: Copyright 2026 GlobalPlatform
 .. SPDX-License-Identifier: CC-BY-SA-4.0 AND LicenseRef-Patent-license
 
 .. header:: psa/update
@@ -11,7 +11,7 @@
    :include: psa/error.h
 
    /* This file is a reference template for implementation of the
-    * PSA Certified Firmware Update API v1.0
+    * PSA Firmware Update API v1.0
     */
 
 .. _api-reference:
@@ -192,7 +192,7 @@ Library version
 Status codes
 ------------
 
-The |API| uses the status code definitions that are shared with the other PSA Certified APIs. The |API| also provides some |API|-specific status codes, see :secref:`specific-errors` and :secref:`specific-success`.
+The |API| uses the status code definitions that are shared with the other PSA APIs. The |API| also provides some |API|-specific status codes, see :secref:`specific-errors` and :secref:`specific-success`.
 
 Common status codes
 ^^^^^^^^^^^^^^^^^^^
@@ -218,7 +218,7 @@ The following elements are defined in :file:`psa/error.h` from :cite:`PSA STAT`:
 
 .. admonition:: Implementation note
 
-   An implementation is permitted to define these interface elements within the :file:`psa/update.h` header, or to define them via inclusion of a :file:`psa/error.h` header file that is shared with the implementation of other PSA Certified APIs.
+   An implementation is permitted to define these interface elements within the :file:`psa/update.h` header, or to define them via inclusion of a :file:`psa/error.h` header file that is shared with the implementation of other PSA APIs.
 
 
 .. _specific-errors:
