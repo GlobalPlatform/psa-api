@@ -50,7 +50,6 @@ d) I understand and agree that this project and the contribution
 [DCO]:          https://developercertificate.org/
 [issues]:       https://github.com/globalplatform/psa-api/issues
 [prs]:          https://github.com/globalplatform/psa-api/pulls
-[spec-list]:    https://github.com/globalplatform/psa-api#specifications
 
 ----
 
