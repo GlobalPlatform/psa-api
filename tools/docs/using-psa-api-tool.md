@@ -224,7 +224,8 @@ Important `doc_info` keys used by these specifications include:
 | --- | --- |
 | `template` | Template directory under `tools/templates/`. |
 | `title` | Document title used by Sphinx and the title page. |
-| `version` | Base API version, normally `X.Y`. |
+| `version` | Required document lifecycle version. This is the Sphinx version and is used for document release labels, filenames, and `|docversion|`. |
+| `api_version` | Optional target API version, normally `X.Y`. It defaults to `version` for compatibility. It is used for `|APIversion|`, `|majorversion|`, `|minorversion|`, `|hexversion|`, and `:api-version:` macro values. |
 | `issue_no` | Document issue or maintenance revision. |
 | `draft` | Draft flag or draft revision, depending on the selected publication model. |
 | `release_candidate` | Release-candidate number for existing Arm-style documents. |
@@ -234,6 +235,17 @@ Important `doc_info` keys used by these specifications include:
 | `error_order` | Document-wide order for generated return values. |
 | `identifier_index` | Controls the generated C identifier index. |
 | `prolog_files` | Shared substitution files included in the Sphinx prolog. |
+
+`version` identifies the document lifecycle version. The optional `api_version`
+identifies the API described by the document and must use `X.Y` format. If it is
+omitted, the tool derives the API version from the document version's major and
+minor components, so a document version of `1.5.0` describes API version `1.5`.
+
+An explicit `api_version` can match the document's major/minor version. For a
+non-published document it can instead target only the next minor version or the
+next major version. Published documents must describe the API with the same
+major/minor version as the document. Invalid API-version settings stop the build
+with a configuration diagnostic.
 
 For detailed directive and role behavior, use `psa-api-tool-notes.md` as the editing
 reference.
