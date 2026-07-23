@@ -1,0 +1,24 @@
+# SPDX-FileCopyrightText: Copyright 2018-2020, 2022-2026 Arm Limited and/or its affiliates
+# SPDX-FileCopyrightText: Copyright 2026 GlobalPlatform
+# SPDX-License-Identifier: CC-BY-SA-4.0 AND LicenseRef-Patent-license
+
+# Document identity
+template = "psa-api-2026"
+title = "PSA Attestation API"
+doc_id = "GPD_SPE_085"
+copyright_date = "2018-2020, 2022-2026"
+
+# Publication and lifecycle
+version = "2.0"
+issue_no = 0
+draft = 1
+status = "DFT"
+date = "May 2026"
+
+# API generation
+header = "psa/initial_attestation"
+header_doxygen = 2
+
+# Rendering and optional content
+identifier_index = false
+page_break = "chapter"

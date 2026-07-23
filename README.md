@@ -82,7 +82,7 @@ Reference header files for each minor version of each API are provided in the [h
 
 This repository includes the documentation build tooling in [tools/]. The top-level `Makefile` uses that local tool copy by default, so a normal build does not require a separate checkout of the build tools.
 
-The HTML build requires Python, Sphinx, and `make`. PDF output also requires a LaTeX toolchain with `pdflatex`. Regenerating figures can require additional tools, depending on the figure source format, including Graphviz, `wavedrompy`, PlantUML, Java, and `rsvg-convert`.
+The HTML build requires Python 3.11 or later, Sphinx, and `make`. PDF output also requires a LaTeX toolchain with `pdflatex`. Regenerating figures can require additional tools, depending on the figure source format, including Graphviz, `wavedrompy`, PlantUML, Java, and `rsvg-convert`.
 
 Build one specification from the repository root with:
 

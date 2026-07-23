@@ -37,10 +37,10 @@ By default, builds use the checked-in tool under `tools/`. Editors can override
 make PSA_API_TOOL=/path/to/psa-api-tool doc/crypto/html
 ```
 
-Each specification has its own `conf.py` under `doc/<spec>/`. The document configuration
-sets `psa_api_tool_path` to the repository `tools/` directory, allows the `PSA_API_TOOL`
-environment variable to override that path, then executes `psa-api-conf.py` from the
-selected tool copy.
+Each specification has its own `conf.py` and `psa-api.toml` under `doc/<spec>/`.
+The small `conf.py` shim sets `psa_api_tool_path` to the repository `tools/` directory,
+allows the `PSA_API_TOOL` environment variable to override that path, provides the TOML
+file path, then executes `psa-api-conf.py` from the selected tool copy.
 
 Each specification directory also contains a minimal `pyproject.toml` file. These files
 act as project-boundary markers for editor integrations such as Esbonio, allowing each
@@ -60,7 +60,7 @@ make -f /path/to/psa-api-tool/make doc/crypto/html
 
 The core HTML and structured-output build path requires:
 
-- Python 3.
+- Python 3.11 or later.
 - Sphinx.
 - A POSIX-like shell and `make`.
 
@@ -84,8 +84,9 @@ optional.
 ### Version and Platform Guidance
 
 The build tooling is not currently defined by a pinned requirements file or a repeatable
-CI environment. Contributors should report the tool and platform versions used when
-diagnosing build differences.
+CI environment. Python 3.11 is the minimum supported version; this provides the standard
+library TOML support used by TOML-backed document configurations. Contributors should
+report the tool and platform versions used when diagnosing build differences.
 
 The integrated tool introduction branch has been tested on macOS arm64 with Python
 3.13.7, Sphinx 8.1.0, GNU Make 3.81, MiKTeX-pdfTeX 4.10, OpenJDK 21.0.2, PlantUML
@@ -209,34 +210,59 @@ not rendering as expected.
 
 ## Document Configuration
 
-Each document `conf.py` defines a `doc_info` dictionary and then executes the shared
-tool configuration. Keep document configuration focused on document metadata and
-document-specific choices. Avoid setting Sphinx configuration variables directly in
-`conf.py` unless the shared configuration cannot support the required behavior.
+Each document's `psa-api.toml` defines its metadata. Keep document configuration focused
+on document metadata and document-specific choices. The keys map directly to the common
+tool configuration; the `conf.py` shim should not contain document metadata or set Sphinx
+configuration variables directly.
 
-The current PSA API documents use the Arm-style `psa-api-2022` and `psa-api-2025`
-templates. These templates preserve the existing front matter and release metadata model
-while allowing the repository to build without an external `atg-sphinx-spec` checkout.
+The current PSA API documents use the `psa-api-2026` template. It preserves the current
+front matter and release metadata model while allowing the repository to build without an
+external `atg-sphinx-spec` checkout.
 
-Important `doc_info` keys used by these specifications include:
+For example:
+
+```toml
+# Document identity
+template = "psa-api-2026"
+title = "Example API"
+doc_id = "GPD_SPE_000"
+
+# Publication and lifecycle
+version = "1.0"
+issue_no = 0
+draft = 1
+status = "DFT"
+
+# API generation
+header_doxygen = 2
+```
+
+Important TOML keys used by these specifications include:
 
 | Key | Purpose |
 | --- | --- |
 | `template` | Template directory under `tools/templates/`. |
 | `title` | Document title used by Sphinx and the title page. |
-| `version` | Base API version, normally `X.Y`. |
+| `version` | Document version, normally `X.Y`. |
 | `issue_no` | Document issue or maintenance revision. |
 | `draft` | Draft flag or draft revision, depending on the selected publication model. |
+| `status` | Document lifecycle status, such as `DFT` or `PUB`. |
 | `release_candidate` | Release-candidate number for existing Arm-style documents. |
 | `quality` | API maturity code such as `ALP`, `BET`, or `REL`. |
 | `header` | Default generated C header path for API directives. |
 | `header_doxygen` | Generated header annotation level. |
 | `error_order` | Document-wide order for generated return values. |
+| `include_content` | Optional content to render, such as `banner` or `rationale`. |
 | `identifier_index` | Controls the generated C identifier index. |
+| `page_break` | PDF page-break policy: `none`, `appendix`, or `chapter`. |
 | `prolog_files` | Shared substitution files included in the Sphinx prolog. |
 
 For detailed directive and role behavior, use `psa-api-tool-notes.md` as the editing
 reference.
+
+Legacy document trees can continue to define the same keys in a Python `doc_info`
+dictionary. The shared tool uses that dictionary when it is present; it otherwise loads
+the `psa_api_config_path` supplied by the local shim.
 
 ----
 

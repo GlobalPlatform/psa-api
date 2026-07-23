@@ -1,0 +1,25 @@
+# SPDX-FileCopyrightText: Copyright 2025 Arm Limited and/or its affiliates
+# SPDX-FileCopyrightText: Copyright 2026 GlobalPlatform
+# SPDX-License-Identifier: CC-BY-SA-4.0 AND LicenseRef-Patent-license
+
+# Document identity
+template = "psa-api-2026"
+title = "PSA Crypto Driver Interface"
+doc_id = "111106"
+copyright_date = "2020-2026"
+
+# Publication and lifecycle
+version = "1.0"
+quality = "ALP"
+issue_no = 1
+draft = 1
+status = "DFT"
+date = "September 2025"
+
+# API generation
+header_doxygen = 2
+
+# Rendering and optional content
+include_content = ["banner", "rationale"]
+identifier_index = false
+page_break = "chapter"
