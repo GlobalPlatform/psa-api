@@ -12,21 +12,33 @@ Document change history
 
 This section provides the detailed changes made between published version of the document.
 
-Changes in the draft GlobalPlatform publication revision
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Changes between *1.5* and *1.6*
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Changes to the API
+~~~~~~~~~~~~~~~~~~
+
+*  Added interruptible operations for asymmetric signatures, key generation, public-key export, and key agreement. See:
+
+   -  :secref:`interruptible-sign` and :secref:`interruptible-verify`
+   -  :secref:`interruptible-generate-key`
+   -  :secref:`interruptible-export-key`
+   -  :secref:`interruptible-key-agreement`
+
+   These APIs enable applications to bound the expensive computation performed in a single call. See :secref:`interruptible-operations`.
 
 Clarifications and fixes
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-*   Corrected the WPA3-SAE operation example code: the send-confirm counter input step is `PSA_PAKE_STEP_CONFIRM_COUNT`, and the shared key is extracted from the ``wpa3_sae`` operation.
-*   Corrected the SPAKE2+ operation example code: the Prover input step for the Verifier confirmation value is `PSA_PAKE_STEP_CONFIRM`.
+*  Corrected the WPA3-SAE operation example code: the send-confirm counter input step is `PSA_PAKE_STEP_CONFIRM_COUNT`, and the shared key is extracted from the ``wpa3_sae`` operation.
+*  Corrected the SPAKE2+ operation example code: the Prover input step for the Verifier confirmation value is `PSA_PAKE_STEP_CONFIRM`.
 
 Other changes
 ~~~~~~~~~~~~~
 
-*   Migrated the document to the 2026 PSA API template.
+*  Migrated the document to the 2026 PSA API template.
 
-    This changes the document front matter structure and publication styling, without changing the API.
+   This changes the document front matter structure and publication styling, without changing the API.
 
 Changes between *1.4.1* and *1.5*
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
