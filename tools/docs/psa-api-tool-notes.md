@@ -547,8 +547,9 @@ definition is provided in the `:definition:` option. For a function-like macro:
 Common options:
 
 - `:definition:` (optional) - provide the macro definition.
-- `:api-version: <type>` (optional) - define the macro using the document version
-  (from conf.py). `type` is one of `major`, `minor`, or `hex` which results in the
+- `:api-version: <type>` (optional) - define the macro using the target API version
+  (the optional `api_version` value in `doc_info`, or `version` when it is omitted).
+  `type` is one of `major`, `minor`, or `hex` which results in the
   macro definition being the major version, minor version, or a 16-bit
   `(major << 8) | minor` value respectively. This option cannot be used at the same
   time as `:definition:`.

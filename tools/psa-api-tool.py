@@ -1978,7 +1978,7 @@ class Macro(C_Item):
                 error = self.state_machine.reporter.error(
                 'Cannot provide arguments for version macro "{}"'.format(self.item_name),
                 line=self.lineno)
-            version = self.env.config.version.split()[0]
+            version = self.env.config.psa_api_api_version
             v = [int(x) for x in version.split('.')]
             if len(v) == 1:
                 v.append(0)
@@ -2603,6 +2603,7 @@ def setup(app):
     app.add_config_value('psa_api_tool_path', '', 'env')
     app.add_config_value('psa_api_template_path', '', 'env')
     app.add_config_value('psa_api_license', 'missing', 'env')
+    app.add_config_value('psa_api_api_version', '', 'env')
     app.add_config_value('psa_api_retval_order', [], 'env')
     app.add_config_value('psa_api_header_doxygen', 0, 'env')
     app.add_config_value('psa_api_front_sections', [], 'env')

@@ -142,6 +142,13 @@ def split_version(version):
         s.append(0)
     return s[0], s[1]
 
+def api_version_parts(version):
+    if not isinstance(version, str) or not re.fullmatch(r'[0-9]+\.[0-9]+', version):
+        raise ValueError(
+            'Invalid doc_info.api_version value {!r}; expected an API version in X.Y format.'
+            .format(version))
+    return tuple(int(x) for x in version.split('.'))
+
 # -- Build PSA API specification configuration -----------------------------------
 
 now = date.today()
@@ -156,7 +163,10 @@ title = title[-1]
 
 project = doc_info.get('project', fulltitle)
 author = doc_info.get('author', 'Unattributed')
+# The document version describes the published document lifecycle. The API
+# version can differ for drafts that describe a future API release.
 version = doc_info['version']
+api_version_configured = 'api_version' in doc_info
 owner = doc_info.get('owner')
 copyright_date = doc_info.get('copyright_date', now.strftime('%Y'))
 doc_id = doc_info.get('doc_id', '<<Document ID>>')
@@ -228,7 +238,33 @@ docdate = nowdate if status == 'DFT' else doc_info.get('date', nowdate)
 c_index = doc_info.get('identifier_index', True)
 page_break = doc_info.get('page_break', template_info.get('page_break','appendix'))
 
-majorversion, minorversion = split_version(version)
+document_majorversion, document_minorversion = split_version(version)
+document_api_version = '{}.{}'.format(document_majorversion, document_minorversion)
+if api_version_configured:
+    majorversion, minorversion = api_version_parts(doc_info['api_version'])
+    api_version = '{}.{}'.format(majorversion, minorversion)
+else:
+    majorversion, minorversion = document_majorversion, document_minorversion
+    api_version = document_api_version
+
+if status in ('MEM', 'PUB'):
+    if api_version != document_api_version:
+        raise ValueError(
+            'Invalid doc_info.api_version value {}: a published document at version {} '
+            'must describe API version {}.'.format(
+                api_version, version, document_api_version))
+elif api_version_configured:
+    next_minor = (document_majorversion, document_minorversion + 1)
+    next_major = (document_majorversion + 1, 0)
+    if (majorversion, minorversion) not in (
+            (document_majorversion, document_minorversion), next_minor, next_major):
+        raise ValueError(
+            'Invalid doc_info.api_version value {} for document version {}: a '
+            'non-published document must describe the current API version {}, '
+            'the next minor version {}.{}, or the next major version {}.0.'.format(
+                api_version, version, document_api_version,
+                *next_minor, next_major[0]))
+
 extension = doc_info.get('extension_doc', None)
 if extension:
     if extension == True:
@@ -277,7 +313,7 @@ doc_terms = {
     'doclatextitle': latextitle,            #  P
     'doctitle': title,                      # FPG
     'API': title,                           #AF
-    'APIversion': version,                  #A  P
+    'APIversion': api_version,              #A  P
     'docversion': version,                  # legacy usage
     'majorversion' : '``{}``'.format(majorversion), # F
     'minorversion' : '``{}``'.format(minorversion), # F
@@ -315,6 +351,8 @@ logo_file = template_info['logo_file']
 primary_domain = 'psa_c'
 
 psa_api_license = doc_info.get('license', 'missing')
+
+psa_api_api_version = api_version
 
 psa_api_c_header = doc_info.get('header', filename)
 
