@@ -1,0 +1,45 @@
+# SPDX-FileCopyrightText: Copyright 2018-2026 Arm Limited and/or its affiliates
+# SPDX-FileCopyrightText: Copyright 2026 GlobalPlatform
+# SPDX-License-Identifier: CC-BY-SA-4.0 AND LicenseRef-Patent-license
+
+# Document identity
+template = "psa-api-2026"
+title = "PSA Crypto API"
+doc_id = "GPD_SPE_086"
+copyright_date = "2018-2026"
+
+# Publication and lifecycle
+version = "1.5"
+issue_no = 0
+draft = 1
+status = "DFT"
+date = "June 2026"
+
+# API generation
+header_doxygen = 2
+error_order = [
+    "PSA_SUCCESS",
+    "PSA_ERROR_BAD_STATE",
+    "PSA_ERROR_INVALID_HANDLE",
+    "PSA_ERROR_NOT_PERMITTED",
+    "PSA_ERROR_INVALID_SIGNATURE",
+    "PSA_ERROR_ALREADY_EXISTS",
+    "PSA_ERROR_INSUFFICIENT_DATA",
+    "PSA_ERROR_BUFFER_TOO_SMALL",
+    "PSA_ERROR_INVALID_PADDING",
+    "PSA_ERROR_INVALID_ARGUMENT",
+    "PSA_ERROR_NOT_SUPPORTED",
+    "PSA_ERROR_INSUFFICIENT_ENTROPY",
+    "PSA_ERROR_INSUFFICIENT_MEMORY",
+    "PSA_ERROR_INSUFFICIENT_STORAGE",
+    "PSA_ERROR_COMMUNICATION_FAILURE",
+    "PSA_ERROR_CORRUPTION_DETECTED",
+    "PSA_ERROR_STORAGE_FAILURE",
+    "PSA_ERROR_DATA_CORRUPT",
+    "PSA_ERROR_DATA_INVALID",
+]
+
+# Rendering and optional content
+identifier_index = true
+page_break = "chapter"
+prolog_files = ["/substitutions"]

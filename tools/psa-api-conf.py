@@ -11,9 +11,10 @@
 # This script is included and executed as part of conf.py, it is not a
 # standalone python module or script.
 #
-# conf.py must have set up:
+# conf.py must have set up either:
 # * a dictionary doc_info, with project specific information and
-#   configuration.
+#   configuration; or
+# * a path psa_api_config_path to a TOML file containing the doc_info values.
 # * a string path psa_api_tool_path that defines the the path containing this
 #   file, either relative to conf.py, or absolute.
 #
@@ -21,6 +22,32 @@
 import sys, os, re
 from datetime import date
 import importlib
+
+def load_doc_info(path):
+    try:
+        import tomllib
+    except ModuleNotFoundError as error:
+        raise RuntimeError(
+            'TOML document configuration requires Python 3.11 or later.') from error
+    try:
+        with open(path, 'rb') as config_file:
+            return tomllib.load(config_file)
+    except FileNotFoundError as error:
+        raise RuntimeError(
+            'Document configuration TOML file "{}" was not found.'.format(path)) from error
+    except OSError as error:
+        raise RuntimeError(
+            'Cannot read document configuration TOML file "{}": {}.'.format(path, error)) from error
+    except tomllib.TOMLDecodeError as error:
+        raise RuntimeError(
+            'Invalid TOML in document configuration file "{}": {}.'.format(path, error)) from error
+
+if 'doc_info' not in globals():
+    try:
+        doc_info = load_doc_info(psa_api_config_path)
+    except NameError as error:
+        raise RuntimeError(
+            'conf.py must define doc_info or psa_api_config_path.') from error
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the

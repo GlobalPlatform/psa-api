@@ -1,0 +1,34 @@
+# SPDX-FileCopyrightText: Copyright 2018-2019, 2022-2026 Arm Limited and/or its affiliates
+# SPDX-FileCopyrightText: Copyright 2026 GlobalPlatform
+# SPDX-License-Identifier: CC-BY-SA-4.0 AND LicenseRef-Patent-license
+
+# Document identity
+template = "psa-api-2026"
+title = "PSA Secure Storage API"
+doc_id = "GPD_SPE_087"
+copyright_date = "2018-2019, 2022-2026"
+
+# Publication and lifecycle
+version = "1.0"
+issue_no = 4
+draft = 1
+status = "DFT"
+date = "September 2025"
+
+# API generation
+header_doxygen = 2
+error_order = [
+    "PSA_SUCCESS",
+    "PSA_ERROR_NOT_PERMITTED",
+    "PSA_ERROR_INVALID_SIGNATURE",
+    "PSA_ERROR_DOES_NOT_EXIST",
+    "PSA_ERROR_INVALID_ARGUMENT",
+    "PSA_ERROR_NOT_SUPPORTED",
+    "PSA_ERROR_INSUFFICIENT_STORAGE",
+    "PSA_ERROR_STORAGE_FAILURE",
+    "PSA_ERROR_DATA_CORRUPT",
+]
+
+# Rendering and optional content
+identifier_index = true
+page_break = "chapter"
