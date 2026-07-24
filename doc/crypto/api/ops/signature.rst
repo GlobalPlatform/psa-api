@@ -129,6 +129,16 @@ For large or streamed messages, it might be necessary to compute or verify a sig
 
 See :secref:`multi-part-signature`.
 
+.. rubric:: Signature interruptible operations
+
+Some applications need to bound the expensive computation performed in an individual signature API call.
+
+*   Version 1.6 of the |API| introduces optional interruptible signature and verification operations, `psa_sign_iop_t` and `psa_verify_iop_t`. They limit the computation performed in a call and can return :code:`PSA_OPERATION_INCOMPLETE` when further calls are required.
+
+    These operations are distinct from the multi-part operations and are intended for applications that require bounded execution time. The interruptible operations use a zero-length context when the algorithm has a context parameter.
+
+See :secref:`interruptible-sign` and :secref:`interruptible-verify`.
+
 .. _rsa-sign-algorithms:
 
 RSA signature algorithms
@@ -151,7 +161,7 @@ RSA signature algorithms
     This hash-and-sign signature algorithm can be used with both the message and hash signature functions.
     RSA PKCS#1 v1.5 does not have a context parameter.
     However, the sign or verify with context functions can be used with a zero-length context.
-    This algorithm can be used with the multi-part sign and verify operations.
+    This algorithm can be used with the multi-part sign and verify operations. It can also be used with the interruptible signature and verification operations.
 
     This signature scheme is defined by :RFC-title:`8017#8.2` under the name RSASSA-PKCS1-v1_5.
 
@@ -206,9 +216,8 @@ RSA signature algorithms
     .. summary::
         The raw RSA PKCS#1 v1.5 signature algorithm, without hashing.
 
-    This specialized signature algorithm can only be used with the `psa_sign_hash()` and `psa_verify_hash()` functions.
+    This specialized signature algorithm can only be used with the `psa_sign_hash()` and `psa_verify_hash()` functions, their context variants with a zero-length context, or the interruptible signature and verification operations.
     RSA PKCS#1 v1.5 does not have a context parameter.
-    However, `psa_sign_hash_with_context()` or `psa_verify_hash_with_context()` can be used with a zero-length context.
 
     This signature scheme is defined by :RFC-title:`8017#8.2` under the name RSASSA-PKCS1-v1_5.
 
@@ -245,7 +254,7 @@ RSA signature algorithms
     This hash-and-sign signature algorithm can be used with both the message and hash signature functions.
     RSA PSS does not have a context parameter.
     However, the sign or verify with context functions can be used with a zero-length context.
-    This algorithm can be used with the multi-part sign and verify operations.
+    This algorithm can be used with the multi-part sign and verify operations. It can also be used with the interruptible signature and verification operations.
 
     This algorithm is randomized: each invocation returns a different, equally valid signature.
 
@@ -287,7 +296,7 @@ RSA signature algorithms
     This hash-and-sign signature algorithm can be used with both the message and hash signature functions.
     RSA PSS does not have a context parameter.
     However, the sign or verify with context functions can be used with a zero-length context.
-    This algorithm can be used with the multi-part sign and verify operations.
+    This algorithm can be used with the multi-part sign and verify operations. It can also be used with the interruptible signature and verification operations.
 
     This algorithm is randomized: each invocation returns a different, equally valid signature.
 
@@ -401,7 +410,7 @@ ECDSA signature algorithms
     This hash-and-sign signature algorithm can be used with both the message and hash signature functions.
     ECDSA does not have a context parameter.
     However, the sign or verify with context functions can be used with a zero-length context.
-    This algorithm can be used with the multi-part sign and verify operations.
+    This algorithm can be used with the multi-part sign and verify operations. It can also be used with the interruptible signature and verification operations.
 
     When used with `psa_sign_hash()` or `psa_verify_hash()`, the provided ``hash`` parameter is the message digest, computed using the ``hash_alg`` hash algorithm.
 
@@ -441,9 +450,8 @@ ECDSA signature algorithms
     .. summary::
         The randomized ECDSA signature scheme, without hashing.
 
-    This specialized signature algorithm can only be used with the `psa_sign_hash()` and `psa_verify_hash()` functions.
+    This specialized signature algorithm can only be used with the `psa_sign_hash()` and `psa_verify_hash()` functions, their context variants with a zero-length context, or the interruptible signature and verification operations.
     ECDSA does not have a context parameter.
-    However, `psa_sign_hash_with_context()` or `psa_verify_hash_with_context()` can be used with a zero-length context.
 
     This algorithm is randomized: each invocation returns a different, equally valid signature.
 
@@ -484,7 +492,7 @@ ECDSA signature algorithms
     This hash-and-sign signature algorithm can be used with both the message and hash signature functions.
     ECDSA does not have a context parameter.
     However, the sign or verify with context functions can be used with a zero-length context.
-    This algorithm can be used with the multi-part sign and verify operations.
+    This algorithm can be used with the multi-part sign and verify operations. It can also be used with the interruptible signature and verification operations.
 
     When used with `psa_sign_hash()` or `psa_verify_hash()`, the provided ``hash`` parameter is the message digest, computed using the ``hash_alg`` hash algorithm.
 
@@ -580,6 +588,7 @@ They are used with the Edwards25519 and Edwards448 elliptic curve keys, see `PSA
 
 Both PureEdDSA and HashEdDSA can be used with contexts, which enables domain-separation when signatures are made of different message structures with the same key.
 For EdDSA, the context is an arbitrary byte string between zero and 255 bytes in length.
+Interruptible signature operations use a zero-length context.
 
 The development of EdDSA resulted in a total of five distinct algorithms:
 
@@ -617,7 +626,7 @@ The development of EdDSA resulted in a total of five distinct algorithms:
     This message-signature algorithm can be used with the `psa_sign_message()` and `psa_verify_message()` functions.
     With a zero-length context, `PSA_ALG_PURE_EDDSA` can also be used with the `psa_sign_message_with_context()` and `psa_verify_message_with_context()` functions.
     It cannot be used to sign hashes.
-    This algorithm can be used with the multi-part verify operation, but not with the multi-part sign operation.
+    This algorithm can be used with the multi-part verify operation, but not with the multi-part sign operation. It can also be used with the interruptible signature and verification operations.
 
     This is the PureEdDSA digital signature algorithm defined by :RFC-title:`8032`, with zero-length context.
 
@@ -629,6 +638,11 @@ The development of EdDSA resulted in a total of five distinct algorithms:
 
     *   Edwards448: the Ed448 algorithm is computed, with a zero-length context.
         The output signature is a 114-byte string: the concatenation of :math:`R` and :math:`S` as defined by :RFC:`8032#5.2.6`.
+
+    .. note::
+        When using an interruptible asymmetric signature operation with this algorithm, it is not possible to fragment the message data when calculating the signature. The message must be passed in a single call to `psa_sign_iop_update()`.
+
+        However, it is possible to fragment the message data when verifying a signature using an interruptible asymmetric verification operation.
 
     .. note::
         To sign or verify the pre-computed hash of a message using EdDSA, the HashEdDSA algorithms (`PSA_ALG_ED25519PH` and `PSA_ALG_ED448PH`) can be used.
@@ -654,7 +668,7 @@ The development of EdDSA resulted in a total of five distinct algorithms:
 
     This message-signature algorithm can be used with both the message and message with context signature functions.
     It cannot be used to sign hashes.
-    This algorithm can be used with the multi-part verify operation, but not with the multi-part sign operation.
+    This algorithm can be used with the multi-part verify operation, but not with the multi-part sign operation. It can also be used with the interruptible signature and verification operations.
 
     This is the PureEdDSA digital signature algorithm defined by :RFC-title:`8032`, with a context parameter.
     The context parameter can be between zero and 255 bytes in length.
@@ -670,6 +684,9 @@ The development of EdDSA resulted in a total of five distinct algorithms:
 
     To use a non-zero-length context, use the message-signature functions that accept a context parameter, :code:`psa_sign_message_with_context()` and :code:`psa_verify_message_with_context()`
     The `psa_sign_message()` and `psa_verify_message()` functions use a zero-length context when computing or verifying signatures.
+
+    .. note::
+        An interruptible signature operation for this algorithm must receive the complete message in one call to `psa_sign_iop_update()`. An interruptible verification operation can receive the message in fragments.
 
     .. note::
         To sign or verify the pre-computed hash of a message using EdDSA, the HashEdDSA algorithms (`PSA_ALG_ED25519PH` and `PSA_ALG_ED448PH`) can be used.
@@ -701,7 +718,7 @@ The development of EdDSA resulted in a total of five distinct algorithms:
         .. versionadded:: 1.1
 
     This hash-and-sign signature algorithm can be used with both the message and hash signature functions.
-    This algorithm can be used with the multi-part sign and verify operations.
+    This algorithm can be used with the multi-part sign and verify operations. It can also be used with the interruptible signature and verification operations.
 
     This calculates the Ed25519ph algorithm as specified in :RFC-title:`8032#5.1`, and requires an Edwards25519 curve key.
 
@@ -751,7 +768,7 @@ The development of EdDSA resulted in a total of five distinct algorithms:
         .. versionadded:: 1.1
 
     This hash-and-sign signature algorithm can be used with both the message and hash signature functions.
-    This algorithm can be used with the multi-part sign and verify operations.
+    This algorithm can be used with the multi-part sign and verify operations. It can also be used with the interruptible signature and verification operations.
 
     This calculates the Ed448ph algorithm as specified in :RFC-title:`8032#5.2`, and requires an Edwards448 curve key.
 
@@ -899,6 +916,7 @@ Context values are arbitrary strings between zero and 255 bytes in length.
 
 *   The signature functions without a context parameter provide a zero-length context when computing or verifying SLH-DSA signatures.
 *   To provide a context, use the ``psa_xxxx_with_context()`` signature functions with a context parameter, such as :code:`psa_sign_message_with_context()`.
+*   Interruptible signature operations use a zero-length context.
 
 .. macro:: PSA_ALG_SLH_DSA
     :definition: ((psa_algorithm_t) 0x06004000)
@@ -910,7 +928,7 @@ Context values are arbitrary strings between zero and 255 bytes in length.
 
     This message-signature algorithm can be used with both the message and message with context signature functions.
     It cannot be used to sign hashes.
-    This algorithm can be used with the multi-part verify operation, but not with the multi-part sign operation.
+    This algorithm can be used with the multi-part verify operation, but not with the multi-part sign operation. It can also be used with the interruptible signature and verification operations.
 
     This is the pure SLH-DSA digital signature algorithm, defined by :cite-title:`FIPS205`, using hedging.
     SLH-DSA requires an SLH-DSA key, which determines the SLH-DSA parameter set for the operation.
@@ -921,10 +939,13 @@ Context values are arbitrary strings between zero and 255 bytes in length.
     This algorithm has a context parameter.
     See the `notes on SLH-DSA contexts <slh-dsa-contexts_>`_.
 
+    .. note::
+        An interruptible signature operation for this algorithm must receive the complete message in one call to `psa_sign_iop_update()`. An interruptible verification operation can receive the message in fragments.
+
     When `PSA_ALG_SLH_DSA` is used as a permitted algorithm in a key policy, this permits:
 
-    *   `PSA_ALG_SLH_DSA` as the algorithm in a call to any single-part message signing function.
-    *   `PSA_ALG_SLH_DSA` or `PSA_ALG_DETERMINISTIC_SLH_DSA` as the algorithm in a call to any message signature verification function or when setting up a multi-part verify operation.
+    *   `PSA_ALG_SLH_DSA` as the algorithm in a call to any single-part message signing function or when setting up an interruptible signature operation.
+    *   `PSA_ALG_SLH_DSA` or `PSA_ALG_DETERMINISTIC_SLH_DSA` as the algorithm in a call to any message signature verification function or when setting up a multi-part verify operation or an interruptible verification operation.
 
     .. note::
         To sign or verify the pre-computed hash of a message using SLH-DSA, the HashSLH-DSA algorithms (`PSA_ALG_HASH_SLH_DSA()` and `PSA_ALG_DETERMINISTIC_HASH_SLH_DSA()`) can also be used with :code:`psa_sign_hash()` and :code:`psa_verify_hash()`.
@@ -946,7 +967,7 @@ Context values are arbitrary strings between zero and 255 bytes in length.
 
     This message-signature algorithm can be used with both the message and message with context signature functions.
     It cannot be used to sign hashes.
-    This algorithm can be used with the multi-part verify operation, but not with the multi-part sign operation.
+    This algorithm can be used with the multi-part verify operation, but not with the multi-part sign operation. It can also be used with the interruptible signature and verification operations.
 
     This is the pure SLH-DSA digital signature algorithm, defined by `[FIPS205]`, without hedging.
     SLH-DSA requires an SLH-DSA key, which determines the SLH-DSA parameter set for the operation.
@@ -960,10 +981,13 @@ Context values are arbitrary strings between zero and 255 bytes in length.
     This algorithm has a context parameter.
     See the `notes on SLH-DSA contexts <slh-dsa-contexts_>`_.
 
+    .. note::
+        An interruptible signature operation for this algorithm must receive the complete message in one call to `psa_sign_iop_update()`. An interruptible verification operation can receive the message in fragments.
+
     When `PSA_ALG_DETERMINISTIC_SLH_DSA` is used as a permitted algorithm in a key policy, this permits:
 
-    *   `PSA_ALG_DETERMINISTIC_SLH_DSA` as the algorithm in a call to any single-part message signing function.
-    *   `PSA_ALG_SLH_DSA` or `PSA_ALG_DETERMINISTIC_SLH_DSA` as the algorithm in a call to any message signature verification function or when setting up a multi-part verify operation.
+    *   `PSA_ALG_DETERMINISTIC_SLH_DSA` as the algorithm in a call to any single-part message signing function or when setting up an interruptible signature operation.
+    *   `PSA_ALG_SLH_DSA` or `PSA_ALG_DETERMINISTIC_SLH_DSA` as the algorithm in a call to any message signature verification function or when setting up a multi-part verify operation or an interruptible verification operation.
 
     .. note::
         To sign or verify the pre-computed hash of a message using SLH-DSA, the HashSLH-DSA algorithms (`PSA_ALG_HASH_SLH_DSA()` and `PSA_ALG_DETERMINISTIC_HASH_SLH_DSA()`) can also be used with :code:`psa_sign_hash()` and :code:`psa_verify_hash()`.
@@ -993,7 +1017,7 @@ Context values are arbitrary strings between zero and 255 bytes in length.
         Unspecified if ``hash_alg`` is not a supported hash algorithm.
 
     This hash-and-sign signature algorithm can be used with both the message and hash signature functions.
-    This algorithm can be used with the multi-part sign and verify operations.
+    This algorithm can be used with the multi-part sign and verify operations. It can also be used with the interruptible signature and verification operations.
 
     This is the pre-hashed SLH-DSA digital signature algorithm, defined by `[FIPS205]`, using hedging.
     SLH-DSA requires an SLH-DSA key, which determines the SLH-DSA parameter set for the operation.
@@ -1011,8 +1035,8 @@ Context values are arbitrary strings between zero and 255 bytes in length.
 
     When `PSA_ALG_HASH_SLH_DSA()` is used as a permitted algorithm in a key policy, this permits:
 
-    *   `PSA_ALG_HASH_SLH_DSA()` as the algorithm in a call to any signing function or when setting up a multi-part sign operation.
-    *   `PSA_ALG_HASH_SLH_DSA()` or `PSA_ALG_DETERMINISTIC_HASH_SLH_DSA()` as the algorithm in a call to any signature verification function or when setting up a multi-part verify operation.
+    *   `PSA_ALG_HASH_SLH_DSA()` as the algorithm in a call to any signing function or when setting up a multi-part sign operation or an interruptible signature operation.
+    *   `PSA_ALG_HASH_SLH_DSA()` or `PSA_ALG_DETERMINISTIC_HASH_SLH_DSA()` as the algorithm in a call to any signature verification function or when setting up a multi-part verify operation or an interruptible verification operation.
 
     .. note::
         The signature produced by HashSLH-DSA is distinct from that produced by SLH-DSA.
@@ -1054,7 +1078,7 @@ Context values are arbitrary strings between zero and 255 bytes in length.
         Unspecified if ``hash_alg`` is not a supported hash algorithm.
 
     This hash-and-sign signature algorithm can be used with both the message and hash signature functions.
-    This algorithm can be used with the multi-part sign and verify operations.
+    This algorithm can be used with the multi-part sign and verify operations. It can also be used with the interruptible signature and verification operations.
 
     This is the pre-hashed SLH-DSA digital signature algorithm, defined by `[FIPS205]`, without hedging.
     SLH-DSA requires an SLH-DSA key, which determines the SLH-DSA parameter set for the operation.
@@ -1075,8 +1099,8 @@ Context values are arbitrary strings between zero and 255 bytes in length.
 
     When `PSA_ALG_DETERMINISTIC_HASH_SLH_DSA()` is used as a permitted algorithm in a key policy, this permits:
 
-    *   `PSA_ALG_DETERMINISTIC_HASH_SLH_DSA()` as the algorithm in a call to any signing function or when setting up a multi-part sign operation.
-    *   `PSA_ALG_HASH_SLH_DSA()` or `PSA_ALG_DETERMINISTIC_HASH_SLH_DSA()` as the algorithm in a call to any signature verification function or when setting up a multi-part verify operation.
+    *   `PSA_ALG_DETERMINISTIC_HASH_SLH_DSA()` as the algorithm in a call to any signing function or when setting up a multi-part sign operation or an interruptible signature operation.
+    *   `PSA_ALG_HASH_SLH_DSA()` or `PSA_ALG_DETERMINISTIC_HASH_SLH_DSA()` as the algorithm in a call to any signature verification function or when setting up a multi-part verify operation or an interruptible verification operation.
 
     .. note::
         The signature produced by HashSLH-DSA is distinct from that produced by SLH-DSA.
@@ -1244,6 +1268,7 @@ Context values are arbitrary strings between zero and 255 bytes in length.
 
 *   The signature functions without a context parameter provide a zero-length context when computing or verifying ML-DSA signatures.
 *   To provide a context, use the ``psa_xxxx_with_context()`` signature functions with a context parameter, such as :code:`psa_sign_message_with_context()`.
+*   Interruptible signature operations use a zero-length context.
 
 .. macro:: PSA_ALG_ML_DSA
     :definition: ((psa_algorithm_t) 0x06004400)
@@ -1255,7 +1280,7 @@ Context values are arbitrary strings between zero and 255 bytes in length.
 
     This message-signature algorithm can be used with both the message and message with context signature functions.
     It cannot be used to sign hashes.
-    This algorithm can be used with the multi-part sign and verify operations.
+    This algorithm can be used with the multi-part sign and verify operations. It can also be used with the interruptible signature and verification operations.
 
     This is the pure ML-DSA digital signature algorithm, defined by :cite-title:`FIPS204`, using hedging.
     ML-DSA requires an ML-DSA key, which determines the ML-DSA parameter set for the operation.
@@ -1268,8 +1293,8 @@ Context values are arbitrary strings between zero and 255 bytes in length.
 
     When `PSA_ALG_ML_DSA` is used as a permitted algorithm in a key policy, this permits:
 
-    *   `PSA_ALG_ML_DSA` as the algorithm in a call to any message signing function or when setting up a multi-part sign operation.
-    *   `PSA_ALG_ML_DSA` or `PSA_ALG_DETERMINISTIC_ML_DSA` as the algorithm in a call to any message signature verification function or when setting up a multi-part verify operation.
+    *   `PSA_ALG_ML_DSA` as the algorithm in a call to any message signing function or when setting up a multi-part sign operation or an interruptible signature operation.
+    *   `PSA_ALG_ML_DSA` or `PSA_ALG_DETERMINISTIC_ML_DSA` as the algorithm in a call to any message signature verification function or when setting up a multi-part verify operation or an interruptible verification operation.
 
     .. note::
         To sign or verify the pre-computed hash of a message using ML-DSA, the HashML-DSA algorithms (`PSA_ALG_HASH_ML_DSA()` and `PSA_ALG_DETERMINISTIC_HASH_ML_DSA()`) can also be used with :code:`psa_sign_hash()` and :code:`psa_verify_hash()`.
@@ -1291,7 +1316,7 @@ Context values are arbitrary strings between zero and 255 bytes in length.
 
     This message-signature algorithm can be used with both the message and message with context signature functions.
     It cannot be used to sign hashes.
-    This algorithm can be used with the multi-part sign and verify operations.
+    This algorithm can be used with the multi-part sign and verify operations. It can also be used with the interruptible signature and verification operations.
 
     This is the pure ML-DSA digital signature algorithm, defined by :cite-title:`FIPS204`, without hedging.
     ML-DSA requires an ML-DSA key, which determines the ML-DSA parameter set for the operation.
@@ -1307,8 +1332,8 @@ Context values are arbitrary strings between zero and 255 bytes in length.
 
     When `PSA_ALG_DETERMINISTIC_ML_DSA` is used as a permitted algorithm in a key policy, this permits:
 
-    *   `PSA_ALG_DETERMINISTIC_ML_DSA` as the algorithm in a call to any message signing function or when setting up a multi-part sign operation.
-    *   `PSA_ALG_ML_DSA` or `PSA_ALG_DETERMINISTIC_ML_DSA` as the algorithm in a call to any message signature verification function or when setting up a multi-part verify operation.
+    *   `PSA_ALG_DETERMINISTIC_ML_DSA` as the algorithm in a call to any message signing function or when setting up a multi-part sign operation or an interruptible signature operation.
+    *   `PSA_ALG_ML_DSA` or `PSA_ALG_DETERMINISTIC_ML_DSA` as the algorithm in a call to any message signature verification function or when setting up a multi-part verify operation or an interruptible verification operation.
 
     .. note::
         To sign or verify the pre-computed hash of a message using ML-DSA, the HashML-DSA algorithms (`PSA_ALG_HASH_ML_DSA()` and `PSA_ALG_DETERMINISTIC_HASH_ML_DSA()`) can also be used with :code:`psa_sign_hash()` and :code:`psa_verify_hash()`.
@@ -1338,7 +1363,7 @@ Context values are arbitrary strings between zero and 255 bytes in length.
         Unspecified if ``hash_alg`` is not a supported hash algorithm.
 
     This hash-and-sign signature algorithm can be used with both the message and hash signature functions.
-    This algorithm can be used with the multi-part sign and verify operations.
+    This algorithm can be used with the multi-part sign and verify operations. It can also be used with the interruptible signature and verification operations.
 
     This is the pre-hashed ML-DSA digital signature algorithm, defined by :cite-title:`FIPS204`, using hedging.
     ML-DSA requires an ML-DSA key, which determines the ML-DSA parameter set for the operation.
@@ -1356,8 +1381,8 @@ Context values are arbitrary strings between zero and 255 bytes in length.
 
     When `PSA_ALG_HASH_ML_DSA()` is used as a permitted algorithm in a key policy, this permits:
 
-    *   `PSA_ALG_HASH_ML_DSA()` as the algorithm in a call to any signing function or when setting up a multi-part sign operation.
-    *   `PSA_ALG_HASH_ML_DSA()` or `PSA_ALG_DETERMINISTIC_HASH_ML_DSA()` as the algorithm in a call to any signature verification function or when setting up a multi-part verify operation.
+    *   `PSA_ALG_HASH_ML_DSA()` as the algorithm in a call to any signing function or when setting up a multi-part sign operation or an interruptible signature operation.
+    *   `PSA_ALG_HASH_ML_DSA()` or `PSA_ALG_DETERMINISTIC_HASH_ML_DSA()` as the algorithm in a call to any signature verification function or when setting up a multi-part verify operation or an interruptible verification operation.
 
     .. note::
         The signature produced by HashML-DSA is distinct from that produced by ML-DSA.
@@ -1399,7 +1424,7 @@ Context values are arbitrary strings between zero and 255 bytes in length.
         Unspecified if ``hash_alg`` is not a supported hash algorithm.
 
     This hash-and-sign signature algorithm can be used with both the message and hash signature functions.
-    This algorithm can be used with the multi-part sign and verify operations.
+    This algorithm can be used with the multi-part sign and verify operations. It can also be used with the interruptible signature and verification operations.
 
     This is the pre-hashed ML-DSA digital signature algorithm, defined by :cite-title:`FIPS204`, without hedging.
     ML-DSA requires an ML-DSA key, which determines the ML-DSA parameter set for the operation.
@@ -1420,8 +1445,8 @@ Context values are arbitrary strings between zero and 255 bytes in length.
 
     When `PSA_ALG_DETERMINISTIC_HASH_ML_DSA()` is used as a permitted algorithm in a key policy, this permits:
 
-    *   `PSA_ALG_DETERMINISTIC_HASH_ML_DSA()` as the algorithm in a call to any signing function or when setting up a multi-part sign operation.
-    *   `PSA_ALG_HASH_ML_DSA()` or `PSA_ALG_DETERMINISTIC_HASH_ML_DSA()` as the algorithm in a call to any signature verification function or when setting up a multi-part verify operation.
+    *   `PSA_ALG_DETERMINISTIC_HASH_ML_DSA()` as the algorithm in a call to any signing function or when setting up a multi-part sign operation or an interruptible signature operation.
+    *   `PSA_ALG_HASH_ML_DSA()` or `PSA_ALG_DETERMINISTIC_HASH_ML_DSA()` as the algorithm in a call to any signature verification function or when setting up a multi-part verify operation or an interruptible verification operation.
 
     .. note::
         The signature produced by HashML-DSA is distinct from that produced by ML-DSA.
@@ -1714,6 +1739,8 @@ Single-part asymmetric signature functions
         *   For a hash-and-sign signature algorithm, use a `psa_hash_operation_t` multi-part hash operation and then pass the resulting hash to `psa_sign_hash()`.
             :code:`PSA_ALG_GET_HASH(alg)` can be used to determine the hash algorithm to use.
 
+        An implementation that supports interruptible signature operations can instead use `psa_sign_iop_t` when bounded execution time is required. This API has distinct availability and completion requirements, and is not a replacement for the multi-part signature API.
+
 .. function:: psa_sign_message_with_context
 
     .. summary::
@@ -1790,6 +1817,8 @@ Single-part asymmetric signature functions
         *   For a hash-and-sign signature algorithm, use a `psa_hash_operation_t` multi-part hash operation and then pass the resulting hash to `psa_sign_hash_with_context()`.
             :code:`PSA_ALG_GET_HASH(alg)` can be used to determine the hash algorithm to use.
 
+        Interruptible signature operations use a zero-length context. To use a non-zero-length context, use this function instead.
+
 .. function:: psa_verify_message
 
     .. summary::
@@ -1849,6 +1878,8 @@ Single-part asymmetric signature functions
         *   From version 1.5 of the |API|, use a `psa_verify_operation_t` multi-part verify operation.
         *   For a hash-and-sign signature algorithm, use a `psa_hash_operation_t` multi-part hash operation and then pass the resulting hash to `psa_verify_hash()`.
             :code:`PSA_ALG_GET_HASH(alg)` can be used to determine the hash algorithm to use.
+
+        An implementation that supports interruptible signature operations can instead use `psa_verify_iop_t` when bounded execution time is required. This API has distinct availability and completion requirements, and is not a replacement for the multi-part signature API.
 
 .. function:: psa_verify_message_with_context
 
@@ -1917,6 +1948,8 @@ Single-part asymmetric signature functions
         *   From version 1.5 of the |API|, use a `psa_verify_operation_t` multi-part verify operation.
         *   For a hash-and-sign signature algorithm, use a `psa_hash_operation_t` multi-part hash operation and then pass the resulting hash to `psa_verify_hash_with_context()`.
             :code:`PSA_ALG_GET_HASH(alg)` can be used to determine the hash algorithm to use.
+
+        Interruptible signature operations use a zero-length context. To use a non-zero-length context, use this function instead.
 
 .. function:: psa_sign_hash
 
@@ -2750,6 +2783,744 @@ Multi-part asymmetric signature operations
 
     In particular, calling `psa_verify_abort()` after the operation has been terminated by a call to `psa_verify_abort()` or `psa_verify_finish()` is safe and has no effect.
 
+.. _interruptible-sign:
+
+Interruptible asymmetric signature
+----------------------------------
+
+The interruptible asymmetric signature operation calculates the signature of a message, or pre-computed hash, in an interruptible manner. For example, this can enable an application to remain responsive in an execution environment that does not provide multi-tasking.
+
+An interruptible asymmetric signature operation is used as follows:
+
+1.  Allocate an interruptible asymmetric signature operation object, of type `psa_sign_iop_t`, which will be passed to all the functions listed here.
+#.  Initialize the operation object with one of the methods described in the documentation for `psa_sign_iop_t`, for example, `PSA_SIGN_IOP_INIT`.
+#.  Call `psa_sign_iop_setup()` to specify the algorithm and key.
+#.  Call `psa_sign_iop_setup_complete()` to complete the setup, until this function does not return :code:`PSA_OPERATION_INCOMPLETE`.
+#.  Either:
+
+    1.  Call `psa_sign_iop_hash()` with a pre-computed hash of the message to sign; or
+    2.  Call `psa_sign_iop_update()` one or more times, passing a fragment of the message each time. The signature that is calculated will that be of the concatenation of these fragments, in order.
+#.  Call `psa_sign_iop_complete()` to finish calculating the signature value, until this function does not return :code:`PSA_OPERATION_INCOMPLETE`.
+#.  If an error occurs at any stage, or to terminate the operation early, call `psa_sign_iop_abort()`.
+
+
+.. typedef:: /* implementation-defined type */ psa_sign_iop_t
+
+    .. summary::
+        The type of the state data structure for an interruptible asymmetric signature operation.
+
+        .. versionadded:: 1.6
+
+    Before calling any function on an interruptible asymmetric signature operation object, the application must initialize it by any of the following means:
+
+    *   Set the object to all-bits-zero, for example:
+
+        .. code-block:: xref
+
+            psa_sign_iop_t operation;
+            memset(&operation, 0, sizeof(operation));
+
+    *   Initialize the object to logical zero values by declaring the object as static or global without an explicit initializer, for example:
+
+        .. code-block:: xref
+
+            static psa_sign_iop_t operation;
+
+    *   Initialize the object to the initializer `PSA_SIGN_IOP_INIT`, for example:
+
+        .. code-block:: xref
+
+            psa_sign_iop_t operation = PSA_SIGN_IOP_INIT;
+
+    *   Assign the result of the function `psa_sign_iop_init()` to the object, for example:
+
+        .. code-block:: xref
+
+            psa_sign_iop_t operation;
+            operation = psa_sign_iop_init();
+
+    This is an implementation-defined type. Applications that make assumptions about the content of this object will result in implementation-specific behavior, and are non-portable.
+
+.. macro:: PSA_SIGN_IOP_INIT
+    :definition: /* implementation-defined value */
+
+    .. summary::
+        This macro evaluates to an initializer for an interruptible asymmetric signature operation object of type `psa_sign_iop_t`.
+
+        .. versionadded:: 1.6
+
+.. function:: psa_sign_iop_init
+
+    .. summary::
+        Return an initial value for an interruptible asymmetric signature operation object.
+
+        .. versionadded:: 1.6
+
+    .. return:: psa_sign_iop_t
+
+.. function:: psa_sign_iop_get_num_ops
+
+    .. summary::
+        Get the number of *ops* that an interruptible asymmetric signature operation has taken so far.
+
+        .. versionadded:: 1.6
+
+    .. param:: psa_sign_iop_t * operation
+        The interruptible asymmetric signature operation to inspect.
+
+    .. return:: uint32_t
+        Number of *ops* that the operation has taken so far.
+
+    After the interruptible operation has completed, the returned value is the number of *ops* required for the entire operation. The value is reset to zero by a call to either `psa_sign_iop_setup()` or `psa_sign_iop_abort()`.
+
+    This function can be used to tune the value passed to `psa_iop_set_max_ops()`.
+
+    The value is undefined if the operation object has not been initialized.
+
+.. function:: psa_sign_iop_setup
+
+    .. summary::
+        Begin the setup of an interruptible asymmetric signature operation.
+
+        .. versionadded:: 1.6
+
+    .. param:: psa_sign_iop_t * operation
+        The interruptible asymmetric signature operation to set up. It must have been initialized as per the documentation for `psa_sign_iop_t` and not yet in use.
+    .. param:: psa_key_id_t key
+        Identifier of the key to use for the operation. It must be an asymmetric key pair. The key must either permit the usage `PSA_KEY_USAGE_SIGN_HASH` or `PSA_KEY_USAGE_SIGN_MESSAGE`.
+    .. param:: psa_algorithm_t alg
+        An asymmetric signature algorithm: a value of type `psa_algorithm_t` such that :code:`PSA_ALG_IS_SIGN(alg)` is true.
+
+    .. return:: psa_status_t
+    .. retval:: PSA_SUCCESS
+        Success.
+        The operation setup must now be completed by calling `psa_sign_iop_setup_complete()`.
+    .. retval:: PSA_ERROR_INVALID_HANDLE
+        ``key`` is not a valid key identifier.
+    .. retval:: PSA_ERROR_NOT_PERMITTED
+        The following conditions can result in this error:
+
+        *   The key has neither the `PSA_KEY_USAGE_SIGN_HASH` nor the `PSA_KEY_USAGE_SIGN_MESSAGE` usage flag.
+        *   The key does not permit the requested algorithm.
+    .. retval:: PSA_ERROR_NOT_SUPPORTED
+        The following conditions can result in this error:
+
+        *   ``alg`` is not supported or is not an asymmetric signature algorithm.
+        *   ``key`` is not supported for use with ``alg``.
+    .. retval:: PSA_ERROR_INVALID_ARGUMENT
+        The following conditions can result in this error:
+
+        *   ``alg`` is not an asymmetric signature algorithm.
+        *   ``key`` is not an asymmetric key pair, that is compatible with ``alg``.
+    .. retval:: PSA_ERROR_BAD_STATE
+        The following conditions can result in this error:
+
+        *   The operation state is not valid: it must be inactive.
+        *   The library requires initializing by a call to `psa_crypto_init()`.
+    .. retval:: PSA_ERROR_INSUFFICIENT_MEMORY
+    .. retval:: PSA_ERROR_COMMUNICATION_FAILURE
+    .. retval:: PSA_ERROR_CORRUPTION_DETECTED
+    .. retval:: PSA_ERROR_STORAGE_FAILURE
+    .. retval:: PSA_ERROR_DATA_CORRUPT
+    .. retval:: PSA_ERROR_DATA_INVALID
+    .. retval:: PSA_ERROR_INSUFFICIENT_ENTROPY
+
+    This function sets up the calculation of an asymmetric signature of a message or pre-computed hash. To verify an asymmetric signature against an expected value, use an interruptible asymmetric verification operation, see :secref:`interruptible-verify`.
+
+    After a successful call to `psa_sign_iop_setup()`, the operation is in setup state. Setup can be completed by calling `psa_sign_iop_setup_complete()` repeatedly, until it returns a status code that is not :code:`PSA_OPERATION_INCOMPLETE`. Once setup has begun, the application must eventually terminate the operation. The following events terminate an operation:
+
+    *   A successful call to `psa_sign_iop_complete()`.
+    *   A call to `psa_sign_iop_abort()`.
+
+    If `psa_sign_iop_setup()` returns an error, the operation object is unchanged.
+
+.. function:: psa_sign_iop_setup_complete
+
+    .. summary::
+        Finish setting up an interruptible asymmetric signature operation.
+
+        .. versionadded:: 1.6
+
+    .. param:: psa_sign_iop_t * operation
+        The interruptible asymmetric signature operation to use. The operation must be in the process of being set up.
+
+    .. return:: psa_status_t
+    .. retval:: PSA_SUCCESS
+        Success.
+        The operation is now ready for input of data to sign.
+    .. retval:: PSA_OPERATION_INCOMPLETE
+        The function was interrupted after exhausting the maximum *ops*. The computation is incomplete, and this function must be called again with the same operation object to continue.
+    .. retval:: PSA_ERROR_BAD_STATE
+        The following conditions can result in this error:
+
+        *   The operation state is not valid: the operation setup must have started, but not yet finished.
+        *   The library requires initializing by a call to `psa_crypto_init()`.
+    .. retval:: PSA_ERROR_INSUFFICIENT_MEMORY
+    .. retval:: PSA_ERROR_COMMUNICATION_FAILURE
+    .. retval:: PSA_ERROR_CORRUPTION_DETECTED
+    .. retval:: PSA_ERROR_STORAGE_FAILURE
+    .. retval:: PSA_ERROR_DATA_CORRUPT
+    .. retval:: PSA_ERROR_DATA_INVALID
+    .. retval:: PSA_ERROR_INSUFFICIENT_ENTROPY
+
+    .. note::
+        This is an interruptible function, and must be called repeatedly, until it returns a status code that is not :code:`PSA_OPERATION_INCOMPLETE`.
+
+    When this function returns successfully, the operation is ready for data input using a call to `psa_sign_iop_hash()` or `psa_sign_iop_update()`.
+    If this function returns :code:`PSA_OPERATION_INCOMPLETE`, setup is not complete, and this function must be called again to continue the operation.
+    If this function returns an error status, the operation enters an error state and must be aborted by calling `psa_sign_iop_abort()`.
+
+    The amount of calculation performed in a single call to this function is determined by the maximum *ops* setting. See `psa_iop_set_max_ops()`.
+
+.. function:: psa_sign_iop_hash
+
+    .. summary::
+        Input a pre-computed hash to an interruptible asymmetric signature operation.
+
+        .. versionadded:: 1.6
+
+    .. param:: psa_sign_iop_t * operation
+        The interruptible asymmetric signature operation to use. The operation must have been set up, with no data input.
+    .. param:: const uint8_t * hash
+        The input to sign. This is usually the hash of a message.
+
+        See the description of this function, or the description of individual signature algorithms, for details of the acceptable inputs.
+    .. param:: size_t hash_length
+        Size of the ``hash`` buffer in bytes.
+
+    .. return:: psa_status_t
+    .. retval:: PSA_SUCCESS
+        Success.
+        The operation is now ready for completion.
+    .. retval:: PSA_ERROR_BAD_STATE
+        The following conditions can result in this error:
+
+        *   The operation state is not valid: the operation must be set up, with no data input.
+        *   The library requires initializing by a call to `psa_crypto_init()`.
+    .. retval:: PSA_ERROR_NOT_PERMITTED
+        The key does not have the `PSA_KEY_USAGE_SIGN_HASH` flag.
+    .. retval:: PSA_ERROR_INVALID_ARGUMENT
+        The following conditions can result in this error:
+
+        *   The algorithm does not allow signing of a pre-computed hash.
+        *   ``hash_length`` is not valid for the algorithm and key type.
+        *   ``hash`` is not a valid input value for the algorithm and key type.
+    .. retval:: PSA_ERROR_NOT_SUPPORTED
+        The implementation does not support signing of a pre-computed hash.
+    .. retval:: PSA_ERROR_INSUFFICIENT_MEMORY
+    .. retval:: PSA_ERROR_COMMUNICATION_FAILURE
+    .. retval:: PSA_ERROR_CORRUPTION_DETECTED
+    .. retval:: PSA_ERROR_STORAGE_FAILURE
+    .. retval:: PSA_ERROR_DATA_CORRUPT
+    .. retval:: PSA_ERROR_DATA_INVALID
+    .. retval:: PSA_ERROR_INSUFFICIENT_ENTROPY
+
+    The application must complete the setup of the operation before calling this function.
+
+    For hash-and-sign signature algorithms, the ``hash`` input to this function is the hash of the message to sign. The algorithm used to calculate this hash is encoded in the signature algorithm. For such algorithms, ``hash_length`` must equal the length of the hash output: :code:`hash_length == PSA_HASH_LENGTH(PSA_ALG_GET_HASH(alg))`.
+
+    Specialized signature algorithms can apply a padding or encoding to the hash. In such cases, the encoded hash must be passed to this function. For example, see `PSA_ALG_RSA_PKCS1V15_SIGN_RAW`.
+
+    After input of the hash, the signature operation can be completed by calling `psa_sign_iop_complete()` until it returns a status code that is not :code:`PSA_OPERATION_INCOMPLETE`.
+
+    If this function returns an error status, the operation enters an error state and must be aborted by calling `psa_sign_iop_abort()`.
+
+.. function:: psa_sign_iop_update
+
+    .. summary::
+        Add a message fragment to an interruptible asymmetric signature operation.
+
+        .. versionadded:: 1.6
+
+    .. param:: psa_sign_iop_t * operation
+        The interruptible asymmetric signature operation to use. The operation must have been set up, with no hash value input.
+    .. param:: const uint8_t * input
+        Buffer containing the message fragment to add to the signature calculation.
+    .. param:: size_t input_length
+        Size of the ``input`` buffer in bytes.
+
+    .. return:: psa_status_t
+    .. retval:: PSA_SUCCESS
+        Success.
+    .. retval:: PSA_ERROR_BAD_STATE
+        The following conditions can result in this error:
+
+        *   The operation state is not valid: the operation must be set up, with no pre-computed hash value input.
+        *   The library requires initializing by a call to `psa_crypto_init()`.
+    .. retval:: PSA_ERROR_NOT_PERMITTED
+        The key does not have the `PSA_KEY_USAGE_SIGN_MESSAGE` flag.
+    .. retval:: PSA_ERROR_INVALID_ARGUMENT
+        The following conditions can result in this error:
+
+        *   The algorithm does not allow signing of a message.
+        *   The total input for the operation is too large for the signature algorithm.
+    .. retval:: PSA_ERROR_NOT_SUPPORTED
+        The following conditions can result in this error:
+
+        *   The implementation does not support signing of a message.
+        *   The total input for the operation is too large for the implementation.
+    .. retval:: PSA_ERROR_INSUFFICIENT_MEMORY
+    .. retval:: PSA_ERROR_COMMUNICATION_FAILURE
+    .. retval:: PSA_ERROR_CORRUPTION_DETECTED
+    .. retval:: PSA_ERROR_STORAGE_FAILURE
+    .. retval:: PSA_ERROR_DATA_CORRUPT
+    .. retval:: PSA_ERROR_DATA_INVALID
+    .. retval:: PSA_ERROR_INSUFFICIENT_ENTROPY
+
+    The application must complete the setup of the operation before calling this function.
+
+    For message-signature algorithms that process the message data multiple times when computing a signature, `psa_sign_iop_update()` must be called exactly once with the entire message content. For signature algorithms that only process the message data once, the message content can be passed in a series of calls to `psa_sign_iop_update()`.
+
+    After input of the message, the signature operation can be completed by calling `psa_sign_iop_complete()` until it returns a status code that is not :code:`PSA_OPERATION_INCOMPLETE`.
+
+    If this function returns an error status, the operation enters an error state and must be aborted by calling `psa_sign_iop_abort()`.
+
+    .. note::
+
+        To sign the zero-length message using an interruptible operation, call `psa_sign_iop_update()` once with a zero-length message fragment before calling `psa_sign_iop_complete()`.
+
+.. function:: psa_sign_iop_complete
+
+    .. summary::
+        Attempt to finish the interruptible calculation of an asymmetric signature.
+
+        .. versionadded:: 1.6
+
+    .. param:: psa_sign_iop_t * operation
+        The interruptible asymmetric signature operation to use. The operation must have hash or message data input, or be in the process of finishing.
+    .. param:: uint8_t * signature
+        Buffer where the signature is to be written.
+    .. param:: size_t signature_size
+        Size of the ``signature`` buffer in bytes. This must be appropriate for the selected algorithm and key:
+
+        *   The required signature size is :code:`PSA_SIGN_OUTPUT_SIZE(key_type, key_bits, alg)` where ``key_type`` and ``key_bits`` are attributes of the key, and ``alg`` is the algorithm used to calculate the signature.
+        *   `PSA_SIGNATURE_MAX_SIZE` evaluates to the maximum signature size of any supported signature algorithm.
+    .. param:: size_t * signature_length
+        On success, the number of bytes that make up the returned signature value.
+
+    .. return:: psa_status_t
+    .. retval:: PSA_SUCCESS
+        Success.
+        The first ``(*signature_length)`` bytes of ``signature`` contain the signature value.
+    .. retval:: PSA_OPERATION_INCOMPLETE
+        The function was interrupted after exhausting the maximum *ops*. The computation is incomplete, and this function must be called again with the same operation object to continue.
+    .. retval:: PSA_ERROR_BAD_STATE
+        The following conditions can result in this error:
+
+        *   The operation state is not valid: the operation setup must be complete, or a previous call to `psa_sign_iop_complete()` returned :code:`PSA_OPERATION_INCOMPLETE`.
+        *   The library requires initializing by a call to `psa_crypto_init()`.
+    .. retval:: PSA_ERROR_BUFFER_TOO_SMALL
+        The size of the ``signature`` buffer is too small.
+        `PSA_SIGN_OUTPUT_SIZE()` or `PSA_SIGNATURE_MAX_SIZE` can be used to determine a sufficient buffer size.
+    .. retval:: PSA_ERROR_INSUFFICIENT_MEMORY
+    .. retval:: PSA_ERROR_COMMUNICATION_FAILURE
+    .. retval:: PSA_ERROR_CORRUPTION_DETECTED
+    .. retval:: PSA_ERROR_STORAGE_FAILURE
+    .. retval:: PSA_ERROR_DATA_CORRUPT
+    .. retval:: PSA_ERROR_DATA_INVALID
+    .. retval:: PSA_ERROR_INSUFFICIENT_ENTROPY
+
+    .. note::
+        This is an interruptible function, and must be called repeatedly, until it returns a status code that is not :code:`PSA_OPERATION_INCOMPLETE`.
+
+    When this function returns successfully, the signature is returned in ``signature``, and the operation becomes inactive.
+    If this function returns :code:`PSA_OPERATION_INCOMPLETE`, no signature is returned, and this function must be called again to continue the operation.
+    If this function returns an error status, the operation enters an error state and must be aborted by calling `psa_sign_iop_abort()`.
+
+    The amount of calculation performed in a single call to this function is determined by the maximum *ops* setting. See `psa_iop_set_max_ops()`.
+
+.. function:: psa_sign_iop_abort
+
+    .. summary::
+        Abort an interruptible asymmetric signature operation.
+
+        .. versionadded:: 1.6
+
+    .. param:: psa_sign_iop_t * operation
+        The interruptible signature operation to abort.
+
+    .. return:: psa_status_t
+    .. retval:: PSA_SUCCESS
+        Success.
+        The operation object can now be discarded or reused.
+    .. retval:: PSA_ERROR_COMMUNICATION_FAILURE
+    .. retval:: PSA_ERROR_CORRUPTION_DETECTED
+    .. retval:: PSA_ERROR_BAD_STATE
+        The library requires initializing by a call to `psa_crypto_init()`.
+
+    Aborting an operation frees all associated resources except for the ``operation`` structure itself. Once aborted, the operation object can be reused for another operation by calling `psa_sign_iop_setup()` again.
+
+    This function can be called at any time after the operation object has been initialized as described in `psa_sign_iop_t`.
+
+    In particular, it is valid to call `psa_sign_iop_abort()` twice, or to call `psa_sign_iop_abort()` on an operation that has not been set up.
+
+
+.. _interruptible-verify:
+
+Interruptible asymmetric verification
+-------------------------------------
+
+The interruptible asymmetric verification operation verifies the signature of a message, or pre-computed hash, in an interruptible manner. For example, this can enable an application to remain responsive in an execution environment that does not provide multi-tasking.
+
+An interruptible asymmetric verification operation is used as follows:
+
+1.  Allocate an interruptible asymmetric verification operation object, of type `psa_verify_iop_t`, which will be passed to all the functions listed here.
+#.  Initialize the operation object with one of the methods described in the documentation for `psa_verify_iop_t`, for example, `PSA_VERIFY_IOP_INIT`.
+#.  Call `psa_verify_iop_setup()` to specify the algorithm, key, and the signature to verify.
+#.  Call `psa_verify_iop_setup_complete()` to complete the setup, until this function does not return :code:`PSA_OPERATION_INCOMPLETE`.
+#.  Either:
+
+    1.  Call `psa_verify_iop_hash()` with a pre-computed hash of the message to verify; or
+    2.  Call `psa_verify_iop_update()` one or more times, passing a fragment of the message each time. The signature is verified against the concatenation of these fragments, in order.
+#.  Call `psa_verify_iop_complete()` to finish verifying the signature value, until this function does not return :code:`PSA_OPERATION_INCOMPLETE`.
+#.  If an error occurs at any stage, or to terminate the operation early, call `psa_verify_iop_abort()`.
+
+
+.. typedef:: /* implementation-defined type */ psa_verify_iop_t
+
+    .. summary::
+        The type of the state data structure for an interruptible asymmetric verification operation.
+
+        .. versionadded:: 1.6
+
+    Before calling any function on an interruptible asymmetric verification operation object, the application must initialize it by any of the following means:
+
+    *   Set the object to all-bits-zero, for example:
+
+        .. code-block:: xref
+
+            psa_verify_iop_t operation;
+            memset(&operation, 0, sizeof(operation));
+
+    *   Initialize the object to logical zero values by declaring the object as static or global without an explicit initializer, for example:
+
+        .. code-block:: xref
+
+            static psa_verify_iop_t operation;
+
+    *   Initialize the object to the initializer `PSA_VERIFY_IOP_INIT`, for example:
+
+        .. code-block:: xref
+
+            psa_verify_iop_t operation = PSA_VERIFY_IOP_INIT;
+
+    *   Assign the result of the function `psa_verify_iop_init()` to the object, for example:
+
+        .. code-block:: xref
+
+            psa_verify_iop_t operation;
+            operation = psa_verify_iop_init();
+
+    This is an implementation-defined type. Applications that make assumptions about the content of this object will result in implementation-specific behavior, and are non-portable.
+
+.. macro:: PSA_VERIFY_IOP_INIT
+    :definition: /* implementation-defined value */
+
+    .. summary::
+        This macro evaluates to an initializer for an interruptible asymmetric verification operation object of type `psa_verify_iop_t`.
+
+        .. versionadded:: 1.6
+
+.. function:: psa_verify_iop_init
+
+    .. summary::
+        Return an initial value for an interruptible asymmetric verification operation object.
+
+        .. versionadded:: 1.6
+
+    .. return:: psa_verify_iop_t
+
+.. function:: psa_verify_iop_get_num_ops
+
+    .. summary::
+        Get the number of *ops* that an interruptible asymmetric verification operation has taken so far.
+
+        .. versionadded:: 1.6
+
+    .. param:: psa_verify_iop_t * operation
+        The interruptible asymmetric verification operation to inspect.
+
+    .. return:: uint32_t
+        Number of *ops* that the operation has taken so far.
+
+    After the interruptible operation has completed, the returned value is the number of *ops* required for the entire operation. The value is reset to zero by a call to either `psa_verify_iop_setup()` or `psa_verify_iop_abort()`.
+
+    This function can be used to tune the value passed to `psa_iop_set_max_ops()`.
+
+    The value is undefined if the operation object has not been initialized.
+
+.. function:: psa_verify_iop_setup
+
+    .. summary::
+        Begin the setup of an interruptible asymmetric verification operation.
+
+        .. versionadded:: 1.6
+
+    .. param:: psa_verify_iop_t * operation
+        The interruptible verification operation to set up. It must have been initialized as per the documentation for `psa_verify_iop_t` and not yet in use.
+    .. param:: psa_key_id_t key
+        Identifier of the key to use for the operation. It must be an asymmetric key pair or asymmetric public key. The key must either permit the usage `PSA_KEY_USAGE_VERIFY_HASH` or `PSA_KEY_USAGE_VERIFY_MESSAGE`.
+    .. param:: psa_algorithm_t alg
+        An asymmetric signature algorithm: a value of type `psa_algorithm_t` such that :code:`PSA_ALG_IS_SIGN(alg)` is true.
+    .. param:: const uint8_t * signature
+        Buffer containing the signature to verify.
+    .. param:: size_t signature_length
+        Size of the ``signature`` buffer in bytes.
+
+    .. return:: psa_status_t
+    .. retval:: PSA_SUCCESS
+        Success.
+        The operation setup must now be completed by calling `psa_verify_iop_setup_complete()`.
+    .. retval:: PSA_ERROR_INVALID_HANDLE
+        ``key`` is not a valid key identifier.
+    .. retval:: PSA_ERROR_NOT_PERMITTED
+        The following conditions can result in this error:
+
+        *   The key has neither the `PSA_KEY_USAGE_VERIFY_HASH` nor the `PSA_KEY_USAGE_VERIFY_MESSAGE` usage flag.
+        *   The key does not permit the requested algorithm.
+    .. retval:: PSA_ERROR_NOT_SUPPORTED
+        The following conditions can result in this error:
+
+        *   ``alg`` is not supported or is not an asymmetric signature algorithm.
+        *   ``key`` is not supported for use with ``alg``.
+    .. retval:: PSA_ERROR_INVALID_ARGUMENT
+        The following conditions can result in this error:
+
+        *   ``alg`` is not an asymmetric signature algorithm.
+        *   ``key`` is not an asymmetric key pair, or asymmetric public key, that is compatible with ``alg``.
+        *   ``signature`` is not a valid signature for the algorithm and key.
+    .. retval:: PSA_ERROR_BAD_STATE
+        The following conditions can result in this error:
+
+        *   The operation state is not valid: it must be inactive.
+        *   The library requires initializing by a call to `psa_crypto_init()`.
+    .. retval:: PSA_ERROR_INVALID_SIGNATURE
+        ``signature`` is not a valid signature for the algorithm and key.
+    .. retval:: PSA_ERROR_INSUFFICIENT_MEMORY
+    .. retval:: PSA_ERROR_COMMUNICATION_FAILURE
+    .. retval:: PSA_ERROR_CORRUPTION_DETECTED
+    .. retval:: PSA_ERROR_STORAGE_FAILURE
+    .. retval:: PSA_ERROR_DATA_CORRUPT
+    .. retval:: PSA_ERROR_DATA_INVALID
+
+    This function sets up the verification of an asymmetric signature of a message or pre-computed hash. To calculate an asymmetric signature, use an interruptible asymmetric signature operation, see :secref:`interruptible-sign`.
+
+    After a successful call to `psa_verify_iop_setup()`, the operation is in setup state. Setup can be completed by calling `psa_verify_iop_setup_complete()` repeatedly, until it returns a status code that is not :code:`PSA_OPERATION_INCOMPLETE`. Once setup has begun, the application must eventually terminate the operation. The following events terminate an operation:
+
+    *   A successful call to `psa_verify_iop_complete()`.
+    *   A call to `psa_verify_iop_abort()`.
+
+    If `psa_verify_iop_setup()` returns an error, the operation object is unchanged.
+
+.. function:: psa_verify_iop_setup_complete
+
+    .. summary::
+        Finish setting up an interruptible asymmetric verification operation.
+
+        .. versionadded:: 1.6
+
+    .. param:: psa_verify_iop_t * operation
+        The interruptible verification operation to use. The operation must be in the process of being set up.
+
+    .. return:: psa_status_t
+    .. retval:: PSA_SUCCESS
+        Success.
+        The operation is now ready for input of data to verify.
+    .. retval:: PSA_OPERATION_INCOMPLETE
+        The function was interrupted after exhausting the maximum *ops*. The computation is incomplete, and this function must be called again with the same operation object to continue.
+    .. retval:: PSA_ERROR_BAD_STATE
+        The following conditions can result in this error:
+
+        *   The operation state is not valid: the operation setup must have started, but not yet finished.
+        *   The library requires initializing by a call to `psa_crypto_init()`.
+    .. retval:: PSA_ERROR_INVALID_SIGNATURE
+        The signature is not a valid signature for the algorithm and key.
+    .. retval:: PSA_ERROR_INSUFFICIENT_MEMORY
+    .. retval:: PSA_ERROR_COMMUNICATION_FAILURE
+    .. retval:: PSA_ERROR_CORRUPTION_DETECTED
+    .. retval:: PSA_ERROR_STORAGE_FAILURE
+    .. retval:: PSA_ERROR_DATA_CORRUPT
+    .. retval:: PSA_ERROR_DATA_INVALID
+
+    .. note::
+        This is an interruptible function, and must be called repeatedly, until it returns a status code that is not :code:`PSA_OPERATION_INCOMPLETE`.
+
+    When this function returns successfully, the operation is ready for data input using a call to `psa_verify_iop_hash()` or `psa_verify_iop_update()`.
+    If this function returns :code:`PSA_OPERATION_INCOMPLETE`, setup is not complete, and this function must be called again to continue the operation.
+    If this function returns an error status, the operation enters an error state and must be aborted by calling `psa_verify_iop_abort()`.
+
+    The amount of calculation performed in a single call to this function is determined by the maximum *ops* setting. See `psa_iop_set_max_ops()`.
+
+.. function:: psa_verify_iop_hash
+
+    .. summary::
+        Input a pre-computed hash to an interruptible asymmetric verification operation.
+
+        .. versionadded:: 1.6
+
+    .. param:: psa_verify_iop_t * operation
+        The interruptible verification operation to use. The operation must have been set up, with no data input.
+    .. param:: const uint8_t * hash
+        The input whose signature is to be verified. This is usually the hash of a message.
+
+        See the description of this function, or the description of individual signature algorithms, for details of the acceptable inputs.
+    .. param:: size_t hash_length
+        Size of the ``hash`` buffer in bytes.
+
+    .. return:: psa_status_t
+    .. retval:: PSA_SUCCESS
+        Success.
+        The operation is now ready for completion.
+    .. retval:: PSA_ERROR_BAD_STATE
+        The following conditions can result in this error:
+
+        *   The operation state is not valid: the operation must be set up, with no data input.
+        *   The library requires initializing by a call to `psa_crypto_init()`.
+    .. retval:: PSA_ERROR_NOT_PERMITTED
+        The key does not have the `PSA_KEY_USAGE_VERIFY_HASH` flag.
+    .. retval:: PSA_ERROR_INVALID_ARGUMENT
+        The following conditions can result in this error:
+
+        *   The algorithm does not allow verification of a pre-computed hash.
+        *   ``hash_length`` is not valid for the algorithm and key type.
+        *   ``hash`` is not a valid input value for the algorithm and key type.
+    .. retval:: PSA_ERROR_NOT_SUPPORTED
+        The implementation does not support verification of a pre-computed hash.
+    .. retval:: PSA_ERROR_INSUFFICIENT_MEMORY
+    .. retval:: PSA_ERROR_COMMUNICATION_FAILURE
+    .. retval:: PSA_ERROR_CORRUPTION_DETECTED
+    .. retval:: PSA_ERROR_STORAGE_FAILURE
+    .. retval:: PSA_ERROR_DATA_CORRUPT
+    .. retval:: PSA_ERROR_DATA_INVALID
+
+    The application must complete the setup of the operation before calling this function.
+
+    For hash-and-sign signature algorithms, the ``hash`` input to this function is the hash of the message to verify. The algorithm used to calculate this hash is encoded in the signature algorithm. For such algorithms, ``hash_length`` must equal the length of the hash output: :code:`hash_length == PSA_HASH_LENGTH(PSA_ALG_GET_HASH(alg))`.
+
+    Specialized signature algorithms can apply a padding or encoding to the hash. In such cases, the encoded hash must be passed to this function. For example, see `PSA_ALG_RSA_PKCS1V15_SIGN_RAW`.
+
+    After input of the hash, the verification operation can be completed by calling `psa_verify_iop_complete()` until it returns a status code that is not :code:`PSA_OPERATION_INCOMPLETE`.
+
+    If this function returns an error status, the operation enters an error state and must be aborted by calling `psa_verify_iop_abort()`.
+
+
+.. function:: psa_verify_iop_update
+
+    .. summary::
+        Add a message fragment to an interruptible asymmetric verification operation.
+
+        .. versionadded:: 1.6
+
+    .. param:: psa_verify_iop_t * operation
+        The interruptible verification operation to use. The operation must have been set up, with no hash value input.
+    .. param:: const uint8_t * input
+        Buffer containing the message fragment to add to the verification.
+    .. param:: size_t input_length
+        Size of the ``input`` buffer in bytes.
+
+    .. return:: psa_status_t
+    .. retval:: PSA_SUCCESS
+        Success.
+    .. retval:: PSA_ERROR_BAD_STATE
+        The following conditions can result in this error:
+
+        *   The operation state is not valid: the operation must be set up, with no pre-computed hash value input.
+        *   The library requires initializing by a call to `psa_crypto_init()`.
+    .. retval:: PSA_ERROR_NOT_PERMITTED
+        The key does not have the `PSA_KEY_USAGE_VERIFY_MESSAGE` flag.
+    .. retval:: PSA_ERROR_INVALID_ARGUMENT
+        The following conditions can result in this error:
+
+        *   The algorithm does not allow verification of a message.
+        *   The total input for the operation is too large for the signature algorithm.
+    .. retval:: PSA_ERROR_NOT_SUPPORTED
+        The following conditions can result in this error:
+
+        *   The implementation does not support signing of a message.
+        *   The total input for the operation is too large for the implementation.
+    .. retval:: PSA_ERROR_INSUFFICIENT_MEMORY
+    .. retval:: PSA_ERROR_COMMUNICATION_FAILURE
+    .. retval:: PSA_ERROR_CORRUPTION_DETECTED
+    .. retval:: PSA_ERROR_STORAGE_FAILURE
+    .. retval:: PSA_ERROR_DATA_CORRUPT
+    .. retval:: PSA_ERROR_DATA_INVALID
+
+    The application must complete the setup of the operation before calling this function.
+
+    For message-signature algorithms that process the message data multiple times when verifying a signature, `psa_verify_iop_update()` must be called exactly once with the entire message content. For signature algorithms that only process the message data once, the message content can be passed in a series of calls to `psa_verify_iop_update()`.
+
+    After input of the message, the verification operation can be completed by calling `psa_verify_iop_complete()` until it returns a status code that is not :code:`PSA_OPERATION_INCOMPLETE`.
+
+    If this function returns an error status, the operation enters an error state and must be aborted by calling `psa_verify_iop_abort()`.
+
+    .. note::
+
+        To verify the signature of the zero-length message using an interruptible operation, call `psa_verify_iop_update()` once with a zero-length message fragment before calling `psa_verify_iop_complete()`
+
+.. function:: psa_verify_iop_complete
+
+    .. summary::
+        Attempt to finish the interruptible verification of an asymmetric signature.
+
+        .. versionadded:: 1.6
+
+    .. param:: psa_verify_iop_t * operation
+        The interruptible verification operation to use. The operation must have hash or message data input, or be in the process of finishing.
+
+    .. return:: psa_status_t
+    .. retval:: PSA_SUCCESS
+        Success.
+        The signature is valid.
+    .. retval:: PSA_OPERATION_INCOMPLETE
+        The function was interrupted after exhausting the maximum *ops*. The computation is incomplete, and this function must be called again with the same operation object to continue.
+    .. retval:: PSA_ERROR_BAD_STATE
+        The following conditions can result in this error:
+
+        *   The operation state is not valid: the operation setup must be complete, or a previous call to `psa_verify_iop_complete()` returned :code:`PSA_OPERATION_INCOMPLETE`.
+        *   The library requires initializing by a call to `psa_crypto_init()`.
+    .. retval:: PSA_ERROR_INVALID_SIGNATURE
+        The signature is not the result of signing the input message, or hash value, with the requested algorithm, using the private key corresponding to the key provided to the operation.
+    .. retval:: PSA_ERROR_INSUFFICIENT_MEMORY
+    .. retval:: PSA_ERROR_COMMUNICATION_FAILURE
+    .. retval:: PSA_ERROR_CORRUPTION_DETECTED
+    .. retval:: PSA_ERROR_STORAGE_FAILURE
+    .. retval:: PSA_ERROR_DATA_CORRUPT
+    .. retval:: PSA_ERROR_DATA_INVALID
+
+    .. note::
+        This is an interruptible function, and must be called repeatedly, until it returns a status code that is not :code:`PSA_OPERATION_INCOMPLETE`.
+
+    When this function returns successfully, the operation becomes inactive.
+    If this function returns :code:`PSA_OPERATION_INCOMPLETE`, this function must be called again to continue the operation.
+    If this function returns an error status, the operation enters an error state and must be aborted by calling `psa_verify_iop_abort()`.
+
+    The amount of calculation performed in a single call to this function is determined by the maximum *ops* setting. See `psa_iop_set_max_ops()`.
+
+.. function:: psa_verify_iop_abort
+
+    .. summary::
+        Abort an interruptible asymmetric verification operation.
+
+        .. versionadded:: 1.6
+
+    .. param:: psa_verify_iop_t * operation
+        The interruptible verification operation to abort.
+
+    .. return:: psa_status_t
+    .. retval:: PSA_SUCCESS
+        Success.
+        The operation object can now be discarded or reused.
+    .. retval:: PSA_ERROR_COMMUNICATION_FAILURE
+    .. retval:: PSA_ERROR_CORRUPTION_DETECTED
+    .. retval:: PSA_ERROR_BAD_STATE
+        The library requires initializing by a call to `psa_crypto_init()`.
+
+    Aborting an operation frees all associated resources except for the ``operation`` structure itself. Once aborted, the operation object can be reused for another operation by calling `psa_verify_iop_setup()` again.
+
+    This function can be called at any time after the operation object has been initialized as described in `psa_verify_iop_t`.
+
+    In particular, it is valid to call `psa_verify_iop_abort()` twice, or to call `psa_verify_iop_abort()` on an operation that has not been set up.
+
 Support macros
 --------------
 
@@ -2757,7 +3528,7 @@ Support macros
     :definition: /* specification-defined value */
 
     .. summary::
-        Whether the specified algorithm is a signature algorithm that can be used with message signature and verification functions, and with sign and verify multi-part operations.
+        Whether the specified algorithm is a signature algorithm that can be used with message signature and verification functions, multi-part signature operations, and interruptible signature operations.
 
     .. param:: alg
         An algorithm identifier: a value of type `psa_algorithm_t`.
@@ -2771,7 +3542,7 @@ Support macros
     :definition: /* specification-defined value */
 
     .. summary::
-        Whether the specified algorithm is a signature algorithm that can be used with hash signature and verification functions.
+        Whether the specified algorithm is a signature algorithm that can be used with hash signature and verification functions, and with interruptible signature operations.
 
     .. param:: alg
         An algorithm identifier: a value of type `psa_algorithm_t`.

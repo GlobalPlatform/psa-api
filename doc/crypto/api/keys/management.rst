@@ -237,6 +237,9 @@ When creating a key, the attributes for the new key are specified in a `psa_key_
 
         This function is equivalent to calling `psa_generate_key_custom()` with the production parameters `PSA_CUSTOM_KEY_PARAMETERS_INIT` and ``custom_data_length == 0`` (``custom_data`` is ignored).
 
+    If an application requires bounded execution when generating a key, the implementation might provide support for interruptible key generation.
+    See :secref:`interruptible-generate-key`.
+
 .. function:: psa_generate_key_custom
 
     .. summary::
@@ -723,6 +726,10 @@ Key export
 
     Exporting a public-key object or the public part of a key pair is always permitted, regardless of the key's usage flags.
 
+    If an application requires bounded execution when exporting a public key, it can use an interruptible public-key export operation.
+    See :secref:`interruptible-export-key`.
+
+
 .. macro:: PSA_EXPORT_KEY_OUTPUT_SIZE
     :definition: /* implementation-defined value */
 
@@ -830,3 +837,493 @@ Key export
     This value must be a sufficient buffer size when calling `psa_export_key()` or `psa_export_public_key()` to export any asymmetric key pair or public key that is supported by the implementation, regardless of the exact key type and key size.
 
     See also `PSA_EXPORT_KEY_PAIR_MAX_SIZE`, `PSA_EXPORT_PUBLIC_KEY_MAX_SIZE`, and `PSA_EXPORT_KEY_OUTPUT_SIZE()`.
+
+.. _interruptible-generate-key:
+
+Interruptible key generation
+----------------------------
+
+Generation of some key types can be computationally expensive.
+For example, RSA keys, and elliptic curve public keys.
+
+For such keys, an interruptible key-generation operation can be used instead of calling `psa_generate_key()`, in applications that have bounded execution requirements for use cases that require key generation.
+
+This operation uses the default production parameters of `psa_generate_key()`. It does not support the custom production parameters accepted by `psa_generate_key_custom()`.
+
+.. note::
+    An implementation of the |API| does not need to provide incremental generation for all key types supported by the implementation.
+    Use `psa_generate_key()` to create keys for types that do not need to be incrementally generated.
+
+An interruptible key-generation operation is used as follows:
+
+1.  Allocate an interruptible key-generation operation object, of type `psa_generate_key_iop_t`, which will be passed to all the functions listed here.
+#.  Initialize the operation object with one of the methods described in the documentation for `psa_generate_key_iop_t`, for example, `PSA_GENERATE_KEY_IOP_INIT`.
+#.  Call `psa_generate_key_iop_setup()` to specify the key attributes.
+#.  Call `psa_generate_key_iop_complete()` to finish generating the key, until this function does not return :code:`PSA_OPERATION_INCOMPLETE`.
+#.  If an error occurs at any stage, or to terminate the operation early, call `psa_generate_key_iop_abort()`.
+
+.. typedef:: /* implementation-defined type */ psa_generate_key_iop_t
+
+    .. summary::
+        The type of the state data structure for an interruptible key-generation operation.
+
+        .. versionadded:: 1.6
+
+    Before calling any function on an interruptible key-generation operation object, the application must initialize it by any of the following means:
+
+    *   Set the object to all-bits-zero, for example:
+
+        .. code-block:: xref
+
+            psa_generate_key_iop_t operation;
+            memset(&operation, 0, sizeof(operation));
+
+    *   Initialize the object to logical zero values by declaring the object as static or global without an explicit initializer, for example:
+
+        .. code-block:: xref
+
+            static psa_generate_key_iop_t operation;
+
+    *   Initialize the object to the initializer `PSA_GENERATE_KEY_IOP_INIT`, for example:
+
+        .. code-block:: xref
+
+            psa_generate_key_iop_t operation = PSA_GENERATE_KEY_IOP_INIT;
+
+    *   Assign the result of the function `psa_generate_key_iop_init()` to the object, for example:
+
+        .. code-block:: xref
+
+            psa_generate_key_iop_t operation;
+            operation = psa_generate_key_iop_init();
+
+    This is an implementation-defined type.
+    Applications that make assumptions about the content of this object will result in implementation-specific behavior, and are non-portable.
+
+.. macro:: PSA_GENERATE_KEY_IOP_INIT
+    :definition: /* implementation-defined value */
+
+    .. summary::
+        This macro evaluates to an initializer for an interruptible key-generation operation object of type `psa_generate_key_iop_t`.
+
+        .. versionadded:: 1.6
+
+.. function:: psa_generate_key_iop_init
+
+    .. summary::
+        Return an initial value for an interruptible key-generation operation object.
+
+        .. versionadded:: 1.6
+
+    .. return:: psa_generate_key_iop_t
+
+.. function:: psa_generate_key_iop_get_num_ops
+
+    .. summary::
+        Get the number of *ops* that an interruptible key-generation operation has taken so far.
+
+        .. versionadded:: 1.6
+
+    .. param:: psa_generate_key_iop_t * operation
+        The interruptible key-generation operation to inspect.
+
+    .. return:: uint32_t
+        Number of *ops* that the operation has taken so far.
+
+    After the interruptible operation has completed, the returned value is the number of *ops* required for the entire operation.
+    The value is reset to zero by a call to either `psa_generate_key_iop_setup()` or `psa_generate_key_iop_abort()`.
+
+    This function can be used to tune the value passed to `psa_iop_set_max_ops()`.
+
+    The value is undefined if the operation object has not been initialized.
+
+.. function:: psa_generate_key_iop_setup
+
+    .. summary::
+        Start an interruptible operation to generate a key or key pair.
+
+        .. versionadded:: 1.6
+
+    .. param:: psa_generate_key_iop_t * operation
+        The interruptible key-generation operation to set up.
+        It must have been initialized as per the documentation for `psa_generate_key_iop_t`, and be inactive.
+    .. param:: const psa_key_attributes_t * attributes
+        The attributes for the new key.
+
+        The following attributes are required for all keys:
+
+        *   The key type. It must not be an asymmetric public key.
+        *   The key size. It must be a valid size for the key type.
+
+        The following attributes must be set for keys used in cryptographic operations:
+
+        *   The key permitted-algorithm policy, see :secref:`permitted-algorithms`.
+        *   The key usage flags, see :secref:`key-usage-flags`.
+
+        The following attributes must be set for keys that do not use the default volatile lifetime:
+
+        *   The key lifetime, see :secref:`key-lifetimes`.
+        *   The key identifier is required for a key with a persistent lifetime, see :secref:`key-identifiers`.
+
+        .. note::
+            This is an input parameter: it is not updated with the final key attributes.
+            The final attributes of the new key can be queried by calling `psa_get_key_attributes()` with the key's identifier.
+
+    .. return:: psa_status_t
+    .. retval:: PSA_SUCCESS
+        Success.
+        The interruptible operation must now be completed by calling `psa_generate_key_iop_complete()`.
+    .. retval:: PSA_ERROR_ALREADY_EXISTS
+        This is an attempt to create a persistent key, and there is already a persistent key with the given identifier.
+    .. retval:: PSA_ERROR_NOT_SUPPORTED
+        The following conditions can result in this error:
+
+        *   The implementation does not support incremental generation of the requested key type.
+        *   The key attributes, as a whole, are not supported, either by the implementation in general or in the specified storage location.
+    .. retval:: PSA_ERROR_INVALID_ARGUMENT
+        The following conditions can result in this error:
+
+        *   The key type is invalid, or is an asymmetric public key type.
+        *   The key size is not valid for the key type.
+        *   The key lifetime is invalid.
+        *   The key identifier is not valid for the key lifetime.
+        *   The key usage flags include invalid values.
+        *   The key's permitted-usage algorithm is invalid.
+        *   The key attributes, as a whole, are invalid.
+    .. retval:: PSA_ERROR_NOT_PERMITTED
+        The implementation does not permit creating a key with the specified attributes due to some implementation-specific policy.
+    .. retval:: PSA_ERROR_BAD_STATE
+        The following conditions can result in this error:
+
+        *   The operation state is not valid: it must be inactive.
+        *   The library requires initializing by a call to `psa_crypto_init()`.
+    .. retval:: PSA_ERROR_INSUFFICIENT_MEMORY
+    .. retval:: PSA_ERROR_INSUFFICIENT_ENTROPY
+    .. retval:: PSA_ERROR_COMMUNICATION_FAILURE
+    .. retval:: PSA_ERROR_CORRUPTION_DETECTED
+    .. retval:: PSA_ERROR_INSUFFICIENT_STORAGE
+    .. retval:: PSA_ERROR_STORAGE_FAILURE
+    .. retval:: PSA_ERROR_DATA_CORRUPT
+    .. retval:: PSA_ERROR_DATA_INVALID
+
+    This function sets up the random generation of a new key.
+    The location, policy, type, and size of the key are taken from ``attributes``.
+
+    Implementations must reject an attempt to generate a key of size ``0``.
+
+    The following type-specific considerations apply:
+
+    *   For RSA keys (`PSA_KEY_TYPE_RSA_KEY_PAIR`), the public exponent is 65537.
+        The modulus is a product of two probabilistic primes between :math:`2^{n-1}` and :math:`2^n` where :math:`n` is the bit size specified in the attributes.
+
+    After a successful call to `psa_generate_key_iop_setup()`, the operation is active.
+    The operation can be completed by calling `psa_generate_key_iop_complete()` repeatedly, until it returns a status code that is not :code:`PSA_OPERATION_INCOMPLETE`.
+    Once active, the application must eventually terminate the operation. The following events terminate an operation:
+
+    *   A successful call to `psa_generate_key_iop_complete()`.
+    *   A call to `psa_generate_key_iop_abort()`.
+
+    If `psa_generate_key_iop_setup()` returns an error, the operation object is unchanged.
+
+.. function:: psa_generate_key_iop_complete
+
+    .. summary::
+        Attempt to finish the interruptible generation of a key.
+
+        .. versionadded:: 1.6
+
+    .. param:: psa_generate_key_iop_t * operation
+        The interruptible key-generation operation to use.
+        The operation must be active.
+    .. param:: psa_key_id_t * key
+        On success, an identifier for the newly created key.
+        `PSA_KEY_ID_NULL` on failure.
+
+    .. return:: psa_status_t
+    .. retval:: PSA_SUCCESS
+        Success.
+        If the key is persistent, the key material and the key's metadata have been saved to persistent storage.
+    .. retval:: PSA_OPERATION_INCOMPLETE
+        The function was interrupted after exhausting the maximum *ops*.
+        The computation is incomplete, and this function must be called again with the same operation object to continue.
+    .. retval:: PSA_ERROR_ALREADY_EXISTS
+        This is an attempt to create a persistent key, and there is already a persistent key with the given identifier.
+    .. retval:: PSA_ERROR_BAD_STATE
+        The following conditions can result in this error:
+
+        *   The operation state is not valid: it must be active.
+        *   The library requires initializing by a call to `psa_crypto_init()`.
+    .. retval:: PSA_ERROR_INSUFFICIENT_MEMORY
+    .. retval:: PSA_ERROR_COMMUNICATION_FAILURE
+    .. retval:: PSA_ERROR_CORRUPTION_DETECTED
+    .. retval:: PSA_ERROR_INSUFFICIENT_STORAGE
+    .. retval:: PSA_ERROR_STORAGE_FAILURE
+    .. retval:: PSA_ERROR_DATA_CORRUPT
+    .. retval:: PSA_ERROR_DATA_INVALID
+    .. retval:: PSA_ERROR_INSUFFICIENT_ENTROPY
+
+    .. note::
+        This is an interruptible function, and must be called repeatedly, until it returns a status code that is not :code:`PSA_OPERATION_INCOMPLETE`.
+
+    When this function returns successfully, the new key is returned in ``key``, and the operation becomes inactive.
+    If this function returns :code:`PSA_OPERATION_INCOMPLETE`, no key is returned, and this function must be called again to continue the operation.
+    If this function returns an error status, the operation enters an error state and must be aborted by calling `psa_generate_key_iop_abort()`.
+
+    The amount of calculation performed in a single call to this function is determined by the maximum *ops* setting. See `psa_iop_set_max_ops()`.
+
+.. function:: psa_generate_key_iop_abort
+
+    .. summary::
+        Abort an interruptible key-generation operation.
+
+        .. versionadded:: 1.6
+
+    .. param:: psa_generate_key_iop_t * operation
+        The interruptible key-generation operation to abort.
+
+    .. return:: psa_status_t
+    .. retval:: PSA_SUCCESS
+        Success.
+        The operation object can now be discarded or reused.
+    .. retval:: PSA_ERROR_COMMUNICATION_FAILURE
+    .. retval:: PSA_ERROR_CORRUPTION_DETECTED
+    .. retval:: PSA_ERROR_BAD_STATE
+        The library requires initializing by a call to `psa_crypto_init()`.
+
+    Aborting an operation frees all associated resources except for the ``operation`` structure itself.
+    Once aborted, the operation object can be reused for another operation by calling `psa_generate_key_iop_setup()` again.
+
+    This function can be called at any time after the operation object has been initialized as described in `psa_generate_key_iop_t`.
+
+    In particular, it is valid to call `psa_generate_key_iop_abort()` twice, or to call `psa_generate_key_iop_abort()` on an operation that has not been set up.
+
+.. _interruptible-export-key:
+
+Interruptible public-key export
+-------------------------------
+
+Extracting a public key from an asymmetric key pair can be computationally expensive.
+For example, computing an elliptic curve public key from the private key.
+
+An interruptible public-key export operation can be used instead of calling `psa_export_public_key()`, in applications that have bounded execution requirements for use cases that require public-key export.
+
+An interruptible public-key export operation is used as follows:
+
+1.  Allocate an interruptible public-key export operation object, of type `psa_export_public_key_iop_t`, which will be passed to all the functions listed here.
+#.  Initialize the operation object with one of the methods described in the documentation for `psa_export_public_key_iop_t`, for example, `PSA_EXPORT_PUBLIC_KEY_IOP_INIT`.
+#.  Call `psa_export_public_key_iop_setup()` to specify the key to export.
+#.  Call `psa_export_public_key_iop_complete()` to finish exporting the key data, until this function does not return :code:`PSA_OPERATION_INCOMPLETE`.
+#.  If an error occurs at any stage, or to terminate the operation early, call `psa_export_public_key_iop_abort()`.
+
+.. typedef:: /* implementation-defined type */ psa_export_public_key_iop_t
+
+    .. summary::
+        The type of the state data structure for an interruptible public-key export operation.
+
+        .. versionadded:: 1.6
+
+    Before calling any function on an interruptible public-key export operation object, the application must initialize it by any of the following means:
+
+    *   Set the object to all-bits-zero, for example:
+
+        .. code-block:: xref
+
+            psa_export_public_key_iop_t operation;
+            memset(&operation, 0, sizeof(operation));
+
+    *   Initialize the object to logical zero values by declaring the object as static or global without an explicit initializer, for example:
+
+        .. code-block:: xref
+
+            static psa_export_public_key_iop_t operation;
+
+    *   Initialize the object to the initializer `PSA_EXPORT_PUBLIC_KEY_IOP_INIT`, for example:
+
+        .. code-block:: xref
+
+            psa_export_public_key_iop_t operation = PSA_EXPORT_PUBLIC_KEY_IOP_INIT;
+
+    *   Assign the result of the function `psa_export_public_key_iop_init()` to the object, for example:
+
+        .. code-block:: xref
+
+            psa_export_public_key_iop_t operation;
+            operation = psa_export_public_key_iop_init();
+
+    This is an implementation-defined type.
+    Applications that make assumptions about the content of this object will result in implementation-specific behavior, and are non-portable.
+
+.. macro:: PSA_EXPORT_PUBLIC_KEY_IOP_INIT
+    :definition: /* implementation-defined value */
+
+    .. summary::
+        This macro evaluates to an initializer for an interruptible public-key export operation object of type `psa_export_public_key_iop_t`.
+
+        .. versionadded:: 1.6
+
+.. function:: psa_export_public_key_iop_init
+
+    .. summary::
+        Return an initial value for an interruptible public-key export operation object.
+
+        .. versionadded:: 1.6
+
+    .. return:: psa_export_public_key_iop_t
+
+.. function:: psa_export_public_key_iop_get_num_ops
+
+    .. summary::
+        Get the number of *ops* that an interruptible public-key export operation has taken so far.
+
+        .. versionadded:: 1.6
+
+    .. param:: psa_export_public_key_iop_t * operation
+        The interruptible public-key export operation to inspect.
+
+    .. return:: uint32_t
+        Number of *ops* that the operation has taken so far.
+
+    After the interruptible operation has completed, the returned value is the number of *ops* required for the entire operation.
+    The value is reset to zero by a call to either `psa_export_public_key_iop_setup()` or `psa_export_public_key_iop_abort()`.
+
+    This function can be used to tune the value passed to `psa_iop_set_max_ops()`.
+
+    The value is undefined if the operation object has not been initialized.
+
+.. function:: psa_export_public_key_iop_setup
+
+    .. summary::
+        Start an interruptible operation to export a public key or the public part of a key pair in binary format.
+
+        .. versionadded:: 1.6
+
+    .. param:: psa_export_public_key_iop_t * operation
+        The interruptible public-key export operation to set up.
+        It must have been initialized as per the documentation for `psa_export_public_key_iop_t`, and be inactive.
+    .. param:: psa_key_id_t key
+        Identifier of the key to export.
+
+    .. return:: psa_status_t
+    .. retval:: PSA_SUCCESS
+        Success.
+        The interruptible operation must now be completed by calling `psa_export_public_key_iop_complete()`.
+    .. retval:: PSA_ERROR_INVALID_HANDLE
+        ``key`` is not a valid key identifier.
+    .. retval:: PSA_ERROR_INVALID_ARGUMENT
+        The key is neither a public key nor a key pair.
+    .. retval:: PSA_ERROR_NOT_SUPPORTED
+        The following conditions can result in this error:
+
+        *   The key's storage location does not support export of the key.
+        *   The implementation does not support export of keys with this key type.
+    .. retval:: PSA_ERROR_BAD_STATE
+        The following conditions can result in this error:
+
+        *   The operation state is not valid: it must be inactive.
+        *   The library requires initializing by a call to `psa_crypto_init()`.
+    .. retval:: PSA_ERROR_COMMUNICATION_FAILURE
+    .. retval:: PSA_ERROR_CORRUPTION_DETECTED
+    .. retval:: PSA_ERROR_STORAGE_FAILURE
+    .. retval:: PSA_ERROR_DATA_CORRUPT
+    .. retval:: PSA_ERROR_DATA_INVALID
+    .. retval:: PSA_ERROR_INSUFFICIENT_MEMORY
+
+    This function sets up the export of a public key in binary format.
+    For standard key types, the output format is defined in the relevant *Key format* section in :secref:`key-types`.
+
+    Exporting a public key object or the public part of a key pair is always permitted, regardless of the key's usage flags.
+
+    After a successful call to `psa_export_public_key_iop_setup()`, the operation is active.
+    The operation can be completed by calling `psa_export_public_key_iop_complete()` repeatedly, until it returns a status code that is not :code:`PSA_OPERATION_INCOMPLETE`.
+    Once active, the application must eventually terminate the operation.
+    The following events terminate an operation:
+
+    *   A successful call to `psa_export_public_key_iop_complete()`.
+    *   A call to `psa_export_public_key_iop_abort()`.
+
+    If `psa_export_public_key_iop_setup()` returns an error, the operation object is unchanged.
+
+.. function:: psa_export_public_key_iop_complete
+
+    .. summary::
+        Attempt to finish the interruptible export of a public key.
+
+        .. versionadded:: 1.6
+
+    .. param:: psa_export_public_key_iop_t * operation
+        The interruptible public-key export operation to use.
+        The operation must be active.
+    .. param:: uint8_t * data
+        Buffer where the key data is to be written.
+    .. param:: size_t data_size
+        Size of the ``data`` buffer in bytes.
+        This must be appropriate for the key:
+
+        *   The required output size is :code:`PSA_EXPORT_PUBLIC_KEY_OUTPUT_SIZE(type, bits)` where ``type`` is the key type and ``bits`` is the key size in bits.
+        *   `PSA_EXPORT_PUBLIC_KEY_MAX_SIZE` evaluates to the maximum output size of any supported public key or public part of a key pair.
+        *   `PSA_EXPORT_ASYMMETRIC_KEY_MAX_SIZE` evaluates to the maximum output size of any supported public key or key pair.
+    .. param:: size_t * data_length
+        On success, the number of bytes that make up the key data.
+
+    .. return:: psa_status_t
+    .. retval:: PSA_SUCCESS
+        Success.
+        The first ``(*data_length)`` bytes of ``data`` contain the exported public key.
+    .. retval:: PSA_OPERATION_INCOMPLETE
+        The function was interrupted after exhausting the maximum *ops*.
+        The computation is incomplete, and this function must be called again with the same operation object to continue.
+    .. retval:: PSA_ERROR_BUFFER_TOO_SMALL
+        The size of the ``data`` buffer is too small.
+        `PSA_EXPORT_PUBLIC_KEY_OUTPUT_SIZE()`, `PSA_EXPORT_PUBLIC_KEY_MAX_SIZE`, or `PSA_EXPORT_ASYMMETRIC_KEY_MAX_SIZE` can be used to determine a sufficient buffer size.
+    .. retval:: PSA_ERROR_BAD_STATE
+        The following conditions can result in this error:
+
+        *   The operation state is not valid: it must be active.
+        *   The library requires initializing by a call to `psa_crypto_init()`.
+    .. retval:: PSA_ERROR_COMMUNICATION_FAILURE
+    .. retval:: PSA_ERROR_CORRUPTION_DETECTED
+    .. retval:: PSA_ERROR_STORAGE_FAILURE
+    .. retval:: PSA_ERROR_DATA_CORRUPT
+    .. retval:: PSA_ERROR_DATA_INVALID
+    .. retval:: PSA_ERROR_INSUFFICIENT_MEMORY
+
+    .. note::
+        This is an interruptible function, and must be called repeatedly, until it returns a status code that is not :code:`PSA_OPERATION_INCOMPLETE`.
+
+    When this function returns successfully, the public key data is returned in ``data``, and the operation becomes inactive.
+    The output of this function can be passed to `psa_import_key()` to create a new key that is equivalent to the public key.
+
+    If this function returns :code:`PSA_OPERATION_INCOMPLETE`, no key is returned, and this function must be called again to continue the operation.
+    If this function returns an error status, the operation enters an error state and must be aborted by calling `psa_export_public_key_iop_abort()`.
+
+    The amount of calculation performed in a single call to this function is determined by the maximum *ops* setting. See `psa_iop_set_max_ops()`.
+
+    .. note::
+
+        If the implementation of `psa_import_key()` supports other formats beyond the format specified here, the output from `psa_export_public_key_iop_complete()` must use the representation specified in :secref:`key-types`, not the originally imported representation.
+
+.. function:: psa_export_public_key_iop_abort
+
+    .. summary::
+        Abort an interruptible public-key export operation.
+
+        .. versionadded:: 1.6
+
+    .. param:: psa_export_public_key_iop_t * operation
+        The interruptible public-key export operation to abort.
+
+    .. return:: psa_status_t
+    .. retval:: PSA_SUCCESS
+        Success.
+        The operation object can now be discarded or reused.
+    .. retval:: PSA_ERROR_COMMUNICATION_FAILURE
+    .. retval:: PSA_ERROR_CORRUPTION_DETECTED
+    .. retval:: PSA_ERROR_BAD_STATE
+        The library requires initializing by a call to `psa_crypto_init()`.
+
+    Aborting an operation frees all associated resources except for the ``operation`` structure itself.
+    Once aborted, the operation object can be reused for another operation by calling `psa_export_public_key_iop_setup()` again.
+
+    This function can be called at any time after the operation object has been initialized as described in `psa_export_public_key_iop_t`.
+
+    In particular, it is valid to call `psa_export_public_key_iop_abort()` twice, or to call `psa_export_public_key_iop_abort()` on an operation that has not been set up.
