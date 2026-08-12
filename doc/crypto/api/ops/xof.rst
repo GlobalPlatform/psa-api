@@ -1,4 +1,5 @@
 .. SPDX-FileCopyrightText: Copyright 2025-2026 Arm Limited and/or its affiliates
+.. SPDX-FileCopyrightText: Copyright 2026 GlobalPlatform
 .. SPDX-License-Identifier: CC-BY-SA-4.0 AND LicenseRef-Patent-license
 
 .. header:: psa/crypto
@@ -197,7 +198,10 @@ Multi-part XOF operations
 
     After a successful call to `psa_xof_setup()`, the operation is active, and the application must eventually terminate the operation with a call to `psa_xof_abort()`.
 
-    If `psa_xof_setup()` returns an error, the operation object is unchanged.
+    If `psa_xof_setup()` is called with an operation object that is not inactive, it returns :code:`PSA_ERROR_BAD_STATE` and the operation enters an error state.
+
+    If `psa_xof_setup()` returns an error when called with an inactive operation object, the operation object is unchanged.
+
     If a subsequent function call with an active operation returns an error, the operation enters an error state.
 
     To abandon an active operation, or reset an operation in an error state, call `psa_xof_abort()`.

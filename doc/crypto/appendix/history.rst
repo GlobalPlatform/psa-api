@@ -18,6 +18,7 @@ Changes in the draft GlobalPlatform publication revision
 Clarifications and fixes
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
+*   Clarified the failure postconditions of multi-part operation setup functions: a setup call on a non-inactive operation enters an error state, while a failed setup call on an inactive operation leaves it unchanged.
 *   Corrected the WPA3-SAE operation example code: the send-confirm counter input step is `PSA_PAKE_STEP_CONFIRM_COUNT`, and the shared key is extracted from the ``wpa3_sae`` operation.
 *   Corrected the SPAKE2+ operation example code: the Prover input step for the Verifier confirmation value is `PSA_PAKE_STEP_CONFIRM`.
 

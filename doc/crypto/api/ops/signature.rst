@@ -1,4 +1,5 @@
 .. SPDX-FileCopyrightText: Copyright 2018-2026 Arm Limited and/or its affiliates
+.. SPDX-FileCopyrightText: Copyright 2026 GlobalPlatform
 .. SPDX-License-Identifier: CC-BY-SA-4.0 AND LicenseRef-Patent-license
 
 .. header:: psa/crypto
@@ -2321,7 +2322,10 @@ Multi-part asymmetric signature operations
     *   A successful call to `psa_sign_finish()`.
     *   A call to `psa_sign_abort()`.
 
-    If `psa_sign_setup()` returns an error, the operation object is unchanged.
+    If `psa_sign_setup()` is called with an operation object that is not inactive, it returns :code:`PSA_ERROR_BAD_STATE` and the operation enters an error state.
+
+    If `psa_sign_setup()` returns an error when called with an inactive operation object, the operation object is unchanged.
+
     If a subsequent function call with an active operation returns an error, the operation enters an error state.
 
     To abandon an active operation, or reset an operation in an error state, call `psa_sign_abort()`.
@@ -2603,7 +2607,10 @@ Multi-part asymmetric signature operations
     *   A successful call to `psa_verify_finish()`.
     *   A call to `psa_verify_abort()`.
 
-    If `psa_verify_setup()` returns an error, the operation object is unchanged.
+    If `psa_verify_setup()` is called with an operation object that is not inactive, it returns :code:`PSA_ERROR_BAD_STATE` and the operation enters an error state.
+
+    If `psa_verify_setup()` returns an error when called with an inactive operation object, the operation object is unchanged.
+
     If a subsequent function call with an active operation returns an error, the operation enters an error state.
 
     To abandon an active operation, or reset an operation in an error state, call `psa_verify_abort()`.

@@ -1,4 +1,5 @@
 .. SPDX-FileCopyrightText: Copyright 2018-2025 Arm Limited and/or its affiliates
+.. SPDX-FileCopyrightText: Copyright 2026 GlobalPlatform
 .. SPDX-License-Identifier: CC-BY-SA-4.0 AND LicenseRef-Patent-license
 
 .. header:: psa/crypto
@@ -513,7 +514,11 @@ Multi-part AEAD operations
     *   A successful call to `psa_aead_finish()`.
     *   A call to `psa_aead_abort()`.
 
-    If `psa_aead_encrypt_setup()` returns an error, the operation object is unchanged. If a subsequent function call with an active operation returns an error, the operation enters an error state.
+    If `psa_aead_encrypt_setup()` is called with an operation object that is not inactive, it returns :code:`PSA_ERROR_BAD_STATE` and the operation enters an error state.
+
+    If `psa_aead_encrypt_setup()` returns an error when called with an inactive operation object, the operation object is unchanged.
+
+    If a subsequent function call with an active operation returns an error, the operation enters an error state.
 
     To abandon an active operation, or reset an operation in an error state, call `psa_aead_abort()`.
 
@@ -577,7 +582,11 @@ Multi-part AEAD operations
     *   A successful call to `psa_aead_verify()`.
     *   A call to `psa_aead_abort()`.
 
-    If `psa_aead_decrypt_setup()` returns an error, the operation object is unchanged. If a subsequent function call with an active operation returns an error, the operation enters an error state.
+    If `psa_aead_decrypt_setup()` is called with an operation object that is not inactive, it returns :code:`PSA_ERROR_BAD_STATE` and the operation enters an error state.
+
+    If `psa_aead_decrypt_setup()` returns an error when called with an inactive operation object, the operation object is unchanged.
+
+    If a subsequent function call with an active operation returns an error, the operation enters an error state.
 
     To abandon an active operation, or reset an operation in an error state, call `psa_aead_abort()`.
 
