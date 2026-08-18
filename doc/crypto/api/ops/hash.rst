@@ -558,7 +558,7 @@ Multi-part hashing operations
     .. retval:: PSA_ERROR_BAD_STATE
         The following conditions can result in this error:
 
-        *   The operation state is not valid: it must be inactive.
+        *   The operation is not inactive.
         *   The library requires initializing by a call to `psa_crypto_init()`.
     .. retval:: PSA_ERROR_INSUFFICIENT_MEMORY
     .. retval:: PSA_ERROR_COMMUNICATION_FAILURE
@@ -605,7 +605,7 @@ Multi-part hashing operations
     .. retval:: PSA_ERROR_BAD_STATE
         The following conditions can result in this error:
 
-        *   The operation state is not valid: it must be active.
+        *   The operation is not active.
         *   The library requires initializing by a call to `psa_crypto_init()`.
     .. retval:: PSA_ERROR_INVALID_ARGUMENT
         The total input for the operation is too large for the hash algorithm.
@@ -640,7 +640,7 @@ Multi-part hashing operations
     .. retval:: PSA_ERROR_BAD_STATE
         The following conditions can result in this error:
 
-        *   The operation state is not valid: it must be active.
+        *   The operation is not active.
         *   The library requires initializing by a call to `psa_crypto_init()`.
     .. retval:: PSA_ERROR_BUFFER_TOO_SMALL
         The size of the ``hash`` buffer is too small.
@@ -679,7 +679,7 @@ Multi-part hashing operations
     .. retval:: PSA_ERROR_BAD_STATE
         The following conditions can result in this error:
 
-        *   The operation state is not valid: it must be active.
+        *   The operation is not active.
         *   The library requires initializing by a call to `psa_crypto_init()`.
     .. retval:: PSA_ERROR_INSUFFICIENT_MEMORY
     .. retval:: PSA_ERROR_COMMUNICATION_FAILURE
@@ -741,7 +741,7 @@ Multi-part hashing operations
     .. retval:: PSA_ERROR_BAD_STATE
         The following conditions can result in this error:
 
-        *   The operation state is not valid: it must be active.
+        *   The operation is not active.
         *   The library requires initializing by a call to `psa_crypto_init()`.
     .. retval:: PSA_ERROR_BUFFER_TOO_SMALL
         The size of the ``hash_state`` buffer is too small.
@@ -807,7 +807,7 @@ Multi-part hashing operations
     .. retval:: PSA_ERROR_BAD_STATE
         The following conditions can result in this error:
 
-        *   The operation state is not valid: it must be inactive.
+        *   The operation is not inactive.
         *   The library requires initializing by a call to `psa_crypto_init()`.
     .. retval:: PSA_ERROR_INSUFFICIENT_MEMORY
     .. retval:: PSA_ERROR_COMMUNICATION_FAILURE
@@ -837,8 +837,8 @@ Multi-part hashing operations
     .. retval:: PSA_ERROR_BAD_STATE
         The following conditions can result in this error:
 
-        *   The ``source_operation`` state is not valid: it must be active.
-        *   The ``target_operation`` state is not valid: it must be inactive.
+        *   ``source_operation`` is not active.
+        *   ``target_operation`` is not inactive.
         *   The library requires initializing by a call to `psa_crypto_init()`.
     .. retval:: PSA_ERROR_COMMUNICATION_FAILURE
     .. retval:: PSA_ERROR_CORRUPTION_DETECTED

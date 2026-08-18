@@ -181,7 +181,7 @@ Multi-part XOF operations
     .. retval:: PSA_ERROR_BAD_STATE
         The following conditions can result in this error:
 
-        *   The operation state is not valid: it must be inactive.
+        *   The operation is not inactive.
         *   The library requires initializing by a call to `psa_crypto_init()`.
     .. retval:: PSA_ERROR_INSUFFICIENT_MEMORY
     .. retval:: PSA_ERROR_COMMUNICATION_FAILURE
@@ -228,7 +228,8 @@ Multi-part XOF operations
     .. retval:: PSA_ERROR_BAD_STATE
         The following conditions can result in this error:
 
-        *   The operation state is not valid: it must be active, and no call to `psa_xof_set_context()`, `psa_xof_update()`, or `psa_xof_output()` has been made.
+        *   The operation is not active.
+        *   A call to `psa_xof_set_context()`, `psa_xof_update()`, or `psa_xof_output()` has already been made.
         *   The library requires initializing by a call to `psa_crypto_init()`.
     .. retval:: PSA_ERROR_INVALID_ARGUMENT
         The following conditions can result in this error:
@@ -272,7 +273,8 @@ Multi-part XOF operations
     .. retval:: PSA_ERROR_BAD_STATE
         The following conditions can result in this error:
 
-        *   The operation state is not valid: it must be active, and no call to `psa_xof_output()` has been made.
+        *   The operation is not active.
+        *   A call to `psa_xof_output()` has already been made.
         *   The library requires initializing by a call to `psa_crypto_init()`.
     .. retval:: PSA_ERROR_INVALID_ARGUMENT
         The total input for the operation is too large for the XOF algorithm.
@@ -312,7 +314,7 @@ Multi-part XOF operations
     .. retval:: PSA_ERROR_BAD_STATE
         The following conditions can result in this error:
 
-        *   The operation state is not valid: it must be active.
+        *   The operation is not active.
         *   The library requires initializing by a call to `psa_crypto_init()`.
     .. retval:: PSA_ERROR_INSUFFICIENT_MEMORY
     .. retval:: PSA_ERROR_COMMUNICATION_FAILURE

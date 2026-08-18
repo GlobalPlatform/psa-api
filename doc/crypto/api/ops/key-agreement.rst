@@ -327,7 +327,9 @@ Combining key agreement and key derivation
     .. retval:: PSA_ERROR_BAD_STATE
         The following conditions can result in this error:
 
-        *   The operation state is not valid for this key-agreement ``step``.
+        *   The operation is not active.
+        *   The operation has already produced output.
+        *   The input ``step`` is out of order or has already been provided, and the algorithm does not permit repeating it.
         *   The library requires initializing by a call to `psa_crypto_init()`.
     .. retval:: PSA_ERROR_INVALID_HANDLE
         ``private_key`` is not a valid key identifier.
