@@ -101,7 +101,7 @@ When creating a key, the attributes for the new key are specified in a `psa_key_
     .. retval:: PSA_ERROR_DATA_INVALID
     .. retval:: PSA_ERROR_CORRUPTION_DETECTED
     .. retval:: PSA_ERROR_BAD_STATE
-        The library requires initializing by a call to `psa_crypto_init()`.
+        The library requires initializing, see :secref:`library-init`.
 
     The key is extracted from the provided ``data`` buffer. Its location, policy, and type are taken from ``attributes``.
 
@@ -225,7 +225,7 @@ When creating a key, the attributes for the new key are specified in a `psa_key_
     .. retval:: PSA_ERROR_DATA_CORRUPT
     .. retval:: PSA_ERROR_DATA_INVALID
     .. retval:: PSA_ERROR_BAD_STATE
-        The library requires initializing by a call to `psa_crypto_init()`.
+        The library requires initializing, see :secref:`library-init`.
 
     The key is generated randomly. Its location, policy, type and size are taken from ``attributes``.
 
@@ -312,7 +312,7 @@ When creating a key, the attributes for the new key are specified in a `psa_key_
     .. retval:: PSA_ERROR_DATA_CORRUPT
     .. retval:: PSA_ERROR_DATA_INVALID
     .. retval:: PSA_ERROR_BAD_STATE
-        The library requires initializing by a call to `psa_crypto_init()`.
+        The library requires initializing. See :secref:`library-init`.
 
     Use this function to provide explicit production parameters when generating a key.
     See the description of `psa_generate_key()` for the operation of this function with the default production parameters.
@@ -331,7 +331,7 @@ When creating a key, the attributes for the new key are specified in a `psa_key_
     .. param:: psa_key_id_t source_key
         The key to copy.
         It must permit the usage `PSA_KEY_USAGE_COPY`.
-        If a private or secret key is being copied outside of a secure element it must also permit `PSA_KEY_USAGE_EXPORT`.
+        If a private or secret key is being copied outside of a :term:`secure element` it must also permit `PSA_KEY_USAGE_EXPORT`.
     .. param:: const psa_key_attributes_t * attributes
         The attributes for the new key.
 
@@ -392,7 +392,7 @@ When creating a key, the attributes for the new key are specified in a `psa_key_
     .. retval:: PSA_ERROR_DATA_INVALID
     .. retval:: PSA_ERROR_CORRUPTION_DETECTED
     .. retval:: PSA_ERROR_BAD_STATE
-        The library requires initializing by a call to `psa_crypto_init()`.
+        The library requires initializing, see :secref:`library-init`.
 
     Copy key material from one location to another. Its location is taken from ``attributes``, its policy is the intersection of the policy in ``attributes`` and the source key policy, and its type and size are taken from the source key.
 
@@ -479,7 +479,7 @@ When creating a key, the attributes for the new key are specified in a `psa_key_
     .. retval:: PSA_ERROR_DATA_INVALID
     .. retval:: PSA_ERROR_CORRUPTION_DETECTED
     .. retval:: PSA_ERROR_BAD_STATE
-        The library requires initializing by a call to `psa_crypto_init()`.
+        The library requires initializing. See :secref:`library-init`.
 
     This function allows applications to register implementation-provided key material.
     The key material can come from different sources, for example:
@@ -563,7 +563,7 @@ Key destruction
     .. retval:: PSA_ERROR_CORRUPTION_DETECTED
         An unexpected condition which is not a storage corruption or a communication failure occurred. The cryptoprocessor might have been compromised.
     .. retval:: PSA_ERROR_BAD_STATE
-        The library requires initializing by a call to `psa_crypto_init()`.
+        The library requires initializing, see :secref:`library-init`.
 
     For key identifiers that resulted from registering an implementation-provided key using `psa_attach_key()`, this function detaches the key identifier from the implementation-provided key.
 
@@ -596,7 +596,7 @@ Key destruction
     .. retval:: PSA_ERROR_DATA_INVALID
     .. retval:: PSA_ERROR_CORRUPTION_DETECTED
     .. retval:: PSA_ERROR_BAD_STATE
-        The library requires initializing by a call to `psa_crypto_init()`.
+        The library requires initializing, see :secref:`library-init`.
 
     For keys that have been created with the `PSA_KEY_USAGE_CACHE` usage flag, an implementation is permitted to make additional copies of the key material that are not in storage and not for the purpose of ongoing operations.
 
@@ -661,7 +661,7 @@ Key export
     .. retval:: PSA_ERROR_DATA_INVALID
     .. retval:: PSA_ERROR_INSUFFICIENT_MEMORY
     .. retval:: PSA_ERROR_BAD_STATE
-        The library requires initializing by a call to `psa_crypto_init()`.
+        The library requires initializing, see :secref:`library-init`.
 
     The output of this function can be passed to `psa_import_key()` to create an equivalent object.
 
@@ -713,7 +713,7 @@ Key export
     .. retval:: PSA_ERROR_DATA_INVALID
     .. retval:: PSA_ERROR_INSUFFICIENT_MEMORY
     .. retval:: PSA_ERROR_BAD_STATE
-        The library requires initializing by a call to `psa_crypto_init()`.
+        The library requires initializing, see :secref:`library-init`.
 
     The output of this function can be passed to `psa_import_key()` to create an object that is equivalent to the public key.
 

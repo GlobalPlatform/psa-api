@@ -128,7 +128,7 @@ The usage flags are encoded in a bitmask, which has the type `psa_key_usage_t`. 
 
     *   This flag is required to export a key from the cryptoprocessor using `psa_export_key()`. A public key or the public part of a key pair can always be exported regardless of the value of this permission flag.
 
-    *   This flag can also be required to make a copy of a key outside of a secure element using `psa_copy_key()`. See also `PSA_KEY_USAGE_COPY`.
+    *   This flag can also be required to make a copy of a key outside of a :term:`secure element` using `psa_copy_key()`. See also `PSA_KEY_USAGE_COPY`.
 
     If a key does not have export permission, implementations must not permit the key to be exported in plain form from the cryptoprocessor, whether through `psa_export_key()` or through a proprietary interface. The key might still be exportable in a wrapped form, i.e. in a form where it is encrypted by another key.
 
@@ -408,7 +408,7 @@ The usage flags are encoded in a bitmask, which has the type `psa_key_usage_t`. 
     .. retval:: PSA_ERROR_DATA_CORRUPT
     .. retval:: PSA_ERROR_DATA_INVALID
     .. retval:: PSA_ERROR_BAD_STATE
-        The library requires initializing by a call to `psa_crypto_init()`.
+        The library requires initializing. See :secref:`library-init`.
 
     This function reports whether the implementation supports the use of a key with the operation associated with a provided algorithm and usage.
     This function does not attempt to perform the operation.

@@ -654,7 +654,7 @@ Key-derivation functions
         The following conditions can result in this error:
 
         *   The operation state is not valid: it must be inactive.
-        *   The library requires initializing by a call to `psa_crypto_init()`.
+        *   The library requires initializing. See :secref:`library-init`.
 
     A key-derivation algorithm takes some inputs and uses them to generate a byte stream in a deterministic way. This byte stream can be used to produce keys and other cryptographic material.
 
@@ -697,7 +697,7 @@ Key-derivation functions
         The following conditions can result in this error:
 
         *   The operation state is not valid: it must be active.
-        *   The library requires initializing by a call to `psa_crypto_init()`.
+        *   The library requires initializing. See :secref:`library-init`.
     .. retval:: PSA_ERROR_CORRUPTION_DETECTED
 
     The capacity of a key derivation is the maximum number of bytes that it can return. Reading :math:`N` bytes of output from a key-derivation operation reduces its capacity by at least :math:`N`. The capacity can be reduced by more than :math:`N` in the following situations:
@@ -724,7 +724,7 @@ Key-derivation functions
         The following conditions can result in this error:
 
         *   The operation state is not valid: it must be active.
-        *   The library requires initializing by a call to `psa_crypto_init()`.
+        *   The library requires initializing. See :secref:`library-init`.
     .. retval:: PSA_ERROR_COMMUNICATION_FAILURE
     .. retval:: PSA_ERROR_CORRUPTION_DETECTED
 
@@ -772,7 +772,7 @@ Key-derivation functions
         The following conditions can result in this error:
 
         *   The operation state is not valid for this input ``step``. This can happen if the application provides a step out of order or repeats a step that may not be repeated.
-        *   The library requires initializing by a call to `psa_crypto_init()`.
+        *   The library requires initializing. See :secref:`library-init`.
 
     Which inputs are required and in what order depends on the algorithm. Refer to the documentation of each key-derivation or key-agreement algorithm for information.
 
@@ -818,7 +818,7 @@ Key-derivation functions
         The following conditions can result in this error:
 
         *   The operation state is not valid for this input ``step``. This can happen if the application provides a step out of order or repeats a step that may not be repeated.
-        *   The library requires initializing by a call to `psa_crypto_init()`.
+        *   The library requires initializing. See :secref:`library-init`.
 
     Which inputs are required and in what order depends on the algorithm.
     However, when an algorithm requires a particular order, numeric inputs usually come first as they tend to be configuration parameters.
@@ -870,7 +870,7 @@ Key-derivation functions
         The following conditions can result in this error:
 
         *   The operation state is not valid for this input ``step``. This can happen if the application provides a step out of order or repeats a step that may not be repeated.
-        *   The library requires initializing by a call to `psa_crypto_init()`.
+        *   The library requires initializing. See :secref:`library-init`.
 
     Which inputs are required and in what order depends on the algorithm. Refer to the documentation of each key-derivation or key-agreement algorithm for information.
 
@@ -915,7 +915,7 @@ Key-derivation functions
         The following conditions can result in this error:
 
         *   The operation state is not valid: it must be active, with all required input steps complete.
-        *   The library requires initializing by a call to `psa_crypto_init()`.
+        *   The library requires initializing. See :secref:`library-init`.
     .. retval:: PSA_ERROR_INSUFFICIENT_MEMORY
     .. retval:: PSA_ERROR_COMMUNICATION_FAILURE
     .. retval:: PSA_ERROR_CORRUPTION_DETECTED
@@ -1001,7 +1001,7 @@ Key-derivation functions
         The following conditions can result in this error:
 
         *   The operation state is not valid: it must be active, with all required input steps complete.
-        *   The library requires initializing by a call to `psa_crypto_init()`.
+        *   The library requires initializing. See :secref:`library-init`.
     .. retval:: PSA_ERROR_INSUFFICIENT_MEMORY
     .. retval:: PSA_ERROR_INSUFFICIENT_STORAGE
     .. retval:: PSA_ERROR_COMMUNICATION_FAILURE
@@ -1114,7 +1114,7 @@ Key-derivation functions
         The following conditions can result in this error:
 
         *   The operation state is not valid: it must be active, with all required input steps complete.
-        *   The library requires initializing by a call to `psa_crypto_init()`.
+        *   The library requires initializing. See :secref:`library-init`.
     .. retval:: PSA_ERROR_INSUFFICIENT_MEMORY
     .. retval:: PSA_ERROR_INSUFFICIENT_STORAGE
     .. retval:: PSA_ERROR_COMMUNICATION_FAILURE
@@ -1163,7 +1163,7 @@ Key-derivation functions
         The following conditions can result in this error:
 
         *   The operation state is not valid: it must be active, with all required input steps complete.
-        *   The library requires initializing by a call to `psa_crypto_init()`.
+        *   The library requires initializing. See :secref:`library-init`.
 
     This function calculates output bytes from a key-derivation algorithm and compares those bytes to an expected value.
     If the key derivation's output is viewed as a stream of bytes, this function destructively reads ``output_length`` bytes from the stream before comparing them with ``expected_output``.
@@ -1231,7 +1231,7 @@ Key-derivation functions
         The following conditions can result in this error:
 
         *   The operation state is not valid: it must be active, with all required input steps complete.
-        *   The library requires initializing by a call to `psa_crypto_init()`.
+        *   The library requires initializing. See :secref:`library-init`.
 
     This function calculates output bytes from a key-derivation algorithm and compares those bytes to an expected value, provided as key of type `PSA_KEY_TYPE_PASSWORD_HASH`.
     If the key derivation's output is viewed as a stream of bytes, this function destructively reads the number of bytes corresponding to the length of the ``expected`` key from the stream before comparing them with the key value.
@@ -1264,7 +1264,7 @@ Key-derivation functions
     .. retval:: PSA_ERROR_COMMUNICATION_FAILURE
     .. retval:: PSA_ERROR_CORRUPTION_DETECTED
     .. retval:: PSA_ERROR_BAD_STATE
-        The library requires initializing by a call to `psa_crypto_init()`.
+        The library requires initializing. See :secref:`library-init`.
 
     Aborting an operation frees all associated resources except for the ``operation`` object itself. Once aborted, the operation object can be reused for another operation by calling `psa_key_derivation_setup()` again.
 

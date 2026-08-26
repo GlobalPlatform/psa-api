@@ -214,7 +214,7 @@ Standalone key agreement
     .. retval:: PSA_ERROR_DATA_INVALID
     .. retval:: PSA_ERROR_INSUFFICIENT_STORAGE
     .. retval:: PSA_ERROR_BAD_STATE
-        The library requires initializing by a call to `psa_crypto_init()`.
+        The library requires initializing. See :secref:`library-init`.
 
     A key-agreement algorithm takes two inputs: a private key ``private_key``, and a public key ``peer_key``.
     The result of this function is a shared secret, returned as a derivation key.
@@ -283,7 +283,7 @@ Standalone key agreement
     .. retval:: PSA_ERROR_DATA_CORRUPT
     .. retval:: PSA_ERROR_DATA_INVALID
     .. retval:: PSA_ERROR_BAD_STATE
-        The library requires initializing by a call to `psa_crypto_init()`.
+        The library requires initializing. See :secref:`library-init`.
 
     A key-agreement algorithm takes two inputs: a private key ``private_key``, and a public key ``peer_key``. The result of this function is a shared secret, returned in the ``output`` buffer.
 
@@ -321,7 +321,7 @@ Combining key agreement and key derivation
         The following conditions can result in this error:
 
         *   The operation state is not valid for this key-agreement ``step``.
-        *   The library requires initializing by a call to `psa_crypto_init()`.
+        *   The library requires initializing. See :secref:`library-init`.
     .. retval:: PSA_ERROR_INVALID_HANDLE
         ``private_key`` is not a valid key identifier.
     .. retval:: PSA_ERROR_NOT_PERMITTED

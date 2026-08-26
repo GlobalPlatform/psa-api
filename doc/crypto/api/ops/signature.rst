@@ -1702,7 +1702,7 @@ Single-part asymmetric signature functions
     .. retval:: PSA_ERROR_DATA_INVALID
     .. retval:: PSA_ERROR_INSUFFICIENT_ENTROPY
     .. retval:: PSA_ERROR_BAD_STATE
-        The library requires initializing by a call to `psa_crypto_init()`.
+        The library requires initializing. See :secref:`library-init`.
 
     If the algorithm has a context parameter, a zero-length context is used.
     To provide a context value, use `psa_sign_message_with_context()` instead.
@@ -1779,7 +1779,7 @@ Single-part asymmetric signature functions
     .. retval:: PSA_ERROR_DATA_INVALID
     .. retval:: PSA_ERROR_INSUFFICIENT_ENTROPY
     .. retval:: PSA_ERROR_BAD_STATE
-        The library requires initializing by a call to `psa_crypto_init()`.
+        The library requires initializing. See :secref:`library-init`.
 
     If a context parameter is not required, `psa_sign_message()` can be used instead.
 
@@ -1838,7 +1838,7 @@ Single-part asymmetric signature functions
     .. retval:: PSA_ERROR_DATA_CORRUPT
     .. retval:: PSA_ERROR_DATA_INVALID
     .. retval:: PSA_ERROR_BAD_STATE
-        The library requires initializing by a call to `psa_crypto_init()`.
+        The library requires initializing. See :secref:`library-init`.
 
     If the algorithm has a context parameter, a zero-length context is used.
     To provide a context value, use `psa_verify_message_with_context()` instead.
@@ -1907,7 +1907,7 @@ Single-part asymmetric signature functions
     .. retval:: PSA_ERROR_DATA_CORRUPT
     .. retval:: PSA_ERROR_DATA_INVALID
     .. retval:: PSA_ERROR_BAD_STATE
-        The library requires initializing by a call to `psa_crypto_init()`.
+        The library requires initializing. See :secref:`library-init`.
 
     If a context parameter is not required, `psa_verify_message()` can be used instead.
 
@@ -1976,7 +1976,7 @@ Single-part asymmetric signature functions
     .. retval:: PSA_ERROR_DATA_INVALID
     .. retval:: PSA_ERROR_INSUFFICIENT_ENTROPY
     .. retval:: PSA_ERROR_BAD_STATE
-        The library requires initializing by a call to `psa_crypto_init()`.
+        The library requires initializing. See :secref:`library-init`.
 
     For hash-and-sign signature algorithms, the ``hash`` input to this function is the hash of the message to sign.
     The algorithm used to calculate this hash is encoded in the signature algorithm.
@@ -2055,7 +2055,7 @@ Single-part asymmetric signature functions
     .. retval:: PSA_ERROR_DATA_INVALID
     .. retval:: PSA_ERROR_INSUFFICIENT_ENTROPY
     .. retval:: PSA_ERROR_BAD_STATE
-        The library requires initializing by a call to `psa_crypto_init()`.
+        The library requires initializing. See :secref:`library-init`.
 
     For hash-and-sign signature algorithms, the ``hash`` input to this function is the hash of the message to sign.
     The algorithm used to calculate this hash is encoded in the signature algorithm.
@@ -2115,7 +2115,7 @@ Single-part asymmetric signature functions
     .. retval:: PSA_ERROR_DATA_CORRUPT
     .. retval:: PSA_ERROR_DATA_INVALID
     .. retval:: PSA_ERROR_BAD_STATE
-        The library requires initializing by a call to `psa_crypto_init()`.
+        The library requires initializing. See :secref:`library-init`.
 
     For hash-and-sign signature algorithms, the ``hash`` input to this function is the hash of the message to verify.
     The algorithm used to calculate this hash is encoded in the signature algorithm.
@@ -2185,7 +2185,7 @@ Single-part asymmetric signature functions
     .. retval:: PSA_ERROR_DATA_CORRUPT
     .. retval:: PSA_ERROR_DATA_INVALID
     .. retval:: PSA_ERROR_BAD_STATE
-        The library requires initializing by a call to `psa_crypto_init()`.
+        The library requires initializing. See :secref:`library-init`.
 
     For hash-and-sign signature algorithms, the ``hash`` input to this function is the hash of the message to verify.
     The algorithm used to calculate this hash is encoded in the signature algorithm.
@@ -2303,7 +2303,7 @@ Multi-part asymmetric signature operations
         The following conditions can result in this error:
 
         *   The operation state is not valid: it must be inactive.
-        *   The library requires initializing by a call to `psa_crypto_init()`.
+        *   The library requires initializing. See :secref:`library-init`.
 
     The sequence of operations to sign a message using a multi-part sign operation is as follows:
 
@@ -2349,7 +2349,7 @@ Multi-part asymmetric signature operations
         The following conditions can result in this error:
 
         *   The operation state is not valid: it must be active, and no call to `psa_sign_set_context()` or `psa_sign_update()` has been made.
-        *   The library requires initializing by a call to `psa_crypto_init()`.
+        *   The library requires initializing. See :secref:`library-init`.
     .. retval:: PSA_ERROR_INVALID_ARGUMENT
         The following conditions can result in this error:
 
@@ -2397,7 +2397,7 @@ Multi-part asymmetric signature operations
         The following conditions can result in this error:
 
         *   The operation state is not valid: it must be active.
-        *   The library requires initializing by a call to `psa_crypto_init()`.
+        *   The library requires initializing. See :secref:`library-init`.
     .. retval:: PSA_ERROR_INVALID_ARGUMENT
         The total input for the operation is too large for the signature algorithm.
     .. retval:: PSA_ERROR_NOT_SUPPORTED
@@ -2440,7 +2440,7 @@ Multi-part asymmetric signature operations
         The following conditions can result in this error:
 
         *   The operation state is not valid: it must be active.
-        *   The library requires initializing by a call to `psa_crypto_init()`.
+        *   The library requires initializing. See :secref:`library-init`.
     .. retval:: PSA_ERROR_BUFFER_TOO_SMALL
         The size of the ``signature`` buffer is too small.
         `PSA_SIGN_OUTPUT_SIZE()` or `PSA_SIGNATURE_MAX_SIZE` can be used to determine a sufficient buffer size.
@@ -2471,7 +2471,7 @@ Multi-part asymmetric signature operations
     .. retval:: PSA_ERROR_COMMUNICATION_FAILURE
     .. retval:: PSA_ERROR_CORRUPTION_DETECTED
     .. retval:: PSA_ERROR_BAD_STATE
-        The library requires initializing by a call to `psa_crypto_init()`.
+        The library requires initializing. See :secref:`library-init`.
 
     Aborting an operation frees all associated resources except for the ``operation`` object itself. Once aborted, the operation object can be reused for another operation by calling `psa_sign_setup()` again.
 
@@ -2585,7 +2585,7 @@ Multi-part asymmetric signature operations
         The following conditions can result in this error:
 
         *   The operation state is not valid: it must be inactive.
-        *   The library requires initializing by a call to `psa_crypto_init()`.
+        *   The library requires initializing. See :secref:`library-init`.
 
     The sequence of operations to verify a message signature using a multi-part verify operation is as follows:
 
@@ -2631,7 +2631,7 @@ Multi-part asymmetric signature operations
         The following conditions can result in this error:
 
         *   The operation state is not valid: it must be active, and no call to `psa_verify_set_context()` or `psa_verify_update()` has been made.
-        *   The library requires initializing by a call to `psa_crypto_init()`.
+        *   The library requires initializing. See :secref:`library-init`.
     .. retval:: PSA_ERROR_INVALID_ARGUMENT
         The following conditions can result in this error:
 
@@ -2679,7 +2679,7 @@ Multi-part asymmetric signature operations
         The following conditions can result in this error:
 
         *   The operation state is not valid: it must be active.
-        *   The library requires initializing by a call to `psa_crypto_init()`.
+        *   The library requires initializing. See :secref:`library-init`.
     .. retval:: PSA_ERROR_INVALID_ARGUMENT
         The total input for the operation is too large for the signature algorithm.
     .. retval:: PSA_ERROR_NOT_SUPPORTED
@@ -2714,7 +2714,7 @@ Multi-part asymmetric signature operations
         The following conditions can result in this error:
 
         *   The operation state is not valid: it must be active.
-        *   The library requires initializing by a call to `psa_crypto_init()`.
+        *   The library requires initializing. See :secref:`library-init`.
     .. retval:: PSA_ERROR_INSUFFICIENT_MEMORY
     .. retval:: PSA_ERROR_COMMUNICATION_FAILURE
     .. retval:: PSA_ERROR_CORRUPTION_DETECTED
@@ -2742,7 +2742,7 @@ Multi-part asymmetric signature operations
     .. retval:: PSA_ERROR_COMMUNICATION_FAILURE
     .. retval:: PSA_ERROR_CORRUPTION_DETECTED
     .. retval:: PSA_ERROR_BAD_STATE
-        The library requires initializing by a call to `psa_crypto_init()`.
+        The library requires initializing. See :secref:`library-init`.
 
     Aborting an operation frees all associated resources except for the ``operation`` object itself. Once aborted, the operation object can be reused for another operation by calling `psa_verify_setup()` again.
 
