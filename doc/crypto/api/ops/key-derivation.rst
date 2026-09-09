@@ -1,4 +1,5 @@
 .. SPDX-FileCopyrightText: Copyright 2018-2026 Arm Limited and/or its affiliates
+.. SPDX-FileCopyrightText: Copyright 2026 GlobalPlatform
 .. SPDX-License-Identifier: CC-BY-SA-4.0 AND LicenseRef-Patent-license
 
 .. header:: psa/crypto
@@ -653,7 +654,7 @@ Key-derivation functions
     .. retval:: PSA_ERROR_BAD_STATE
         The following conditions can result in this error:
 
-        *   The operation state is not valid: it must be inactive.
+        *   The operation is not inactive.
         *   The library requires initializing by a call to `psa_crypto_init()`.
 
     A key-derivation algorithm takes some inputs and uses them to generate a byte stream in a deterministic way. This byte stream can be used to produce keys and other cryptographic material.
@@ -696,7 +697,7 @@ Key-derivation functions
     .. retval:: PSA_ERROR_BAD_STATE
         The following conditions can result in this error:
 
-        *   The operation state is not valid: it must be active.
+        *   The operation is not active.
         *   The library requires initializing by a call to `psa_crypto_init()`.
     .. retval:: PSA_ERROR_CORRUPTION_DETECTED
 
@@ -723,7 +724,7 @@ Key-derivation functions
     .. retval:: PSA_ERROR_BAD_STATE
         The following conditions can result in this error:
 
-        *   The operation state is not valid: it must be active.
+        *   The operation is not active.
         *   The library requires initializing by a call to `psa_crypto_init()`.
     .. retval:: PSA_ERROR_COMMUNICATION_FAILURE
     .. retval:: PSA_ERROR_CORRUPTION_DETECTED
@@ -771,7 +772,9 @@ Key-derivation functions
     .. retval:: PSA_ERROR_BAD_STATE
         The following conditions can result in this error:
 
-        *   The operation state is not valid for this input ``step``. This can happen if the application provides a step out of order or repeats a step that may not be repeated.
+        *   The operation is not active.
+        *   The operation has already produced output.
+        *   The input ``step`` is out of order or has already been provided, and the algorithm does not permit repeating it.
         *   The library requires initializing by a call to `psa_crypto_init()`.
 
     Which inputs are required and in what order depends on the algorithm. Refer to the documentation of each key-derivation or key-agreement algorithm for information.
@@ -817,7 +820,9 @@ Key-derivation functions
     .. retval:: PSA_ERROR_BAD_STATE
         The following conditions can result in this error:
 
-        *   The operation state is not valid for this input ``step``. This can happen if the application provides a step out of order or repeats a step that may not be repeated.
+        *   The operation is not active.
+        *   The operation has already produced output.
+        *   The input ``step`` is out of order or has already been provided, and the algorithm does not permit repeating it.
         *   The library requires initializing by a call to `psa_crypto_init()`.
 
     Which inputs are required and in what order depends on the algorithm.
@@ -869,7 +874,9 @@ Key-derivation functions
     .. retval:: PSA_ERROR_BAD_STATE
         The following conditions can result in this error:
 
-        *   The operation state is not valid for this input ``step``. This can happen if the application provides a step out of order or repeats a step that may not be repeated.
+        *   The operation is not active.
+        *   The operation has already produced output.
+        *   The input ``step`` is out of order or has already been provided, and the algorithm does not permit repeating it.
         *   The library requires initializing by a call to `psa_crypto_init()`.
 
     Which inputs are required and in what order depends on the algorithm. Refer to the documentation of each key-derivation or key-agreement algorithm for information.
@@ -914,7 +921,8 @@ Key-derivation functions
     .. retval:: PSA_ERROR_BAD_STATE
         The following conditions can result in this error:
 
-        *   The operation state is not valid: it must be active, with all required input steps complete.
+        *   The operation is not active.
+        *   Not all required input steps have been completed.
         *   The library requires initializing by a call to `psa_crypto_init()`.
     .. retval:: PSA_ERROR_INSUFFICIENT_MEMORY
     .. retval:: PSA_ERROR_COMMUNICATION_FAILURE
@@ -1000,7 +1008,8 @@ Key-derivation functions
     .. retval:: PSA_ERROR_BAD_STATE
         The following conditions can result in this error:
 
-        *   The operation state is not valid: it must be active, with all required input steps complete.
+        *   The operation is not active.
+        *   Not all required input steps have been completed.
         *   The library requires initializing by a call to `psa_crypto_init()`.
     .. retval:: PSA_ERROR_INSUFFICIENT_MEMORY
     .. retval:: PSA_ERROR_INSUFFICIENT_STORAGE
@@ -1113,7 +1122,8 @@ Key-derivation functions
     .. retval:: PSA_ERROR_BAD_STATE
         The following conditions can result in this error:
 
-        *   The operation state is not valid: it must be active, with all required input steps complete.
+        *   The operation is not active.
+        *   Not all required input steps have been completed.
         *   The library requires initializing by a call to `psa_crypto_init()`.
     .. retval:: PSA_ERROR_INSUFFICIENT_MEMORY
     .. retval:: PSA_ERROR_INSUFFICIENT_STORAGE
@@ -1162,7 +1172,8 @@ Key-derivation functions
     .. retval:: PSA_ERROR_BAD_STATE
         The following conditions can result in this error:
 
-        *   The operation state is not valid: it must be active, with all required input steps complete.
+        *   The operation is not active.
+        *   Not all required input steps have been completed.
         *   The library requires initializing by a call to `psa_crypto_init()`.
 
     This function calculates output bytes from a key-derivation algorithm and compares those bytes to an expected value.
@@ -1230,7 +1241,8 @@ Key-derivation functions
     .. retval:: PSA_ERROR_BAD_STATE
         The following conditions can result in this error:
 
-        *   The operation state is not valid: it must be active, with all required input steps complete.
+        *   The operation is not active.
+        *   Not all required input steps have been completed.
         *   The library requires initializing by a call to `psa_crypto_init()`.
 
     This function calculates output bytes from a key-derivation algorithm and compares those bytes to an expected value, provided as key of type `PSA_KEY_TYPE_PASSWORD_HASH`.

@@ -1,4 +1,5 @@
 .. SPDX-FileCopyrightText: Copyright 2018-2025 Arm Limited and/or its affiliates
+.. SPDX-FileCopyrightText: Copyright 2026 GlobalPlatform
 .. SPDX-License-Identifier: CC-BY-SA-4.0 AND LicenseRef-Patent-license
 
 .. header:: psa/crypto
@@ -474,7 +475,7 @@ Multi-part AEAD operations
     .. retval:: PSA_ERROR_BAD_STATE
         The following conditions can result in this error:
 
-        *   The operation state is not valid: it must be inactive.
+        *   The operation is not inactive.
         *   The library requires initializing by a call to `psa_crypto_init()`.
     .. retval:: PSA_ERROR_INVALID_HANDLE
         ``key`` is not a valid key identifier.
@@ -538,7 +539,7 @@ Multi-part AEAD operations
     .. retval:: PSA_ERROR_BAD_STATE
         The following conditions can result in this error:
 
-        *   The operation state is not valid: it must be inactive.
+        *   The operation is not inactive.
         *   The library requires initializing by a call to `psa_crypto_init()`.
     .. retval:: PSA_ERROR_INVALID_HANDLE
         ``key`` is not a valid key identifier.
@@ -601,7 +602,8 @@ Multi-part AEAD operations
     .. retval:: PSA_ERROR_BAD_STATE
         The following conditions can result in this error:
 
-        *   The operation state is not valid: it must be active, and `psa_aead_set_nonce()` and `psa_aead_generate_nonce()` must not have been called yet.
+        *   The operation is not active.
+        *   A call to `psa_aead_set_nonce()` or `psa_aead_generate_nonce()` has already been made.
         *   The library requires initializing by a call to `psa_crypto_init()`.
     .. retval:: PSA_ERROR_INVALID_ARGUMENT
         ``ad_length`` or ``plaintext_length`` are too large for the chosen algorithm.
@@ -643,8 +645,10 @@ Multi-part AEAD operations
     .. retval:: PSA_ERROR_BAD_STATE
         The following conditions can result in this error:
 
-        *   The operation state is not valid: it must be an active AEAD encryption operation, with no nonce set.
-        *   The operation state is not valid: this is an algorithm which requires `psa_aead_set_lengths()` to be called before setting the nonce.
+        *   The operation is not active.
+        *   The operation was not set up with `psa_aead_encrypt_setup()`.
+        *   A nonce has already been set.
+        *   The algorithm requires a call to `psa_aead_set_lengths()` before the nonce is set, and no such call has been made.
         *   The library requires initializing by a call to `psa_crypto_init()`.
     .. retval:: PSA_ERROR_BUFFER_TOO_SMALL
         The size of the ``nonce`` buffer is too small. `PSA_AEAD_NONCE_LENGTH()` or `PSA_AEAD_NONCE_MAX_SIZE` can be used to determine a sufficient buffer size.
@@ -682,8 +686,9 @@ Multi-part AEAD operations
     .. retval:: PSA_ERROR_BAD_STATE
         The following conditions can result in this error:
 
-        *   The operation state is not valid: it must be active, with no nonce set.
-        *   The operation state is not valid: this is an algorithm which requires `psa_aead_set_lengths()` to be called before setting the nonce.
+        *   The operation is not active.
+        *   A nonce has already been set.
+        *   The algorithm requires a call to `psa_aead_set_lengths()` before the nonce is set, and no such call has been made.
         *   The library requires initializing by a call to `psa_crypto_init()`.
     .. retval:: PSA_ERROR_INVALID_ARGUMENT
         ``nonce_length`` is not valid for the chosen algorithm.
@@ -729,7 +734,10 @@ Multi-part AEAD operations
     .. retval:: PSA_ERROR_BAD_STATE
         The following conditions can result in this error:
 
-        *   The operation state is not valid: it must be active, have a nonce set, have lengths set if required by the algorithm, and `psa_aead_update()` must not have been called yet.
+        *   The operation is not active.
+        *   No nonce has been set.
+        *   The algorithm requires a call to `psa_aead_set_lengths()`, and no such call has been made.
+        *   A call to `psa_aead_update()` has already been made.
         *   The library requires initializing by a call to `psa_crypto_init()`.
     .. retval:: PSA_ERROR_INVALID_ARGUMENT
         Excess additional data: the total input length to `psa_aead_update_ad()` is greater than the additional data length that was previously specified with `psa_aead_set_lengths()`, or is too large for the chosen AEAD algorithm.
@@ -788,7 +796,9 @@ Multi-part AEAD operations
     .. retval:: PSA_ERROR_BAD_STATE
         The following conditions can result in this error:
 
-        *   The operation state is not valid: it must be active, have a nonce set, and have lengths set if required by the algorithm.
+        *   The operation is not active.
+        *   No nonce has been set.
+        *   The algorithm requires a call to `psa_aead_set_lengths()`, and no such call has been made.
         *   The library requires initializing by a call to `psa_crypto_init()`.
     .. retval:: PSA_ERROR_BUFFER_TOO_SMALL
         The size of the ``output`` buffer is too small. `PSA_AEAD_UPDATE_OUTPUT_SIZE()` or `PSA_AEAD_UPDATE_OUTPUT_MAX_SIZE()` can be used to determine a sufficient buffer size.
@@ -854,7 +864,9 @@ Multi-part AEAD operations
     .. retval:: PSA_ERROR_BAD_STATE
         The following conditions can result in this error:
 
-        *   The operation state is not valid: it must be an active encryption operation with a nonce set.
+        *   The operation is not active.
+        *   The operation was not set up with `psa_aead_encrypt_setup()`.
+        *   No nonce has been set.
         *   The library requires initializing by a call to `psa_crypto_init()`.
     .. retval:: PSA_ERROR_BUFFER_TOO_SMALL
         The size of the ``ciphertext`` or ``tag`` buffer is too small.
@@ -914,7 +926,9 @@ Multi-part AEAD operations
     .. retval:: PSA_ERROR_BAD_STATE
         The following conditions can result in this error:
 
-        *   The operation state is not valid: it must be an active decryption operation with a nonce set.
+        *   The operation is not active.
+        *   The operation was not set up with `psa_aead_decrypt_setup()`.
+        *   No nonce has been set.
         *   The library requires initializing by a call to `psa_crypto_init()`.
     .. retval:: PSA_ERROR_BUFFER_TOO_SMALL
         The size of the ``plaintext`` buffer is too small. `PSA_AEAD_VERIFY_OUTPUT_SIZE()` or `PSA_AEAD_VERIFY_OUTPUT_MAX_SIZE` can be used to determine a sufficient buffer size.

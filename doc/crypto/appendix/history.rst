@@ -21,6 +21,7 @@ Clarifications and fixes
 *   Clarified that an implementation accesses memory referenced by a pointer or buffer parameter only during the function call, and consumes input buffers before returning.
 *   Corrected the WPA3-SAE operation example code: the send-confirm counter input step is `PSA_PAKE_STEP_CONFIRM_COUNT`, and the shared key is extracted from the ``wpa3_sae`` operation.
 *   Corrected the SPAKE2+ operation example code: the Prover input step for the Verifier confirmation value is `PSA_PAKE_STEP_CONFIRM`.
+*   Clarified the `PSA_ERROR_BAD_STATE` conditions for multi-part hash, XOF, MAC, cipher, AEAD, asymmetric signature, key-derivation, and PAKE operations.
 
 Other changes
 ~~~~~~~~~~~~~

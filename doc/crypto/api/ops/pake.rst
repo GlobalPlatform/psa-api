@@ -1,4 +1,5 @@
 .. SPDX-FileCopyrightText: Copyright 2022-2025 Arm Limited and/or its affiliates
+.. SPDX-FileCopyrightText: Copyright 2026 GlobalPlatform
 .. SPDX-License-Identifier: CC-BY-SA-4.0 AND LicenseRef-Patent-license
 
 .. header:: psa/crypto
@@ -784,7 +785,7 @@ Multi-part PAKE operations
     .. retval:: PSA_ERROR_BAD_STATE
         The following conditions can result in this error:
 
-        *   The operation state is not valid: it must be inactive.
+        *   The operation is not inactive.
         *   The library requires initializing by a call to `psa_crypto_init()`.
     .. retval:: PSA_ERROR_INVALID_HANDLE
         ``password_key`` is not a valid key identifier.
@@ -861,7 +862,8 @@ Multi-part PAKE operations
     .. retval:: PSA_ERROR_BAD_STATE
         The following conditions can result in this error:
 
-        *   The operation state is not valid: it must be active, and `psa_pake_set_role()`, `psa_pake_input()`, and `psa_pake_output()` must not have been called yet.
+        *   The operation is not active.
+        *   A call to `psa_pake_set_role()`, `psa_pake_input()`, or `psa_pake_output()` has already been made.
         *   The library requires initializing by a call to `psa_crypto_init()`.
     .. retval:: PSA_ERROR_INVALID_ARGUMENT
         The following conditions can result in this error:
@@ -904,7 +906,8 @@ Multi-part PAKE operations
     .. retval:: PSA_ERROR_BAD_STATE
         The following conditions can result in this error:
 
-        *   The operation state is not valid: it must be active, and `psa_pake_set_user()`, `psa_pake_input()`, and `psa_pake_output()` must not have been called yet.
+        *   The operation is not active.
+        *   A call to `psa_pake_set_user()`, `psa_pake_input()`, or `psa_pake_output()` has already been made.
         *   The library requires initializing by a call to `psa_crypto_init()`.
     .. retval:: PSA_ERROR_INVALID_ARGUMENT
         ``user_id`` is not valid for the operation's algorithm and cipher suite.
@@ -940,7 +943,8 @@ Multi-part PAKE operations
     .. retval:: PSA_ERROR_BAD_STATE
         The following conditions can result in this error:
 
-        *   The operation state is not valid: it must be active, and `psa_pake_set_peer()`, `psa_pake_input()`, and `psa_pake_output()` must not have been called yet.
+        *   The operation is not active.
+        *   A call to `psa_pake_set_peer()`, `psa_pake_input()`, or `psa_pake_output()` has already been made.
         *   Calling `psa_pake_set_peer()` is invalid with the operation's algorithm.
         *   The library requires initializing by a call to `psa_crypto_init()`.
     .. retval:: PSA_ERROR_INVALID_ARGUMENT
@@ -977,7 +981,8 @@ Multi-part PAKE operations
     .. retval:: PSA_ERROR_BAD_STATE
         The following conditions can result in this error:
 
-        *   The operation state is not valid: it must be active, and `psa_pake_set_context()`, `psa_pake_input()`, and `psa_pake_output()` must not have been called yet.
+        *   The operation is not active.
+        *   A call to `psa_pake_set_context()`, `psa_pake_input()`, or `psa_pake_output()` has already been made.
         *   Calling `psa_pake_set_context()` is invalid with the operation's algorithm.
         *   The library requires initializing by a call to `psa_crypto_init()`.
     .. retval:: PSA_ERROR_INVALID_ARGUMENT
@@ -1023,7 +1028,9 @@ Multi-part PAKE operations
     .. retval:: PSA_ERROR_BAD_STATE
         The following conditions can result in this error:
 
-        *   The operation state is not valid: it must be active and fully set up, and this call must conform to the algorithm's requirements for ordering of input and output steps.
+        *   The operation is not active.
+        *   The operation is not fully set up.
+        *   The call does not conform to the algorithm's requirements for ordering input and output steps.
         *   The library requires initializing by a call to `psa_crypto_init()`.
     .. retval:: PSA_ERROR_INVALID_ARGUMENT
         ``step`` is not compatible with the operation's algorithm.
@@ -1070,7 +1077,9 @@ Multi-part PAKE operations
     .. retval:: PSA_ERROR_BAD_STATE
         The following conditions can result in this error:
 
-        *   The operation state is not valid: it must be active and fully set up, and this call must conform to the algorithm's requirements for ordering of input and output steps.
+        *   The operation is not active.
+        *   The operation is not fully set up.
+        *   The call does not conform to the algorithm's requirements for ordering input and output steps.
         *   The library requires initializing by a call to `psa_crypto_init()`.
     .. retval:: PSA_ERROR_INVALID_ARGUMENT
         The following conditions can result in this error:
@@ -1147,11 +1156,10 @@ Multi-part PAKE operations
     .. retval:: PSA_ERROR_BAD_STATE
         The following conditions can result in this error:
 
-        *   The state of PAKE operation ``operation`` is not valid: it must be ready to return the shared secret.
-
-            For an unconfirmed key, this will be when the key-exchange output and input steps are complete, but prior to any key-confirmation output and input steps.
-
-            For a confirmed key, this will be when all key-exchange and key-confirmation output and input steps are complete.
+        *   The operation is not active.
+        *   The key-exchange input and output steps are not complete.
+        *   The operation is configured for an unconfirmed key, and a key-confirmation input or output step has been performed.
+        *   The operation is configured for a confirmed key, and the key-confirmation input and output steps are not complete.
         *   The library requires initializing by a call to `psa_crypto_init()`.
     .. retval:: PSA_ERROR_ALREADY_EXISTS
         This is an attempt to create a persistent key, and there is already a persistent key with the given identifier.
