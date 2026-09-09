@@ -1,4 +1,5 @@
 .. SPDX-FileCopyrightText: Copyright 2018-2025 Arm Limited and/or its affiliates
+.. SPDX-FileCopyrightText: Copyright 2026 GlobalPlatform
 .. SPDX-License-Identifier: CC-BY-SA-4.0 AND LicenseRef-Patent-license
 
 .. header:: psa/crypto
@@ -113,7 +114,7 @@ Managing key attributes
     #.  Set the key policy with `psa_set_key_usage_flags()` and `psa_set_key_algorithm()`.
     #.  Set the key type with `psa_set_key_type()`. Skip this step if copying an existing key with `psa_copy_key()`.
     #.  When generating a random key with `psa_generate_key()` or `psa_generate_key_custom()`, or deriving a key with `psa_key_derivation_output_key()` or `psa_key_derivation_output_key_custom()`, set the desired key size with `psa_set_key_bits()`.
-    #.  Call a key creation function: `psa_import_key()`, `psa_generate_key()`, `psa_generate_key_custom()`, `psa_key_derivation_output_key()`, `psa_key_derivation_output_key_custom()`, `psa_key_agreement()`, `psa_encapsulate()`, `psa_decapsulate()`, `psa_pake_get_shared_key()`, `psa_copy_key()`, or `psa_attach_key()`. This function reads the attribute object, creates a key with these attributes, and outputs an identifier for the newly created key.
+    #.  Call a :term:`key-creation API`. A key-creation function reads the attribute object, creates a key with these attributes, and outputs its identifier. An interruptible key-creation operation takes the attributes in its start function and outputs the identifier when its completion function succeeds. See :secref:`key-creation`.
     #.  Optionally call `psa_reset_key_attributes()`, now that the attribute object is no longer needed. Currently this call is not required as the attributes defined in this specification do not require additional resources beyond the object itself.
 
     A typical sequence to query a key's attributes is as follows:

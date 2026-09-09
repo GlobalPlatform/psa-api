@@ -74,3 +74,60 @@ Library initialization
 
     .. warning::
         The set of functions that depend on successful initialization of the library is :scterm:`IMPLEMENTATION DEFINED`. Applications that rely on calling functions before initializing the library might not be portable to other implementations.
+
+
+Interruptible operation limit
+-----------------------------
+
+An interruptible operation lets an application limit the computation performed by an individual function call. The limit is controlled by the *maximum ops* value.
+
+See :secref:`interruptible-operations`.
+
+.. function:: psa_iop_set_max_ops
+
+    .. summary::
+        Set the maximum number of *ops* allowed to be executed by an interruptible function in a single call.
+
+        .. versionadded:: 1.6
+
+    .. param:: uint32_t max_ops
+        The maximum number of *ops* to execute in a single call. This can be a value from ``0`` to `PSA_IOP_MAX_OPS_UNLIMITED`.
+
+    .. return:: void
+
+    Interruptible functions use this value to limit the computation in a single call. If the limit is reached before the operation is complete, the function returns :code:`PSA_OPERATION_INCOMPLETE`. The application must call the function again until it returns a different status, or abort the operation.
+
+    After implementation initialization, the maximum *ops* defaults to `PSA_IOP_MAX_OPS_UNLIMITED`. This permits an interruptible function to finish its calculation before returning. Call `psa_iop_set_max_ops()` to set a limit.
+
+    .. note::
+
+        The computation and time represented by an *op* are implementation- and function-specific. They can depend on the hardware, algorithm, key type, curve, and current stage of the operation. Successive *ops* in one operation can take different amounts of time. The ``psa_xxx_iop_get_num_ops()`` functions can help tune this value.
+
+    .. admonition:: Implementation note
+
+        The interpretation of the maximum is implementation-defined. An implementation intended for a hard real-time system can interpret it as a hard execution limit. An implementation for a non-real-time system can use a less strict interpretation. In either case, the implementation documentation should describe how it applies the limit.
+
+    .. warning::
+        With implementations that interpret this value as a hard limit, setting it too low can prevent any useful computation. Repeated calls can then return :code:`PSA_OPERATION_INCOMPLETE` without completing the operation.
+
+.. function:: psa_iop_get_max_ops
+
+    .. summary::
+        Get the maximum number of *ops* allowed to be executed by an interruptible function in a single call.
+
+        .. versionadded:: 1.6
+
+    .. return:: uint32_t
+        Maximum number of *ops* allowed to be executed by an interruptible function in a single call.
+
+    This returns the value last set by `psa_iop_set_max_ops()`, or `PSA_IOP_MAX_OPS_UNLIMITED` if the application has not set a value.
+
+.. macro:: PSA_IOP_MAX_OPS_UNLIMITED
+    :definition: UINT32_MAX
+
+    .. summary::
+        Maximum value for use with `psa_iop_set_max_ops()`.
+
+        .. versionadded:: 1.6
+
+    Using this value in a call to `psa_iop_set_max_ops()` permits interruptible functions to complete their calculation before returning.

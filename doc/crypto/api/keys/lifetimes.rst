@@ -32,7 +32,7 @@ To create a volatile key:
 
 1.  Populate a `psa_key_attributes_t` object with the required type, size, policy and other key attributes.
 #.  If a non-default storage location is being used, set the key lifetime in the attributes object.
-#.  Create the key with one of the key creation functions. If successful, these functions output a transient `key identifier <key-identifiers>`.
+#.  Create the key with a :term:`key-creation API`. If the key is successfully created, the API outputs a transient `key identifier <key-identifiers>`.
 
 To destroy a volatile key: call `psa_destroy_key()` with the key identifier. There must be a matching call to `psa_destroy_key()` for each successful call to a create a volatile key.
 
@@ -54,7 +54,7 @@ To create a persistent key:
 
 1.  Populate a `psa_key_attributes_t` object with the key’s type, size, policy and other attributes.
 #.  In the attributes object, set the desired lifetime and persistent identifier for the key.
-#.  Create the key with one of the key creation functions. If successful, these functions output the `key identifier <key-identifiers>` that was specified by the application in step 2.
+#.  Create the key with a :term:`key-creation API`. If the key is successfully created, the API outputs the `key identifier <key-identifiers>` that was specified by the application in step 2.
 
 To access an existing persistent key: use the key identifier in any API that requires a key.
 
@@ -280,7 +280,7 @@ Attribute accessors
 
     To make a key persistent, give it a persistent key identifier by using `psa_set_key_id()`. By default, a key that has a persistent identifier is stored in the default storage area identifier by `PSA_KEY_LIFETIME_PERSISTENT`. Call this function to choose a specific storage area, or to explicitly declare the key as volatile.
 
-    This function does not access storage, it merely stores the given value in the attribute object. The persistent key will be written to storage when the attribute object is passed to a key creation function such as `psa_import_key()`, `psa_generate_key()`, `psa_generate_key_custom()`, `psa_key_derivation_output_key()`, `psa_key_derivation_output_key_custom()`, `psa_key_agreement()`, `psa_encapsulate()`, `psa_decapsulate()`, `psa_pake_get_shared_key()`, or `psa_copy_key()`.
+    This function does not access storage, it merely stores the given value in the attribute object. The persistent key will be written to storage when a :term:`key-creation API` successfully creates the key. For an interruptible key-creation operation, this occurs when its completion function returns successfully.
 
     .. admonition:: Implementation note
 

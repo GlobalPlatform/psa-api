@@ -1,4 +1,5 @@
 .. SPDX-FileCopyrightText: Copyright 2018-2025 Arm Limited and/or its affiliates
+.. SPDX-FileCopyrightText: Copyright 2026 GlobalPlatform
 .. SPDX-License-Identifier: CC-BY-SA-4.0 AND LicenseRef-Patent-license
 
 .. _key-identifiers:
@@ -17,7 +18,7 @@ Key identifiers are integral values that act as permanent names for persistent k
 
 Key identifiers outside these ranges are reserved for future use.
 
-Key identifiers are output from a successful call to one of the key creation functions. For persistent keys, this is the same identifier as the one specified in the key attributes used to create the key. The key identifier remains valid until it is invalidated by passing it to `psa_destroy_key()`. A volatile key identifier must not be used after it has been invalidated.
+Key identifiers are output when a :term:`key-creation API` successfully creates a key. For persistent keys, this is the same identifier as the one specified in the key attributes used to create the key. The key identifier remains valid until it is invalidated by passing it to `psa_destroy_key()`. A volatile key identifier must not be used after it has been invalidated.
 
 If an invalid key identifier is provided as a parameter in any function, the function will return :code:`PSA_ERROR_INVALID_HANDLE`; except for the special case of calling :code:`psa_destroy_key(PSA_KEY_ID_NULL)`, which has no effect and always returns :code:`PSA_SUCCESS`.
 
@@ -92,7 +93,7 @@ Attribute accessors
 
     If the attribute object currently declares the key as volatile, this function sets the persistence level in the lifetime attribute to `PSA_KEY_PERSISTENCE_DEFAULT` without changing the key location. See :secref:`key-lifetimes`.
 
-    This function does not access storage, it merely stores the given value in the attribute object. The persistent key will be written to storage when the attribute object is passed to a key creation function such as `psa_import_key()`, `psa_generate_key()`, `psa_generate_key_custom()`, `psa_key_derivation_output_key()`, `psa_key_derivation_output_key_custom()`, `psa_key_agreement()`, `psa_encapsulate()`, `psa_decapsulate()`, `psa_pake_get_shared_key()`, or `psa_copy_key()`.
+    This function does not access storage, it merely stores the given value in the attribute object. The persistent key will be written to storage when a :term:`key-creation API` successfully creates the key. For an interruptible key-creation operation, this occurs when its completion function returns successfully.
 
     .. admonition:: Implementation note
 

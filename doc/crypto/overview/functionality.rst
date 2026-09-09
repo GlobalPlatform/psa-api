@@ -1,4 +1,5 @@
 .. SPDX-FileCopyrightText: Copyright 2018-2025 Arm Limited and/or its affiliates
+.. SPDX-FileCopyrightText: Copyright 2026 GlobalPlatform
 .. SPDX-License-Identifier: CC-BY-SA-4.0 AND LicenseRef-Patent-license
 
 .. _functionality-overview:
@@ -33,21 +34,7 @@ The key attributes include:
 *   A lifetime that determines when the key material is destroyed, and where it is stored. See :secref:`key-life`.
 *   A policy that determines how the key can be used. See :secref:`key-usage-policies`.
 
-Keys are created using one of the *key creation functions*:
-
-*   `psa_import_key()`
-*   `psa_generate_key()`
-*   `psa_generate_key_custom()`
-*   `psa_key_derivation_output_key()`
-*   `psa_key_derivation_output_key_custom()`
-*   `psa_key_agreement()`
-*   `psa_encapsulate()`
-*   `psa_decapsulate()`
-*   `psa_pake_get_shared_key()`
-*   `psa_copy_key()`
-*   `psa_attach_key()`
-
-These output the key identifier, that is used to access the key in all other parts of the API.
+Keys are created through a :term:`key-creation API`. Key-creation functions create a key in a single function call. Interruptible key-creation operations create a key when their completion function succeeds. See :secref:`key-creation` for the key-creation APIs.
 
 All of the key attributes are set when the key is created and cannot be changed without destroying the key first. If the original key permits copying, then the application can specify a different lifetime or restricted policy for the copy of the key.
 
@@ -71,7 +58,7 @@ Key identifiers
 
 Key identifiers are integral values that act as permanent names for persistent keys, or as transient references to volatile keys. Key identifiers are defined by the application for persistent keys, and by the implementation for volatile keys and for built-in keys.
 
-Key identifiers are output from a successful call to one of the key creation functions.
+Key identifiers are output when a key-creation API successfully creates a key.
 
 Valid key identifiers must have distinct values within the same application. If the implementation provides :term:`caller isolation`, then key identifiers are local to each application.
 
@@ -121,7 +108,7 @@ The API supports cryptographic operations through two kinds of interfaces:
 
 *   A *multi-part operation* is a set of functions that work with a stored operation state. This provides more control over operation configuration, piecewise processing of large input data, or handling for multi-step processes. See :secref:`multi-part-operations`.
 
-Depending on the mechanism, one or both kind of interfaces may be provided.
+*   An *interruptible operation* is a distinct set of functions that works with a stored operation state. It enables the application to limit the computation performed in a single function call for computationally expensive algorithms, for example digital signatures. See :secref:`interruptible-operations`.
 
 .. _single-part-functions:
 
@@ -134,6 +121,7 @@ Single-part functions do not meet the needs of all use cases:
 
 *   Some use cases involve messages that are too large to be assembled in memory, or require non-default configuration of the algorithm. These use cases require the use of a `multi-part operation <multi-part-operations>`.
 
+*   Some use cases require that the time spent in a single function call is bounded. Processing input data in fragments can meet this requirement for some algorithms. When an algorithm has computationally expensive steps that are independent of the input size, the use case requires an `interruptible operation <interruptible-operations>`.
 
 .. _multi-part-operations:
 
@@ -222,6 +210,195 @@ It is safe to move a multi-part operation object to a different memory location,
 
 Each type of multi-part operation can have multiple *active* states. Documentation for the specific operation describes the configuration and update functions, and any requirements about their usage and ordering.
 
+See :secref:`hash-mp` for an example of a multi-part operation.
+
+.. _interruptible-operations:
+
+Interruptible operations
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Interruptible operations split a computationally expensive operation into a sequence of function calls, each of which limits the computational progress made. They are useful when responsiveness is critical and the environment does not provide suitable multitasking.
+
+Processing a bounded amount of input in each call can meet this need for some operations. For example, a hash can be computed using a multi-part operation to break the computation into smaller blocks. However, a multi-part operation does not bound computation that is independent of the input size, such as calculating a shared secret in key agreement.
+
+.. note::
+
+    Interruptible operations and multi-part operations are distinct optional API capabilities. An implementation can provide one without the other. Applications that need only fragmented input should use the ordinary multi-part API when it is available. Applications that require bounded computation must use the interruptible API, and must handle :code:`PSA_OPERATION_INCOMPLETE`.
+
+    Some interruptible operations accept input in a sequence of update calls. This does not make them substitutes for the ordinary multi-part operations: they have additional state, use an execution budget, and can report :code:`PSA_OPERATION_INCOMPLETE`.
+
+Use cases for which the |API| defines interruptible operations include:
+
+*   Asymmetric signature generation and verification.
+*   Key exchange protocols, including the use of ephemeral key-pairs.
+
+Interruptible operations have three principal components:
+
+*   A specific object type to maintain the state of the operation, in a similar way to multi-part operations. These types are implementation-defined.
+*   A non-error status code, :code:`PSA_OPERATION_INCOMPLETE`, that is returned by some interruptible operation functions to indicate that the computation is incomplete. The same function must be called repeatedly until it returns either a success or an error status.
+*   The concept of a unit of work --- called *ops* --- that can be carried out by an interruptible operation function.
+
+*ops* limits and accounting
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The *maximum ops* value limits the *ops* performed by each call to an interruptible function. An application sets this value by calling `psa_iop_set_max_ops()`, and can query the current value with `psa_iop_get_max_ops()`. If a function exhausts the maximum *ops* before its calculation is complete, it returns :code:`PSA_OPERATION_INCOMPLETE`.
+
+After a successful call to `psa_crypto_init()`, the *maximum ops* value defaults to `PSA_IOP_MAX_OPS_UNLIMITED`. With this default, interruptible functions complete their calculation before returning. An application can set a lower value to bound the computation performed in one function call.
+
+The computation and execution time represented by an *op* have no fixed meaning across implementations or functions. They can depend on the hardware, algorithm, key type, and current stage of the operation. Applications can use the cumulative *ops* count to tune the maximum value for a particular implementation.
+
+The cumulative *ops* count for an interruptible operation can be retrieved by calling the operation's associated ``psa_xxx_iop_get_num_ops()`` function. This count can be queried while the operation is active, or after a successful completion to obtain the count for the entire operation. It is reset when the operation is aborted or when an operation object is successfully started for a new operation. A failed start can also reset the count.
+
+Interruptible operation flow
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Interruptible operations follow a common pattern of use, which is shown in :numref:`fig-interruptible`.
+
+.. figure::  /figure/interruptible_operation.*
+    :name: fig-interruptible
+
+    General state model for an interruptible operation
+
+The typical sequence of actions with an interruptible operation is as follows:
+
+1.  **Allocate:** Allocate memory for an operation object of the appropriate type.
+    The application can use any allocation strategy: stack, heap, static, etc.
+
+#.  **Initialize:** Initialize or assign the interruptible operation object by one of the following methods:
+
+    -   Set it to logical zero.
+        This is automatic for static and global variables.
+        Explicit initialization must use the associated ``PSA_xxx_IOP_INIT`` macro as the type is implementation-defined.
+    -   Set it to all-bits zero.
+        This is automatic if the object was allocated with ``calloc()``.
+    -   Assign the value of the associated macro ``PSA_xxx_IOP_INIT``.
+    -   Assign the result of calling the associated function ``psa_xxx_iop_init()``.
+
+    The resulting object is now *inactive*.
+
+    It is an error to initialize an interruptible operation object that is in *active* or *error* states. This can leak memory or other resources.
+
+#.  **Start:** Start a new interruptible operation on an *inactive* operation object.
+    Each interruptible operation object will define one or more functions that start a specific operation.
+
+    The accumulated *ops* value for the operation is reset to zero.
+
+    On success, a start function will put an interruptible operation object into an *active* state.
+    On failure, the operation object will remain *inactive*.
+
+#.  **Complete:** To end an interruptible operation, call the applicable completion function.
+    This will perform the final computation, produce any final outputs, and then release any resources associated with the operation.
+
+    If the computation cannot be completed within the *maximum ops*, the interruptible operation is left in an *active* state.
+    If the operation completes successfully, the operation enters an *inactive* state.
+    On failure, the operation object will enter an *error* state.
+
+    An application needs to repeat this step until the completion function returns with a success or an error status.
+
+#.  **Abort:** An interruptible operation can be aborted at any stage during its use by calling the associated ``psa_xxx_iop_abort()`` function.
+    This will release any resources associated with the operation, return the operation object to the *inactive* state, and reset the accumulated *ops* value to zero.
+
+    Any error that occurs to an operation while it is in an *active* state will result in the operation entering an *error* state.
+    The application must call the associated ``psa_xxx_iop_abort()`` function to release the operation resources and return the object to the *inactive* state.
+
+    ``psa_xxx_iop_abort()`` can be called on an *inactive* interruptible operation, and this has no effect.
+
+Once an interruptible operation object is returned to the *inactive* state, it can be reused by calling one of the start functions again.
+
+If an interruptible operation object is not initialized before use, the behavior is undefined.
+
+If an interruptible operation function determines that the operation object is not in any valid state, it can return :code:`PSA_ERROR_CORRUPTION_DETECTED`.
+
+If an interruptible operation function is called with an operation object in the wrong state, the function will return :code:`PSA_ERROR_BAD_STATE` and the operation object will enter the *error* state.
+
+It is safe to move an interruptible operation object to a different memory location, for example, using a bitwise copy, and then to use the object in the new location.
+For example, an application can allocate an operation object on the stack and return it, or the operation object can be allocated within memory managed by a garbage collector.
+However, this does not permit the following behaviors:
+
+*   Moving the object while a function is being called on the object. See also :secref:`concurrency`.
+*   Working with both the original and the copied operation objects.
+
+Each type of interruptible operation can have multiple *active* states.
+Documentation for the specific operation describes the start and completion functions, and any requirements about their usage and ordering.
+
+See :secref:`interruptible-generate-key` for an example of an interruptible operation.
+
+.. _interruptible-key-creation:
+
+Interruptible key creation
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+An interruptible key-creation operation creates a key only when its completion function returns successfully. The implementation must bind the identifier for the new key only when the operation completes successfully. Before then, the identifier does not refer to a partially formed key.
+
+This preserves atomic key creation: a key identifier either refers to a fully formed key or does not refer to a key. Before the completion function returns successfully, the identifier cannot be used to access the key being created by an interruptible operation.
+
+An implementation can check at the start of an interruptible key-creation operation whether an application-provided persistent key identifier already exists. It can report :code:`PSA_ERROR_ALREADY_EXISTS` at this point, or when the completion function is called. Applications must be prepared for either function to report this error.
+
+.. _interruptible-signature-operations:
+
+Interruptible signature operations
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The interruptible signature and verification APIs are separate from the ordinary multi-part signature APIs. They provide bounded computation for the setup and completion of an asymmetric signature operation. They also accept message input where the selected algorithm permits it, but this is incidental to their execution-budget purpose.
+
+These operations can have more than one step at which the application calls the same function repeatedly until it returns a status other than :code:`PSA_OPERATION_INCOMPLETE`.
+
+:numref:`fig-interruptible-signature` shows the state model used for interruptible signature and verification operations.
+
+.. figure::  /figure/interruptible_operation_complex.*
+    :name: fig-interruptible-signature
+
+    State model for an interruptible signature operation
+
+The sequence has the common interruptible-operation steps, with a setup phase that can itself require bounded computation and an optional input phase. The following flow adds detail for an interruptible signature operation. Steps without accompanying text are the same as in the preceding interruptible-operation flow:
+
+1.  **Allocate**
+
+#.  **Initialize**
+
+#.  **Start setup:** Start the setup phase of a new interruptible signature or verification operation on an *inactive* object.
+
+    The accumulated *ops* value for the operation is reset to zero.
+
+    On success, an operation object enters a *setup* state.
+    On failure, the operation object will remain *inactive*.
+
+#.  **Configure:** An interruptible operation can have operation-specific configuration steps that can be called while the object is in the *setup* state. For example, an interruptible verification operation can receive an early signature.
+
+    On success, the operation object remains in *setup* state.
+    On failure, the operation object will enter an *error* state.
+
+#.  **Complete setup:** Complete setup on an object in the *setup* state.
+
+    If the setup computation is interrupted, the operation remains in *setup* state.
+    If setup completes successfully, the operation enters an *input* state.
+    On failure, the operation object will enter an *error* state.
+
+    An application needs to repeat this step until the setup completes with success or an error status.
+
+#.  **Input:** Provide data to an object in the *input* state.
+    The interruptible signature and verification APIs provide functions to set the context, input a pre-computed message hash or a message fragment, and provide a signature. See the individual interruptible operations for the specific ordering requirements on input data.
+
+    On success, the operation object remains in *input* state.
+    On failure, the operation object will enter an *error* state.
+
+#.  **Complete:** To end an interruptible operation, call the applicable completion function.
+    This will perform the final computation, produce any final outputs, and then release any resources associated with the operation.
+
+    If the finishing computation is interrupted, the operation is left in the *completing* state.
+    If the operation completes successfully, the operation enters an *inactive* state.
+    On failure, the operation object will enter an *error* state.
+
+    An application needs to repeat this step until the completion function completes with success or an error status.
+
+#.  **Abort**
+
+The rules for use of an interruptible operation apply to an interruptible signature operation. See :secref:`interruptible-operations`.
+
+Each type of interruptible signature operation can have multiple *setup*, *input*, and *completing* states. The operation documentation describes the setup, input, and completion functions and their ordering requirements.
+
+See :secref:`interruptible-sign` for the interruptible signature API.
+
 Symmetric cryptography
 ~~~~~~~~~~~~~~~~~~~~~~
 
@@ -254,7 +431,7 @@ Here is an example of a use case where a master key is used to generate both a m
     #.  Populate a `psa_key_attributes_t` object with the derived message encryption key’s attributes.
     #.  Call `psa_key_derivation_output_key()` to create the derived message key.
     #.  Call `psa_key_derivation_output_bytes()` to generate the derived IV.
-    #.  Call `psa_key_derivation_abort()` to release the key-derivation operation memory.
+    #.  Call `psa_key_derivation_abort()` to release the key derivation operation memory.
 
 #.  Encrypt the message with the derived material.
 
@@ -277,11 +454,11 @@ This specification defines interfaces for the following types of asymmetric cryp
 *   Key encapsulation. See :secref:`key-encapsulation`.
 *   Password-authenticated key exchange (PAKE). See :secref:`pake`.
 
-For asymmetric signature, the API provides *single-part* functions and *multi-part* operations.
+For asymmetric signature, the API provides single-part functions, multi-part operations, and interruptible operations.
 
 For asymmetric encryption, the API provides single-part functions.
 
-For key agreement, the API provides single-part functions and an additional input method for a key-derivation operation.
+For key agreement, the API provides single-part functions, an interruptible operation, and an additional input method for a key derivation operation.
 
 For key encapsulation, the API provides single-part functions.
 

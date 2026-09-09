@@ -37,6 +37,8 @@ The following elements are defined in :file:`psa/error.h` from :cite-title:`PSA 
     #define PSA_ERROR_DATA_CORRUPT          ((psa_status_t)-152)
     #define PSA_ERROR_DATA_INVALID          ((psa_status_t)-153)
 
+    #define PSA_OPERATION_INCOMPLETE        ((psa_status_t)-248)
+
 These definitions must be available to an application that includes the :file:`psa/crypto.h` header file.
 
 .. admonition:: Implementation note
