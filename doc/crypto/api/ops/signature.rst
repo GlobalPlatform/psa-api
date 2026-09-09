@@ -2205,6 +2205,56 @@ Single-part asymmetric signature functions
 Multi-part asymmetric signature operations
 ------------------------------------------
 
+Multi-part asymmetric signature operations process a message in one or more fragments and provide the widest choice of signature algorithms, subject to the selected algorithm supporting fragmented message input.
+An application that is restricted to hash-and-sign algorithms can instead use a multi-part hash operation followed by the `psa_sign_hash()` or `psa_verify_hash()` function family, including the context variants, for maximum portability across implementations.
+An algorithm that requires multiple passes over the message when signing or verifying must use the corresponding `psa_sign_message()` or `psa_verify_message()` function family with the complete message, including the context variants where applicable.
+
+There is one flow for calculating a signature.
+To verify a signature, choose the flow according to whether the signature is available before or after the message data.
+
+.. rubric:: Signing a message
+
+To calculate a signature for a fragmented message:
+
+1.  Allocate a sign operation object, `psa_sign_operation_t`, which will be passed to all the functions in the flow.
+#.  Initialize the operation object with one of the methods described in the documentation for `psa_sign_operation_t`, for example `PSA_SIGN_OPERATION_INIT`.
+#.  Call `psa_sign_setup()` to specify the key pair and algorithm.
+#.  Optionally, call `psa_sign_set_context()` to provide a context.
+#.  Call `psa_sign_update()` zero, one or more times, passing a fragment of the message each time.
+    The signature that is calculated is the signature of the concatenation of these messages in order.
+#.  To calculate and extract the signature, call `psa_sign_finish()`.
+
+If an error occurs at any stage, or to terminate the operation early, call `psa_sign_abort()`.
+
+.. rubric:: Verifying a message with an early signature
+
+Use this flow when the signature is available before the message input.
+It supports all signature algorithms that are available through the multi-part verification operation.
+
+1.  Allocate a verify operation object, `psa_verify_operation_t`, which will be passed to all the functions in the flow.
+#.  Initialize the operation object with one of the methods described in the documentation for `psa_verify_operation_t`, for example `PSA_VERIFY_OPERATION_INIT`.
+#.  Call `psa_verify_setup()` to specify the key, algorithm, and signature to verify.
+#.  Optionally, call `psa_verify_set_context()` to provide a context.
+#.  Call `psa_verify_update()` zero, one or more times, passing a fragment of the message each time.
+    The signature is verified against the concatenation of these messages in order.
+#.  To determine the validity of the signature, call `psa_verify_finish()`.
+
+If an error occurs at any stage, or to terminate the operation early, call `psa_verify_abort()`.
+
+.. rubric:: Verifying a message with a deferred signature
+
+Use this flow when a streaming protocol provides the signature after the message data.
+It is only available for algorithms identified by `PSA_ALG_SIGN_SUPPORTS_DEFERRED_SIGNATURE()`.
+
+1.  Allocate and initialize a verify operation object as in the early-signature flow.
+#.  Call `psa_verify_setup_deferred_signature()` to specify the key and algorithm.
+#.  Optionally, call `psa_verify_set_context()` to provide a context.
+#.  Call `psa_verify_update()` zero, one or more times, passing a fragment of the message each time.
+    The signature is verified against the concatenation of these messages in order.
+#.  To determine the validity of the signature, call `psa_verify_finish_with_signature()`.
+
+If an error occurs at any stage, or to terminate the operation early, call `psa_verify_abort()`.
+
 .. typedef:: /* implementation-defined type */ psa_sign_operation_t
 
     .. summary::
@@ -2308,16 +2358,6 @@ Multi-part asymmetric signature operations
 
         *   The operation state is not valid: it must be inactive.
         *   The library requires initializing by a call to `psa_crypto_init()`.
-
-    The sequence of operations to sign a message using a multi-part sign operation is as follows:
-
-    1.  Allocate a sign operation object which will be passed to all the functions listed here.
-    #.  Initialize the operation object with one of the methods described in the documentation for `psa_sign_operation_t`, for example `PSA_SIGN_OPERATION_INIT`.
-    #.  Call `psa_sign_setup()` to specify the key pair and algorithm.
-    #.  Optionally, call `psa_sign_set_context()` to provide a context.
-    #.  Call `psa_sign_update()` zero, one or more times, passing a fragment of the message each time.
-        The signature that is calculated is the signature of the concatenation of these messages in order.
-    #.  To calculate and extract the signature, call `psa_sign_finish()`.
 
     After a successful call to `psa_sign_setup()`, the operation is active, and the application must eventually terminate the operation.
     The following events terminate an operation:
@@ -2568,6 +2608,8 @@ Multi-part asymmetric signature operations
         ``key`` is not a valid key identifier.
     .. retval:: PSA_ERROR_NOT_PERMITTED
         The key does not have the `PSA_KEY_USAGE_VERIFY_MESSAGE` flag, or it does not permit the requested algorithm.
+    .. retval:: PSA_ERROR_INVALID_SIGNATURE
+        The signature is structurally invalid and cannot be used to perform the verification.
     .. retval:: PSA_ERROR_NOT_SUPPORTED
         The following conditions can result in this error:
 
@@ -2591,16 +2633,6 @@ Multi-part asymmetric signature operations
         *   The operation state is not valid: it must be inactive.
         *   The library requires initializing by a call to `psa_crypto_init()`.
 
-    The sequence of operations to verify a message signature using a multi-part verify operation is as follows:
-
-    1.  Allocate a verify operation object which will be passed to all the functions listed here.
-    #.  Initialize the operation object with one of the methods described in the documentation for `psa_verify_operation_t`, for example `PSA_VERIFY_OPERATION_INIT`.
-    #.  Call `psa_verify_setup()` to specify the key, algorithm, and signature to verify.
-    #.  Optionally, call `psa_verify_set_context()` to provide a context.
-    #.  Call `psa_verify_update()` zero, one or more times, passing a fragment of the message each time.
-        The signature is verified against the concatenation of these messages in order.
-    #.  To determine the validity of the signature, call `psa_verify_finish()`.
-
     After a successful call to `psa_verify_setup()`, the operation is active, and the application must eventually terminate the operation.
     The following events terminate an operation:
 
@@ -2608,6 +2640,74 @@ Multi-part asymmetric signature operations
     *   A call to `psa_verify_abort()`.
 
     If `psa_verify_setup()` returns an error, the operation object is unchanged.
+    If a subsequent function call with an active operation returns an error, the operation enters an error state.
+
+    To abandon an active operation, or reset an operation in an error state, call `psa_verify_abort()`.
+
+    See :secref:`multi-part-operations`.
+
+.. function:: psa_verify_setup_deferred_signature
+
+    .. summary::
+        Set up a multi-part verify operation with a deferred signature.
+
+        .. versionadded:: 1.6
+
+    .. param:: psa_verify_operation_t * operation
+        The operation object to set up.
+        It must have been initialized as per the documentation for `psa_verify_operation_t` and not yet in use.
+    .. param:: psa_key_id_t key
+        Identifier of the key to use for the operation.
+        It must be a public key or an asymmetric key pair.
+        It must remain valid until the operation terminates.
+        The key must permit the usage `PSA_KEY_USAGE_VERIFY_MESSAGE`.
+    .. param:: psa_algorithm_t alg
+        An asymmetric message signature algorithm that supports deferred signatures: a value of type `psa_algorithm_t` such that :code:`PSA_ALG_IS_SIGN_MESSAGE(alg)` and :code:`PSA_ALG_SIGN_SUPPORTS_DEFERRED_SIGNATURE(alg)` are true.
+
+    .. return:: psa_status_t
+    .. retval:: PSA_SUCCESS
+        Success.
+        The operation is now active.
+    .. retval:: PSA_ERROR_INVALID_HANDLE
+        ``key`` is not a valid key identifier.
+    .. retval:: PSA_ERROR_NOT_PERMITTED
+        The key does not have the `PSA_KEY_USAGE_VERIFY_MESSAGE` flag, or it does not permit the requested algorithm.
+    .. retval:: PSA_ERROR_NOT_SUPPORTED
+        The following conditions can result in this error:
+
+        *   ``alg`` is not supported, is not an asymmetric message signature algorithm, or does not support deferred signatures.
+        *   ``key`` is not supported for use with ``alg``.
+    .. retval:: PSA_ERROR_INVALID_ARGUMENT
+        The following conditions can result in this error:
+
+        *   ``alg`` is not an asymmetric message signature algorithm, or does not support deferred signatures.
+        *   ``key`` is not a public key or an asymmetric key pair, that is compatible with ``alg``.
+    .. retval:: PSA_ERROR_INSUFFICIENT_MEMORY
+    .. retval:: PSA_ERROR_COMMUNICATION_FAILURE
+    .. retval:: PSA_ERROR_CORRUPTION_DETECTED
+    .. retval:: PSA_ERROR_STORAGE_FAILURE
+    .. retval:: PSA_ERROR_DATA_CORRUPT
+    .. retval:: PSA_ERROR_DATA_INVALID
+    .. retval:: PSA_ERROR_INSUFFICIENT_ENTROPY
+    .. retval:: PSA_ERROR_BAD_STATE
+        The following conditions can result in this error:
+
+        *   The operation state is not valid: it must be inactive.
+        *   The library requires initializing by a call to `psa_crypto_init()`.
+
+    This function sets up verification of an asymmetric signature of a message when the signature is received after the message data.
+    The application must provide the signature by calling `psa_verify_finish_with_signature()` after all message input.
+
+    `PSA_ALG_SIGN_SUPPORTS_DEFERRED_SIGNATURE()` can be used to determine whether a signature algorithm supports this flow.
+    An implementation can still return :code:`PSA_ERROR_NOT_SUPPORTED` if it does not support deferred-signature verification for the algorithm.
+
+    After a successful call to `psa_verify_setup_deferred_signature()`, the operation is active, and the application must eventually terminate the operation.
+    The following events terminate an operation:
+
+    *   A successful call to `psa_verify_finish_with_signature()`.
+    *   A call to `psa_verify_abort()`.
+
+    If `psa_verify_setup_deferred_signature()` returns an error, the operation object is unchanged.
     If a subsequent function call with an active operation returns an error, the operation enters an error state.
 
     To abandon an active operation, or reset an operation in an error state, call `psa_verify_abort()`.
@@ -2649,12 +2749,12 @@ Multi-part asymmetric signature operations
 
     This function sets the context value in a multi-part verify operation.
 
-    The application must call `psa_verify_setup()` before calling this function.
+    The application must call `psa_verify_setup()` or `psa_verify_setup_deferred_signature()` before calling this function.
 
     For a signature algorithm that has a context parameter:
 
     *   If this function is not called, the operation uses the algorithm with a zero-length or empty context.
-    *   To set a non-zero-length context, call this function after `psa_verify_setup()` and before calling any other function on the verify operation.
+    *   To set a non-zero-length context, call this function after `psa_verify_setup()` or `psa_verify_setup_deferred_signature()`, and before calling any other function on the verify operation.
 
     If a context parameter is not supported by the algorithm, this function call can be omitted, or can be called with a zero-length context.
 
@@ -2692,9 +2792,9 @@ Multi-part asymmetric signature operations
     .. retval:: PSA_ERROR_COMMUNICATION_FAILURE
     .. retval:: PSA_ERROR_CORRUPTION_DETECTED
 
-    The application must call `psa_verify_setup()` before calling this function.
+    The application must call `psa_verify_setup()` or `psa_verify_setup_deferred_signature()` before calling this function.
 
-    When the last fragment of the message has been input to the multi-part verify operation, call `psa_verify_finish()` to determine the validity of the signature.
+    When the last fragment of the message has been input to the multi-part verify operation, call `psa_verify_finish()` or `psa_verify_finish_with_signature()`, according to the setup function used, to determine the validity of the signature.
 
     If this function returns an error status, the operation enters an error state and must be aborted by calling `psa_verify_abort()`.
 
@@ -2706,7 +2806,7 @@ Multi-part asymmetric signature operations
         .. versionadded:: 1.5
 
     .. param:: psa_verify_operation_t * operation
-        Active verify operation.
+        Active verify operation set up with `psa_verify_setup()`.
 
     .. return:: psa_status_t
     .. retval:: PSA_SUCCESS
@@ -2717,7 +2817,7 @@ Multi-part asymmetric signature operations
     .. retval:: PSA_ERROR_BAD_STATE
         The following conditions can result in this error:
 
-        *   The operation state is not valid: it must be active.
+        *   The operation state is not valid: it must be active and set up with `psa_verify_setup()`.
         *   The library requires initializing by a call to `psa_crypto_init()`.
     .. retval:: PSA_ERROR_INSUFFICIENT_MEMORY
     .. retval:: PSA_ERROR_COMMUNICATION_FAILURE
@@ -2725,6 +2825,40 @@ Multi-part asymmetric signature operations
 
     The application must call `psa_verify_setup()` before calling this function.
     This function verifies the asymmetric signature with the message formed by concatenating the inputs passed to preceding calls to `psa_verify_update()`.
+
+    When this function returns successfully, the operation becomes inactive.
+    If this function returns an error status, the operation enters an error state and must be aborted by calling `psa_verify_abort()`.
+
+.. function:: psa_verify_finish_with_signature
+
+    .. summary::
+        Report the validity of the message signature in a deferred-signature verify operation.
+
+        .. versionadded:: 1.6
+
+    .. param:: psa_verify_operation_t * operation
+        Active verify operation set up with `psa_verify_setup_deferred_signature()`.
+    .. param:: const uint8_t * signature
+        Buffer containing the signature to verify.
+    .. param:: size_t signature_length
+        Size of the ``signature`` buffer in bytes.
+
+    .. return:: psa_status_t
+    .. retval:: PSA_SUCCESS
+        Success.
+        The signature is valid.
+    .. retval:: PSA_ERROR_INVALID_SIGNATURE
+        ``signature`` is not a valid signature for the algorithm and key.
+    .. retval:: PSA_ERROR_BAD_STATE
+        The following conditions can result in this error:
+
+        *   The operation state is not valid: it must be active and set up with `psa_verify_setup_deferred_signature()`.
+        *   The library requires initializing by a call to `psa_crypto_init()`.
+    .. retval:: PSA_ERROR_INSUFFICIENT_MEMORY
+    .. retval:: PSA_ERROR_COMMUNICATION_FAILURE
+    .. retval:: PSA_ERROR_CORRUPTION_DETECTED
+
+    This function verifies the signature with the message formed by concatenating the inputs passed to preceding calls to `psa_verify_update()`.
 
     When this function returns successfully, the operation becomes inactive.
     If this function returns an error status, the operation enters an error state and must be aborted by calling `psa_verify_abort()`.
@@ -2748,11 +2882,11 @@ Multi-part asymmetric signature operations
     .. retval:: PSA_ERROR_BAD_STATE
         The library requires initializing by a call to `psa_crypto_init()`.
 
-    Aborting an operation frees all associated resources except for the ``operation`` object itself. Once aborted, the operation object can be reused for another operation by calling `psa_verify_setup()` again.
+    Aborting an operation frees all associated resources except for the ``operation`` object itself. Once aborted, the operation object can be reused for another operation by calling `psa_verify_setup()` or `psa_verify_setup_deferred_signature()` again.
 
     This function can be called any time after the operation object has been initialized by one of the methods described in `psa_verify_operation_t`.
 
-    In particular, calling `psa_verify_abort()` after the operation has been terminated by a call to `psa_verify_abort()` or `psa_verify_finish()` is safe and has no effect.
+    In particular, calling `psa_verify_abort()` after the operation has been terminated by a call to `psa_verify_abort()`, `psa_verify_finish()`, or `psa_verify_finish_with_signature()` is safe and has no effect.
 
 Support macros
 --------------
@@ -2828,6 +2962,25 @@ Support macros
         A wildcard signature algorithm policy, using `PSA_ALG_ANY_HASH`, returns the same value as the signature algorithm parameterized with a valid hash algorithm.
 
     This macro identifies signature algorithms that have a context parameter, and can be used with the appropriate functions that support non-zero-length contexts.
+
+.. macro:: PSA_ALG_SIGN_SUPPORTS_DEFERRED_SIGNATURE
+    :definition: /* implementation-defined value */
+
+    .. summary::
+        Whether the specified signature algorithm supports verification with a deferred signature.
+
+        .. versionadded:: 1.6
+
+    .. param:: alg
+        A signature algorithm identifier: a value of type `psa_algorithm_t` such that :code:`PSA_ALG_IS_SIGN(alg)` is true.
+
+    .. return::
+        ``1`` if ``alg`` is a signature algorithm that can verify a message when the signature is provided after the message input.
+        ``0`` if ``alg`` is a signature algorithm that requires the signature before message input.
+        This macro can return either ``0`` or ``1`` if ``alg`` is not a supported signature algorithm identifier.
+
+    This macro identifies algorithms that can be used with the deferred-signature multi-part verification flow, beginning with `psa_verify_setup_deferred_signature()`.
+    It indicates algorithm compatibility only. An implementation can still return :code:`PSA_ERROR_NOT_SUPPORTED` if it does not support the deferred-signature flow for the algorithm.
 
 .. macro:: PSA_ALG_ANY_HASH
     :definition: ((psa_algorithm_t)0x020000ff)
