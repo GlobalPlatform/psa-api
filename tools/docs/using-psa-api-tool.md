@@ -100,6 +100,10 @@ The core HTML and structured-output build path requires:
 - Sphinx.
 - A POSIX-like shell and `make`.
 
+The make-based build does not support whitespace in directory or file names used by the
+build. This includes repository, tool, resource, and output directory paths, as well as
+tracked source and resource filenames.
+
 PDF output also requires a LaTeX toolchain that provides `pdflatex`.
 
 The `images` target may require additional tools, depending on the figure sources used
@@ -192,6 +196,15 @@ Use `INTERNAL=1` to build an internal-tagged output variant when a document uses
 internal-only content.
 
 ## Recommended Validation
+
+The generated prerequisite list supports efficient incremental builds, but deleting an
+input file may not cause existing output to be rebuilt. Start shared review and publication
+builds from a clean output directory. For example:
+
+```sh
+make doc/<spec>/clean
+make doc/<spec>/html
+```
 
 For a source-only documentation change, build the affected HTML output first:
 
