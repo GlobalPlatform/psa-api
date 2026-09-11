@@ -17,6 +17,13 @@ export PSA_API_TOOL
 # atg-sphinx-conf.py using ATG_SPHINX_SPEC.
 override ATG_SPHINX_SPEC := $(PSA_API_TOOL)
 export ATG_SPHINX_SPEC
+# Optional external templates and licenses. Resolve the resource path before
+# recursive builds change their working directory.
+ifneq ($(strip $(PSA_API_RESOURCE_PATH)),)
+override PSA_API_RESOURCE_PATH := $(abspath $(PSA_API_RESOURCE_PATH))
+export PSA_API_RESOURCE_PATH
+endif
+export PSA_API_TEMPLATE_VARIANT
 # For recursive invokation we need to know which makefile is used
 THIS_MAKE := -f $(firstword $(MAKEFILE_LIST))
 
@@ -43,7 +50,9 @@ DOCS_ALL := $(sort $(DOCS) $(DOCS2) $(DOCS3) $(DOCS4))
 # The full combination of all documents and targets
 ALL_TARGETS := $(foreach DOC,$(DOCS_ALL),$(addprefix $(DOC)/,$(TARGETS_ALL)))
 
-MAKE_VARS := INTERNAL=$(INTERNAL)
+MAKE_VARS := INTERNAL=$(INTERNAL) \
+	PSA_API_RESOURCE_PATH=$(PSA_API_RESOURCE_PATH) \
+	PSA_API_TEMPLATE_VARIANT=$(PSA_API_TEMPLATE_VARIANT)
 
 .PHONY: all
 all: $(addsuffix /all,$(DOCS))
@@ -130,7 +139,10 @@ endif
 PRUNE := .* __* skeleton guide build docs
 PRUNE := $(patsubst %,-name "%" -prune -or,$(PRUNE))
 PSA_API_TOOL_FILES := $(shell find $(PSA_API_TOOL) $(PRUNE) -type f -print)
-SPHINX_INPUTS := $(shell find $(SOURCE) -type f -print) $(PSA_API_TOOL_FILES)
+ifneq ($(strip $(PSA_API_RESOURCE_PATH)),)
+PSA_API_RESOURCE_FILES := $(shell find $(PSA_API_RESOURCE_PATH) $(PRUNE) -type f -print)
+endif
+SPHINX_INPUTS := $(shell find $(SOURCE) -type f -print) $(PSA_API_TOOL_FILES) $(PSA_API_RESOURCE_FILES)
 
 .PHONY: html
 html: $(OUTPUT)/html/done

@@ -37,6 +37,42 @@ By default, builds use the checked-in tool under `tools/`. Editors can override
 make PSA_API_TOOL=/path/to/psa-api-tool doc/crypto/html
 ```
 
+Templates and licenses can instead be supplied separately from the core tool. Set
+`PSA_API_RESOURCE_PATH` to a directory containing `templates/` and `license/`
+subdirectories. Set `PSA_API_TEMPLATE_VARIANT` to prefix the template selected by the
+document. For example, this command selects `gp-psa-api-2026` for a document configured
+to use `psa-api-2026`:
+
+```sh
+make PSA_API_RESOURCE_PATH=/path/to/gp-resources \
+     PSA_API_TEMPLATE_VARIANT=gp \
+     doc/crypto/html
+```
+
+The corresponding external resources have this layout:
+
+```text
+gp-resources/
+├── license/
+│   └── gp_psa_api_license.rst
+└── templates/
+    └── gp-psa-api-2026/
+```
+
+The external template selects the license supplied by its resource bundle. For this
+example, `templates/gp-psa-api-2026/template-conf.py` contains:
+
+```python
+doc_info.setdefault('license', 'gp-psa-api-license')
+```
+
+License identifiers use hyphens, while their corresponding resource filenames use
+underscores.
+
+The variant and a hyphen are prefixed to every configured template name. When a resource
+path or template variant is specified, the selected resource directory and template must
+exist; the build does not fall back to the default template.
+
 Each specification has its own `conf.py` and `psa-api.toml` under `doc/<spec>/`.
 The small `conf.py` shim sets `psa_api_tool_path` to the repository `tools/` directory,
 allows the `PSA_API_TOOL` environment variable to override that path, provides the TOML
