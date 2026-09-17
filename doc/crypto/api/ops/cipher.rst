@@ -561,7 +561,7 @@ Multi-part cipher operations
     .. retval:: PSA_ERROR_BAD_STATE
         The following conditions can result in this error:
 
-        *   The operation state is not valid: it must be inactive.
+        *   The operation is not inactive.
         *   The library requires initializing by a call to `psa_crypto_init()`.
 
     The sequence of operations to encrypt a message with a symmetric cipher is as follows:
@@ -627,7 +627,7 @@ Multi-part cipher operations
     .. retval:: PSA_ERROR_BAD_STATE
         The following conditions can result in this error:
 
-        *   The operation state is not valid: it must be inactive.
+        *   The operation is not inactive.
         *   The library requires initializing by a call to `psa_crypto_init()`.
 
     The sequence of operations to decrypt a message with a symmetric cipher is as follows:
@@ -676,7 +676,9 @@ Multi-part cipher operations
         The following conditions can result in this error:
 
         *   The cipher algorithm does not use an IV.
-        *   The operation state is not valid: it must be active, with no IV set.
+        *   The operation is not active.
+        *   The operation was not set up with `psa_cipher_encrypt_setup()`.
+        *   An IV has already been set.
         *   The library requires initializing by a call to `psa_crypto_init()`.
     .. retval:: PSA_ERROR_BUFFER_TOO_SMALL
         The size of the ``iv`` buffer is too small. `PSA_CIPHER_IV_LENGTH()` or `PSA_CIPHER_IV_MAX_SIZE` can be used to determine a sufficient buffer size.
@@ -717,7 +719,8 @@ Multi-part cipher operations
         The following conditions can result in this error:
 
         *   The cipher algorithm does not use an IV.
-        *   The operation state is not valid: it must be an active cipher encrypt operation, with no IV set.
+        *   The operation is not active.
+        *   An IV has already been set.
         *   The library requires initializing by a call to `psa_crypto_init()`.
     .. retval:: PSA_ERROR_INVALID_ARGUMENT
         The following conditions can result in this error:
@@ -773,7 +776,8 @@ Multi-part cipher operations
     .. retval:: PSA_ERROR_BAD_STATE
         The following conditions can result in this error:
 
-        *   The operation state is not valid: it must be active, with an IV set if required for the algorithm.
+        *   The operation is not active.
+        *   The cipher algorithm requires an IV, and no IV has been set.
         *   The library requires initializing by a call to `psa_crypto_init()`.
     .. retval:: PSA_ERROR_BUFFER_TOO_SMALL
         The size of the ``output`` buffer is too small. `PSA_CIPHER_UPDATE_OUTPUT_SIZE()` or `PSA_CIPHER_UPDATE_OUTPUT_MAX_SIZE()` can be used to determine a sufficient buffer size.
@@ -828,7 +832,8 @@ Multi-part cipher operations
     .. retval:: PSA_ERROR_BAD_STATE
         The following conditions can result in this error:
 
-        *   The operation state is not valid: it must be active, with an IV set if required for the algorithm.
+        *   The operation is not active.
+        *   The cipher algorithm requires an IV, and no IV has been set.
         *   The library requires initializing by a call to `psa_crypto_init()`.
     .. retval:: PSA_ERROR_BUFFER_TOO_SMALL
         The size of the ``output`` buffer is too small. `PSA_CIPHER_FINISH_OUTPUT_SIZE()` or `PSA_CIPHER_FINISH_OUTPUT_MAX_SIZE` can be used to determine a sufficient buffer size.
