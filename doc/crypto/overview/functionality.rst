@@ -203,6 +203,8 @@ If a multi-part operation function determines that the operation object is not i
 
 If a multi-part operation function is called with an operation object in the wrong state, the function will return :code:`PSA_ERROR_BAD_STATE` and the operation object will enter the *error* state.
 
+The source object passed to `psa_hash_clone()` is an exception to the preceding error-state rules: the function does not modify it, even if it is not active or the call fails.
+
 It is safe to move a multi-part operation object to a different memory location, for example, using a bitwise copy, and then to use the object in the new location. For example, an application can allocate an operation object on the stack and return it, or the operation object can be allocated within memory managed by a garbage collector. However, this does not permit the following behaviors:
 
 *   Moving the object while a function is being called on the object. This is not safe. See also :secref:`concurrency`.

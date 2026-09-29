@@ -820,6 +820,16 @@ Multi-part hashing operations
     *   A successful call to `psa_hash_finish()`, `psa_hash_verify()` or `psa_hash_suspend()`.
     *   A call to `psa_hash_abort()`.
 
+    If `psa_hash_resume()` is called with an operation object that is not inactive, it returns :code:`PSA_ERROR_BAD_STATE` and the operation enters an error state.
+
+    If `psa_hash_resume()` returns an error when called with an inactive operation object, the operation object is left inactive.
+
+    If a subsequent function call with an active operation returns an error, the operation enters an error state.
+
+    To abandon an active operation, or reset an operation in an error state, call `psa_hash_abort()`.
+
+    See :secref:`multi-part-operations`.
+
 .. function:: psa_hash_clone
 
     .. summary::
@@ -828,7 +838,7 @@ Multi-part hashing operations
     .. param:: const psa_hash_operation_t * source_operation
         The active hash operation to clone.
     .. param:: psa_hash_operation_t * target_operation
-        The operation object to set up. It must be initialized but not active.
+        The initialized, inactive operation object to set up. It must be distinct from ``source_operation``.
 
     .. return:: psa_status_t
     .. retval:: PSA_SUCCESS
@@ -837,14 +847,27 @@ Multi-part hashing operations
     .. retval:: PSA_ERROR_BAD_STATE
         The following conditions can result in this error:
 
-        *   The ``source_operation`` state is not valid: it must be active.
-        *   The ``target_operation`` state is not valid: it must be inactive.
+        *   ``source_operation`` is not active.
+        *   ``target_operation`` is not inactive.
         *   The library requires initializing by a call to `psa_crypto_init()`.
     .. retval:: PSA_ERROR_COMMUNICATION_FAILURE
     .. retval:: PSA_ERROR_CORRUPTION_DETECTED
     .. retval:: PSA_ERROR_INSUFFICIENT_MEMORY
 
-    This function copies the state of an ongoing hash operation to a new operation object. In other words, this function is equivalent to calling `psa_hash_setup()` on ``target_operation`` with the same algorithm that ``source_operation`` was set up for, then `psa_hash_update()` on ``target_operation`` with the same input that that was passed to ``source_operation``. After this function returns, the two objects are independent, i.e. subsequent calls involving one of the objects do not affect the other object.
+    This function copies the state of an ongoing hash operation to a new operation object. On success, ``target_operation`` has the same state as if `psa_hash_setup()` had been called on it with the same algorithm that ``source_operation`` was set up for, followed by `psa_hash_update()` with the same input that was passed to ``source_operation``. The two objects are then independent, i.e. subsequent calls involving one of the objects do not affect the other object.
+
+    If ``source_operation`` and ``target_operation`` refer to the same object, the behavior is undefined.
+
+    This function does not modify ``source_operation``, whether it succeeds or fails.
+
+    If ``target_operation`` is not inactive when this function is called, the function returns :code:`PSA_ERROR_BAD_STATE` and ``target_operation`` enters an error state. This applies even if ``source_operation`` is not active.
+
+    If ``target_operation`` is inactive when this function is called, it is left inactive if the function returns an error.
+
+    To abandon an active operation, or reset an operation in an error state, call `psa_hash_abort()`.
+
+    See :secref:`multi-part-operations`.
+
 
 Support macros
 --------------
