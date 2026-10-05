@@ -1,6 +1,6 @@
 ..  SPDX-FileCopyrightText: Copyright 2020-2025 Arm Limited and/or its affiliates
 ..  SPDX-FileCopyrightText: Copyright 2026 GlobalPlatform, Inc. and contributors
-..  SPDX-License-Identifier: CC-BY-SA-4.0
+..  SPDX-License-Identifier: CC-BY-SA-4.0 AND LicenseRef-Patent-license
 
 .. _using-drivers:
 
@@ -81,4 +81,3 @@ Generally speaking, to declare a key with a specified persistence:
     psa_set_key_lifetime(&attributes, PSA_KEY_LIFETIME_FROM_PERSISTENCE_AND_LOCATION(
             PSA_KEY_LOCATION_foo,
             persistence));
-

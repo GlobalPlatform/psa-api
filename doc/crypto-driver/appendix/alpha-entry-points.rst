@@ -1,5 +1,6 @@
 ..  SPDX-FileCopyrightText: Copyright 2020-2025 Arm Limited and/or its affiliates
-..  SPDX-License-Identifier: CC-BY-SA-4.0
+..  SPDX-FileCopyrightText: Copyright 2026 GlobalPlatform, Inc. and contributors
+..  SPDX-License-Identifier: CC-BY-SA-4.0 AND LicenseRef-Patent-license
 
 .. _driver-entry-points:
 
@@ -782,7 +783,7 @@ The entry points that create or format key data have the following prototypes fo
                                    size_t key_buffer_size,
                                    size_t *key_buffer_length);
 
-Additionally, opaque drivers can create keys through their `"key_derivation_output_key" <key-derivation-driver-outputs>` and `"key_agreement_key" <key-agreement>` entry points.
+Additionally, opaque drivers can create keys through their `"key_derivation_output_key" <key-derivation-driver-outputs>` and :ref:`"key_agreement_key" <key-agreement>` entry points.
 Transparent drivers can create key material through their `"derive_key" <transparent-cooked-key-derivation>` entry point.
 
 TODO: copy
