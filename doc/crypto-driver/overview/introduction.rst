@@ -10,51 +10,23 @@ Crypto Driver Interface
 Purpose
 -------
 
-The Crypto API defines an interface that allows applications to perform cryptographic operations in a uniform way regardless of how the operations are performed.
-Under the hood, different keys may be stored and used in different hardware or in different logical partitions, and different algorithms may involve different hardware or software components.
+The :cite-title:`PSA CRYPT` allows applications and system software to perform cryptographic operations without depending on how those operations are implemented. An implementation can use general-purpose software, optimized software, hardware accelerators, protected key stores, secure elements, or a combination of these.
 
-The driver interface allows implementations of the Crypto API to be built compositionally.
-An implementation of the Crypto API is composed of a **core** and zero or more **drivers**.
-The core handles key management, enforces key usage policies, and dispatches cryptographic operations either to the applicable driver or to built-in code.
+The PSA Crypto API does not depend on the PSA Crypto Driver Interface specification. An implementation can conform to the Crypto API without using the architecture or any of the interfaces defined here.
 
-Functions in the Crypto API implementation invoke functions in the core.
-Code from the core calls drivers as described in the present document.
+This specification defines an optional architecture and portable integration interfaces for implementations that separate the implementation of the Crypto API from the providers of cryptographic operations and key-management capabilities. Its intended use is within an implementation of the PSA Crypto API, with which it shares concepts, types, operation families, and programming conventions.
 
-Types of drivers
-----------------
+Portable integration contracts
+------------------------------
 
-The PSA Crypto driver interface supports two types of cryptoprocessors, and accordingly two types of drivers.
+A product can require cryptographic capabilities from several sources. For example, one hardware block might accelerate AES, a secure element might store private keys and perform signatures, and optimized software might provide the remaining algorithms. The required combination varies between products, even when they run the same application software.
 
-*  **Transparent** drivers implement cryptographic operations on keys that are provided in cleartext at the beginning of each operation. They are typically used for hardware **accelerators**. When a transparent driver is available for a particular combination of parameters (cryptographic algorithm, key type and size, etc.), it is used instead of the default software implementation. Transparent drivers can also be pure software implementations that are distributed as plug-ins to a Crypto API implementation (for example, an alternative implementation with different performance characteristics, or a certified implementation).
-*  **Opaque** drivers implement cryptographic operations on keys that can only be used inside a protected environment such as a **secure element**, a hardware security module, a smartcard, a secure enclave, etc. An opaque driver is invoked for the specific `key location <lifetimes-and-locations>` that the driver is registered for: the dispatch is based on the key's lifetime.
+This specification allows independently supplied components to be combined behind one application-facing Crypto API. It defines the following constituent material:
 
-Requirements
-------------
+*  Common contracts that apply across the integration boundaries.
+*  A structured Driver description that declares the capabilities and integration properties of a Driver.
+*  The Dispatch interface used to request a configured cryptographic capability.
+*  The Driver interface implemented by providers of cryptographic operations and key-management capabilities.
+*  Integration requirements for constructing a product-specific implementation from the selected components.
 
-The present specification was designed to fulfill the following high-level requirements.
-
-[Req.plugins]
-   It is possible to combine multiple drivers from different providers into the same implementation, without any prior arrangement other than choosing certain names and values from disjoint namespaces.
-
-[Req.compile]
-   It is possible to compile the code of each driver and of the core separately, and link them together.
-   A small amount of glue code may need to be compiled once the list of drivers is available.
-
-[Req.types]
-   Support drivers for the following types of hardware: accelerators that operate on keys in cleartext; cryptoprocessors that can wrap keys with a built-in keys but not store user keys; and cryptoprocessors that store key material.
-
-[Req.portable]
-   The interface between drivers and the core does not involve any platform-specific consideration.
-   Driver calls are simple C function calls.
-   Interactions with platform-specific hardware happen only inside the driver (and in fact a driver need not involve any hardware at all).
-
-[Req.location]
-   Applications can tell which location values correspond to which secure element drivers.
-
-[Req.fallback]
-   Accelerator drivers can specify that they do not fully support a cryptographic mechanism and that a fallback to core code may be necessary.
-   Conversely, if an accelerator fully supports cryptographic mechanism, the core must be able to omit code for this mechanism.
-
-[Req.mechanisms]
-   Drivers can specify which mechanisms they support.
-   A driver's code will not be invoked for cryptographic mechanisms that it does not support.
+The specification standardizes the portable boundaries and the responsibilities on each side of them. It does not standardize a particular Crypto API implementation, Dispatch Layer implementation, build system, code generator, or source-tree organization.

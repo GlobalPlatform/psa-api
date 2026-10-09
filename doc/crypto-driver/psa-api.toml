@@ -20,6 +20,6 @@ date = "September 2025"
 header_doxygen = 2
 
 # Rendering and optional content
-include_content = ["banner", "rationale"]
+include_content = ["banner", "comment", "rationale"]
 identifier_index = false
 page_break = "chapter"

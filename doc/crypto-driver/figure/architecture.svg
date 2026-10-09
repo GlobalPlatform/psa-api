@@ -1,0 +1,65 @@
+<!-- SPDX-FileCopyrightText: Copyright 2026 GlobalPlatform, Inc. and contributors -->
+<!-- SPDX-License-Identifier: CC-BY-SA-4.0 AND LicenseRef-Patent-license -->
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="704" viewBox="0 0 600 704" role="img" aria-labelledby="title description">
+  <title id="title">Core, Dispatch, and Driver architecture</title>
+  <desc id="description">A vertically aligned call path from applications through the PSA Crypto API, Core, Dispatch interface, Dispatch Layer, Driver interface, and configured Drivers. Driver descriptions and product configuration provide integration input to the Dispatch Layer. Drivers can use the Dispatch interface for Driver chaining.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#253746"/>
+    </marker>
+    <style>
+      text { font-family: Roboto, Arial, sans-serif; font-size: 16px; }
+      .box { stroke: none; rx: 7px; }
+      .component { fill: #0091bd; }
+      .interface { fill: #78be20; }
+      .external { fill: #002b49; }
+      .integration { fill: #7d868c; }
+      .box-label { fill: #ffffff; text-anchor: middle; dominant-baseline: middle; }
+      .arrow { fill: none; stroke: #253746; stroke-width: 2.5px; marker-end: url(#arrow); }
+      .input { stroke-dasharray: 8 7; }
+      .arrow-label { fill: #253746; font-size: 15px; }
+    </style>
+  </defs>
+
+  <!-- The principal runtime path uses a common width and regular spacing. -->
+  <rect class="box external" x="265" y="24" width="190" height="56"/>
+  <text class="box-label" x="360" y="43">Applications and</text>
+  <text class="box-label" x="360" y="63">system software</text>
+
+  <rect class="box interface" x="265" y="124" width="190" height="56"/>
+  <text class="box-label" x="360" y="153">PSA Crypto API</text>
+
+  <rect class="box component" x="265" y="224" width="190" height="56"/>
+  <text class="box-label" x="360" y="253">Core</text>
+
+  <rect class="box interface" x="265" y="324" width="190" height="56"/>
+  <text class="box-label" x="360" y="353">Dispatch interface</text>
+
+  <rect class="box component" x="265" y="424" width="190" height="56"/>
+  <text class="box-label" x="360" y="443">Configuration-specific</text>
+  <text class="box-label" x="360" y="463">Dispatch Layer</text>
+
+  <rect class="box interface" x="265" y="524" width="190" height="56"/>
+  <text class="box-label" x="360" y="553">Driver interface</text>
+
+  <rect class="box integration" x="265" y="624" width="190" height="56"/>
+  <text class="box-label" x="360" y="653">Configured Drivers</text>
+
+  <path class="arrow" d="M 360 80 V 122"/>
+  <path class="arrow" d="M 360 180 V 222"/>
+  <path class="arrow" d="M 360 280 V 322"/>
+  <path class="arrow" d="M 360 380 V 422"/>
+  <path class="arrow" d="M 360 480 V 522"/>
+  <path class="arrow" d="M 360 580 V 622"/>
+
+  <!-- Configuration affects integration, rather than adding a runtime call. -->
+  <rect class="box integration" x="20" y="424" width="190" height="56"/>
+  <text class="box-label" x="115" y="443">Driver descriptions and</text>
+  <text class="box-label" x="115" y="463">product configuration</text>
+  <path class="arrow input" d="M 210 452 H 263"/>
+  <text class="arrow-label" x="115" y="505" text-anchor="middle">Integration input</text>
+
+  <!-- A Driver can return through Dispatch to obtain a lower-level capability. -->
+  <path class="arrow" d="M 455 652 H 545 Q 570 652 570 627 V 377 Q 570 352 545 352 H 457"/>
+  <text class="arrow-label" x="625" y="438" transform="rotate(-90 625 502)" text-anchor="middle">Driver chaining</text>
+</svg>
