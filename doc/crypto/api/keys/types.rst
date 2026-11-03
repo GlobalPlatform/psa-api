@@ -2210,7 +2210,7 @@ The |API| supports Module Lattice-based key encapsulation (ML-KEM) as defined in
     :definition: /* specification-defined value */
 
     .. summary::
-        Whether a key type is an ML-DSA key, either a key pair or a public key.
+        Whether a key type is an ML-KEM key, either a key pair or a public key.
 
         .. versionadded:: 1.3
 
