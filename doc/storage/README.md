@@ -1,6 +1,6 @@
 <!--
 SPDX-FileCopyrightText: Copyright 2022 Arm Limited and/or its affiliates
-SPDX-FileCopyrightText: Copyright 2026 GlobalPlatform
+SPDX-FileCopyrightText: Copyright 2026 GlobalPlatform, Inc. and contributors
 SPDX-License-Identifier: CC-BY-SA-4.0
 -->
 
@@ -20,4 +20,4 @@ Current directory | Configuration and table of contents
 ----
 
 *Copyright 2022 Arm Limited and/or its affiliates*\
-*Copyright 2026 GlobalPlatform*
+*Copyright 2026 GlobalPlatform, Inc. and contributors*

@@ -1,6 +1,6 @@
 <!--
 SPDX-FileCopyrightText: Copyright 2018-2026 Arm Limited
-SPDX-FileCopyrightText: Copyright 2026 GlobalPlatform
+SPDX-FileCopyrightText: Copyright 2026 GlobalPlatform, Inc. and contributors
 SPDX-License-Identifier: Apache-2.0
 -->
 
@@ -2516,4 +2516,4 @@ The mitigation is described in :m:`isolate-components`.
 ----
 
 *Copyright 2018-2026 Arm Limited*\
-*Copyright 2026 GlobalPlatform*
+*Copyright 2026 GlobalPlatform, Inc. and contributors*

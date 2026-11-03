@@ -1,6 +1,6 @@
 <!--
 SPDX-FileCopyrightText: Copyright 2022 Arm Limited and/or its affiliates
-SPDX-FileCopyrightText: Copyright 2026 GlobalPlatform
+SPDX-FileCopyrightText: Copyright 2026 GlobalPlatform, Inc. and contributors
 SPDX-License-Identifier: CC-BY-SA-4.0
 -->
 
@@ -54,4 +54,4 @@ d) I understand and agree that this project and the contribution
 ----
 
 *Copyright 2022 Arm Limited and/or its affiliates*\
-*Copyright 2026 GlobalPlatform*
+*Copyright 2026 GlobalPlatform, Inc. and contributors*
