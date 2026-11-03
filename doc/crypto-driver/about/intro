@@ -12,12 +12,14 @@
 
    In the remainder of this document:
 
-   *  :secref:`introduction` describes the purpose of this interface.
-   *  :secref:`overview` describes what a Crypto Driver looks like.
-   *  :secref:`driver-description` outlines the  Driver manifest.
-   *  :secref:`driver-entry-points` provides details of driver capabilities.
-   *  :secref:`transparent-drivers` and :secref:`opaque-drivers` explain the requirements for specific driver types.
-   *  :secref:`using-drivers` describes how application code influences Driver selection.
+   *  :secref:`crypto-driver-purpose` describes the purpose of this interface.
+   *  :secref:`goals-requirements-use-cases` describes the design goals, requirements, and motivating use cases.
+   *  :secref:`architecture` describes the Core, Dispatch, and Driver architecture.
+   *  :secref:`common-contracts` describes behavior shared across the interfaces.
+   *  :secref:`driver-description-reference` describes how a Driver declares its capabilities.
+   *  :secref:`crypto-dispatch-interface` and :secref:`crypto-driver-interface` specify the two C interfaces.
+   *  :secref:`supporting-services` defines the supporting services needed by Drivers.
+   *  :secref:`integration-and-portability` describes Driver packaging, Dispatch construction, and integration.
 
 .. api-status::
 

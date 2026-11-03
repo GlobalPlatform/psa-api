@@ -1,4 +1,5 @@
 .. SPDX-FileCopyrightText: Copyright 2020-2025 Arm Limited and/or its affiliates
+.. SPDX-FileCopyrightText: Copyright 2026 GlobalPlatform, Inc. and contributors
 .. SPDX-License-Identifier: CC-BY-SA-4.0 AND LicenseRef-Patent-license
 
 ..  title::
@@ -12,15 +13,18 @@
 ..  maintoc::
 
     about/about
-    body/introduction
-    body/overview
-    body/manifest
-    body/entry-points
-    body/transparent
-    body/opaque
-    body/using-drivers
+    overview/introduction
+    overview/goals
+    overview/architecture
+    common/index
+    description/index
+    api/dispatch/index
+    api/driver/index
+    api/support/index
+    integration/index
 
 ..  appendix::
 
-    appendix/open-issues
+    appendix/capability-map
+    appendix/compatibility
     appendix/history

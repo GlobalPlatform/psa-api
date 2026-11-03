@@ -1,5 +1,8 @@
 ..  SPDX-FileCopyrightText: Copyright 2020-2026 Arm Limited and/or its affiliates
-..  SPDX-License-Identifier: CC-BY-SA-4.0
+..  SPDX-FileCopyrightText: Copyright 2026 GlobalPlatform, Inc. and contributors
+..  SPDX-License-Identifier: CC-BY-SA-4.0 AND LicenseRef-Patent-license
+
+.. _crypto-driver-purpose:
 
 Crypto Driver Interface
 =======================
@@ -20,7 +23,7 @@ Code from the core calls drivers as described in the present document.
 Types of drivers
 ----------------
 
-The PSA Cryptoprocessor driver interface supports two types of cryptoprocessors, and accordingly two types of drivers.
+The PSA Crypto driver interface supports two types of cryptoprocessors, and accordingly two types of drivers.
 
 *  **Transparent** drivers implement cryptographic operations on keys that are provided in cleartext at the beginning of each operation. They are typically used for hardware **accelerators**. When a transparent driver is available for a particular combination of parameters (cryptographic algorithm, key type and size, etc.), it is used instead of the default software implementation. Transparent drivers can also be pure software implementations that are distributed as plug-ins to a Crypto API implementation (for example, an alternative implementation with different performance characteristics, or a certified implementation).
 *  **Opaque** drivers implement cryptographic operations on keys that can only be used inside a protected environment such as a **secure element**, a hardware security module, a smartcard, a secure enclave, etc. An opaque driver is invoked for the specific `key location <lifetimes-and-locations>` that the driver is registered for: the dispatch is based on the key's lifetime.
