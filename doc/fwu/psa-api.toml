@@ -5,7 +5,7 @@
 # Document identity
 template = "psa-api-2026"
 title = "PSA Firmware Update API"
-doc_id = "GPD_SPE_093"
+doc_id = "GPS_SPE_093"
 copyright_date = "2020-2026"
 
 # Publication and lifecycle

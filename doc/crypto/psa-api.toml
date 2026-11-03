@@ -5,7 +5,7 @@
 # Document identity
 template = "psa-api-2026"
 title = "PSA Crypto API"
-doc_id = "GPD_SPE_086"
+doc_id = "GPS_SPE_086"
 copyright_date = "2018-2026"
 
 # Publication and lifecycle
