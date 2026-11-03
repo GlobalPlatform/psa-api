@@ -137,6 +137,25 @@ make doc/crypto
 Generated output is written under `build/`, mirroring the document path. For example,
 `make doc/crypto/html` writes HTML under `build/doc/crypto/html`.
 
+### Building Historical Revisions
+
+Repository tags from before the build tools were integrated do not contain a `tools/`
+directory. To build one of these revisions, first make an external copy of the tools from
+the current `main` branch, then check out the required tag and invoke the copied makefile
+explicitly. Choose a destination path that does not already exist:
+
+```sh
+git switch main
+cp -R tools ../psa-api-tools
+git switch --detach <tag>
+make -f ../psa-api-tools/make doc/crypto/html
+```
+
+Other document paths and build targets can be selected in the same way. The current tools
+are intended to remain compatible with these older specification sources. The resulting
+document uses the current compatible tooling and may therefore incorporate later cosmetic
+or layout improvements.
+
 ## Targets
 
 | Target | Purpose |
