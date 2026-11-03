@@ -2363,7 +2363,7 @@ Multi-part asymmetric signature operations
 
     If `psa_sign_setup()` is called with an operation object that is not inactive, it returns :code:`PSA_ERROR_BAD_STATE` and the operation enters an error state.
 
-    If `psa_sign_setup()` returns an error when called with an inactive operation object, the operation object is unchanged.
+    If `psa_sign_setup()` returns an error when called with an inactive operation object, the operation object is left inactive.
 
     If a subsequent function call with an active operation returns an error, the operation enters an error state.
 
@@ -2648,7 +2648,7 @@ Multi-part asymmetric signature operations
 
     If `psa_verify_setup()` is called with an operation object that is not inactive, it returns :code:`PSA_ERROR_BAD_STATE` and the operation enters an error state.
 
-    If `psa_verify_setup()` returns an error when called with an inactive operation object, the operation object is unchanged.
+    If `psa_verify_setup()` returns an error when called with an inactive operation object, the operation object is left inactive.
 
     If a subsequent function call with an active operation returns an error, the operation enters an error state.
 
