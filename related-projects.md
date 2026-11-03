@@ -1,6 +1,6 @@
 <!--
 SPDX-FileCopyrightText: Copyright 2022, 2025 Arm Limited and/or its affiliates
-SPDX-FileCopyrightText: Copyright 2026 GlobalPlatform
+SPDX-FileCopyrightText: Copyright 2026 GlobalPlatform, Inc. and contributors
 SPDX-License-Identifier: CC-BY-SA-4.0
 -->
 
@@ -73,4 +73,4 @@ The aim of the Driver Interface is to simplify the integration of cryptographic 
 ----
 
 *Copyright 2022, 2025 Arm Limited and/or its affiliates*\
-*Copyright 2026 GlobalPlatform*
+*Copyright 2026 GlobalPlatform, Inc. and contributors*

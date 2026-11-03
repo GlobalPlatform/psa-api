@@ -1,6 +1,6 @@
 <!--
 SPDX-FileCopyrightText: Copyright 2022-2026 Arm Limited and/or its affiliates
-SPDX-FileCopyrightText: Copyright 2026 GlobalPlatform
+SPDX-FileCopyrightText: Copyright 2026 GlobalPlatform, Inc. and contributors
 SPDX-License-Identifier: CC-BY-SA-4.0
 -->
 
@@ -178,4 +178,4 @@ Anyone may contribute to the PSA APIs. Discussion of changes and enhancement hap
 ----
 
 *Copyright 2022-2026 Arm Limited and/or its affiliates*\
-*Copyright 2026 GlobalPlatform*
+*Copyright 2026 GlobalPlatform, Inc. and contributors*
