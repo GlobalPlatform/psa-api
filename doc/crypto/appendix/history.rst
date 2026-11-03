@@ -35,6 +35,7 @@ Clarifications and fixes
 *   Clarified the failure postconditions of `psa_hash_clone()` for both operation objects, and required the source and target to be distinct objects.
 *   Corrected the WPA3-SAE operation example code: the send-confirm counter input step is `PSA_PAKE_STEP_CONFIRM_COUNT`, and the shared key is extracted from the ``wpa3_sae`` operation.
 *   Corrected the SPAKE2+ operation example code: the Prover input step for the Verifier confirmation value is `PSA_PAKE_STEP_CONFIRM`.
+*   Clarified the :code:`PSA_ERROR_BAD_STATE` conditions for multi-part hash, XOF, MAC, cipher, AEAD, asymmetric signature, key-derivation (including combined key agreement), and PAKE operations.
 
 Other changes
 ~~~~~~~~~~~~~
