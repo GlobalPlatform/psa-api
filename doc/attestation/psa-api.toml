@@ -5,7 +5,7 @@
 # Document identity
 template = "psa-api-2026"
 title = "PSA Attestation API"
-doc_id = "GPD_SPE_085"
+doc_id = "GPS_SPE_085"
 copyright_date = "2018-2020, 2022-2026"
 
 # Publication and lifecycle

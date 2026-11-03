@@ -225,7 +225,7 @@ For example:
 # Document identity
 template = "psa-api-2026"
 title = "Example API"
-doc_id = "GPD_SPE_000"
+doc_id = "GPS_SPE_000"
 
 # Publication and lifecycle
 version = "1.0"
