@@ -396,7 +396,7 @@ div.admonition-todo p.admonition-title {
     text-transform: lowercase;
 }
 
-div.license span.sectiontitle {
+div.license span.sectiontitle, div.introduction span.sectiontitle {
     margin-top: 24px;
     font-size: 127%;
 }

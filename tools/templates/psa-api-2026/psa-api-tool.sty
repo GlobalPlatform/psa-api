@@ -415,11 +415,22 @@
 \newcommand{\DUroleversionmodified}[1]
     {{\psasmall\sphinxstyleemphasis{#1}}}
 
-% define class environment for the license text (much smaller font)
+% define class environment for the license text
 \newenvironment{sphinxclasslicense}
     {\psalicense\setlist[enumerate,1]{label=\mdseries(\roman*)}%
      \renewcommand{\DUrolesectiontitle}[1]
-         {{\psahhh ##1}}%
+         {%
+
+          {\psahhh ##1}}%
+    }
+    {}
+
+% define class environment for the introduction section, to reduce sub-section titles
+\newenvironment{sphinxclassintroduction}
+    {\renewcommand{\DUrolesectiontitle}[1]
+         {%
+
+          {\psahhh ##1}}%
     }
     {}
 

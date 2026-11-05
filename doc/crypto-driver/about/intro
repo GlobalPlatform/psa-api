@@ -2,11 +2,7 @@
 .. SPDX-FileCopyrightText: Copyright 2026 GlobalPlatform, Inc. and contributors
 .. SPDX-License-Identifier: CC-BY-SA-4.0 AND LicenseRef-Patent-license
 
-.. introduction::
-
-   This document is one of a set of resources that can help organizations develop products that meet the security requirements of GlobalPlatform's PSA Certified evaluation scheme. The PSA Certified scheme provides a framework and methodology that helps silicon manufacturers, system software providers and OEMs to develop more secure products. You can read more about PSA Certified here at :url:`www.psacertified.org`.
-
-   .. rubric:: About the |API|
+.. about-the-api::
 
    This document describes an interface for cryptoprocessor drivers within an implementation of the PSA Crypto API. This interface complements :cite-title:`PSA CRYPT`, which describes the interface between a Crypto API implementation and an application.
 
