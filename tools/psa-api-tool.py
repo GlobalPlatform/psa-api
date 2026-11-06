@@ -17,6 +17,7 @@ from docutils import nodes
 from docutils.parsers.rst import directives
 from sphinx import addnodes
 from sphinx.directives.other import Include, TocTree
+from sphinx.errors import SphinxError
 from docutils.parsers.rst.directives.tables import RSTTable
 from sphinx.roles import XRefRole
 from sphinx.util.nodes import make_refnode
@@ -372,7 +373,7 @@ class IncludeLicense(Include, SphinxDirective):
     option_spec = {}
 
     def run(self):
-        license_path = os.path.join(os.sep,self.config.psa_api_tool_path,'license')
+        license_path = os.path.join(os.sep,self.config.psa_api_resource_path,'license')
         license = self.config.psa_api_license
         rel_filename, filename = self.env.relfn2path(license)
         if not os.path.isfile(filename):
@@ -381,6 +382,12 @@ class IncludeLicense(Include, SphinxDirective):
         error = []
         if not os.path.isfile(filename):
             rel_filename = os.path.join(license_path,'missing.rst')
+            _, filename = self.env.relfn2path(rel_filename)
+            if not os.path.isfile(filename):
+                raise SphinxError(
+                    'Invalid or unknown license name/identifier "{}", and no '
+                    'missing-license fallback was provided by the active resource '
+                    'directory.'.format(license))
             error = [self.state_machine.reporter.error(
                 'Invalid or unknown license name/identifier "{}".'.format(license),
                 line=self.lineno)]
@@ -2601,6 +2608,7 @@ def setup(app):
 
     app.add_config_value('psa_api_c_header', 'prototypes', 'env')
     app.add_config_value('psa_api_tool_path', '', 'env')
+    app.add_config_value('psa_api_resource_path', '', 'env')
     app.add_config_value('psa_api_template_path', '', 'env')
     app.add_config_value('psa_api_license', 'missing', 'env')
     app.add_config_value('psa_api_api_version', '', 'env')

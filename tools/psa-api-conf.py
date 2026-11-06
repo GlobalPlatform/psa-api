@@ -57,15 +57,35 @@ sys.path.insert(0, os.path.abspath(psa_api_tool_path))
 # When used within the extension, psa_api_tool_path must be a relative path
 psa_api_tool_path = os.path.relpath(psa_api_tool_path)
 
+# Templates and licenses are normally stored with the tool, but can be supplied
+# from a separate resource directory for branded document builds.
+resource_path_override = os.environ.get('PSA_API_RESOURCE_PATH')
+psa_api_resource_path = os.path.relpath(resource_path_override or psa_api_tool_path)
+if resource_path_override and not os.path.isdir(psa_api_resource_path):
+    raise RuntimeError(
+        'PSA_API_RESOURCE_PATH "{}" is not a directory.'.format(resource_path_override))
+
 # Validate the selected document template, or use the default one
 def template_path(template):
-    return os.path.join(psa_api_tool_path, 'templates', template)
+    return os.path.join(psa_api_resource_path, 'templates', template)
 
 default_template = 'psa-api-2026'
 
 template = doc_info.get('template', default_template)
+template_variant = os.environ.get('PSA_API_TEMPLATE_VARIANT', '').strip()
+if template_variant and re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9._-]*', template_variant) is None:
+    raise RuntimeError(
+        'PSA_API_TEMPLATE_VARIANT must be a template name prefix containing only '
+        'letters, numbers, dots, underscores, and hyphens.')
+if template_variant:
+    template = '{}-{}'.format(template_variant, template)
+
 psa_api_template_path = template_path(template)
 if not os.path.isdir(psa_api_template_path):
+    if resource_path_override or template_variant:
+        raise RuntimeError(
+            'Document template "{}" was not found under resource path "{}".'.format(
+                template, psa_api_resource_path))
     print ('WARNING: Document template "{}" not found, falling back to "{}"'.format(template, default_template))
     psa_api_template_path = template_path(default_template)
 
