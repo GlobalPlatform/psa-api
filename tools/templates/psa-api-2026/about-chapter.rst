@@ -9,29 +9,36 @@ Introduction
 
 .. insert-section::
    :section: introduction
+   :class: introduction
 
-   .. todo:: Provide an introduction.
+   This document is one of a set of resources that can help organizations develop products that meet the security requirements of GlobalPlatform's PSA Certified evaluation scheme. The PSA Certified scheme provides a framework and methodology that helps silicon manufacturers, system software providers and OEMs to develop more secure products. You can read more about PSA Certified here at :url:`www.psacertified.org`.
 
-.. insert-section::
-   :section: api-status
+   .. insert-section:: About the |API|
+      :section: about-the-api
+      :not-in-toc:
 
-.. _feedback:
+      .. todo:: Provide an introduction.
 
-.. insert-section::
-   :section: feedback
+   .. insert-section:: Current Status
+      :section: api-status
+      :not-in-toc:
 
-   .. rubric:: Feedback
+   .. _feedback:
 
-   We welcome feedback on the |docfulltitle|.
+   .. insert-section:: Feedback
+      :section: feedback
+      :not-in-toc:
 
-   If you have comments on the content of this specification, |docfeedback|. Give:
+      We welcome feedback on the |docfulltitle|.
 
-   *  The title (|docfulltitle|).
-   *  The number and issue (|docid| |docrelease|).
-   *  The location in the document to which your comments apply.
-   *  A concise explanation of your comments.
+      If you have comments on the content of this specification, |docfeedback|. Give:
 
-   We also welcome general suggestions for additions and improvements.
+      *  The title (|docfulltitle|).
+      *  The number and issue (|docid| |docrelease|).
+      *  The location in the document to which your comments apply.
+      *  A concise explanation of your comments.
+
+      We also welcome general suggestions for additions and improvements.
 
 .. _audience:
 

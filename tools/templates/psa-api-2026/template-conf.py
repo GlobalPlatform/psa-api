@@ -80,6 +80,7 @@ template_info['make_filename'] = make_doc_filename
 
 template_info['front_sections'] = [
         'introduction',
+        'about-the-api',
         'api-status',
         'feedback',
         'audience',
