@@ -217,18 +217,18 @@
 
 % A frontmatter environment, which continues roman page numbers,
 %   does not number titles, but includes them in the TOC.
-\newcommand{\psafrontmatter}[1]%
+\newcommand{\psafrontmatter}[2]%
   {\pagenumbering{roman}%
    \setcounter{secnumdepth}{#1}
   }
 
-\newcommand{\psamain}[1]
+\newcommand{\psamain}[2]
   {\clearpage%
    \pagenumbering{arabic}%
    \setcounter{secnumdepth}{#1}
   }
 
-\newcommand{\psaappendix}[1]
+\newcommand{\psaappendix}[2]
   {\ifdefined\docappendixbreak \clearpage\fi%
    \setcounter{secnumdepth}{#1}
    \appendix%
