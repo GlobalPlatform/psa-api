@@ -4,7 +4,7 @@
 
 .. about-the-api::
 
-   This document describes an interface for cryptoprocessor drivers within an implementation of the PSA Crypto API. This interface complements :cite-title:`PSA CRYPT`, which describes the interface between a Crypto API implementation and an application.
+   This document specifies portable interfaces for integrating providers of cryptographic operations and key-management capabilities. Its intended use is within an implementation of the PSA Crypto API. It complements :cite-title:`PSA CRYPT`, which specifies the application-facing Crypto API.
 
    In the remainder of this document:
 
@@ -16,12 +16,13 @@
    *  :secref:`crypto-dispatch-interface` and :secref:`crypto-driver-interface` specify the two C interfaces.
    *  :secref:`supporting-services` defines the supporting services needed by Drivers.
    *  :secref:`integration-and-portability` describes Driver packaging, Dispatch construction, and integration.
+   *  :secref:`capability-map` provides an operation-oriented view connecting the common contracts, Driver descriptions, and interface definitions for each capability family.
 
 .. api-status::
 
    .. warning:: **API status : ALPHA**
 
-      This interfaces defined by this document are at Alpha quality. This document is shared to support ongoing development and discussion of the architecture and interfaces for Crypto Drivers.
+      The interfaces defined by this document are at Alpha quality. This document is shared to support ongoing development and discussion of the architecture and interfaces for Crypto Drivers.
 
       At ALPHA quality, any aspect of the interface might be changed in a future version of the document.
 
@@ -33,8 +34,10 @@
 
 .. audience::
 
-   This document is intended primarily for the use of developers of:
+   This document is intended primarily for:
 
-   *  Software cryptographic drivers to be integrated into a framework that uses the |API|.
-   *  Software drivers for cryptographic hardware to be integrated into a framework that uses the |API|.
-   *  Frameworks that use the |API| to integrate software and hardware providers of cryptographic services. This includes implementations of the PSA Crypto API that provide extensibility via the |API|.
+   *  **Driver developers**, who implement cryptographic or key-management capabilities in software or hardware and describe those capabilities for integration.
+   *  **Core developers**, who implement the application-facing Crypto API and use the Dispatch interface to obtain cryptographic capabilities.
+   *  **Dispatch developers and tooling authors**, who implement or generate the selection and adaptation between Dispatch calls and Driver entry points.
+   *  **Product integrators**, who select Cores and Drivers, configure routing, and assemble an implementation for a target platform.
+   *  **Reviewers and test developers**, who verify the behavior and responsibilities at each interface.

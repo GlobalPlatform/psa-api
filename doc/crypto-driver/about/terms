@@ -1,8 +1,55 @@
 .. SPDX-FileCopyrightText: Copyright 2025-2026 Arm Limited and/or its affiliates
+.. SPDX-FileCopyrightText: Copyright 2026 GlobalPlatform, Inc. and contributors
 .. SPDX-License-Identifier: CC-BY-SA-4.0 AND LicenseRef-Patent-license
 
-.. terms::
-   :hide:
+.. term:: Core
 
-.. abbreviations::
-   :hide:
+   The component that implements the application-facing Crypto API, coordinates key management and policy, and requests cryptographic and Driver-backed key-management capabilities through the Dispatch interface.
+
+.. term:: Dispatch interface
+
+   The portable interface through which the Core, or a Driver using Driver chaining, requests a configured cryptographic or key-management capability.
+
+.. term:: Dispatch Layer
+
+   The configuration-specific implementation of the Dispatch interface that selects an eligible Driver capability and calls the corresponding Driver entry point.
+
+.. term:: Driver
+
+   A provider of cryptographic operations, key-management capabilities, or both, that implements entry points from the Driver interface.
+
+.. term:: Driver chaining
+
+   The use of the Dispatch interface by a Driver to request a lower-level cryptographic capability.
+
+.. term:: Driver description
+
+   Structured data that declares the capabilities and integration properties of a Driver.
+
+.. term:: Driver interface
+
+   The portable interface implemented by Drivers and called by the Dispatch Layer.
+
+.. term:: Opaque Driver
+
+   A Driver that owns a protected representation of key material and provides the capabilities that use keys in that representation.
+
+.. term:: Transparent Driver
+
+   A Driver whose capabilities operate on keys represented in the formats specified by the Crypto API.
+
+.. abbr:: API
+
+   Application Programming Interface
+
+.. abbr:: KDF
+
+   Key Derivation Function
+
+.. abbr:: MAC
+
+   Message Authentication Code
+
+.. abbr:: PSA
+
+   Platform Security Architecture
