@@ -94,8 +94,8 @@ template_info['front_sections'] = [
 template_info['numfig_sec_depth'] = 1
 template_info['page_break'] = 'chapter'
 
-doc_info.setdefault('author', 'The PSA API contributors')
-doc_info.setdefault('copyright', 'The PSA API contributors')
+doc_info.setdefault('author', 'GlobalPlatform')
+doc_info.setdefault('copyright', 'GlobalPlatform, Inc. and contributors')
 doc_info.setdefault('feedback', 'visit :url:`github.com/globalplatform/psa-api/issues`' +
                                 ' to create a new issue at the PSA API GitHub project')
 doc_info.setdefault('license', 'psa-api-license')
